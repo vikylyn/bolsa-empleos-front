@@ -1,0 +1,43 @@
+<div class="login-register " style="background-image:url(../assets/images/background/login-register2.png);">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10">
+                    <div class="card animated fadeIn fast">
+                        <div class="card-body">
+                            <form (ngSubmit)="ingresar()"
+                                [formGroup]="registerForm"
+                                class="form-horizontal form-material animated fadeIn fast" id="loginform" >
+                                <h3 class="box-title m-b-20 text-center">Ingreso al Sistema</h3>
+                                <div class="form-group">
+                                    <input [class.is-invalid]="campoNoValido('email')" formControlName="email" class="form-control" type="email"  placeholder="Email">
+                                    <small *ngIf="campoNoValido('email')" class="form-control-feedback text-danger">El email es obligatorio </small>
+                                </div>
+                                <div class="form-group">
+                                    <input [class.is-invalid]="campoNoValido('password')" formControlName="email" formControlName="password" class="form-control" type="password"  placeholder="Password">
+                                    <small *ngIf="campoNoValido('password')" class="form-control-feedback text-danger">El password es obligatorio</small>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <div class="checkbox checkbox-info pull-left p-t-0">
+                                            <input formControlName="recuerdame" id="checkbox-signup" type="checkbox" class="filled-in chk-col-light-blue">
+                                            <label for="checkbox-signup"> Recuerdame </label>
+                                        </div> <a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> olvidaste tu contraseña?</a> </div>
+                                </div>
+                                <div class="form-group text-center">
+                                    <div class="col-xs-12 p-b-20">
+                                        <button class="btn btn-block btn-lg btn-info btn-rounded" type="submit">Ingresar</button>
+                                    </div>
+                                </div>
+                                <div class="form-group m-b-0">
+                                    <div class="col-sm-12 text-center">
+                                        No tienes una cuenta? <a routerLink="/registro" class="text-info m-l-5"><b>Registrate</b></a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>

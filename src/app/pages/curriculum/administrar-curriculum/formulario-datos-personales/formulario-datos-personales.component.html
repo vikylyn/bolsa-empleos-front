@@ -1,0 +1,175 @@
+<div class="container animated fadeIn fast">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    <form *ngIf="cargarformulario" class="form p-t-20" 
+                            [formGroup]="perfilForm"
+                            (ngSubmit)="guardar()">
+                        <div class="row">
+                            <div class="col-md-6 ">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Nombres</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user"></i></div>
+                                        <input [class.is-invalid]="campoNoValido('nombre')" formControlName="nombre" class="form-control" type="text" placeholder="Nombres">
+                                    </div>
+                                    <small *ngIf="campoNoValido('nombre')" class="form-control-feedback text-danger">El nombre es obligatorio </small>                        
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Apellidos</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user"></i></div>
+                                        <input [class.is-invalid]="campoNoValido('apellidos')" formControlName="apellidos" class="form-control" type="text"  placeholder="Apellidos">
+                                    </div>
+                                    <small *ngIf="campoNoValido('apellidos')" class="form-control-feedback text-danger">Los apellidos son obligatorios </small>        
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 ">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Correo electronico</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-email"></i></div>
+                                        <input formControlName="email" class="form-control" type="email"  placeholder="Email"> 
+                                    </div>
+                                    <small *ngIf="campoNoValido('email')" class="form-control-feedback text-danger">El email es obligatorio </small>        
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Telefono</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user"></i></div>
+                                        <input [class.is-invalid]="campoNoValido('telefono')" formControlName="telefono" type="text" class="form-control" placeholder="Telefono">
+                                    </div>
+                                    <small *ngIf="campoNoValido('telefono')" class="form-control-feedback text-danger">El telefono es obligatorio</small>
+        
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 ">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Cedula</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user"></i></div>
+                                        <input [class.is-invalid]="campoNoValido('cedula')" formControlName="cedula" type="text" class="form-control" placeholder="Cedula">
+                                              
+                                    </div>
+                                    <small *ngIf="campoNoValido('cedula')" class="form-control-feedback text-danger">La cedula de identidad es obligatorio</small> 
+        
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Genero</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user"></i></div>
+                                        <select formControlName="genero" class="form-control custom-select">
+                                            <option value="M">Masculino</option>
+                                            <option value="F">Fememino</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 ">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Fecha de Nacimiento</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user"></i></div>
+                                        <input formControlName="fecha_nac"  type="date" class="form-control" placeholder="dd/mm/yyyy">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Nacionalidad</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user"></i></div>
+                                        <input [class.is-invalid]="campoNoValido('nacionalidad')" formControlName="nacionalidad" type="text" class="form-control" placeholder="Nacionalidad">
+                                    </div>
+                                    <small *ngIf="campoNoValido('nacionalidad')" class="form-control-feedback text-danger">La nacionalidad es Obligatoria</small> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 ">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Estado civil</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user"></i></div>
+                                        <select formControlName="id_estado_civil" class="form-control custom-select">
+                                            <option *ngFor="let estado_civil of estados_civiles" value="{{estado_civil.id}}">{{estado_civil.estado}}</option>
+                                        </select>
+                                    </div>
+                                    <small *ngIf="selectNoValido('id_estado_civil')" class="form-control-feedback text-danger">Seleccione un estado civil</small> 
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Direccion</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user"></i></div>
+                                        <input [class.is-invalid]="campoNoValido('direccion')" formControlName="direccion" type="text" class="form-control" placeholder="Direccion">
+                                    </div>
+                                    <small *ngIf="campoNoValido('direccion')" class="form-control-feedback text-danger">La nacionalidad es Obligatoria</small> 
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 ">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Pais</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user"></i></div>
+                                        <select (change)="seleccionarPais()" formControlName="id_pais" class="form-control custom-select">
+                                            <option *ngFor="let pais of paises" value="{{pais.id}}">{{pais.nombre}}</option>
+                                        </select>  
+                                    </div>
+                                    <small *ngIf="selectNoValido('id_pais')" class="form-control-feedback text-danger">Seleccione un pais</small> 
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Ciudad</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user"></i></div>
+                                        <select  formControlName="id_ciudad" class="form-control custom-select">
+                                            <option *ngFor="let ciudad of ciudades" value="{{ciudad.id}}">{{ciudad.nombre}} / {{ciudad.estado.nombre}}</option>
+                                        </select>
+                                    </div>
+                                    <small *ngIf="selectNoValido('id_ciudad')" class="form-control-feedback text-danger">Seleccione una ciudad</small> 
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-md-6 ">
+                                <label for="exampleInputuname">Profesion/Oficio</label>
+                                <input disabled  type="text" class="form-control" placeholder="{{solicitante.profesion.nombre}}">
+                            </div>
+                        </div> 
+                        <br>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success waves-effect waves-light">
+                                <i class="fa fa-save"></i>
+                                Guardar
+                            </button>
+                            &nbsp;
+                            <button  routerLink="/curriculum/administracion" type="button" class="btn btn-inverse">Cancelar</button>
+                        </div>   
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>

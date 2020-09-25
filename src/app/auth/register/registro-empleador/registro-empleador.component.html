@@ -1,0 +1,240 @@
+<div class="form-registro " style="background-image:url(../assets/images/background/login-register2.png);">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <form *ngIf="ciudades && paises" autocomplete="off" 
+                               [formGroup]="registerForm"
+                               >
+                            <div class="form-body">
+                                <h3 class="card-title">Registrarme</h3>
+                                <hr>
+                                <div class="row p-t-20">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Nombres:</label>
+                                            <input [class.is-invalid]="campoNoValido('nombre')" formControlName="nombre" class="form-control" type="text" placeholder="Nombres">
+                                            <small *ngIf="campoNoValido('nombre')" class="form-control-feedback text-danger">El nombre es obligatorio </small>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Apellidos:</label>
+                                            <input [class.is-invalid]="campoNoValido('apellidos')" formControlName="apellidos" class="form-control" type="text"  placeholder="Apellidos">
+                                            <small *ngIf="campoNoValido('apellidos')" class="form-control-feedback text-danger">Los apellidos son obligatorios </small>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <div class="form-group">
+                                            <label class="control-label">Email:</label>
+                                            <input [class.is-invalid]="campoNoValido('email')" formControlName="email" class="form-control" type="email"  placeholder="Email">
+                                            <small *ngIf="campoNoValido('email')" class="form-control-feedback text-danger">El email es obligatorio </small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 ">
+                                        <div class="form-group">
+                                            <label class="control-label">Contraseña:</label>
+                                            <input [class.is-invalid]="campoNoValido('password')" formControlName="password" formControlName="password" class="form-control" type="password"  placeholder="Password">
+                                            <small *ngIf="campoNoValido('password')" class="form-control-feedback text-danger">El password es obligatorio</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 ">
+                                        <div class="form-group">
+                                            <label class="control-label">Confirmar contraseña:</label>
+                                            <input [class.is-invalid]="campoNoValido('password2') || contrasenasNovalidas()" formControlName="password2" class="form-control" type="password"  placeholder="Confirmar password">
+                                            <small *ngIf="campoNoValido('password2')" class="form-control-feedback text-danger">La confirmacion de la contraseña es obligatoria</small>
+                                            <small *ngIf="contrasenasNovalidas()" class="form-control-feedback text-danger">Las contraseñas deben ser iguales</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/row-->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Genero</label>
+                                            <select [class.is-invalid]="selectNoValido('genero')" formControlName="genero" class="form-control custom-select">
+                                                <option value="0">Seleccionar</option>
+                                                <option value="M">Masculino</option>
+                                                <option value="F">Fememino</option>
+                                            </select>
+                                            <small *ngIf="selectNoValido('genero')" class="form-control-feedback text-danger">Seleccione un genero</small> 
+        
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Telefono:</label>
+                                            <input [class.is-invalid]="campoNoValido('telefono')" formControlName="telefono" type="text" class="form-control" placeholder="Telefono">
+                                            <small *ngIf="campoNoValido('telefono')" class="form-control-feedback text-danger">El telefono es obligatorio</small>
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+                                <!--/row-->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Cedula:</label>
+                                            <input [class.is-invalid]="campoNoValido('cedula')" formControlName="cedula" type="text" class="form-control" placeholder="Cedula">
+                                            <small *ngIf="campoNoValido('cedula')" class="form-control-feedback text-danger">La cedula de identidad es obligatorio</small> 
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Nacionalidad</label>
+                                            <input [class.is-invalid]="campoNoValido('nacionalidad')" formControlName="nacionalidad" type="text" class="form-control" placeholder="Nacionalidad">
+                                            <small *ngIf="campoNoValido('nacionalidad')" class="form-control-feedback text-danger">La nacionalidad es Obligatoria</small> 
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <div class="form-group">
+                                            <label>Direccion</label>
+                                            <input [class.is-invalid]="campoNoValido('direccion')" formControlName="direccion" type="text" class="form-control" placeholder="Direccion">
+                                            <small *ngIf="campoNoValido('direccion')" class="form-control-feedback text-danger">La direccion es Obligatoria</small> 
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Pais</label>
+                                            <select [class.is-invalid]="selectNoValido('id_pais')" formControlName="id_pais" class="form-control custom-select">
+                                                <option value="0">Seleccionar</option>
+                                                <option *ngFor="let pais of paises" value="{{pais.id}}">{{pais.nombre}}</option>
+                                            </select>
+                                            <small *ngIf="selectNoValido('id_pais')" class="form-control-feedback text-danger">Seleccione un pais</small> 
+        
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Ciudad</label>
+                                            <select [class.is-invalid]="selectNoValido('id_ciudad')" formControlName="id_ciudad" class="form-control custom-select">
+                                                <option value="0">Seleccionar</option>
+                                                <option *ngFor="let ciudad of ciudades" value="{{ciudad.id}}">{{ciudad.nombre}} / {{ciudad.estado.nombre}}</option>
+                                            </select>
+                                            <small *ngIf="selectNoValido('id_ciudad')" class="form-control-feedback text-danger">Seleccione una ciudad</small> 
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <input type="checkbox" formControlName="empresa" id="empresa" name="empresa" value="empresa">
+                                            <label for="empresa"> Deseo registrar mi empresa (opcional)</label><br>                                          
+                                        </div>
+                                    </div>
+                                </div>
+                                <div *ngIf="mostrar()" class="row">
+                                    <div class="col-md-12 ">
+                                        <h3>Datos de la Empresa</h3>
+                                        <hr>
+                                    </div>
+                                </div>
+                                <div *ngIf="mostrar()" class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Empresa:</label>
+                                            <input [class.is-invalid]="campoNoValido('empresa_nombre')" formControlName="empresa_nombre" type="text" class="form-control" placeholder="Nombre de la empresa">
+                                            <small *ngIf="campoNoValido('empresa_nombre')" class="form-control-feedback text-danger">El nombre de la empresa es obligatorio</small> 
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Dominio Web:</label>
+                                            <input formControlName="empresa_dominio_web" type="text" class="form-control" placeholder="Dominio web">
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                </div> 
+                                <div *ngIf="mostrar()" class="row">
+                                    <div class="col-md-6 ">
+                                        <div class="form-group">
+                                            <label>Direccion</label>
+                                            <input [class.is-invalid]="campoNoValido('empresa_direccion')" formControlName="empresa_direccion" type="text" class="form-control" placeholder="Direccion">
+                                            <small *ngIf="campoNoValido('empresa_direccion')" class="form-control-feedback text-danger">La direccion de la empresa es Obligatoria</small> 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Telefono:</label>
+                                            <input [class.is-invalid]="campoNoValido('empresa_telefono')" formControlName="empresa_telefono" type="text" class="form-control" placeholder="Telefono">
+                                            <small *ngIf="campoNoValido('empresa_telefono')" class="form-control-feedback text-danger">El telefono de la empresa es obligatorio</small>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div *ngIf="mostrar()" class="row">
+                                    <div class="col-md-12 ">
+                                        <div class="form-group">
+                                            <label>Descripcion</label>
+                                            <textarea [class.is-invalid]="campoNoValido('empresa_descripcion')" formControlName="empresa_descripcion" class="form-control rounded-0" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                            <small *ngIf="campoNoValido('empresa_descripcion')" class="form-control-feedback text-danger">La descripcion de la empresa es Obligatoria</small> 
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div *ngIf="mostrar()" class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Pais</label>
+                                            <select [class.is-invalid]="selectNoValido('empresa_id_pais')" formControlName="empresa_id_pais" class="form-control custom-select">
+                                                <option value="0">Seleccionar</option>
+                                                <option *ngFor="let pais of paises" value="{{pais.id}}">{{pais.nombre}}</option>
+                                            </select>
+                                            <small *ngIf="selectNoValido('empresa_id_pais')" class="form-control-feedback text-danger">Seleccione un pais</small> 
+        
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Ciudad</label>
+                                            <select [class.is-invalid]="selectNoValido('empresa_id_ciudad')" formControlName="empresa_id_ciudad" class="form-control custom-select">
+                                                <option value="0">Seleccionar</option>
+                                                <option *ngFor="let ciudad of ciudades" value="{{ciudad.id}}">{{ciudad.nombre}} / {{ciudad.estado.nombre}}</option>
+                                            </select>
+                                            <small *ngIf="selectNoValido('empresa_id_ciudad')" class="form-control-feedback text-danger">Seleccione una ciudad</small> 
+                                        </div>
+                                    </div>
+                                    
+                                    <!--/span-->
+                                </div>       
+                            </div>
+                            
+                            <hr>
+                            <div class="row animated fadeIn fast" *ngIf="cargando">
+                                <div class="col-12">
+                                    <div class="alert alert-info text-center">
+                                        <h4>Guardando...</h4>
+                                        <i class="fa fa-spin fa-refresh fa-2x"></i>
+                                        <p class="mb-0">Por favor espere</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions text-center">
+                                <button (click)="adicionarEmpleador()"  class="btn btn-success"> <i class="fa fa-check"></i> Guardar</button>
+                                &nbsp;
+                                <button  routerLink="/login" type="button" class="btn btn-inverse">Cancelar</button>
+                            </div>
+                        </form>
+                       </div>
+                </div>
+            </div>
+        </div>
+            
+    </div>
+</div>
+

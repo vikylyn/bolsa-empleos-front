@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "bolsa"
+    }
+  },
+  "defaultProject": "bolsa",
+  "cli": {
+    "analytics": false
+  }
 }

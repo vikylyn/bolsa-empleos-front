@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+.cursor {
+    cursor: pointer;
+}
+
+.w100 {
+  width: 100px;  
+} 
+.w150 {
+  width: 200px;  
+}  
+.w600 {
+  width: 600px;  
+}  
+.oculto {
+  display: none;
+}  
+.form-registro {
+    
+  background-position: center center;
+  height: 100%;
+  width: 100%;
+  padding: 2% 0;
+}

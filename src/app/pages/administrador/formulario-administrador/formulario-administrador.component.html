@@ -1,0 +1,107 @@
+<div class="container">
+    <div class="row justify-content-center animated fadeIn fast">
+        <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <form *ngIf="cargarformulario" class="form p-t-20" 
+                            [formGroup]="adminForm"> 
+                        <div class="row">
+                            <div class="col-md-6 ">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Nombres:</label>
+                                    <input [class.is-invalid]="campoNoValido('nombre')" formControlName="nombre" class="form-control" type="text" placeholder="Nombres">
+                                    <small *ngIf="campoNoValido('nombre')" class="form-control-feedback text-danger">El nombre es obligatorio </small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Apellidos:</label>
+                                    <input [class.is-invalid]="campoNoValido('apellidos')" formControlName="apellidos" class="form-control" type="text"  placeholder="Apellidos">
+                                    <small *ngIf="campoNoValido('apellidos')" class="form-control-feedback text-danger">Los apellidos son obligatorios </small>
+                                </div>
+                            </div>
+                        </div>  
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Email:</label>
+                                    <input [class.is-invalid]="campoNoValido('email')" formControlName="email" class="form-control" type="email"  placeholder="Email">
+                                    <small *ngIf="campoNoValido('email')" class="form-control-feedback text-danger">El email es obligatorio </small>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <div *ngIf="tipo==='adicionar'" class="form-group">
+                                    <label for="exampleInputuname">Contraseña:</label>
+                                    <input [class.is-invalid]="campoNoValido('password')" formControlName="email" formControlName="password" class="form-control" type="password"  placeholder="Password">
+                                    <small *ngIf="campoNoValido('password')" class="form-control-feedback text-danger">El password es obligatorio</small>
+                                </div>
+                            </div>
+                        </div> 
+                        <div  *ngIf="tipo==='adicionar'" class="row">
+                            <div class="col-md-12 ">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">confirmar Contraseña:</label>
+                                    <input [class.is-invalid]="campoNoValido('password2') || contrasenasNovalidas()" formControlName="password2" class="form-control" type="password"  placeholder="Confirmar password">
+                                    <small *ngIf="campoNoValido('password2')" class="form-control-feedback text-danger">La confirmacion del password es obligatorio</small>
+                                    <small *ngIf="contrasenasNovalidas()" class="form-control-feedback text-danger">Las contraseñas deben ser iguales</small>
+                                </div> 
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-md-6 ">
+                                <div class="form-group">
+                                    <label class="control-label">Genero</label>
+                                    <select [class.is-invalid]="selectNoValido('genero')" formControlName="genero" class="form-control custom-select">
+                                        <option *ngIf="tipo==='adicionar'" value="0">Seleccionar</option>
+                                        <option value="M">Masculino</option>
+                                        <option value="F">Fememino</option>
+                                    </select>
+                                    <small *ngIf="selectNoValido('genero')" class="form-control-feedback text-danger">Seleccione un genero</small> 
+            
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Telefono:</label>
+                                    <input [class.is-invalid]="campoNoValido('telefono')" formControlName="telefono" type="text" class="form-control" placeholder="Telefono">
+                                    <small *ngIf="campoNoValido('telefono')" class="form-control-feedback text-danger">El telefono es obligatorio</small>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-md-6 ">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Cedula de identidad:</label>
+                                    <input [class.is-invalid]="campoNoValido('cedula')" formControlName="cedula" type="text" class="form-control" placeholder="Cedula">
+                                    <small *ngIf="campoNoValido('cedula')" class="form-control-feedback text-danger">La cedula de identidad es obligatorio</small> 
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Habilitado</label>    
+                                    <select formControlName="habilitado" class="form-control custom-select">
+                                        <option value="true">verdadero</option>
+                                        <option value="false">falso</option>
+                                    </select>
+                                  
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="text-center">
+                            <button  (click)="guardar()" type="submit" class="btn btn-success waves-effect waves-light">
+                                <i class="fa fa-save"></i>
+                                Guardar
+                            </button>
+                            &nbsp;
+                            <button  routerLink="/administrador" type="button" class="btn btn-inverse">Cancelar</button>
+                        </div>
+                          
+                </form>
+                </div>
+            </div>  
+        </div>
+      </div>
+    
+</div>

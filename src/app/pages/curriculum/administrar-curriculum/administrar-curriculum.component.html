@@ -1,0 +1,118 @@
+<div class="row">
+    <div class="col-12">
+        <div id="1" class="card">
+            <div class="card-header"> 
+                
+               <h2><span class="badge badge-info">Datos Personales</span></h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive table-striped">
+                    <table *ngIf="solicitante" class="table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Apellidos</th>
+                                <th>Profesion/Oficio</th>
+                                <th>Telefono</th>
+                                <th>Cedula</th>
+                                <th>Genero</th>
+                                <th>Nacionalidad</th>
+                                <th>direccion</th>
+                                <th>Estado Civil</th>
+                                <th>Ciudad</th>
+                                <th>Ocupado</th>
+                                <th class="w100">Operaciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    {{solicitante.nombre}}
+                                </td>
+                                <td>
+                                    {{solicitante.apellidos}}
+                                </td>
+                                <td>
+                                    {{solicitante.profesion.nombre}}
+                                </td>
+                                <td>
+                                    {{solicitante.telefono}}
+                                </td>
+                                <td>
+                                    {{solicitante.cedula}}
+                                </td>
+                                <td>
+                                    {{solicitante.genero}}
+                                </td>
+                                <td>
+                                    {{solicitante.nacionalidad}}
+                                </td>
+                                <td>
+                                    {{solicitante.direccion}}
+                                </td>
+                                <td>
+                                    {{solicitante.ciudad.nombre}}
+                                </td>
+                                <td>
+                                    {{solicitante.ocupado}}
+                                </td>
+                                <td class="text-center"><span class="label label-danger">{{solicitante.habilitado}}</span></td>
+                                <td class="text-nowrap text-center">
+                                    <a routerLink="/curriculum/datos-personales"
+                                        data-toggle="tooltip"> 
+                                            <i class="fa fa-pencil text-inverse m-r-10"></i> 
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div id="2" class="card">
+            <div class="card-header">
+                <h2><span class="badge badge-info">Datos del Curriculum</span></h2>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive table-striped">
+                    <table *ngIf="curriculum" class="table">
+                        <thead>
+                            <tr>
+                                <th>Titulo</th>
+                                <th>Pretension Salarial</th>
+                                <th>Biografia</th>
+                                <th class="w100">Operaciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    {{curriculum.titulo}}
+                                </td>
+                                <td>
+                                    {{curriculum.pretension_salarial}}
+                                </td>
+                                <td>
+                                    {{curriculum.biografia}}
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <a routerLink="/curriculum/encabezado"
+                                        data-toggle="tooltip" > 
+                                            <i class="fa fa-pencil text-inverse m-r-10"></i> 
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody> 
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

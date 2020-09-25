@@ -1,0 +1,62 @@
+<div class="container animated fadeIn fast">
+    <div class="row">
+        <div class="col-12">
+            <div class="card" id="4">
+                <div class="card-header">
+                    <h2><span class="badge badge-info">Habilidades</span></h2>              
+                    <h6>Total: {{totalHabilidades}} - {{desde}}</h6> 
+                </div>
+                <div class="card-body">
+                    <div class="row animated fadeIn fast" *ngIf="cargando">
+                        <div class="col-12">
+                            <div class="alert alert-info text-center">
+                                <h4>Cargando...</h4> 
+                                <i class="fa fa-spin fa-refresh fa-2x"></i>
+                                <p class="mb-0">Por favor espere</p>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <button [routerLink]="['/curriculum/habilidad/formulario']"
+                            [queryParams] = "{'tipo': 'adicionar', 'id': 0, 'id_curriculum': id_curriculum}" 
+                            class="btn btn-success">
+                                Adicionar
+                    </button>
+                    <br><br>
+                    <div class="table-responsive">
+                        <table class="table full-color-table full-inverse-table hover-table">
+                            <thead>
+                                <tr>
+                                    <th>Habilidad</th>
+                                    <th class="w100">Operaciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let habilidad of habilidades">
+                                    <td> 
+                                        {{habilidad.habilidad.habilidad}}
+                                    </td>
+                                    <td class="text-nowrap text-center">
+                                        <a [routerLink]="['/curriculum/habilidad/formulario']"
+                                           [queryParams] = "{'tipo': 'modificar', 'id': habilidad.id, 'id_curriculum': id_curriculum}" 
+                                            data-toggle="tooltip" > 
+                                                <i class="fa fa-pencil m-r-10"></i> 
+                                        </a>
+                                        <a (click)="eliminar(habilidad.id)" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-close text-danger"></i> </a>
+    
+                                    </td>
+                                </tr>
+                            </tbody> 
+                        </table>
+                    </div>
+                    <div class="text-center">
+                        <button (click)="cambiarPagina(-5)" class="btn btn-secondary">Anterior</button> 
+                        &nbsp;
+                        <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguiente</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

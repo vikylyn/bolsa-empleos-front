@@ -1,0 +1,104 @@
+
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input #txtTermino (keyup)="busqueda(txtTermino.value)" type="text" class="form-control" placeholder="buscar profesion...">
+            <div>
+        </div>
+    </div>
+</div>
+<div class="row animated fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4>Cargando...</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+    </div>
+</div>
+<div class="row animated fadeIn fast" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Profesiones</h4>
+                <h6>Total: {{totalProfesiones}} - {{desde}}</h6>
+                
+                <div class="row"> 
+                    <div class="col-md-4">
+                        <h5 class="m-t-30 m-b-10 text-white">Adicionar</h5>
+                        <button [routerLink]="['/profesion/formulario']"
+                            [queryParams] = "{'tipo': 'adicionar', 'id': 0}" 
+                            class="btn btn-success">
+                                 Adicionar
+                        </button>
+                    </div>
+                    <div class="col-md-4">
+                        <h5 class="m-t-30 m-b-10">Area Laboral:</h5>
+                        <select [(ngModel)]="id_area" (change)="filtrar()" class="form-control" name="" id="">
+                            <option value="0">Cualquiera</option>
+                            <option *ngFor="let area of areas_laborales" [value]="area.id">{{area.nombre}}</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <h5 class="m-t-30">Actividad Laboral:</h5>
+                        <select [(ngModel)]="id_actividad" (change)="filtrar()" class="form-control" name="" id="">
+                            <option value="0">Cualquiera</option>
+                            <option *ngFor="let actividad of actividades_laborales" [value]="actividad.id">{{actividad.nombre}}</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="table-responsive">
+                    <table class="table full-color-table full-inverse-table hover-table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Area laboral</th>
+                                <th>Actividad Laboral</th>
+                                <th>Habilitado</th>
+                                <th class="w100">Operaciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr  *ngFor="let profesion of this.profesiones">
+                                <td>
+                                    {{profesion.nombre}}
+                                </td>
+                                <td>
+                                    {{profesion.area_laboral.nombre}}
+                                </td>
+                                <td>
+                                    {{profesion.actividad_laboral.nombre}}
+                                </td>
+                                <td class="text-center"><span class="label label-danger">{{profesion.habilitado}}</span></td>
+                                <td class="text-nowrap text-center">
+                                    <a [routerLink]="['/profesion/formulario']"
+                                        [queryParams] = "{'tipo': 'modificar', 'id': profesion.id}"
+                                        data-toggle="tooltip"> 
+                                            <i class="fa fa-pencil m-r-10"></i> 
+                                    </a>
+                                    <a (click)="eliminar(profesion.id)" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-close text-danger"></i> </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center" *ngIf="txtTermino.value.length ===0">
+                    <button (click)="cambiarPagina(-5)" class="btn btn-secondary">Anterior</button> 
+                    &nbsp;
+                    <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguiente</button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+

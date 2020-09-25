@@ -1,0 +1,75 @@
+<div class="container">
+    <div class="row justify-content-center animated fadeIn fast">
+        <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <form *ngIf="cargarformulario" class="form p-t-20" 
+                            [formGroup]="idiomaForm">  
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Idioma</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user"></i></div>
+                                        <select [class.is-invalid]="selectNoValido('id_idioma')" formControlName="id_idioma" class="form-control custom-select">
+                                            <option *ngIf="tipo==='adicionar'" value="0">Seleccionar</option>
+                                            <option *ngFor="let idioma of idiomas" value="{{idioma.id}}">{{idioma.nombre}}</option>
+                                        </select>
+                                    </div>
+                                    <small *ngIf="selectNoValido('id_idioma')" class="form-control-feedback text-danger">Seleccione un Idioma</small> 
+    
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Nivel Escrito</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user"></i></div>
+                                        <select [class.is-invalid]="selectNoValido('id_nivel_escrito')" formControlName="id_nivel_escrito" class="form-control custom-select">
+                                            <option *ngIf="tipo==='adicionar'" value="0">Seleccionar</option>
+                                            <option *ngFor="let nivel of niveles" value="{{nivel.id}}">{{nivel.nombre}}</option>
+                                        </select>
+                                    </div>
+                                    <small *ngIf="selectNoValido('id_nivel_escrito')" class="form-control-feedback text-danger">Seleccione un Nivel escrito</small> 
+    
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Nivel oral</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user"></i></div>
+                                        <select [class.is-invalid]="selectNoValido('id_nivel_oral')" formControlName="id_nivel_oral" class="form-control custom-select">
+                                            <option *ngIf="tipo==='adicionar'" value="0">Seleccionar</option>
+                                            <option *ngFor="let nivel of niveles" value="{{nivel.id}}">{{nivel.nombre}}</option>
+                                        </select>
+                                    </div>
+                                    <small *ngIf="selectNoValido('id_nivel_oral')" class="form-control-feedback text-danger">Seleccione un Nivel oral</small> 
+    
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Nivel Lectura</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user"></i></div>
+                                        <select [class.is-invalid]="selectNoValido('id_nivel_lectura')" formControlName="id_nivel_lectura" class="form-control custom-select">
+                                            <option *ngIf="tipo==='adicionar'" value="0">Seleccionar</option>
+                                            <option *ngFor="let nivel of niveles" value="{{nivel.id}}">{{nivel.nombre}}</option>
+                                        </select>
+                                    </div>
+                                    <small *ngIf="selectNoValido('id_nivel_lectura')" class="form-control-feedback text-danger">Seleccione un Nivel de lectura</small> 
+    
+                                </div>
+                            </div>
+                        </div>                 
+                        <div class="text-center">
+                            <button  (click)="guardar()" type="submit" class="btn btn-success waves-effect waves-light">
+                                <i class="fa fa-save"></i>
+                                Guardar
+                            </button>
+                            &nbsp;
+                            <button  routerLink="/curriculum/idioma" type="button" class="btn btn-inverse">Cancelar</button>
+                        </div>
+                          
+                </form>
+                </div>
+            </div>  
+        </div>
+      </div>
+</div>
+

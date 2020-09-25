@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="row justify-content-center animated fadeIn fast">
+        <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <form *ngIf="cargarformulario" class="form p-t-20" 
+                            [formGroup]="profesionForm">  
+                        <div class="form-group">
+                            <label for="exampleInputuname">Nombres:</label>
+                            <input [class.is-invalid]="campoNoValido('nombre')" formControlName="nombre" class="form-control" type="text" placeholder="Nombre">
+                            <small *ngIf="campoNoValido('nombre')" class="form-control-feedback text-danger">El nombre es obligatorio </small>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Area Laboral</label>
+                            <select [class.is-invalid]="selectNoValido('id_area_laboral')" formControlName="id_area_laboral" class="form-control custom-select">
+                                <option *ngIf="tipo==='adicionar'" value="0">Seleccionar</option>
+                                <option *ngFor="let area of areas_laborales" [value]="area.id">{{area.nombre}}</option>
+                            </select>
+                            <small *ngIf="selectNoValido('id_area_laboral')" class="form-control-feedback text-danger">Seleccione una area laboral</small> 
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Actividad Laboral</label>
+                            <select [class.is-invalid]="selectNoValido('id_actividad_laboral')" formControlName="id_actividad_laboral" class="form-control custom-select">
+                                <option *ngIf="tipo==='adicionar'" value="0">Seleccionar</option>
+                                <option *ngFor="let actividad of actividades_laborales" [value]="actividad.id">{{actividad.nombre}}</option>
+                            </select>
+                            <small *ngIf="selectNoValido('id_actividad_laboral')" class="form-control-feedback text-danger">Seleccione una actividad laboral</small> 
+                        </div>                 
+                        <div class="form-group">
+                            <label for="exampleInputuname">Habilitado</label>
+                            
+                            <select formControlName="habilitado" class="form-control custom-select">
+                                <option value="true">verdadero</option>
+                                <option value="false">falso</option>
+                            </select>
+                            
+                        </div>
+                        <div class="text-center">
+                            <button  (click)="guardar()" type="submit" class="btn btn-success waves-effect waves-light">
+                                <i class="fa fa-save"></i>
+                                Guardar
+                            </button>
+                            &nbsp;
+                            <button  routerLink="/profesion" type="button" class="btn btn-inverse">Cancelar</button>
+                        </div>
+                          
+                </form>
+                </div>
+            </div>  
+        </div>
+      </div>
+    
+</div>

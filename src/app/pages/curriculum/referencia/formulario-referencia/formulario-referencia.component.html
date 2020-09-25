@@ -1,0 +1,80 @@
+<div class="container">
+    <div class="row justify-content-center animated fadeIn fast">
+        <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <form *ngIf="cargarformulario" class="form p-t-20" 
+                            [formGroup]="referenciaForm">  
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Nombre</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user"></i></div>
+                                        <input [class.is-invalid]="campoNoValido('nombre')" formControlName="nombre" class="form-control" type="text" placeholder="Ingrese un Nombre">
+                                        
+                                    </div>
+                                    <small *ngIf="campoNoValido('nombre')" class="form-control-feedback text-danger">Ingrese un nombre</small> 
+    
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Apellidos</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user"></i></div>
+                                        <input [class.is-invalid]="campoNoValido('apellidos')" formControlName="apellidos" class="form-control" type="text" placeholder="Apellidos">
+                                        
+                                    </div>
+                                    <small *ngIf="campoNoValido('apellidos')" class="form-control-feedback text-danger">Ingrese los apellidos</small> 
+    
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Empresa</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user"></i></div>
+                                        <input [class.is-invalid]="campoNoValido('empresa')" formControlName="empresa" class="form-control" type="text" placeholder="Empresa">
+                                        
+                                    </div>
+                                    <small *ngIf="campoNoValido('empresa')" class="form-control-feedback text-danger">Ingrese una Empresa</small> 
+    
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Cargo</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user"></i></div>
+                                        <input [class.is-invalid]="campoNoValido('cargo')" formControlName="cargo" class="form-control" type="text" placeholder="Cargo">
+                                        
+                                    </div>
+                                    <small *ngIf="campoNoValido('cargo')" class="form-control-feedback text-danger">Ingrese un cargo</small> 
+    
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Telefono</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="ti-user"></i></div>
+                                        <input [class.is-invalid]="campoNoValido('telefono')" formControlName="telefono" class="form-control" type="text" placeholder="Telefono">
+                                        
+                                    </div>
+                                    <small *ngIf="campoNoValido('telefono')" class="form-control-feedback text-danger">Ingrese un Telefono</small> 
+    
+                                </div>
+         
+                            </div>
+                        </div>                 
+                        <div class="text-center">
+                            <button  (click)="guardar()" type="submit" class="btn btn-success waves-effect waves-light">
+                                <i class="fa fa-save"></i>
+                                Guardar
+                            </button>
+                            &nbsp;
+                            <button  routerLink="/curriculum/referencia" type="button" class="btn btn-inverse">Cancelar</button>
+                        </div>
+                          
+                </form>
+                </div>
+            </div>  
+        </div>
+      </div>
+</div>
+
+
+
