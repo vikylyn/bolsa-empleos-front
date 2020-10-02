@@ -33,6 +33,12 @@ import { PerfilEmpleadorComponent } from './perfil/perfil-empleador/perfil-emple
 import { FormularioDatosPersonalesComponent } from './curriculum/administrar-curriculum/formulario-datos-personales/formulario-datos-personales.component';
 import { FormularioEncabezadoComponent } from './curriculum/administrar-curriculum/formulario-encabezado/formulario-encabezado.component';
 import { PerfilEmpresaComponent } from './perfil/perfil-empresa/perfil-empresa.component';
+import { PostulacionSolicitanteComponent } from './postulaciones/postulacion-solicitante/postulacion-solicitante.component';
+import { PostulacionEmpleadorComponent } from './postulaciones/postulacion-empleador/postulacion-empleador.component';
+import { ContratacionSolicitanteComponent } from './contrataciones/contratacion-solicitante/contratacion-solicitante.component';
+import { ContratacionEmpleadorComponent } from './contrataciones/contratacion-empleador/contratacion-empleador.component';
+import { InicioSolicitanteComponent } from './inicio/inicio-solicitante/inicio-solicitante.component';
+import { VacantesComponent } from './vancante/vacantes/vacantes.component';
 
 
 @NgModule({
@@ -65,6 +71,12 @@ import { PerfilEmpresaComponent } from './perfil/perfil-empresa/perfil-empresa.c
     FormularioDatosPersonalesComponent,
     FormularioEncabezadoComponent,
     PerfilEmpresaComponent,
+    PostulacionSolicitanteComponent,
+    PostulacionEmpleadorComponent,
+    ContratacionSolicitanteComponent,
+    ContratacionEmpleadorComponent,
+    InicioSolicitanteComponent,
+    VacantesComponent,
   ],
   exports: [
     DashboardComponent,

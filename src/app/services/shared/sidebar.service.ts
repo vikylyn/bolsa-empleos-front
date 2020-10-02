@@ -9,7 +9,7 @@ export class SidebarService {
       titulo: 'Principal',
       icono: 'mdi mdi-gauge',
       submenu: [
-        {titulo: 'Inicio', url: '/dashboard',
+        {titulo: 'Inicio', url: '/inicio-solicitante',
           submenu: []},
         {titulo: 'Curriculum', url: '/curriculum',
           submenu: [
@@ -21,8 +21,8 @@ export class SidebarService {
             {titulo: 'Idiomas', url: '/curriculum/idioma'},
 
           ]},
-   //     {titulo: 'Postulaciones', url: '/postulacion'},
-    //    {titulo: 'Contrataciones', url: '/contratacion'},
+        {titulo: 'Postulaciones', url: '/postulaciones-solicitante', submenu: []},
+        {titulo: 'Contrataciones', url: '/contrataciones-solicitante', submenu: []},
       ]
     }
   ];

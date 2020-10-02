@@ -1,59 +1,50 @@
 import { Component, OnInit } from '@angular/core';
-import { ExperienciaLaboralService } from '../../../services/solicitante/curriculum/experiencia-laboral.service';
-import { ExperienciaLaboral } from '../../../models/curriculum/experiencia-laboral.model';
-import Swal from 'sweetalert2';
-import { CurriculumService } from '../../../services/solicitante/curriculum/curriculum.service';
+import { Vacante } from '../../../models/empleador/vacante.model';
+import { VacanteService } from '../../../services/empleador/vacante.service';
 import { LoginService } from '../../../services/login.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-experiencia-laboral',
-  templateUrl: './experiencia-laboral.component.html',
+  selector: 'app-vacantes',
+  templateUrl: './vacantes.component.html',
   styles: [
   ]
 })
-export class ExperienciaLaboralComponent implements OnInit {
-  id_curriculum: number;
-  experiencias: ExperienciaLaboral[];
+export class VacantesComponent implements OnInit {
+
+  vacantes: Vacante[];
   desde = 0;
   cargando = true;
-  totalExperiencias = 0;
+  totalVacantes = 0;
 
 
-  constructor(private experienciaService: ExperienciaLaboralService,
-              private curriculumService: CurriculumService,
+  constructor(private vacanteService: VacanteService,
               private loginService: LoginService,
               private router: Router) { }
 
   ngOnInit(): void {
-    this.curriculumService.buscarPorIdSolicitante(this.loginService.solicitante.id).subscribe((resp: any) => {
-      if (resp.ok === false) {
-        this.router.navigateByUrl('/curriculum');
-      }else {
-        this.id_curriculum = resp.curriculum.id;
-        this.cargarExperiencias();
-      }
-    });
-
+    this.cargarVacantes();
   }
   cambiarPagina(valor: number): void {
     this.desde += valor;
     if (this.desde < 0 ) {
       this.desde = 0;
     }
-    else if (this.desde >= this.totalExperiencias) {
+    else if (this.desde >= this.totalVacantes) {
       this.desde -= valor;
     }
-    this.cargarExperiencias();
+    this.cargarVacantes();
   }
 
-  cargarExperiencias(): void {
+  cargarVacantes(): void {
     this.cargando = true;
-    this.experienciaService.listar(this.id_curriculum, this.desde)
-    .subscribe(({total, experiencias}) => {
-      this.experiencias = experiencias;
-      this.totalExperiencias = total;
+    this.vacanteService.listar(this.loginService.empleador.id, this.desde)
+    .subscribe(({total, vacantes}) => {
+      this.vacantes = vacantes;
+      this.totalVacantes = total;
       this.cargando = false;
+      console.log(this.vacantes, this.totalVacantes);
     });
   }
   busqueda(nombre: string): any {
@@ -77,14 +68,14 @@ export class ExperienciaLaboralComponent implements OnInit {
       confirmButtonText: 'Eliminar!',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
-      if (result.value) {
-        this.experienciaService.eliminar(id).subscribe( (resp: any) => {
+    /*  if (result.value) {
+        this.vacanteService.eliminar(id).subscribe( (resp: any) => {
           Swal.fire(
             'Eliminado!',
             resp.mensaje,
             'success'
           );
-          this.cargarExperiencias();
+          this.cargarVacantes();
         },(err) => {
           console.log(err);
           Swal.fire('Error al eliminar Experiencia', err.error.error || err.error.mensaje, 'error');
@@ -96,6 +87,7 @@ export class ExperienciaLaboralComponent implements OnInit {
           'error'
         );
       }
-    });
+    */  });
   }
+
 }

@@ -39,7 +39,11 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.registerForm.value)
         .subscribe( (resp: any) => {
           Swal.fire('Bienvenido', this.registerForm.get('email').value, 'success');
-          this.router.navigate(['/dashboard']);
+          if (resp.usuario.credenciales.rol.nombre === 'ROLE_SOLICITANTE') {
+            this.router.navigate(['/inicio-solicitante']);
+          }else {
+            this.router.navigate(['/dashboard']);
+          }
         }, (err) => {
          Swal.fire('Error al ingresar', err.error.mensaje, 'error');
     });

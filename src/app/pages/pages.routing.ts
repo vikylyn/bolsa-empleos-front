@@ -31,6 +31,10 @@ import { FormularioDatosPersonalesComponent } from './curriculum/administrar-cur
 import { FormularioEncabezadoComponent } from './curriculum/administrar-curriculum/formulario-encabezado/formulario-encabezado.component';
 import { PerfilEmpresaComponent } from './perfil/perfil-empresa/perfil-empresa.component';
 import { EmpresaGuard } from '../guards/empresa.guard';
+import { PostulacionSolicitanteComponent } from './postulaciones/postulacion-solicitante/postulacion-solicitante.component';
+import { ContratacionSolicitanteComponent } from './contrataciones/contratacion-solicitante/contratacion-solicitante.component';
+import { InicioSolicitanteComponent } from './inicio/inicio-solicitante/inicio-solicitante.component';
+import { VacantesComponent } from './vancante/vacantes/vacantes.component';
 
 const routes: Routes = [
     {
@@ -85,6 +89,15 @@ const routes: Routes = [
         ],
     },
     {
+        path: 'inicio-solicitante',
+        component: PagesComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: '', component: InicioSolicitanteComponent},
+            { path: '**', redirectTo: '/inicio-solicitante' }
+        ],
+    },
+    {
         path: 'curriculum',
         component: PagesComponent,
         canActivate: [AuthGuard],
@@ -113,6 +126,22 @@ const routes: Routes = [
         ],
     },
     {
+        path: 'postulaciones-solicitante',
+        component: PagesComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: '', component: PostulacionSolicitanteComponent, data: { titulo: 'Postulaciones'}},
+        ],
+    },
+    {
+        path: 'contrataciones-solicitante',
+        component: PagesComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: '', component: ContratacionSolicitanteComponent, data: { titulo: 'Contrataciones'}},
+        ],
+    },
+    {
         path: 'perfil-empleador',
         component: PagesComponent,
         canActivate: [AuthGuard],
@@ -126,6 +155,14 @@ const routes: Routes = [
         canActivate: [AuthGuard, EmpresaGuard],
         children: [
             { path: '', component: PerfilEmpresaComponent, data: { titulo: 'Perfil de Empresa'}},
+        ],
+    },
+    {
+        path: 'vacante',
+        component: PagesComponent,
+        canActivate: [AuthGuard, EmpresaGuard],
+        children: [
+            { path: '', component: VacantesComponent, data: { titulo: 'Vacantes'}},
         ],
     }
 ];

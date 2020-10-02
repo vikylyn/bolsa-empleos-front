@@ -63,9 +63,9 @@
                                 </ul>
                                 <ul *ngIf="solicitante" class="dropdown-user">
                                     <li>
-                                        <div class="dw-user-box">
+                                        <div class="dw-user-box"  align="center">
                                             <div class="u-img"><img [src]="this.solicitante.imagen.url" alt="user"></div>
-                                            <div class="u-text" align="center">
+                                            <div class="u-text">
                                                 <h4>{{solicitante.nombre}} {{solicitante.apellidos}}</h4>
                                                 <p class="text-muted">{{solicitante.credenciales.email}}</p><a routerLink="/perfil-solicitante" href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">Ver mi Perfil</a></div>
                                         </div>
