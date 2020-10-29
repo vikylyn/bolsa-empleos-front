@@ -18,8 +18,6 @@ export class FormularioHabilidadComponent implements OnInit {
   habilidadForm: FormGroup;
   curriculum_habilidad: CurriculumHabilidad;
   habilidades: Habilidad[];
-  tipo: string;
-  id: number;
   id_curriculum: number;
   constructor(
           private route: ActivatedRoute,
@@ -29,45 +27,22 @@ export class FormularioHabilidadComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.cargarHabilidades();
     this.route.queryParams
     .subscribe(params => {
-        this.tipo = params.tipo;
-        this.id = params.id;
         this.id_curriculum = params.id_curriculum;
-        if (params.tipo === 'modificar') {
-              this.cargarHabilidad(params);
-        }else{
-              this.cargarformulario = true;
-              this.habilidadForm = this.fb.group({
-              id_habilidad: [0 , [Validators.required]],
-              id_curriculum: [this.id_curriculum]
+        this.cargarHabilidades();
+        this.cargarformulario = true;
+        this.habilidadForm = this.fb.group({
+          id_habilidad: [ null , [Validators.required]],
+          id_curriculum: [this.id_curriculum]
         });
-      }
     });
   }
   cargarHabilidades(): void {
-    this.habilidadService.listarTodas().subscribe(({habilidades}) => {
+    this.habilidadService.listarTodas(this.id_curriculum).subscribe(({habilidades}) => {
+      console.log(habilidades);
       this.habilidades = habilidades;
     });
-  }
-  cargarHabilidad(params: any): void {
-      this.habilidadService.buscar(params.id)
-      .subscribe((resp: CurriculumHabilidad) => {
-        this.curriculum_habilidad = resp;
-        this.cargarformulario = true;
-        this.habilidadForm = this.fb.group({
-        id_habilidad: [this.curriculum_habilidad.habilidad.id , [Validators.required]],
-        id_curriculum: [this.id_curriculum]
-      });
-    });
-  }
-  campoNoValido( campo: string): boolean {
-    if (this.habilidadForm.get(campo).invalid && this.formSubmitted) {
-      return true;
-    }else {
-      return false;
-   }
   }
   selectNoValido( campo: string): boolean {
     const id = this.habilidadForm.get(campo).value;
@@ -86,26 +61,15 @@ export class FormularioHabilidadComponent implements OnInit {
       return;
     }
     console.log(this.habilidadForm.value);
-    if (this.tipo === 'modificar') {
-      this.habilidadService.modificar(this.habilidadForm.value, this.curriculum_habilidad.id)
-          .subscribe((resp: any) => {
-            Swal.fire(resp.mensaje, '', 'success');
-            this.router.navigateByUrl('/curriculum/habilidad');
-          }, (err) => {
-            console.log(err);
-            Swal.fire('Error al modificar Habilidad', err.error.error.error || err.error.error || err.error.mensaje, 'error');
-          });
-    }else {
-     this.habilidadService.adicionar(this.habilidadForm.value)
-          .subscribe((resp: any) => {
-            console.log(resp);
-            Swal.fire(resp.mensaje, '', 'success');
-            this.router.navigateByUrl('/curriculum/habilidad');
-          }, (err) => {
-            console.log(err);
-            Swal.fire('Error al adicionar Habilidad', err.error.mensaje, 'error');
-          });
-    }
+    this.habilidadService.adicionar(this.habilidadForm.value)
+        .subscribe((resp: any) => {
+          console.log(resp);
+          Swal.fire(resp.mensaje, '', 'success');
+          this.router.navigateByUrl('/curriculum/habilidad');
+        }, (err) => {
+          console.log(err);
+          Swal.fire('Error al adicionar Habilidad', err.error.mensaje, 'error');
+        });
   }
 
 }

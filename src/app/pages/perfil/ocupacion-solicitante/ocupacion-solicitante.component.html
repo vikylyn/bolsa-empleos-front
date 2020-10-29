@@ -1,0 +1,66 @@
+<div>
+    <div class="row animated fadeIn fast" *ngIf="cargando">
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                <h4>Cargando...</h4>
+                <i class="fa fa-spin fa-refresh fa-2x"></i>
+                <p class="mb-0">Por favor espere</p>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center animated fadeIn fast" *ngIf="!cargando">
+        <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Ocupaciones</h4>
+                    <h6>Total: {{total}} - {{desde}}</h6>
+                    <button [routerLink]="['/ocupaciones-solicitante/formulario']"
+                            [queryParams] = "{'tipo': 'adicionar', 'id': 0}" 
+                            class="btn btn-success">
+                                Adicionar
+                    </button>
+                    <br><br>
+                    <div class="table-responsive">
+                        <table class="table full-color-table full-inverse-table hover-table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th class="w100 hidden-md-down">Habilitado</th>
+                                    <th class="w100">Operaciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let ocupacion of ocupacionesSolicitante">
+                                    <td>
+                                        {{ocupacion.ocupacion.nombre}}
+                                    </td>
+                                    <td class="text-center hidden-md-down">
+                                        <i *ngIf="ocupacion.habilitado" class="fa fa-thumbs-o-up"></i>
+                                        <i *ngIf="!ocupacion.habilitado" class="fa fa-thumbs-o-down"></i>
+                                    </td>
+                                    <td class="text-nowrap  text-center">
+                                        <a *ngIf="!ocupacion.habilitado" (click)="habilitar(ocupacion.id)"> 
+                                                <i class="fa fa-edit m-r-10 cursor" data-toggle="tooltip" data-original-title="habilitar"></i> 
+                                        </a>
+                                        <a *ngIf="ocupacion.habilitado" (click)="inhabilitar(ocupacion.id)" class="cursor" data-toggle="tooltip" data-original-title="Inhabilitar"> <i class="fa fa-close text-danger"></i> </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center">
+                        <button (click)="cambiarPagina(-5)" class="btn btn-secondary">Anterior</button> 
+                        &nbsp;
+                        <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguiente</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

@@ -1,0 +1,93 @@
+<div class="container" *ngIf="vacante">
+    <div class="row justify-content-center">
+        <div class="col-lg-9 col-md-10 col-sm-12">
+           
+            <div class="row animated fadeIn fast">
+                        <div class="col-lg-7 col-md-7 col-sm-12">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card text-white bg-info mb-3">
+                                        <div class="card-header">
+                                            <h2 class="card-title text-light text-center"><strong>{{vacante.titulo}}</strong></h2>
+                                        </div>
+                                        <div class="card-body">
+                                            <span class="font-weight-bold">Pais: </span> <span>{{vacante.ciudad.estado.pais.nombre}}</span> <br>
+                                            <span class="font-weight-bold">Ciudad: </span> <span>{{vacante.ciudad.nombre}} / {{vacante.ciudad.estado.nombre}}</span> <br>
+                                            <span class="font-weight-bold">Direccion: </span> <span>{{vacante.direccion}}</span> <br>
+                                            <span class="font-weight-bold">Horario: </span> <span>{{vacante.horario.nombre}}</span> <br>
+                                            <span class="font-weight-bold">Vacantes Disponibles: </span> <span>{{vacante.num_disponibles}}</span> <br>
+                                            <span class="font-weight-bold">Tipo de Contrato: </span> <span>{{vacante.tipo_contrato.tipo}}</span> <br>
+                                            <span class="font-weight-bold">Publicado en:: </span> <span>{{vacante.creado_en}}</span> <br>                               
+
+                                        </div>
+
+                                        <div class="card-header">
+                                            <h4 class="card-title text-light text-center"><strong>Descripcion del Empleo</strong> </h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-text">{{vacante.descripcion}}</p>
+                                        </div>
+
+
+                                        <div class="card-header">
+                                            <h4 class="card-title text-light text-center"><strong>Requisitos para el cargo</strong> </h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <span class="font-weight-bold">Ocupacion: </span> <span>{{vacante.requisitos.ocupacion.nombre}}</span> <br>
+                                            <span class="font-weight-bold">Años de Experiencia: </span> <span>{{vacante.requisitos.experiencia}}</span> <br>
+                                            <span class="font-weight-bold">Genero: </span> <span>{{vacante.requisitos.genero}}</span> <br>
+                                            <span class="font-weight-bold">Idiomas: </span> <span>{{vacante.requisitos.idioma.nombre}}</span>
+                                        </div>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-md-5 col-sm-12">
+                            
+                            <div *ngIf="vacante.empleador.empresa && vacante.empresa" class="card text-white bg-dark mb-3">
+                                <img [src]="vacante.empresa.logo.url" alt="">
+                                <div class="card-body">
+                                  <span class="font-weight-bold">Empresa: </span> <span>{{vacante.empresa.nombre}}</span> <br>
+                                  <span class="font-weight-bold">Pais: </span> <span>{{vacante.empresa.ciudad.estado.pais.nombre}} / {{vacante.ciudad.estado.nombre}}</span> <br>
+                                  <span class="font-weight-bold">Ciudad: </span> <span>{{vacante.empresa.ciudad.nombre}} / {{vacante.empresa.ciudad.estado.nombre}}</span> <br>
+                                  <span class="font-weight-bold">Direccion: </span> <span>{{vacante.empresa.direccion}}</span> <br>   
+                                  <span class="font-weight-bold">Telefono: </span> <span>{{vacante.empresa.telefono}}</span>  <br>                              
+                                  <span class="font-weight-bold">Descripcion: </span> <span>{{vacante.empresa.descripcion}}</span>  <br> 
+                                  
+                                  <!--Solicitante no postulante, ni contratado-->
+                                  <button *ngIf="postularme && !contratado && !aceptado && !ocupado" (click)="postular()" class="btn btn-info btn-lg btn-block mt-2">Postularme</button>
+
+                                  <!--Solicitante Aceptado para la vacante pero aun no confirmado-->
+                                  <button *ngIf="aceptado && !contratacion.confirmado && !ocupado" (click)="confirmar()" class="btn btn-info btn-lg btn-block mt-2">Confirmar</button>                          
+                                  <button *ngIf="aceptado && !contratacion.confirmado && !ocupado"  (click)="rechazar()" class="btn btn-danger btn-lg btn-block mt-2">Rechazar</button>   
+
+                                  <!--Solicitante postulando para la vacante pero aun no aceptado-->
+                                  <button  *ngIf="!aceptado && !postularme && !postulacion.aceptado" (click)="cancelar()" class="btn btn-danger btn-lg btn-block mt-2">Cancelar</button>
+
+                                  <br>
+                                  <!--Alerta cuando el solicitante esta ocupado y cuando el objeto contratacion es nulo (cuando el solicitante carga el componente)-->
+                                  <div *ngIf="!contratacion && !postulacion && ocupado" class="alert alert-danger" role="alert">
+                                    Usted ya tiene un empleo asignado, contacte a su empleador para terminar con su contrato
+                                  </div>
+                                  
+                                  <!--Alerta cuando el solicitante esta ocupado y cuando el objeto contratacion no es nulo (cuando el solicitante confirma el contrato)-->
+                                  <div *ngIf="contratado && ocupado && contratacion" class="alert alert-primary" role="alert">
+                                    Usted ha sido contratado para esta vacante!
+                                  </div>
+                                </div>
+                
+                            </div>
+                            <div *ngIf="!vacante.empleador.empresa" class="card text-white bg-dark mb-3">
+                                <div class="card-header">Header</div>
+                                <div class="card-body">  
+                                  <h5 class="card-title">Dark card title</h5>
+                                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                </div>
+                            </div> 
+                        </div>
+            </div>
+           
+        </div>
+    </div>
+    
+</div>

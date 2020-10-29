@@ -2,7 +2,8 @@ import { Credenciales } from '../credenciales.model';
 import { Imagen } from '../imagen.model';
 import { EstadoCivil } from '../estado-civil.model';
 import { Ciudad } from '../ciudad.model';
-import { Profesion } from '../profesion/profesion.model';
+import { Ocupacion } from '../ocupacion/ocupacion.model';
+import { OcupacionSolicitante } from '../ocupacion/ocupacion-solicitante';
 export class Solicitante {
     constructor(
         public nombre: string,
@@ -16,12 +17,13 @@ export class Solicitante {
         public estado_civil: EstadoCivil,
         public ciudad: Ciudad,
         public fecha_nac: Date,
-        public profesion: Profesion,
+        public profesion: Ocupacion,
         public id?: number,
         public imagen?: Imagen,
         public habilitado?: boolean,
         public creado_en?: Date,
         public ocupado?: boolean,
+        public ocupaciones?: OcupacionSolicitante[]
     ){
     }
 }

@@ -68,7 +68,7 @@ export class PerfilSolicitanteComponent implements OnInit {
             id_pais: [1, Validators.required],
             id_ciudad: [this.solicitante.ciudad.id, Validators.required],
             habilitado: [true],
-            id_profesion: [this.solicitante.profesion.id]
+       //     id_profesion: [this.solicitante.profesion.id]
       });
     });
   }

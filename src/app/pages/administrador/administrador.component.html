@@ -34,6 +34,7 @@
                         <table class="table full-color-table full-inverse-table hover-table">
                             <thead>
                                 <tr>
+                                    <th>Num</th>
                                     <th>Nombre</th>
                                     <th>Apellidos</th>
                                     <th>Telefono</th>
@@ -44,7 +45,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let administrador of administradores">
+                                <tr *ngFor="let administrador of administradores; let i = index">
+                                    <td align="center">
+                                        <span >{{desde + i + 1}}</span>
+                                    </td>
                                     <td>
                                         {{administrador.nombre}}
                                     </td>

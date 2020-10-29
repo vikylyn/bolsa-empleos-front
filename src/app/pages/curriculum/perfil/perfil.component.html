@@ -1,0 +1,237 @@
+<div class="container">
+    <div class="card text-white bg-dark">
+        <div class="card-body" *ngIf="curriculum">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="text-center text-white">{{curriculum.titulo}}</h1>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-xl-5 col-lg-5 col-md-5  col-sm-12">
+                    <div class="row">
+                        <div class="col-12" align="center">
+                            <img width="200px" [src]="curriculum.solicitante.imagen.url" alt="..." class="rounded-circle">
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col-12">
+                            <div class="card text-white  bg-danger  mb-3">
+                                <div class="card-body">
+                                    <span class="font-weight-bold">Nombre: </span> <span>{{curriculum.solicitante.nombre}}</span> <br>
+                                    <span class="font-weight-bold">Apellidos: </span> <span>{{curriculum.solicitante.apellidos}}</span> <br>
+                                    <span class="font-weight-bold">Ocupaciones : </span> <span *ngFor="let ocupacion of curriculum.solicitante.ocupaciones">{{ocupacion.ocupacion.nombre}}, </span><br>
+                                    <span class="font-weight-bold">Nacionalidad: </span> <span>{{curriculum.solicitante.nacionalidad}}</span> <br>
+                                    <span class="font-weight-bold">Pais de residencia: </span> <span>{{curriculum.solicitante.ciudad.estado.pais.nombre}}</span> <br>
+                                    <span class="font-weight-bold">Ciudad de residencia: </span> <span>{{curriculum.solicitante.ciudad.nombre}} - {{curriculum.solicitante.ciudad.estado.nombre}}</span> <br>
+                                    <span class="font-weight-bold">Direccion: </span> <span>{{curriculum.solicitante.direccion}}</span> <br>
+                                    <span class="font-weight-bold">Genero: </span> <span>{{curriculum.solicitante.genero}}</span> <br>
+                                    <span class="font-weight-bold">Pretension Salarial: </span> <span>{{curriculum.pretension_salarial}} Bs</span> <br>
+    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card text-white bg-warning mb-3">
+                                <div class="card-header">
+                                    <h4 class="m-b-0 text-white">Contacto</h4>
+                                </div>
+                                <div class="card-body">
+                                    <span class="font-weight-bold">Email: </span> <span>{{curriculum.solicitante.credenciales.email}}</span> <br>
+                                    <span class="font-weight-bold">Telefono: </span> <span>{{curriculum.solicitante.telefono}}</span> <br>   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12  col-sm-12">
+                            <div class="card text-white bg-success">
+                                <div class="card-header">
+                                    <h4 class="m-b-0 text-white">Quien soy</h4>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text text-justify">{{curriculum.biografia}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12  col-sm-12">
+                            <div class="card text-white bg-info">
+                                <div class="card-header">
+                                    <h4 class="m-b-0 text-white">Idiomas</h4>
+                                </div>
+                                <div class="card-body">
+                                    <ul >
+                                        <li *ngFor="let idioma of curriculum.curriculum_idiomas" >
+                                            <h5 class="text-white">{{idioma.idioma.nombre}}</h5>
+                                                <ul>
+                                                     <li><strong>Nivel escrito :</strong> {{idioma.nivel_escrito.nombre}}</li>
+                                                     <li><strong>Nivel lectura :</strong> {{idioma.nivel_lectura.nombre}}</li>
+                                                     <li><strong>Nivel oral :</strong> {{idioma.nivel_oral.nombre}}</li>
+                                                </ul>
+                                             
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12  col-sm-12">
+                            <div class="card text-white bg-info">
+                                <div class="card-header">
+                                    <h4 class="m-b-0 text-white">Referencias</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card text-white bg-info" *ngFor="let referencia of curriculum.referencias">
+                                        <div class="card-body" align="center">
+                                            
+                                                    <span class="font-weight-bold">Empresa: </span> <span>{{referencia.empresa}}</span> <br>
+                                              
+                                                    <span class="font-weight-bold">Nombre: </span><span>{{referencia.nombre}} {{referencia.apellidos}}</span> <br>
+                                               
+                                                    <span class="font-weight-bold">Cargo: </span><span>{{referencia.cargo}}</span> <br>
+                                               
+                                                    <span class="font-weight-bold">Telefono: </span><span>{{referencia.telefono}}</span> <br>
+                                               
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-7 col-lg-7 col-md-7  col-sm-12">
+                    <div class="row">
+                        <div class="col">
+                            <div class="card text-white bg-info">
+                                <div class="card-header">
+                                    <h4 class="m-b-0 text-white">Experiencias Laborales</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card text-white bg-info" *ngFor="let experiencia of curriculum.experiencias_laborales">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-xl-5 col-lg-5 col-md-5  col-sm-12">
+                                                    <span class="font-weight-bold">De: </span> <span>{{experiencia.fecha_inicio}}</span> <br>
+                                                    <span class="font-weight-bold">al: </span> <span>{{experiencia.fecha_fin}}</span>
+
+                                                </div>
+                                                <div class="col-xl-7 col-lg-7 col-md-7  col-sm-12">
+                                                    <span class="font-weight-bold">Empresa: </span> <span>{{experiencia.empresa}}</span> <br>
+                                                    <span class="font-weight-bold">Puesto: </span> <span>{{experiencia.puesto}}</span> <br>
+                                                    <span class="font-weight-bold">Descripcion:</span> <p class="card-text text-justify">{{experiencia.descripcion}}</p>
+                                                    <span class="font-weight-bold">Pais: </span> <span>{{experiencia.pais.nombre}}</span> <br>
+                                                    <span class="font-weight-bold">Ciudad: </span> <span>{{experiencia.ciudad}} - {{experiencia.estado}}</span>
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card text-white bg-info">
+                                <div class="card-header">
+                                    <h4 class="m-b-0 text-white">Habilidades</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row justify-content-center">
+                                        <div class="col-xl-8 col-lg-8 col-md-8  col-sm-12">
+                                            <ul >
+                                                <li *ngFor="let habilidad of curriculum.curriculum_habilidades" >
+                                                    <h5 class="text-white">{{habilidad.habilidad.habilidad}}</h5>                                            
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card text-white bg-info">
+                                <div class="card-header">
+                                    <h4 class="m-b-0 text-white">Estudios Basicos</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card text-white bg-info" *ngFor="let estudio of curriculum.estudios_basicos">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-xl-5 col-lg-5 col-md-5  col-sm-12">
+                                                    <span class="font-weight-bold">De: </span> <span>{{estudio.fecha_inicio}}</span> <br>
+                                                    <span class="font-weight-bold">al: </span> <span>{{estudio.fecha_fin}}</span>
+
+                                                </div>
+                                                <div class="col-xl-7 col-lg-7 col-md-7  col-sm-12">
+                                                    <span class="font-weight-bold">Colegio: </span> <span>{{estudio.colegio}}</span> <br>
+                                                    <span class="font-weight-bold">Grado de inicio: </span> <span>{{estudio.grado_inicio.grado}} de {{estudio.grado_inicio.nivel_escolar.nivel}}</span> <br>
+                                                    <span class="font-weight-bold">Grado fin: </span> <span>{{estudio.grado_fin.grado}} de {{estudio.grado_fin.nivel_escolar.nivel}}</span> <br>
+                                                    <span class="font-weight-bold">Pais: </span> <span>{{estudio.pais.nombre}}</span> <br>
+                                                    <span class="font-weight-bold">Ciudad: </span> <span>{{estudio.ciudad}} - {{estudio.estado}}</span>
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div class="card text-white bg-info">
+                                <div class="card-header">
+                                    <h4 class="m-b-0 text-white">Estudios Avanzados</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="card text-white bg-info" *ngFor="let estudio of curriculum.estudios_avanzados">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-xl-5 col-lg-5 col-md-5  col-sm-12">
+                                                    <span class="font-weight-bold">De: </span> <span>{{estudio.fecha_inicio}}</span> <br>
+                                                    <span class="font-weight-bold">al: </span> <span>{{estudio.fecha_fin}}</span>
+
+                                                </div>
+                                                <div class="col-xl-7 col-lg-7 col-md-7  col-sm-12">
+                                                    <span class="font-weight-bold">Intitucion: </span> <span>{{estudio.institucion}}</span> <br>
+                                                    <span class="font-weight-bold">Carrera/ curso/ seminario/ otros: </span> <span>{{estudio.carrera}}</span> <br>
+                                                    <span class="font-weight-bold">Nivel de Estudio: </span> <span>{{estudio.nivel_estudio.nombre}}</span> <br>
+                                                    <span class="font-weight-bold">Pais: </span> <span>{{estudio.pais.nombre}}</span> <br>
+                                                    <span class="font-weight-bold">Ciudad: </span> <span>{{estudio.ciudad}} - {{estudio.estado}}</span>
+                                                </div>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        
+                        <div class="col-xl-12 col-lg-12 col-md-12  col-sm-12">
+                            <div class="row">
+                                <div class="col-12">
+                                    <button *ngIf="tipo === 'postulacion'" (click)="contratar()" class="btn btn-success btn-block">Contratar</button>
+                                    <button *ngIf="tipo === 'contratacion'" (click)="terminar()" class="btn btn-danger btn-block">Terminar</button>
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+</div>

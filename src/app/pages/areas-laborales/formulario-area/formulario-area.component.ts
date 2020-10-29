@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AreaLaboralService } from '../../../services/administrador/area-laboral.service';
+import { GrupoOcupacionalService } from '../../../services/administrador/grupo-ocupacional.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AreaLaboral } from '../../../models/profesion/area-laboral.model';
+import { GrupoOcupacional } from '../../../models/ocupacion/grupo-ocupacional.model';
 import { LoginService } from '../../../services/login.service';
 import Swal from 'sweetalert2';
 @Component({
@@ -15,10 +15,10 @@ export class FormularioAreaComponent implements OnInit {
   cargarformulario = false;
   public formSubmitted = false;
   public areaForm: FormGroup;
-  public area: AreaLaboral;
+  public area: GrupoOcupacional;
   public tipo: string;
   public id: number;
-  constructor(public areaService: AreaLaboralService,
+  constructor(public grupoService: GrupoOcupacionalService,
               private route: ActivatedRoute,
               private router: Router,
               private fb: FormBuilder,
@@ -39,20 +39,20 @@ export class FormularioAreaComponent implements OnInit {
           this.areaForm = this.fb.group({
           nombre: ['', [ Validators.required]],
           habilitado: [true, Validators.required],
-          administrador: [this.loginService.administrador.id, [Validators.required]],
+          id_administrador: [this.loginService.administrador.id, [Validators.required]],
           });
         }
       });
   }
   cargarArea(params: any): void {
-    this.areaService.buscar(params.id)
+    this.grupoService.buscar(params.id)
     .subscribe((resp: any) => {
       this.area = resp;
       this.cargarformulario = true;
       this.areaForm = this.fb.group({
       nombre: [this.area.nombre, [ Validators.required]],
       habilitado: [this.area.habilitado, Validators.required],
-      administrador: [this.loginService.administrador.id, [Validators.required]],
+      id_administrador: [this.loginService.administrador.id, [Validators.required]],
       id: [this.area.id, [Validators.required]],
     });
   });
@@ -63,7 +63,7 @@ export class FormularioAreaComponent implements OnInit {
       return;
     }
     if (this.tipo === 'modificar') {
-      this.areaService.modificar(this.areaForm.value, this.area.id)
+      this.grupoService.modificar(this.areaForm.value, this.area.id)
           .subscribe((resp: any) => {
             Swal.fire(resp.mensaje, '', 'success');
             this.router.navigateByUrl('/area-laboral');
@@ -72,7 +72,7 @@ export class FormularioAreaComponent implements OnInit {
             Swal.fire('Error al modificar Area laboral', err.mensaje, 'error');
           });
     }else {
-      this.areaService.adicionar(this.areaForm.value)
+      this.grupoService.adicionar(this.areaForm.value)
           .subscribe((resp: any) => {
             console.log(resp);
             Swal.fire(resp.mensaje, '', 'success');

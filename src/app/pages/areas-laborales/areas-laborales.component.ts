@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AreaLaboralService } from '../../services/administrador/area-laboral.service';
-import { AreaLaboral } from 'src/app/models/profesion/area-laboral.model';
+import { GrupoOcupacional } from 'src/app/models/ocupacion/grupo-ocupacional.model';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { GrupoOcupacionalService } from '../../services/administrador/grupo-ocupacional.service';
 
 @Component({
   selector: 'app-areas-laborales',
@@ -11,16 +11,16 @@ import { Router } from '@angular/router';
   ]
 })
 export class AreasLaboralesComponent implements OnInit {
-  totalAreas = 0;
-  areas: AreaLaboral [];
-  areasTemp: AreaLaboral [];
+  totalGrupos = 0;
+  grupos: GrupoOcupacional [];
+  gruposTemp: GrupoOcupacional [];
   desde = 0;
   cargando = true;
 
-  constructor(private areaLaboral: AreaLaboralService, public router: Router) { }
+  constructor(private grupoService: GrupoOcupacionalService, public router: Router) { }
 
   ngOnInit(): void {
-   this.cargarAreas();
+   this.cargarGrupos();
   }
 
   cambiarPagina(valor: number): void {
@@ -28,30 +28,30 @@ export class AreasLaboralesComponent implements OnInit {
     if (this.desde < 0 ) {
       this.desde = 0;
     }
-    else if (this.desde >= this.totalAreas) {
+    else if (this.desde >= this.totalGrupos) {
       this.desde -= valor;
     }
-    this.cargarAreas();
+    this.cargarGrupos();
   }
 
-  cargarAreas(): void {
+  cargarGrupos(): void {
     this.cargando = true;
-    this.areaLaboral.listar(this.desde).subscribe( ({total, areas}) => {
-      this.areas = areas;
-      this.areasTemp = areas;
-      this.totalAreas = total;
+    this.grupoService.listar(this.desde).subscribe( ({total, grupos}) => {
+      this.grupos = grupos;
+      this.gruposTemp = grupos;
+      this.totalGrupos = total;
       this.cargando = false;
     });
   }
 
   busqueda(nombre: string): any {
     if (nombre.length === 0) {
-      return this.areas =  this.areasTemp;
+      return this.grupos =  this.gruposTemp;
     }
     console.log(nombre);
-    this.areaLaboral.busqueda(nombre).subscribe(
-      (resp: AreaLaboral[]) => {
-        this.areas = resp;
+    this.grupoService.busqueda(nombre).subscribe(
+      (resp: GrupoOcupacional[]) => {
+        this.grupos = resp;
       }
     );
   }
@@ -59,20 +59,20 @@ export class AreasLaboralesComponent implements OnInit {
     console.log(id);
     Swal.fire({
       title: 'Estas seguro ?',
-      text: 'Se deshabilitara el registro',
+      text: 'Se inhabilitara el registro',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Eliminar!',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
-        this.areaLaboral.eliminar(id).subscribe( (resp: any) => {
+        this.grupoService.eliminar(id).subscribe( (resp: any) => {
           Swal.fire(
-            'Eliminado!',
+            'Inhabilitado!',
             resp.mensaje,
             'success'
           );
-          this.cargarAreas();
+          this.cargarGrupos();
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(

@@ -38,7 +38,13 @@ import { PostulacionEmpleadorComponent } from './postulaciones/postulacion-emple
 import { ContratacionSolicitanteComponent } from './contrataciones/contratacion-solicitante/contratacion-solicitante.component';
 import { ContratacionEmpleadorComponent } from './contrataciones/contratacion-empleador/contratacion-empleador.component';
 import { InicioSolicitanteComponent } from './inicio/inicio-solicitante/inicio-solicitante.component';
-import { VacantesComponent } from './vancante/vacantes/vacantes.component';
+import { VacantesComponent } from './vacante/vacantesEmpleador/vacantes.component';
+import { OcupacionSolicitanteComponent } from './perfil/ocupacion-solicitante/ocupacion-solicitante.component';
+import { FormularioOcupacionSolicitanteComponent } from './perfil/ocupacion-solicitante/formulario-ocupacion-solicitante/formulario-ocupacion-solicitante.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { FormularioVacanteComponent } from './vacante/vacantesEmpleador/formulario-vacante/formulario-vacante.component';
+import { VacantesSolicitanteComponent } from './vacante/vacantes-solicitante/vacantes-solicitante.component';
+import { PerfilComponent } from './curriculum/perfil/perfil.component';
 
 
 @NgModule({
@@ -77,7 +83,12 @@ import { VacantesComponent } from './vancante/vacantes/vacantes.component';
     ContratacionEmpleadorComponent,
     InicioSolicitanteComponent,
     VacantesComponent,
-  ],
+    OcupacionSolicitanteComponent,
+    FormularioOcupacionSolicitanteComponent,
+    FormularioVacanteComponent,
+    VacantesSolicitanteComponent,
+    PerfilComponent,
+    ],
   exports: [
     DashboardComponent,
     PagesComponent,
@@ -87,6 +98,7 @@ import { VacantesComponent } from './vancante/vacantes/vacantes.component';
     SharedModule,
     RouterModule,
     FormsModule,
+    NgSelectModule,
     ReactiveFormsModule,
     HttpClientModule
   ]

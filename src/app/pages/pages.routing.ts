@@ -34,7 +34,14 @@ import { EmpresaGuard } from '../guards/empresa.guard';
 import { PostulacionSolicitanteComponent } from './postulaciones/postulacion-solicitante/postulacion-solicitante.component';
 import { ContratacionSolicitanteComponent } from './contrataciones/contratacion-solicitante/contratacion-solicitante.component';
 import { InicioSolicitanteComponent } from './inicio/inicio-solicitante/inicio-solicitante.component';
-import { VacantesComponent } from './vancante/vacantes/vacantes.component';
+import { VacantesComponent } from './vacante/vacantesEmpleador/vacantes.component';
+import { OcupacionSolicitanteComponent } from './perfil/ocupacion-solicitante/ocupacion-solicitante.component';
+import { FormularioOcupacionSolicitanteComponent } from './perfil/ocupacion-solicitante/formulario-ocupacion-solicitante/formulario-ocupacion-solicitante.component';
+import { FormularioVacanteComponent } from './vacante/vacantesEmpleador/formulario-vacante/formulario-vacante.component';
+import { VacantesSolicitanteComponent } from './vacante/vacantes-solicitante/vacantes-solicitante.component';
+import { PostulacionEmpleadorComponent } from './postulaciones/postulacion-empleador/postulacion-empleador.component';
+import { PerfilComponent } from './curriculum/perfil/perfil.component';
+import { ContratacionEmpleadorComponent } from './contrataciones/contratacion-empleador/contratacion-empleador.component';
 
 const routes: Routes = [
     {
@@ -67,7 +74,7 @@ const routes: Routes = [
         component: PagesComponent,
         canActivate: [AuthGuard],
         children: [
-            { path: '', component: AreasLaboralesComponent, data: { titulo: 'Administracion de Areas Laborales'}},
+            { path: '', component: AreasLaboralesComponent, data: { titulo: 'Administracion de Grupos ocupacionales'}},
             { path: 'formulario', component: FormularioAreaComponent, data: { titulo: 'Formulario area laboral'}}
         ],
     },
@@ -76,7 +83,7 @@ const routes: Routes = [
         component: PagesComponent,
         canActivate: [AuthGuard],
         children: [
-            { path: '', component: ProfesionComponent, data: { titulo: 'Administracion de Profesiones'}},
+            { path: '', component: ProfesionComponent, data: { titulo: 'Administracion de Ocupaciones'}},
             { path: 'formulario', component: FormularioProfesionComponent, data: {titulo: 'Formulario Profesion'}},
         ],
     },
@@ -89,11 +96,21 @@ const routes: Routes = [
         ],
     },
     {
+        path: 'ocupaciones-solicitante',
+        component: PagesComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: '', component: OcupacionSolicitanteComponent, data: { titulo: 'Mis ocupaciones'}},
+            { path: 'formulario', component: FormularioOcupacionSolicitanteComponent, data: { titulo: 'Formulario de Ocupacion'}},
+        ],
+    },
+    {
         path: 'inicio-solicitante',
         component: PagesComponent,
         canActivate: [AuthGuard],
         children: [
             { path: '', component: InicioSolicitanteComponent},
+            { path: 'vacante/:id', component: VacantesSolicitanteComponent},
             { path: '**', redirectTo: '/inicio-solicitante' }
         ],
     },
@@ -103,12 +120,9 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [
             { path: '', component: CurriculumComponent, data: { titulo: 'Curriculum'} },
-            { path: 'administracion', component: AdministrarCurriculumComponent,
-                data: { titulo: 'Administracion de Curriculum'} },
-            { path: 'datos-personales', component: FormularioDatosPersonalesComponent,
-                data: { titulo: 'Modificar Datos Personales'} },
-            { path: 'encabezado', component: FormularioEncabezadoComponent,
-                data: { titulo: 'Modificar Datos'} },
+            { path: 'administracion', component: AdministrarCurriculumComponent, data: { titulo: 'Administracion de Curriculum'} },
+            { path: 'administracion/datos-personales', component: FormularioDatosPersonalesComponent, data: { titulo: 'Modificar Datos Personales'} },
+            { path: 'administracion/encabezado', component: FormularioEncabezadoComponent, data: { titulo: 'Modificar Datos'} },
             { path: 'experiencia-laboral', component: ExperienciaLaboralComponent, data: { titulo: 'Administracion de Experiencias Laborales'} },
             { path: 'experiencia-laboral/formulario', component: FormularioExperienciaLaboralComponent, data: { titulo: 'Experiencia Laboral'} },
             { path: 'habilidad', component: HabilidadComponent, data: { titulo: 'Administracion de Habilidades'} },
@@ -160,11 +174,38 @@ const routes: Routes = [
     {
         path: 'vacante',
         component: PagesComponent,
-        canActivate: [AuthGuard, EmpresaGuard],
+        canActivate: [AuthGuard],
         children: [
             { path: '', component: VacantesComponent, data: { titulo: 'Vacantes'}},
+            { path: 'formulario', component: FormularioVacanteComponent, data: { titulo: 'Formulario Vacante'}},
         ],
-    }
+    },
+    {
+        path: 'postulaciones-empleador',
+        component: PagesComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: '', component: PostulacionEmpleadorComponent, data: { titulo: 'Postulaciones'}},
+            { path: 'perfil/:id_solicitante/:id_postulacion', component: PerfilComponent, data: { titulo: 'Perfil de solicitante'}}
+        ],
+    },
+    {
+        path: 'perfil-curriculum',
+        component: PagesComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: ':tipo/:id_solicitante/:id_postulacion_contratacion', component: PerfilComponent, data: { titulo: 'Perfil de solicitante'}}
+        ],
+    },
+    {
+        path: 'contrataciones-empleador',
+        component: PagesComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: '', component: ContratacionEmpleadorComponent, data: { titulo: 'Contrataciones'}},
+         //   { path: 'perfil/:id_solicitante/:id_postulacion', component: PerfilComponent, data: { titulo: 'Perfil de solicitante'}}
+        ],
+    },
 ];
 
 @NgModule({

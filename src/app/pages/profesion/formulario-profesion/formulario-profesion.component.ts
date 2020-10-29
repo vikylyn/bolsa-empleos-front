@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Profesion } from '../../../models/profesion/profesion.model';
-import { ProfesionService } from '../../../services/administrador/profesion.service';
+import { Ocupacion } from '../../../models/ocupacion/ocupacion.model';
+import { OcupacionService } from '../../../services/administrador/ocupacion.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from '../../../services/login.service';
 import Swal from 'sweetalert2';
-import { AreaLaboralService } from '../../../services/administrador/area-laboral.service';
-import { ActividadLaboralService } from '../../../services/administrador/actividad-laboral.service';
-import { AreaLaboral } from '../../../models/profesion/area-laboral.model';
-import { ActividadLaboral } from '../../../models/profesion/actividad-laboral.model';
+import { GrupoOcupacionalService } from '../../../services/administrador/grupo-ocupacional.service';
+import { GrupoOcupacional } from '../../../models/ocupacion/grupo-ocupacional.model';
 
 @Component({
   selector: 'app-formulario-profesion',
@@ -20,20 +18,18 @@ export class FormularioProfesionComponent implements OnInit {
 
   cargarformulario = false;
   public formSubmitted = false;
-  public profesionForm: FormGroup;
-  public profesion: Profesion;
+  public ocupacionForm: FormGroup;
+  public ocupacion: Ocupacion;
   public tipo: string;
   public id: number;
-  areas_laborales: AreaLaboral[];
-  actividades_laborales: ActividadLaboral[];
+  grupos_ocupacionales: GrupoOcupacional[];
 
-  constructor(public profesionService: ProfesionService,
+  constructor(public ocupacionService: OcupacionService,
               private route: ActivatedRoute,
               private router: Router,
               private fb: FormBuilder,
               private loginService: LoginService,
-              public areaService: AreaLaboralService,
-              public actividadService: ActividadLaboralService) { }
+              public grupoService: GrupoOcupacionalService) { }
 
   ngOnInit(): void {
 
@@ -42,56 +38,50 @@ export class FormularioProfesionComponent implements OnInit {
         this.tipo = params.tipo;
         this.id = params.id;
         if (params.tipo === 'modificar') {
-          this.cargarProfesion(params);
+          this.cargarOcupacion(params);
         }else{
           this.cargarformulario = true;
-          this.profesionForm = this.fb.group({
+          this.ocupacionForm = this.fb.group({
           nombre: ['', [ Validators.required]],
           habilitado: [true, Validators.required],
-          id_area_laboral: [0, [Validators.required]],
-          id_actividad_laboral: [0, [Validators.required]],
+          id_grupo_ocupacional: [0, [Validators.required]],
           id_administrador: [this.loginService.administrador.id, [Validators.required]],
           });
         }
       });
-    this.cargarAreas();
-    this.cargarActividades();
+    this.cargarGruposOcupacionales();
   }
-  cargarAreas(): void {
-    this.areaService.listarTodas().subscribe( (resp: AreaLaboral[]) => {
-      this.areas_laborales = resp;
+  cargarGruposOcupacionales(): void {
+    this.grupoService.listarTodas().subscribe( (resp: GrupoOcupacional[]) => {
+      this.grupos_ocupacionales = resp;
     });
   }
-  cargarActividades(): void {
-    this.actividadService.listar().subscribe( (resp: ActividadLaboral[]) => {
-      this.actividades_laborales = resp;
-    });
-  }
+
   campoNoValido( campo: string): boolean {
-    if (this.profesionForm.get(campo).invalid && this.formSubmitted) {
+    if (this.ocupacionForm.get(campo).invalid && this.formSubmitted) {
       return true;
     }else {
       return false;
     }
   }
   selectNoValido( campo: string): boolean {
-    const id = this.profesionForm.get(campo).value;
+    const id = this.ocupacionForm.get(campo).value;
     if ( id === 0 && this.formSubmitted) {
       return true;
     }else {
       return false;
     }
   }
-  cargarProfesion(params: any): void {
-    this.profesionService.buscar(params.id)
+  cargarOcupacion(params: any): void {
+    this.ocupacionService.buscar(params.id)
     .subscribe((resp: any) => {
-      this.profesion = resp;
+      this.ocupacion = resp;
+      console.log('respuesta', resp);
       this.cargarformulario = true;
-      this.profesionForm = this.fb.group({
-      nombre: [this.profesion.nombre, [ Validators.required]],
-      habilitado: [this.profesion.habilitado, Validators.required],
-      id_area_laboral: [this.profesion.area_laboral.id, [Validators.required]],
-      id_actividad_laboral: [this.profesion.actividad_laboral.id, [Validators.required]],
+      this.ocupacionForm = this.fb.group({
+      nombre: [this.ocupacion.nombre, [ Validators.required]],
+      habilitado: [this.ocupacion.habilitado, Validators.required],
+      id_grupo_ocupacional: [this.ocupacion.grupo_ocupacional.id, [Validators.required]],
       id_administrador: [this.loginService.administrador.id, [Validators.required]],
       id: [this.id, [Validators.required]]
     });
@@ -99,31 +89,31 @@ export class FormularioProfesionComponent implements OnInit {
   }
   guardar(): void {
     this.formSubmitted = true;
-    if (this.profesionForm.get('id_actividad_laboral').value === 0 || this.profesionForm.get('id_area_laboral').value === 0) {
+    if (this.ocupacionForm.get('id_grupo_ocupacional').value === 0) {
       return;
     }
-    if (this.profesionForm.invalid) {
+    if (this.ocupacionForm.invalid) {
       return;
     }
-    console.log(this.profesionForm.value);
+    console.log(this.ocupacionForm.value);
     if (this.tipo === 'modificar') {
-      this.profesionService.modificar(this.profesionForm.value, this.profesion.id)
+      this.ocupacionService.modificar(this.ocupacionForm.value, this.ocupacion.id)
           .subscribe((resp: any) => {
             Swal.fire(resp.mensaje, '', 'success');
             this.router.navigateByUrl('/profesion');
           }, (err) => {
             console.log(err);
-            Swal.fire('Error al modificar Administrador', err.error.mensaje, 'error');
+            Swal.fire('Error al modificar Ocupacion', err.error.mensaje, 'error');
           });
     }else {
-      this.profesionService.adicionar(this.profesionForm.value)
+      this.ocupacionService.adicionar(this.ocupacionForm.value)
           .subscribe((resp: any) => {
             console.log(resp);
             Swal.fire(resp.mensaje, '', 'success');
             this.router.navigateByUrl('/profesion');
           }, (err) => {
             console.log(err);
-            Swal.fire('Error al adicionar profesion', err.error.mensaje, 'error');
+            Swal.fire('Error al adicionar Ocupacion', err.error.mensaje, 'error');
           });
     }
   }

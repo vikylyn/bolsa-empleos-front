@@ -1,0 +1,81 @@
+
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card" id="3">
+            <div class="card-header">
+                <h2><span class="badge badge-info">Mis Vacantes</span></h2>              
+                <h6>Total: {{totalVacantes}} - {{desde}}</h6> 
+            </div>
+            <div class="card-body">
+                <div class="row animated fadeIn fast" *ngIf="cargando">
+                    <div class="col-12">
+                        <div class="alert alert-info text-center">
+                            <h4>Cargando...</h4> 
+                            <i class="fa fa-spin fa-refresh fa-2x"></i>
+                            <p class="mb-0">Por favor espere</p>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <button [routerLink]="['/vacante/formulario']"
+                        [queryParams] = "{'tipo': 'adicionar', 'id': 0}" 
+                        class="btn btn-success">
+                            Adicionar
+                </button>
+                <br><br>
+                <div class="table-responsive">
+                    <table class="table full-color-table full-inverse-table hover-table">
+                        <thead>
+                            <tr>
+                                <th>Titulo</th>
+                                <th>Ocupacion</th>
+                                <th>Sueldo</th>
+                                <th>Num Vacantes</th>
+                                <th>Vacantes disponibles</th>
+                                <th>Habilitado</th>
+                                <th class="w100">Operaciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let vacante of vacantes">
+                                <td>
+                                    {{vacante.titulo}}
+                                </td>
+                                <td>
+                                    {{vacante.requisitos.ocupacion.nombre}}
+                                </td>
+                                <td> 
+                                    {{vacante.sueldo.sueldo}}
+                                </td>
+                                <td> 
+                                    {{vacante.num_vacantes}}
+                                </td>
+                                <td> 
+                                    {{vacante.num_disponibles}}
+                                </td>
+                                <td class="text-center hidden-md-down">
+                                    <i *ngIf="vacante.habilitado" class="fa fa-thumbs-o-up"></i>
+                                    <i *ngIf="!vacante.habilitado" class="fa fa-thumbs-o-down"></i>
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <a [routerLink]="['/vacante/formulario']"
+                                       [queryParams] = "{'tipo': 'modificar', 'id': vacante.id}" 
+                                        data-toggle="tooltip" > 
+                                            <i class="fa fa-pencil  m-r-10"></i> 
+                                    </a>
+                                    <a (click)="eliminar(vacante.id)" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-close text-danger"></i> </a>
+
+                                </td>
+                            </tr>
+                        </tbody> 
+                    </table>
+                </div>
+                <div class="text-center">
+                    <button (click)="cambiarPagina(-5)" class="btn btn-secondary">Anterior</button> 
+                    &nbsp;
+                    <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguiente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -2,41 +2,124 @@
     <div class="row justify-content-center">
         <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
             <div class="card">
-                <h3 class="text-center pt-3"><span class="badge badge-info">Busqueda </span></h3>
+                <h3 *ngIf="mostrar" class="text-center pt-3"><span class="badge badge-info">Busqueda </span></h3>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="">Area laboral:</label>
-                            <select class="form-control" name="" id="">
-                                <option value="">1</option>
-                            </select>
+                    <form *ngIf="mostrar"  autocomplete="off" 
+                               [formGroup]="filtradoForm"
+                               (ngSubmit)="buscar()">
+                        <div class="row">
+                            <div class="col-md-12">
+                            <label for="">Ocupacion:</label>
+                            <ng-select id="id_ocupacion" [items]="ocupaciones" 
+                                       placeholder="Seleccionar Ocupaciones"
+                                       bindLabel="nombre"
+                                       notFoundText = "Ocupacion no encontrada" 
+                                       bindValue="id" 
+                                       formControlName="id_ocupacion">
+                            </ng-select>
+                            </div>
+                        
                         </div>
-                        <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                            <label for="">Pais:</label>
+                            <ng-select 
+                                notFoundText = "Pais no encontrado"
+                                placeholder="Seleccionar Pais"
+                                appendTo="body"
+                                formControlName="id_pais">
+                                <ng-option [value]= "pais.id" *ngFor="let pais of paises">
+                                 {{pais.nombre}}
+                                </ng-option>
+                            </ng-select>
+                            </div>
+                            <div class="col-md-6">
                             <label for="">Ciudad:</label>
-                            <select  class="form-control" name="" id="">
-                                <option value="">1</option>
-                            </select>
+                            <ng-select 
+                                       placeholder="Seleccionar Ciudad"
+                                       appendTo="body"
+                                       notFoundText = "ciudad no encontrada"
+                                       formControlName="id_ciudad">
+                                       <ng-option [value]= "0">
+                                         Cualquiera
+                                       </ng-option>
+                                       <ng-option [value]= "ciudad.id" *ngFor="let ciudad of ciudades">
+                                         {{ciudad.nombre}} / {{ciudad.estado.nombre}}
+                                       </ng-option>
+                            </ng-select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="">Fecha:</label>
-                            <select class="form-control" name="" id="">
-                                <option value="">1</option>
-                            </select>
+                        <div class="row">
+                            <div class="col-md-6">
+                            <label for="">Publicado en:</label>
+                            <ng-select 
+                                       placeholder="Seleccionar Fecha"
+                                       appendTo="body"
+                                       notFoundText = "Fecha no encontrada"
+                                       formControlName="fecha">
+                                       <ng-option [value]= "fecha.fecha" *ngFor="let fecha of fechas">
+                                         {{fecha.descripcion}}
+                                       </ng-option>
+                            </ng-select> 
+                            </div>
+                            <div class="col-md-6">
+                            <label for="">Tipo de Contrato:</label>
+                            <ng-select 
+                                        placeholder="Seleccionar Tipo de Contrato"
+                                        bindLabel="tipo"
+                                        notFoundText = "Tipo de contrato no encontrado" 
+                                        formControlName="id_tipo_contrato">
+                                        <ng-option [value]= "0">
+                                            Cualquiera
+                                        </ng-option>
+                                        <ng-option [value]= "tipo.id" *ngFor="let tipo of tipo_contratos">
+                                            {{tipo.tipo}}
+                                          </ng-option>
+                            </ng-select>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <label for="">Contrato:</label>
-                            <select class="form-control" name="" id="">
-                                <option value="">1</option>
-                            </select>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-info btn-lg btn-block mt-2"> <i class="fa fa-search"></i> Buscar</button>                        
+                            </div>
                         </div>
-                    </div>
+                    </form>
+                    <button *ngIf="!mostrar" (click)="mostrar=true" class="btn btn-info btn-lg btn-block mt-2"> <i class="fa fa-search"></i> Buscar</button>                        
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-
+    <div class="row d-flex justify-content-between align-items-center">
+            <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 " *ngFor="let vacante of vacantes2">
+                <div class="card">
+                    <div class="card-body" *ngIf="vacante.empleador.empresa && vacante.empresa">
+                        <div class="row">
+                            <div class="col-sm-12 col-xl-5 col-lg-5 text-center">
+                                <h5>{{vacante.empresa.nombre}}</h5>
+                                <img class="w100" [src]="vacante.empresa.logo.url" alt="">
+                            </div>
+                            <div class="col-sm-12 col-xl-7 col-lg-7 text-center">
+                                <h5>{{vacante.titulo}}</h5>
+                                <h5>Trabajo ubicado en {{vacante.ciudad.nombre}} - {{vacante.ciudad.estado.pais.nombre}}</h5>
+                                <h5>Publicado en {{vacante.creado_en}}</h5>
+                                <button routerLink="/inicio-solicitante/vacante/{{vacante.id}}" class="btn btn-success btn-lg btn-block mt-2">ver detalle</button>
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="card-body" *ngIf="!vacante.empleador.empresa">
+                        <div class="row">
+                            <div class="col-5">
+                                <img  [src]="vacante.empleador.imagen.url" alt="">
+                            </div>
+                            <div class="col-7 text-center">
+                                <h2>{{vacante.titulo}}</h2>
+                                <h3>{{vacante.empleador.nombre}}</h3>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
     </div>
+        
 </div>
+

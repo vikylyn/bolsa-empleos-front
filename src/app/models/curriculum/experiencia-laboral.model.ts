@@ -1,6 +1,7 @@
 import { Pais } from '../pais.model';
 import { Curriculum } from './curriculum.model';
-import { AreaLaboral } from '../profesion/area-laboral.model';
+import { GrupoOcupacional } from '../ocupacion/grupo-ocupacional.model';
+import { TipoContrato } from '../empleador/tipo-contrato.model';
 export class ExperienciaLaboral {
     constructor(
         public empresa: string,
@@ -10,7 +11,8 @@ export class ExperienciaLaboral {
         public fecha_fin: Date,
         public estado: string,
         public ciudad: string,
-        public area_laboral: AreaLaboral,
+        public tipo_contrato: TipoContrato,
+   //     public grupo_ocupacional: GrupoOcupacional,
         public curriculum: Curriculum,
         public pais: Pais,
         public id?: number

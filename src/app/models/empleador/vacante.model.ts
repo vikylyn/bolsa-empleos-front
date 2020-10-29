@@ -4,6 +4,7 @@ import { Requisitos } from './requisito.model';
 import { TipoContrato } from './tipo-contrato.model';
 import { Ciudad } from '../ciudad.model';
 import { Empleador } from './empleador.model';
+import { Empresa } from './empresa.model';
 export class Vacante {
     constructor(
         public titulo: string,
@@ -20,6 +21,8 @@ export class Vacante {
         public ciudad: Ciudad,
         public empleador: Empleador,
         public id?: number,
+        // aumentando atributo para mostrarlo al listar la empresa a la que pertenece la vacante
+        public empresa?: Empresa
     ) {
     }
 }

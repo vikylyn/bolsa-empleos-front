@@ -22,9 +22,9 @@ export class HabilidadComponent implements OnInit {
 
 
   constructor(private habilidadService: HabilidadService,
-                      private curriculumService: CurriculumService,
-                      private loginService: LoginService,
-                      private router: Router) { }
+              private curriculumService: CurriculumService,
+              private loginService: LoginService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.curriculumService.buscarPorIdSolicitante(this.loginService.solicitante.id).subscribe((resp: any) => {

@@ -2,12 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ExperienciaLaboralService } from '../../../../services/solicitante/curriculum/experiencia-laboral.service';
-import { AreaLaboral } from '../../../../models/profesion/area-laboral.model';
+import { GrupoOcupacional } from '../../../../models/ocupacion/grupo-ocupacional.model';
 import { Pais } from '../../../../models/pais.model';
-import { AreaLaboralService } from '../../../../services/administrador/area-laboral.service';
+import { GrupoOcupacionalService } from '../../../../services/administrador/grupo-ocupacional.service';
 import { UbicacionService } from '../../../../services/ubicacion/ubicacion.service';
 import Swal from 'sweetalert2';
 import { ExperienciaLaboral } from '../../../../models/curriculum/experiencia-laboral.model';
+import { TipoContrato } from '../../../../models/empleador/tipo-contrato.model';
+import { TipoContratoService } from '../../../../services/vacante/tipo-contrato.service';
 
 @Component({
   selector: 'app-formulario-experiencia-laboral',
@@ -23,20 +25,22 @@ export class FormularioExperienciaLaboralComponent implements OnInit {
   tipo: string;
   id: number;
   id_curriculum: number;
-  areas_laborales: AreaLaboral[];
   paises: Pais[];
+  tipo_contratos: TipoContrato[];
+
   constructor(
           private route: ActivatedRoute,
           private router: Router,
           private fb: FormBuilder,
           private experienciaService: ExperienciaLaboralService,
-          private areaService: AreaLaboralService,
+          private grupoService: GrupoOcupacionalService,
+          private tipoContratoService: TipoContratoService,
           private ubicacionService: UbicacionService
     ) { }
 
   ngOnInit(): void {
-    this.cargarAreas();
     this.cargarPaises();
+    this.cargarTipoContratos();
     this.route.queryParams
     .subscribe(params => {
         this.tipo = params.tipo;
@@ -55,16 +59,16 @@ export class FormularioExperienciaLaboralComponent implements OnInit {
               id_pais: [0, [ Validators.required]],
               estado: ['', [ Validators.required]],
               ciudad: ['', [ Validators.required]],
-              id_area_laboral: [0 , [Validators.required]],
+              id_tipo_contrato: [0, [ Validators.required]],
+          //    id_grupo_ocupacional: [0 , [Validators.required]],
               id_curriculum: [this.id_curriculum]
         });
       }
     });
   }
-  cargarAreas(): void {
-    console.log('Cargar areas');
-    this.areaService.listarTodas().subscribe( (resp: AreaLaboral[]) => {
-      this.areas_laborales = resp;
+  cargarTipoContratos(): void {
+    this.tipoContratoService.listar().subscribe((resp: TipoContrato[]) => {
+      this.tipo_contratos = resp;
     });
   }
   cargarPaises(): void {
@@ -86,8 +90,10 @@ export class FormularioExperienciaLaboralComponent implements OnInit {
         id_pais: [this.experiencia.pais.id, [ Validators.required]],
         estado: [this.experiencia.estado, [ Validators.required]],
         ciudad: [this.experiencia.ciudad, [ Validators.required]],
-        id_area_laboral: [this.experiencia.area_laboral.id , [Validators.required]],
-        id_curriculum: [this.id_curriculum]
+   //     id_grupo_ocupacional: [resp.grupo_ocupacional.id , [Validators.required]],
+        id_curriculum: [this.id_curriculum],
+        id_tipo_contrato: [this.experiencia.tipo_contrato.id, [ Validators.required]],
+
       });
     });
   }
@@ -108,7 +114,7 @@ export class FormularioExperienciaLaboralComponent implements OnInit {
   }
   guardar(): void {
     this.formSubmitted = true;
-    if (this.experienciaForm.get('id_area_laboral').value === 0) {
+    if (this.experienciaForm.get('id_tipo_contrato').value === 0) {
       return;
     }
     if (this.experienciaForm.invalid) {

@@ -10,7 +10,8 @@
                             <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img img [src]="solicitante.imagen.url" alt="user" /><span class="hide-menu">{{solicitante.nombre}} {{solicitante.apellidos}}</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a  routerLink="/perfil-solicitante">Mi perfil </a></li>
-                                <li><a (click)="logout()" class="cursor" >cerrar sesion</a></li>
+                                <li><a  routerLink="/ocupaciones-solicitante">Mis ocupaciones</a></li>
+                                <li><a (click)="logout()" class="cursor" >logout</a></li>
                             </ul>
                         </li>
                         <li class="nav-devider"></li>
@@ -19,7 +20,7 @@
                             <ul aria-expanded="true" class="collapse in">
                                 <li  *ngFor="let submenu of menu.submenu">
                                     <a *ngIf="submenu.submenu.length === 0" routerLinkActive="active" [routerLink]="[submenu.url]">{{ submenu.titulo}}</a>
-                                    <a *ngIf="submenu.submenu.length > 0" routerLinkActive="active" [routerLink]="[submenu.url]" class="has-arrow" aria-expanded="true">{{ submenu.titulo}}<span *ngIf="submenu.submenu.length > 0" class="label label-rounded label-success pull-right">{{ submenu.submenu.length }}</span></a>
+                                    <a *ngIf="submenu.submenu.length > 0" routerLinkActive="active" class="has-arrow cursor" aria-expanded="true">{{ submenu.titulo}}<span *ngIf="submenu.submenu.length > 0" class="label label-rounded label-success pull-right">{{ submenu.submenu.length }}</span></a>
                                     <ul *ngIf="submenu.submenu.length > 0" aria-expanded="true" class="collapse in">
                                         <li *ngFor="let submenu2 of submenu.submenu"><a routerLinkActive="active" [routerLink]="[submenu2.url]">{{submenu2.titulo}}</a></li>
                                     </ul>

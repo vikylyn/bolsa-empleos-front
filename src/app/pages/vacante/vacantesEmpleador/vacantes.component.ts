@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Vacante } from '../../../models/empleador/vacante.model';
-import { VacanteService } from '../../../services/empleador/vacante.service';
+import { VacanteService } from '../../../services/vacante/vacante.service';
 import { LoginService } from '../../../services/login.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -20,8 +20,7 @@ export class VacantesComponent implements OnInit {
 
 
   constructor(private vacanteService: VacanteService,
-              private loginService: LoginService,
-              private router: Router) { }
+              private loginService: LoginService) { }
 
   ngOnInit(): void {
     this.cargarVacantes();
@@ -44,7 +43,6 @@ export class VacantesComponent implements OnInit {
       this.vacantes = vacantes;
       this.totalVacantes = total;
       this.cargando = false;
-      console.log(this.vacantes, this.totalVacantes);
     });
   }
   busqueda(nombre: string): any {
@@ -62,23 +60,23 @@ export class VacantesComponent implements OnInit {
   eliminar(id: number): void {
     Swal.fire({
       title: 'Estas seguro ?',
-      text: 'Se eliminara la experiencia laboral',
+      text: 'Se inhabilitara la vacante',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Eliminar!',
+      confirmButtonText: 'Inhabilitar!',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
-    /*  if (result.value) {
-        this.vacanteService.eliminar(id).subscribe( (resp: any) => {
+      if (result.value) {
+        this.vacanteService.inhabilitar(id).subscribe( (resp: any) => {
           Swal.fire(
-            'Eliminado!',
+            'inhabilitado!',
             resp.mensaje,
             'success'
           );
           this.cargarVacantes();
         },(err) => {
           console.log(err);
-          Swal.fire('Error al eliminar Experiencia', err.error.error || err.error.mensaje, 'error');
+          Swal.fire('Error al inhabilitar Vacante', err.error.error || err.error.mensaje, 'error');
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
@@ -87,7 +85,7 @@ export class VacantesComponent implements OnInit {
           'error'
         );
       }
-    */  });
+      });
   }
 
 }

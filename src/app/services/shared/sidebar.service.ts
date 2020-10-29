@@ -11,8 +11,9 @@ export class SidebarService {
       submenu: [
         {titulo: 'Inicio', url: '/inicio-solicitante',
           submenu: []},
-        {titulo: 'Curriculum', url: '/curriculum',
+        {titulo: 'Curriculum', url: '',
           submenu: [
+            {titulo: 'Administracion', url: '/curriculum/administracion'},
             {titulo: 'Habilidades', url: '/curriculum/habilidad'},
             {titulo: 'Experiencias Laborales', url: '/curriculum/experiencia-laboral'},
             {titulo: 'Estudios basicos', url: '/curriculum/estudio-basico'},
@@ -33,8 +34,8 @@ export class SidebarService {
       submenu: [
         {titulo: 'Inicio', url: '/dashboard', submenu: []},
         {titulo: 'Vacantes', url: '/vacante', submenu: []},
-        {titulo: 'Postulaciones', url: '/postulacion', submenu: []},
-        {titulo: 'Contrataciones', url: '/contratacion', submenu: []},
+        {titulo: 'Postulaciones', url: '/postulaciones-empleador', submenu: []},
+        {titulo: 'Contrataciones', url: '/contrataciones-empleador', submenu: []},
       ]
     }
   ];
@@ -45,8 +46,8 @@ export class SidebarService {
       submenu: [
         {titulo: 'Inicio', url: '/dashboard'},
         {titulo: 'Administradores', url: '/administrador'},
-        {titulo: 'Areas laborales', url: '/area-laboral'},
-        {titulo: 'Profesiones', url: '/profesion'},
+        {titulo: 'Grupos Ocupacionales', url: '/area-laboral'},
+        {titulo: 'Ocupaciones', url: '/profesion'},
         {titulo: 'Reportes', url: '/reporte'},
       ]
     }

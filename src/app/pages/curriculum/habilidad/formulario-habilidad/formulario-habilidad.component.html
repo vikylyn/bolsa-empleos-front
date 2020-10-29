@@ -9,13 +9,17 @@
                             <div class="col-12">
                                 <div class="form-group">
                                     <label for="exampleInputuname">Habilidad:</label>
-                                    <select [class.is-invalid]="selectNoValido('id_habilidad')" formControlName="id_habilidad" class="form-control custom-select">
-                                        <option *ngIf="tipo==='adicionar'" value="0">Seleccionar</option>
-                                        <option *ngFor="let habilidad of habilidades" value="{{habilidad.id}}">{{habilidad.habilidad}}</option>
-                                    </select>
-                                    
+                                            <ng-select 
+                                                       notFoundText = "Habilidad no encotrada"
+                                                       placeholder="Seleccionar Habilidad"
+                                                       appendTo="body"
+                                                       multiple="true"
+                                                       formControlName="id_habilidad">
+                                                       <ng-option [value]= "habilidad.id" *ngFor="let habilidad of habilidades">
+                                                        {{habilidad.habilidad}}
+                                                      </ng-option>
+                                            </ng-select>
                                     <small *ngIf="selectNoValido('id_habilidad')" class="form-control-feedback text-danger">Seleccione una habilidad</small> 
-    
                                 </div>
                             </div>
                         </div>                 

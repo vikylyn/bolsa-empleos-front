@@ -8,6 +8,9 @@ import {HttpClientModule} from '@angular/common/http';
 import { RegistroSolicitanteComponent } from './register/registro-solicitante/registro-solicitante.component';
 import { RegistroEmpleadorComponent } from './register/registro-empleador/registro-empleador.component';
 import { ActivacionComponent } from './activacion/activacion.component';
+
+import { NgSelectModule } from '@ng-select/ng-select';
+
 @NgModule({
   declarations: [
     LoginComponent,
@@ -24,6 +27,7 @@ import { ActivacionComponent } from './activacion/activacion.component';
     CommonModule,
     RouterModule,
     FormsModule,
+    NgSelectModule,
     ReactiveFormsModule,
     HttpClientModule
   ]

@@ -17,8 +17,7 @@ export class Empleador {
         public empresa: boolean,
         public creado_en: Date,
         public ciudad: Ciudad,
-        public vacante?: Vacante[],
-        public id?: number,
-
+        public vacante?: Vacante[], 
+        public id?: number
     ){}
 }
