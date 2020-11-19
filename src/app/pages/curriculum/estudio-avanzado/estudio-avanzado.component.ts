@@ -13,9 +13,12 @@ import Swal from 'sweetalert2';
   ]
 })
 export class EstudioAvanzadoComponent implements OnInit {
-
-  id_curriculum: number;
-  estudios_avanzados: EstudioAvanzado[];
+  myModal = false;
+  myModal2 = false;
+  idEstudio: number;
+  tipoOperacion: string;
+  idCurriculum: number;
+  estudiosAvanzados: EstudioAvanzado[];
   desde = 0;
   cargando = true;
   totalEstudios = 0;
@@ -30,7 +33,7 @@ export class EstudioAvanzadoComponent implements OnInit {
       if (resp.ok === false) {
         this.router.navigateByUrl('/curriculum');
       }else {
-        this.id_curriculum = resp.curriculum.id;
+        this.idCurriculum = resp.curriculum.id;
         this.cargarEstudios();
       }
     });
@@ -49,9 +52,9 @@ export class EstudioAvanzadoComponent implements OnInit {
 
   cargarEstudios(): void {
     this.cargando = true;
-    this.estudioService.listar(this.id_curriculum, this.desde)
+    this.estudioService.listar(this.idCurriculum, this.desde)
     .subscribe(({total, estudios_avanzados}) => {
-      this.estudios_avanzados = estudios_avanzados;
+      this.estudiosAvanzados = estudios_avanzados;
       this.totalEstudios = total;
       this.cargando = false;
     });
@@ -86,5 +89,26 @@ export class EstudioAvanzadoComponent implements OnInit {
         );
       }
     });
+  }
+
+  mostrarModal(tipoOperacion: string, idEstudio: number) {
+    this.tipoOperacion = tipoOperacion;
+    this.idEstudio = idEstudio;
+    this.myModal = true;
+  }
+  cerrarModal(e) {
+    this.myModal = e;
+    this.cargarEstudios();
+  }
+
+  cancelarModal(e) {
+    this.myModal = e;
+  }
+  mostrarModal2(idEstudio: number) {
+    this.idEstudio = idEstudio;
+    this.myModal2 = true;
+  }
+  cerrarModal2(e) {
+    this.myModal2 = e;
   }
 }

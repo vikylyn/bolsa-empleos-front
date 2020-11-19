@@ -18,6 +18,10 @@ export class IdiomaService {
     const token = localStorage.getItem('token');
     return this.http.get<{curriculums_idiomas: Idioma[]}>(`${base_url}/idioma?token=${token}`);
   }
+  listarIdiomasNoAsigandos(idCurriculum: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get<{curriculums_idiomas: Idioma[]}>(`${base_url}/idioma/lista/${idCurriculum}?token=${token}`);
+  }
   // Lista de Niveles de Idioma
   listarNiveles(): any {
     const token = localStorage.getItem('token');

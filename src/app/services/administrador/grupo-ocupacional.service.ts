@@ -33,10 +33,15 @@ export class GrupoOcupacionalService {
           return resp.grupos;
         }));
   }
-  eliminar(id: number): any {
+  inhabilitar(id: number): any {
     console.log(id);
     const token = localStorage.getItem('token');
     return this.http.get(`${base_url}/grupo-ocupacional/inhabilitar/${id}?token=${token}`);
+  }
+  habilitar(id: number): any {
+    console.log(id);
+    const token = localStorage.getItem('token');
+    return this.http.get(`${base_url}/grupo-ocupacional/habilitar/${id}?token=${token}`);
   }
   // busqueda por id
   buscar(id: number): any {

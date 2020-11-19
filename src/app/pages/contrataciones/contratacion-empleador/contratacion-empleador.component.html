@@ -1,22 +1,5 @@
 <div class="container-fluid">
-    <div class="row animated fadeIn fast">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <input #txtTermino (keyup)="busqueda(txtTermino.value)" type="text" class="form-control" placeholder="buscar postulacion...">
-                <div>
-            </div>
-        </div>
-    </div>
-    <div class="row animated fadeIn fast" *ngIf="cargando">
-        <div class="col-12">
-            <div class="alert alert-info text-center">
-                <h4>Cargando...</h4>
-                <i class="fa fa-spin fa-refresh fa-2x"></i>
-                <p class="mb-0">Por favor espere</p>
-            </div>
-        </div>
-    </div>
+ 
     <div class="row animated fadeIn fast" *ngIf="!cargando">
         <div class="col-12">
             <div class="card">
@@ -24,16 +7,21 @@
                     <h4 class="card-title">Mis Contrataciones</h4>
                     <h6>Total: {{totalContrataciones}} - {{desde}}</h6>
                     <br><br>
+                   
                     <div class="row"> 
-                        <div class="col-md-5">
-                            <h5>Vacantes:</h5>
+                        <div class="col-md-6">
+                         <!--   <h5>Vacantes:</h5>
                             <ng-select [items]="vacantes" 
                                        bindLabel="titulo" 
                                        bindValue="id" 
                                        [clearable] = "false"
-                                       [(ngModel)]="this.id_vacante"
+                                       [(ngModel)]="id_vacante"
                                        (change)="filtrar()">
                             </ng-select>
+                        -->
+                        </div>
+                        <div class="col-md-6">
+                            <input #txtTermino (keyup)="busqueda(txtTermino.value)" type="text" class="form-control mt-4" placeholder="buscar contratacion...">
                         </div>
                     </div>
                     <br>
@@ -45,10 +33,9 @@
                                         <tr>
                                             <th>Num</th>
                                             <th>Contratado en:</th>
-                                            <th>Ocupacion</th>
                                             <th>Empleado</th>
-                                            <th>Sueldo</th>
-                                            <th>Confirmado</th>
+                                            <th>Ocupacion</th>
+                                            <th>Vacante</th>
                                             <th class="w100 text-center">Operaciones</th>
                                         </tr>
                                     </thead>
@@ -61,20 +48,19 @@
                                                 {{contratacion.creado_en}}
                                             </td>
                                             <td>
-                                                {{contratacion.vacante.requisitos.ocupacion.nombre}}
-                                            </td>
-                                            <td>
                                                 {{contratacion.solicitante.nombre}} {{contratacion.solicitante.apellidos}}
                                             </td>
                                             <td>
-                                                {{contratacion.vacante.sueldo.sueldo}}
+                                                {{contratacion.vacante.requisitos.ocupacion.nombre}}
                                             </td>
-                                            <td class="text-center"><span class="label label-danger">{{contratacion.confirmado}}</span></td>
+                                            <td>
+                                                {{contratacion.vacante.titulo}}
+                                            </td>
                                             <td class="text-nowrap text-center">
-                                               <div  class="btn-group btn-group-sm" role="group" aria-label="...">
-                                                    <button routerLink="/perfil-curriculum/contratacion/{{contratacion.solicitante.id}}/{{contratacion.id}}" type="button" class="btn btn-secondary">ver</button>
-                                                    <button (click)="terminar(contratacion.id)" type="button" class="btn btn-secondary">Terminar</button>
-                                                </div>
+                                                <a class="cursor" (click)="mostrarModal(contratacion.solicitante.id, contratacion.id)"> 
+                                                    <i class="fa fa-eye  m-r-10"></i> 
+                                                </a>
+                                                <a class="cursor" *ngIf="contratacion.habilitado" (click)="terminar(contratacion.id)" > <i class="fa fa-trash-o m-r-10 text-info"></i></a>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -88,14 +74,38 @@
                         &nbsp;
                         <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguiente</button>
                     </div>
-                    
+                    <div class="row animated fadeIn fast" *ngIf="cargando">
+                        <div class="col-12">
+                            <div class="alert alert-info text-center">
+                                <h4>Cargando...</h4>
+                                <i class="fa fa-spin fa-refresh fa-2x"></i>
+                                <p class="mb-0">Por favor espere</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<!--
+<app-vista-completo *ngIf="myModal" [visible]="myModal" 
+                                                    [idSolicitante]= "idSolicitante" 
+                                                    [tipoOperacion]="'contratacion'" 
+                                                    [idOperacion] = "idContratacion"
+                                                    (cerrar)="cerrarModal($event)"
+                                                    (cancelar)="cancelarModal($event)"
+                                                    >
+</app-vista-completo>
+-->
 
+<app-ver-contratacion *ngIf="myModal" [visible]="myModal" 
+                                      [idContratacion] = "idContratacion"
+                                      (cerrar)="cerrarModal($event)"
+                                      (cancelar)="cancelarModal($event)">
+
+</app-ver-contratacion>
 
 
 

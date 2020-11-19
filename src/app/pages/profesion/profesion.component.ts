@@ -13,10 +13,13 @@ import { GrupoOcupacionalService } from '../../services/administrador/grupo-ocup
   ]
 })
 export class ProfesionComponent implements OnInit {
-  id_grupo = 0;
+  myModal = false;
+  idOcupacion: number;
+  tipoOperacion: string;
+  idGrupo = 0;
   totalOcupaciones = 0;
   ocupaciones: Ocupacion [];
-  grupos_ocupacionales: GrupoOcupacional[];
+  gruposOcupacionales: GrupoOcupacional[];
   ocupacionesTemp: Ocupacion [];
   desde = 0;
   cargando = true;
@@ -32,7 +35,7 @@ export class ProfesionComponent implements OnInit {
   filtrar(): void{
     this.cargando = true;
     this.desde = 0;
-    if (this.id_grupo == 0) {
+    if (this.idGrupo == 0) {
       this.ocupacionService.listar(this.desde)
         .subscribe(({total, ocupaciones}) => {
           console.log(ocupaciones);
@@ -42,7 +45,7 @@ export class ProfesionComponent implements OnInit {
           this.cargando = false;
         });
     }else {
-      this.ocupacionService.filtrar(this.id_grupo, this.desde)
+      this.ocupacionService.filtrar(this.idGrupo, this.desde)
       .subscribe(({total, ocupaciones}) => {
         console.log('totaaal', total);
         this.ocupaciones = ocupaciones;
@@ -65,13 +68,13 @@ export class ProfesionComponent implements OnInit {
   }
   cargarGruposOcupaciones(): void {
     this.grupoService.listarTodas().subscribe( (resp: GrupoOcupacional[]) => {
-      this.grupos_ocupacionales = resp;
+      this.gruposOcupacionales = resp;
     });
   }
 
   cargarOcupaciones(): void {
     this.cargando = true;
-    if (this.id_grupo == 0) {
+    if (this.idGrupo == 0) {
       this.ocupacionService.listar(this.desde)
         .subscribe(({total, ocupaciones}) => {
           this.ocupaciones = ocupaciones;
@@ -80,7 +83,7 @@ export class ProfesionComponent implements OnInit {
           this.cargando = false;
         });
     }else {
-      this.ocupacionService.filtrar(this.id_grupo, this.desde)
+      this.ocupacionService.filtrar(this.idGrupo, this.desde)
       .subscribe(({total, ocupaciones}) => {
         this.ocupaciones = ocupaciones;
         this.ocupacionesTemp = ocupaciones;
@@ -101,19 +104,19 @@ export class ProfesionComponent implements OnInit {
       }
     );
   }
-  eliminar(id: number): void {
+  inhabilitar(id: number): void {
     Swal.fire({
       title: 'Estas seguro ?',
       text: 'Se inhabilitara el registro',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Eliminar!',
+      confirmButtonText: 'Inhabilitar!',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
-        this.ocupacionService.eliminar(id).subscribe( (resp: any) => {
+        this.ocupacionService.inhabilitar(id).subscribe( (resp: any) => {
           Swal.fire(
-            'Eliminado!',
+            'Inhabilitado!',
             resp.mensaje,
             'success'
           );
@@ -127,6 +130,46 @@ export class ProfesionComponent implements OnInit {
         );
       }
     });
+  }
+  habilitar(id: number): void {
+    Swal.fire({
+      title: 'Estas seguro ?',
+      text: 'Se habilitara el registro',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Habilitar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        this.ocupacionService.habilitar(id).subscribe( (resp: any) => {
+          Swal.fire(
+            'Habilitado!',
+            resp.mensaje,
+            'success'
+          );
+          this.cargarOcupaciones();
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelado',
+          '',
+          'error'
+        );
+      }
+    });
+  }
+  mostrarModal(tipoOperacion: string, idOcupacion: number) {
+    this.tipoOperacion = tipoOperacion;
+    this.idOcupacion = idOcupacion;
+    this.myModal = true;
+  }
+  cerrarModal(e) {
+    this.myModal = e;
+    this.cargarOcupaciones();
+  }
+
+  cancelarModal(e) {
+    this.myModal = e;
   }
 
 }

@@ -1,7 +1,7 @@
-<div class="container animated fadeIn fast">
+<div class="container animated fadeIn fast" *ngIf="!myModal">
     <div class="row">
-        <div class="col-12">
-            <div class="card" id="4">
+        <div class="col">
+            <div class="card">
                 <div class="card-header">
                     <h2><span class="badge badge-info">Habilidades</span></h2>              
                     <h6>Total: {{totalHabilidades}} - {{desde}}</h6> 
@@ -17,8 +17,7 @@
                         </div>
                     </div>
                     <br>
-                    <button [routerLink]="['/curriculum/habilidad/formulario']"
-                            [queryParams] = "{'id_curriculum': id_curriculum}" 
+                    <button (click)="mostrarModal()"
                             class="btn btn-success">
                                 Adicionar
                     </button>
@@ -41,7 +40,8 @@
                                         {{habilidad.habilidad.habilidad}}
                                     </td>
                                     <td class="text-nowrap text-center">
-                                        <a (click)="eliminar(habilidad.id)" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-close text-danger"></i> </a>
+                                        <a class="cursor" (click)="eliminar(habilidad.id)" class="cursor"> <i class="fa fa-trash-o m-r-10 text-info"></i></a>
+
                                     </td>
                                 </tr>
                             </tbody> 
@@ -58,3 +58,9 @@
     </div>
 </div>
 
+
+<app-formulario-habilidad *ngIf="myModal" [visible]="myModal" 
+                                          [id_curriculum]= "id_curriculum" 
+                                          (cerrar)="cerrarModal($event)"
+                                          (cancelar)="cancelarModal($event)">
+</app-formulario-habilidad>

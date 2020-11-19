@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Habilidad } from '../../../models/curriculum/habilidad.model';
 import { CurriculumHabilidad } from '../../../models/curriculum/curriculum-habilidad.model';
+import { WebsocketService } from '../../websocket/websocket.service';
 
 const base_url = environment.base_url;
 @Injectable({
@@ -10,7 +11,8 @@ const base_url = environment.base_url;
 })
 export class HabilidadService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              public wsService: WebsocketService) { }
   // Lista de las habilidades a seleccionar
   listarTodas(id_curriculum: number): any {
     const token = localStorage.getItem('token');
@@ -22,6 +24,7 @@ export class HabilidadService {
     return this.http.get<{total: number, habilidades: CurriculumHabilidad[]}>(`${base_url}/curriculum/habilidad/lista/${id_curriculum}?desde=${desde}&token=${token}`);
   }
   adicionar(formData: any): any {
+    this.wsService.emitir('mensaje', {habilidad: 'adicionando'});
     const token = localStorage.getItem('token');
     return this.http.post(`${base_url}/curriculum/habilidad?token=${token}`, formData);
   }

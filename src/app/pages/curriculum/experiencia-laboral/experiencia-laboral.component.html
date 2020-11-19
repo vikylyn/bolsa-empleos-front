@@ -1,4 +1,4 @@
-<div class="row animated fadeIn fast">
+<div class="row animated fadeIn fast" *ngIf="!myModal">
     <div class="col-12">
         <div class="card" id="3">
             <div class="card-header">
@@ -16,8 +16,7 @@
                     </div>
                 </div>
                 <br>
-                <button [routerLink]="['/curriculum/experiencia-laboral/formulario']"
-                        [queryParams] = "{'tipo': 'adicionar', 'id': 0, 'id_curriculum': id_curriculum}" 
+                <button (click)="mostrarModal('adicionar', 0)"
                         class="btn btn-success">
                             Adicionar
                 </button>
@@ -67,14 +66,15 @@
                                 <td> 
                                     {{experiencia.ciudad}}
                                 </td>
-                                <td class="text-nowrap text-center">
-                                    <a [routerLink]="['/curriculum/experiencia-laboral/formulario']"
-                                       [queryParams] = "{'tipo': 'modificar', 'id': experiencia.id, 'id_curriculum': id_curriculum}" 
-                                        data-toggle="tooltip" > 
+                                <td class="text-nowrap text-center cursor">
+                                    <a class="cursor" (click)="mostrarModal2(experiencia.id)"> 
+                                        <i class="fa fa-eye  m-r-10"></i> 
+                                    </a>
+                                    <a (click)="mostrarModal('modificar', experiencia.id)"
+                                        > 
                                             <i class="fa fa-pencil  m-r-10"></i> 
                                     </a>
-                                    <a (click)="eliminar(experiencia.id)" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-close text-danger"></i> </a>
-
+                                    <a (click)="eliminar(experiencia.id)" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"><i class="fa fa-trash-o m-r-10 text-info"></i></a>
                                 </td>
                             </tr>
                         </tbody> 
@@ -89,3 +89,16 @@
         </div>
     </div>
 </div>
+
+<app-formulario-experiencia-laboral *ngIf="myModal" [visible]="myModal" 
+                                                    [idCurriculum]= "idCurriculum" 
+                                                    [idExperiencia]= "idExperiencia" 
+                                                    [tipo]="tipoOperacion" 
+                                                    (cerrar)="cerrarModal($event)"
+                                                    (cancelar)="cancelarModal($event)">
+</app-formulario-experiencia-laboral>
+
+<app-ver-experiencia-laboral *ngIf="myModal2" [visible]="myModal2" 
+                                      [idExperiencia] = "idExperiencia"
+                                      (cerrar)="cerrarModal2($event)">
+</app-ver-experiencia-laboral>

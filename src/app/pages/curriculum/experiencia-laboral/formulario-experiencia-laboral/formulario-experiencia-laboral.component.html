@@ -1,8 +1,18 @@
-<div class="container">
-    <div class="row animated fadeIn fast">
-        <div class="col-12">
-            <div class="card">
+
+<div class="modal" *ngIf="visible">
+      <div class="row justify-content-center container-modal animated fadeIn fast">
+        <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
+            <div class="card rounded">
+                <div class="card-header pt-0 pb-0 header-modal">
+                    <div class="row justify-content-end">
+                        <div class="col-1 pr-0">
+                          <a class="cursor float-right" (click)="cerrarModal()"><i class="fa fa-window-close  cerrar"></i></a>
+                       </div>
+                    </div>
+                </div>
                 <div class="card-body">
+                    <h3 class="text-center">{{tipo | titlecase}} Experiencia Laboral</h3>
+                    <hr>
                     <form *ngIf="cargarformulario" class="form p-t-20" 
                             [formGroup]="experienciaForm">
                         <div class="row">
@@ -25,11 +35,11 @@
                             <div class="col-md-6 ">
                                 <div class="form-group">
                                     <label class="control-label">Tipo de Contrato</label>
-                                    <select [class.is-invalid]="selectNoValido('id_tipo_contrato')" formControlName="id_tipo_contrato" class="form-control custom-select">
+                                    <select [class.is-invalid]="campoNoValido('id_tipo_contrato')" formControlName="id_tipo_contrato" class="form-control custom-select">
                                         <option *ngIf="tipo==='adicionar'" value="0">Seleccionar</option>
-                                        <option *ngFor="let tipo of tipo_contratos" [value]="tipo.id">{{tipo.tipo}}</option>
+                                        <option *ngFor="let tipo of tipoContratos" [value]="tipo.id">{{tipo.tipo}}</option>
                                     </select>
-                                    <small *ngIf="selectNoValido('id_tipo_contrato')" class="form-control-feedback text-danger">Seleccione un Tipo de contrato</small> 
+                                    <small *ngIf="campoNoValido('id_tipo_contrato')" class="form-control-feedback text-danger">Seleccione un Tipo de contrato</small> 
                                 </div>
                                 
                             </div>
@@ -53,14 +63,18 @@
                             <div class="col-md-6 ">
                                 <div class="form-group">
                                     <label for="exampleInputuname">Pais</label>
-                                    
-                                    <select [class.is-invalid]="selectNoValido('id_pais')" formControlName="id_pais" class="form-control custom-select">
-                                        <option *ngIf="tipo==='adicionar'" value="0">Seleccionar</option>
-                                        <option *ngFor="let pais of paises" value="{{pais.id}}">{{pais.nombre}}</option>
-                                    </select>
+                                    <ng-select 
+                                          notFoundText = "Pais no encontrado"
+                                          placeholder="Seleccionar Pais"
+                                          [clearable] = "false"
+                                          appendTo="body"
+                                          formControlName="id_pais">
+                                          <ng-option [value]= "pais.id" *ngFor="let pais of paises">
+                                           {{pais.nombre}}
+                                         </ng-option>
+                                    </ng-select>
+                                    <small *ngIf="campoNoValido('id_pais')" class="form-control-feedback text-danger">Seleccione un pais</small> 
                                 
-                                    <small *ngIf="selectNoValido('id_pais')" class="form-control-feedback text-danger">Seleccione un pais</small> 
-    
                                 </div>
                             </div>
                         </div>  
@@ -80,20 +94,6 @@
                                 </div>
                             </div>
                         </div>  
-               <!--         <div class="row">
-                            <div class="col-md-12 ">
-                                <div class="form-group">
-                                    <label class="control-label">Area Laboral</label>
-                                    <select [class.is-invalid]="selectNoValido('id_grupo_ocupacional')" formControlName="id_grupo_ocupacional" class="form-control custom-select">
-                                        <option *ngIf="tipo==='adicionar'" value="0">Seleccionar</option>
-                                        <option *ngFor="let grupo of grupos_ocupacionales" [value]="grupo.id">{{grupo.nombre}}</option>
-                                    </select>
-                                    <small *ngIf="selectNoValido('id_grupo_ocupacional')" class="form-control-feedback text-danger">Seleccione una area laboral</small> 
-                                </div>
-                            </div>
-                            
-                        </div> 
-                -->   
                         <div class="row">
                             <div class="col-md-12 ">
                                 <div class="form-group">
@@ -110,14 +110,12 @@
                                 Guardar
                             </button>
                             &nbsp;
-                            <button  routerLink="/curriculum/administracion" type="button" class="btn btn-inverse">Cancelar</button>
+                            <button  (click)="cancelarModal()" type="button" class="btn btn-inverse">Cancelar</button>
                         </div>
                           
-                </form>
+                    </form>
                 </div>
-            </div>  
+            </div>
         </div>
       </div>
-</div>
-
-
+</div> 

@@ -1,34 +1,24 @@
-
-<div class="container-fluid">
-    <div class="row animated fadeIn fast">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <input #txtTermino (keyup)="busqueda(txtTermino.value)" type="text" class="form-control" placeholder="buscar administrador...">
-                <div>
-            </div>
-        </div>
-    </div>
-    <div class="row animated fadeIn fast" *ngIf="cargando">
-        <div class="col-12">
-            <div class="alert alert-info text-center">
-                <h4>Cargando...</h4>
-                <i class="fa fa-spin fa-refresh fa-2x"></i>
-                <p class="mb-0">Por favor espere</p>
-            </div>
-        </div>
-    </div>
+<div class="container-fluid animated fadeIn fast">
     <div class="row animated fadeIn fast" *ngIf="!cargando">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+
                     <h4 class="card-title">Administradores</h4>
                     <h6>Total: {{totalAdministradores}} - {{desde}}</h6>
-                    <button [routerLink]="['/administrador/formulario']"
-                            [queryParams] = "{'tipo': 'adicionar', 'id': 0}" 
+                    
+                    <div class="row">
+                        <div class="col">
+                            <button (click)="mostrarModal('adicionar', 0)"
                             class="btn btn-success">
                                 Adicionar
-                    </button>
+                            </button>
+                        </div>
+                        <div class="col">
+                            <input #txtTermino (keyup)="busqueda(txtTermino.value)" type="text" class="form-control" placeholder="buscar administrador...">
+                        </div>
+                    </div>                    
+
                     <br><br>
                     <div class="table-responsive">
                         <table class="table full-color-table full-inverse-table hover-table">
@@ -64,14 +54,19 @@
                                     <td>
                                         {{administrador.genero}}
                                     </td>
-                                    <td class="text-center"><span class="label label-danger">{{administrador.habilitado}}</span></td>
+                                    <td class="text-center">
+                                        <i *ngIf="administrador.habilitado" class="fa  fa-thumbs-up text-info"></i>
+                                        <i *ngIf="!administrador.habilitado" class="fa  fa-thumbs-down text-secondary"></i>
+                                    </td>
                                     <td class="text-nowrap text-center">
-                                        <a [routerLink]="['/administrador/formulario']"
-                                            [queryParams] = "{'tipo': 'modificar', 'id': administrador.id}"
-                                            data-toggle="tooltip" > 
+                                        <a class="cursor" (click)="mostrarModal2(administrador.id)"> 
+                                            <i class="fa fa-eye m-r-10"></i> 
+                                        </a>
+                                        <a class="cursor" (click)="mostrarModal('modificar', administrador.id)"> 
                                                 <i class="fa fa-pencil m-r-10"></i> 
                                         </a>
-                                        <a  (click)="deshabilitar(administrador.id)" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-close text-danger"></i> </a>
+                                        <a class="cursor" *ngIf="!administrador.habilitado" (click)="habilitar(administrador.id)"><i class="fa fa-arrow-circle-up text-success m-r-10"></i></a>
+                                        <a *ngIf="administrador.habilitado && administrador.id != this.loginService.administrador.id" (click)="inhabilitar(administrador.id)" class="cursor" data-toggle="tooltip" data-original-title="Inhabilitar"><i class="fa fa-arrow-circle-down text-danger m-r-10"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -82,18 +77,33 @@
                         &nbsp;
                         <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguiente</button>
                     </div>
-                    
+                    <div class="row animated fadeIn fast" *ngIf="cargando">
+                        <div class="col-12">
+                            <div class="alert alert-info text-center">
+                                <h4>Cargando...</h4>
+                                <i class="fa fa-spin fa-refresh fa-2x"></i>
+                                <p class="mb-0">Por favor espere</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+ 
 </div>
 
 
-
-
-
-
-
+<app-formulario-administrador *ngIf="myModal" [visible]="myModal" 
+                                              [idAdministrador]= "idAdministrador" 
+                                              [tipoOperacion]="tipoOperacion" 
+                                              (cerrar)="cerrarModal($event)"
+                                              (cancelar)="cancelarModal($event)">
+</app-formulario-administrador>
+<app-ver-administrador *ngIf="myModal2" [visible]="myModal2" 
+                                        [idAdministrador]= "idAdministrador" 
+                                        (cerrar)="cerrarModal2($event)">
+</app-ver-administrador>
 
 

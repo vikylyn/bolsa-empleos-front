@@ -20,23 +20,19 @@ import { Empresa } from '../../../models/empleador/empresa.model';
   ]
 })
 export class InicioSolicitanteComponent implements OnInit {
+  myModal = false;
+  idVacante: number;
   ocupaciones: Ocupacion[];
-  tipo_contratos: TipoContrato[];
+  tipoContratos: TipoContrato[];
   ciudades: Ciudad[];
   paises: Pais[];
   fechas: Fecha[];
-  fechaActual = new Date();
+  fechaActual: Date;
   desde = 0;
   vacantes: Vacante[];
   vacantes2: Vacante[];
   mostrar = true;
-  public filtradoForm = this.fb.group({
-    id_ocupacion: [5, Validators.required],
-    fecha: [`${this.fechaActual.getFullYear()}-${this.fechaActual.getMonth()}-${this.fechaActual.getDate()}`, [Validators.required]],
-    id_ciudad: [12, Validators.required],
-    id_pais: [1, Validators.required],
-    id_tipo_contrato: [1, [Validators.required]]
-  });
+  public filtradoForm;
 
   constructor( private ocupacionService: OcupacionService,
                private tipoContratoService: TipoContratoService,
@@ -45,11 +41,19 @@ export class InicioSolicitanteComponent implements OnInit {
                private vacanteService: VacanteService,
                private empresaService: EmpresaService
     ) {
+       this.fechaActual = new Date();
        this.listarOcupaciones();
        this.listarTipoContratos();
        this.cargarPaises();
        this.cargarCiudades(1);
        this.cargarFechas();
+       this.filtradoForm = this.fb.group({
+        id_ocupacion: [5, Validators.required],
+        fecha: [`${this.fechaActual.getFullYear()}-${this.fechaActual.getMonth() + 1}-${this.fechaActual.getDate()}`, [Validators.required]],
+        id_ciudad: [12, Validators.required],
+        id_pais: [1, Validators.required],
+        id_tipo_contrato: [1, [Validators.required]]
+      });
       }
 
   ngOnInit(): void {
@@ -63,8 +67,7 @@ export class InicioSolicitanteComponent implements OnInit {
   }
   listarTipoContratos(): void {
     this.tipoContratoService.listar().subscribe((resp: TipoContrato[]) => {
-      this.tipo_contratos = resp;
-      console.log(this.tipo_contratos);
+      this.tipoContratos = resp;
     });
   }
 
@@ -91,7 +94,8 @@ export class InicioSolicitanteComponent implements OnInit {
 
   restarDias(fecha: Date, dias: number): string{
     fecha.setDate(fecha.getDate() - dias);
-    return `${fecha.getFullYear()}-${fecha.getMonth()}-${fecha.getDate()}`;
+    const mes = fecha.getMonth() + 1;
+    return `${fecha.getFullYear()}-${mes}-${fecha.getDate()}`;
   }
   buscar(): void {
     console.log(this.filtradoForm.value);
@@ -121,4 +125,12 @@ export class InicioSolicitanteComponent implements OnInit {
  
   }
 
+
+  mostrarModal(idVacante: number) {
+    this.idVacante = idVacante;
+    this.myModal = true;
+  }
+  cerrarModal(e) {
+    this.myModal = e;
+  }
 }

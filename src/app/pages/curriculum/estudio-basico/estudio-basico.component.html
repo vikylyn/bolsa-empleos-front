@@ -1,4 +1,4 @@
-<div class="container-fluid animated fadeIn fast">
+<div class="container-fluid animated fadeIn fast" *ngIf="!myModal">
     <div class="row">
         <div class="col-12">
             <div class="card" id="4">
@@ -18,8 +18,7 @@
                         </div>
                     </div>
                     <br>
-                    <button [routerLink]="['/curriculum/estudio-basico/formulario']"
-                            [queryParams] = "{'tipo': 'adicionar', 'id': 0, 'id_curriculum': id_curriculum}" 
+                    <button (click)="mostrarModal('adicionar', 0)"
                             class="btn btn-success">
                                 Adicionar 
                     </button>
@@ -40,7 +39,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let estudio of estudios_basicos">
+                                <tr *ngFor="let estudio of estudiosBasicos">
                                     <td> 
                                         {{estudio.colegio}}
                                     </td>
@@ -66,14 +65,15 @@
                                     <td> 
                                         {{estudio.grado_fin.grado}}  / {{estudio.grado_fin.nivel_escolar.nivel}}
                                     </td>
-                                    <td class="text-nowrap text-center">
-                                        <a [routerLink]="['/curriculum/estudio-basico/formulario']"
-                                           [queryParams] = "{'tipo': 'modificar', 'id': estudio.id, 'id_curriculum': id_curriculum}" 
-                                            data-toggle="tooltip" > 
-                                                <i class="fa fa-pencil m-r-10"></i> 
+                                    <td class="text-nowrap text-center cursor">
+
+                                        <a class="cursor" (click)="mostrarModal2(estudio.id)"> 
+                                            <i class="fa fa-eye  m-r-10"></i> 
                                         </a>
-                                        <a (click)="eliminar(estudio.id)" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-close text-danger"></i> </a>
-    
+                                        <a (click)="mostrarModal('modificar', estudio.id)" > 
+                                            <i class="fa fa-pencil m-r-10"></i> 
+                                        </a>
+                                        <a (click)="eliminar(estudio.id)"  class="cursor" data-toggle="tooltip" data-original-title="Eliminar"><i class="fa fa-trash-o m-r-10 text-info"></i></a>
                                     </td>
                                 </tr>
                             </tbody> 
@@ -90,3 +90,16 @@
     </div>
     
 </div>
+
+<app-formulario-estudio-basico *ngIf="myModal" [visible]="myModal" 
+                                               [idCurriculum]= "idCurriculum" 
+                                               [idEstudio]= "idEstudio" 
+                                               [tipoOperacion]="tipoOperacion" 
+                                               (cerrar)="cerrarModal($event)"
+                                               (cancelar)="cancelarModal($event)">
+</app-formulario-estudio-basico>
+
+<app-ver-estudio-basico *ngIf="myModal2" [visible]="myModal2" 
+                                      [idEstudio] = "idEstudio"
+                                      (cerrar)="cerrarModal2($event)">
+</app-ver-estudio-basico>

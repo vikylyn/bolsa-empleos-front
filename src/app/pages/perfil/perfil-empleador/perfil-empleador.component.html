@@ -1,6 +1,6 @@
 <div class="container-fluid animated fadeIn fast">
-    <div class="row">
-        <div class="col-lg-8">
+    <div class="row justify-content-center">
+        <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
             <div class="card">
                 <div class="card-body">
                     <form *ngIf="cargarformulario" class="form p-t-20" 
@@ -132,31 +132,6 @@
                             </div> 
                         
                     </form>
-                </div>
-            </div>
-        </div>
-        <div *ngIf="cargarformulario" class="col-lg-4">
-            <div class="card">
-                <div class="card-body" align="center">
-                    <h4 class="card-title">Fotografia del usuario</h4>
-    
-                    <img *ngIf="!imagenTemp" [src]="empleador.imagen.url" class="w150">
-                    <img *ngIf="imagenTemp" [src]="imagenTemp"  class="w150" width="500px">
-                    <input (change)="seleccionImagen( $event.target.files[0] )" type="file">
-                    <br>
-                    <br>
-                    <button (click)="cambiarImagen()" [disabled]="!imagenSubir" type="button" class="btn btn-success waves-effect waves-light m-r-10">
-                        <i class="fa fa-save"></i>
-                        Actualizar foto
-                    </button>
-                    <br>
-                    <br>
-                    <div *ngIf="cargandoImagen" class="alert alert-info text-center animated fadeIn fast">
-                        <h4>Subiendo imagen...</h4>
-                        <i class="fa fa-spin fa-refresh fa-2x"></i>
-                        <p class="mb-0">Por favor espere</p>
-                    </div>
-                   
                 </div>
             </div>
         </div>

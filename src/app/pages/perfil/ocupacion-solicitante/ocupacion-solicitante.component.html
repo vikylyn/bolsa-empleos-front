@@ -14,8 +14,7 @@
                 <div class="card-body">
                     <h4 class="card-title">Ocupaciones</h4>
                     <h6>Total: {{total}} - {{desde}}</h6>
-                    <button [routerLink]="['/ocupaciones-solicitante/formulario']"
-                            [queryParams] = "{'tipo': 'adicionar', 'id': 0}" 
+                    <button (click)="mostrarModal()"
                             class="btn btn-success">
                                 Adicionar
                     </button>
@@ -35,14 +34,12 @@
                                         {{ocupacion.ocupacion.nombre}}
                                     </td>
                                     <td class="text-center hidden-md-down">
-                                        <i *ngIf="ocupacion.habilitado" class="fa fa-thumbs-o-up"></i>
-                                        <i *ngIf="!ocupacion.habilitado" class="fa fa-thumbs-o-down"></i>
+                                        <i *ngIf="ocupacion.habilitado" class="fa  fa-thumbs-up text-info"></i>
+                                        <i *ngIf="!ocupacion.habilitado" class="fa  fa-thumbs-down text-secondary"></i>
                                     </td>
                                     <td class="text-nowrap  text-center">
-                                        <a *ngIf="!ocupacion.habilitado" (click)="habilitar(ocupacion.id)"> 
-                                                <i class="fa fa-edit m-r-10 cursor" data-toggle="tooltip" data-original-title="habilitar"></i> 
-                                        </a>
-                                        <a *ngIf="ocupacion.habilitado" (click)="inhabilitar(ocupacion.id)" class="cursor" data-toggle="tooltip" data-original-title="Inhabilitar"> <i class="fa fa-close text-danger"></i> </a>
+                                        <a class="cursor" *ngIf="!ocupacion.habilitado" (click)="habilitar(ocupacion.id)"><i class="fa fa-arrow-circle-up text-success m-r-10"></i></a>
+                                        <a *ngIf="ocupacion.habilitado" (click)="inhabilitar(ocupacion.id)" class="cursor"><i class="fa fa-arrow-circle-down text-danger m-r-10"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -60,7 +57,10 @@
     </div>
 </div>
 
-
+<app-formulario-ocupacion-solicitante *ngIf="myModal" [visible]="myModal"  
+                                       (cerrar)="cerrarModal($event)"
+                                       (cancelar)="cancelarModal($event)">
+</app-formulario-ocupacion-solicitante>
 
 
 

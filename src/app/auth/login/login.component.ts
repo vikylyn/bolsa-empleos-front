@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 import Swal from 'sweetalert2';
+import { WebsocketService } from '../../services/websocket/websocket.service';
 declare function init_plugins();
 @Component({
   selector: 'app-login',
@@ -22,12 +23,14 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     public router: Router,
     private loginService: LoginService,
-  ) { }
+    public wsService: WebsocketService
+  ) { 
+    this.loginService.logout();
+  }
 
   ngOnInit(): void {
     init_plugins();
     this.email = localStorage.getItem('email') || '';
-    this.loginService.logout();
   }
   ingresar(): any {
     this.formSubmitted = true;
@@ -38,8 +41,14 @@ export class LoginComponent implements OnInit {
         .subscribe( (resp: any) => {
           Swal.fire('Bienvenido', this.registerForm.get('email').value, 'success');
           if (resp.usuario.credenciales.rol.nombre === 'ROLE_SOLICITANTE') {
-            this.router.navigate(['/inicio-solicitante']);
-          }else {
+            this.wsService.loginWS().then(() => {
+              this.router.navigate(['/inicio-solicitante']);
+            });
+          }else if (resp.usuario.credenciales.rol.nombre === 'ROLE_EMPLEADOR') {
+            this.wsService.loginWS().then(() => {
+              this.router.navigate(['/inicio-empleador']);
+            });
+          } else {
             this.router.navigate(['/dashboard']);
           }
         }, (err) => {

@@ -1,22 +1,5 @@
 <div class="container-fluid">
-    <div class="row animated fadeIn fast">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <input #txtTermino (keyup)="busqueda(txtTermino.value)" type="text" class="form-control" placeholder="buscar postulacion...">
-                <div>
-            </div>
-        </div>
-    </div>
-    <div class="row animated fadeIn fast" *ngIf="cargando">
-        <div class="col-12">
-            <div class="alert alert-info text-center">
-                <h4>Cargando...</h4>
-                <i class="fa fa-spin fa-refresh fa-2x"></i>
-                <p class="mb-0">Por favor espere</p>
-            </div>
-        </div>
-    </div>
+    
     <div class="row animated fadeIn fast" *ngIf="!cargando">
         <div class="col-12">
             <div class="card">
@@ -25,15 +8,18 @@
                     <h6>Total: {{totalPostulaciones}} - {{desde}}</h6>
                     <br><br>
                     <div class="row"> 
-                        <div class="col-md-5">
+                        <div class="col">
                             <h5>Vacantes:</h5>
                             <ng-select [items]="vacantes" 
                                        bindLabel="titulo" 
                                        bindValue="id" 
                                        [clearable] = "false"
-                                       [(ngModel)]="this.id_vacante"
+                                       [(ngModel)]="this.idVacante"
                                        (change)="filtrar()">
                             </ng-select>
+                        </div>
+                        <div class="col">
+                            <input #txtTermino (keyup)="busqueda(txtTermino.value)" type="text" class="form-control mt-4" placeholder="buscar postulacion...">
                         </div>
                     </div>
                     <br>
@@ -48,7 +34,7 @@
                                             <th>Ocupacion</th>
                                             <th>Solicitante</th>
                                             <th>Sueldo</th>
-                                            <th>Aceptado</th>
+                                            <th>Estado</th>
                                             <th class="w100 text-center">Operaciones</th>
                                         </tr>
                                     </thead>
@@ -69,13 +55,25 @@
                                             <td>
                                                 {{postulacion.vacante.sueldo.sueldo}}
                                             </td>
-                                            <td class="text-center"><span class="label label-danger">{{postulacion.aceptado}}</span></td>
+                                            <td class="text-center">
+                                                <span *ngIf="!postulacion.aceptado">Pendiente</span>
+                                                <span *ngIf="postulacion.aceptado">Aceptado</span>
+                                            </td>
                                             <td class="text-nowrap text-center">
-                                               <div  class="btn-group btn-group-sm" role="group" aria-label="...">
-                                                    <button routerLink="/perfil-curriculum/postulacion/{{postulacion.solicitante.id}}/{{postulacion.id}}" type="button" class="btn btn-secondary">ver</button>
-                                                    <button (click)="contratar(postulacion.id)" type="button" class="btn btn-secondary">Contratar</button>
-                                                    <button (click)="eliminar(postulacion.id)" type="button" class="btn btn-secondary">Eliminar</button>
-                                                </div>
+                                                <a class="cursor" (click)="mostrarModal(postulacion.solicitante.id, postulacion.id)"> 
+                                                    <i class="fa fa-eye  m-r-10"></i> 
+                                                </a>
+                                                <a class="cursor" (click)="asignarFavorito(postulacion.id)" *ngIf="!postulacion.favorito"> 
+                                                    <i class="fa fa-heart-o text m-r-10"></i> 
+                                                </a>
+                                                <a class="cursor" (click)="quitarFavorito(postulacion.id)" *ngIf="postulacion.favorito"> 
+                                                    <i class="fa fa-heart text-active text-danger m-r-10"></i> 
+                                                </a>
+                                                <a class="cursor" *ngIf="!postulacion.aceptado" (click)="aceptar(postulacion.id)" data-toggle="tooltip" data-original-title="Aceptar"> 
+                                                    <i class=" fa fa-handshake-o  m-r-10"></i> 
+                                                </a>
+                                                <a class="cursor" (click)="rechazar(postulacion.id)"  data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-trash-o m-r-10 text-info"></i></a>
+
                                             </td>
                                         </tr>
                                     </tbody>
@@ -89,7 +87,15 @@
                         &nbsp;
                         <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguiente</button>
                     </div>
-                    
+                    <div class="row animated fadeIn fast" *ngIf="cargando">
+                        <div class="col-12">
+                            <div class="alert alert-info text-center">
+                                <h4>Cargando...</h4>
+                                <i class="fa fa-spin fa-refresh fa-2x"></i>
+                                <p class="mb-0">Por favor espere</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -101,7 +107,14 @@
 
 
 
-
+<app-vista-completo *ngIf="myModal" [visible]="myModal" 
+                                                    [idSolicitante]= "idSolicitante" 
+                                                    [tipoOperacion]="'postulacion'" 
+                                                    [idOperacion] = "idPostulacion"
+                                                    (cerrar)="cerrarModal($event)"
+                                                    (cancelar)="cancelarModal($event)"
+                                                    >
+</app-vista-completo>
 
 
 

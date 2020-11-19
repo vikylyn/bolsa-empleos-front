@@ -13,9 +13,11 @@ import { Router } from '@angular/router';
   ]
 })
 export class ReferenciaComponent implements OnInit {
-
-
-  id_curriculum: number;
+  myModal = false;
+  myModal2 = false;
+  idCurriculum: number;
+  idReferencia: number;
+  tipoOperacion: string;
   referencias: Referencia[];
   desde = 0;
   cargando = true;
@@ -31,7 +33,7 @@ export class ReferenciaComponent implements OnInit {
       if (resp.ok === false) {
         this.router.navigateByUrl('/curriculum');
       }else {
-        this.id_curriculum = resp.curriculum.id;
+        this.idCurriculum = resp.curriculum.id;
         this.cargarReferencias();
       }
     });
@@ -50,7 +52,7 @@ export class ReferenciaComponent implements OnInit {
 
   cargarReferencias(): void {
     this.cargando = true;
-    this.referenciaService.listar(this.id_curriculum, this.desde)
+    this.referenciaService.listar(this.idCurriculum, this.desde)
     .subscribe(({total, referencias}) => {
       this.referencias = referencias;
       this.totalReferencias = total;
@@ -88,5 +90,24 @@ export class ReferenciaComponent implements OnInit {
     });
   }
 
+  mostrarModal(tipoOperacion: string, idReferencia: number) {
+    this.tipoOperacion = tipoOperacion;
+    this.idReferencia = idReferencia;
+    this.myModal = true;
+  }
+  cerrarModal(e) {
+    this.myModal = e;
+    this.cargarReferencias();
+  }
+  mostrarModal2(idReferencia: number) {
+    this.idReferencia = idReferencia;
+    this.myModal2 = true;
+  }
+  cerrarModal2(e) {
+    this.myModal2 = e;
+  }
+  cancelarModal(e) {
+    this.myModal = e;
+  }
 
 }

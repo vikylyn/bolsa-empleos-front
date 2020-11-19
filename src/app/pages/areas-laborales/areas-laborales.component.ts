@@ -11,6 +11,9 @@ import { GrupoOcupacionalService } from '../../services/administrador/grupo-ocup
   ]
 })
 export class AreasLaboralesComponent implements OnInit {
+  myModal = false;
+  idGrupo: number;
+  tipoOperacion: string;
   totalGrupos = 0;
   grupos: GrupoOcupacional [];
   gruposTemp: GrupoOcupacional [];
@@ -55,18 +58,18 @@ export class AreasLaboralesComponent implements OnInit {
       }
     );
   }
-  eliminar(id: number): void {
+  inhabilitar(id: number): void {
     console.log(id);
     Swal.fire({
       title: 'Estas seguro ?',
       text: 'Se inhabilitara el registro',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Eliminar!',
+      confirmButtonText: 'Inhabilitar!',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
-        this.grupoService.eliminar(id).subscribe( (resp: any) => {
+        this.grupoService.inhabilitar(id).subscribe( (resp: any) => {
           Swal.fire(
             'Inhabilitado!',
             resp.mensaje,
@@ -83,5 +86,45 @@ export class AreasLaboralesComponent implements OnInit {
       }
     });
   }
+  habilitar(id: number): void {
+    console.log(id);
+    Swal.fire({
+      title: 'Estas seguro ?',
+      text: 'Se habilitara el registro',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Habilitar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        this.grupoService.habilitar(id).subscribe( (resp: any) => {
+          Swal.fire(
+            'Habilitado!',
+            resp.mensaje,
+            'success'
+          );
+          this.cargarGrupos();
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelado',
+          '',
+          'error'
+        );
+      }
+    });
+  }
+  mostrarModal(tipoOperacion: string, idGrupo: number) {
+    this.tipoOperacion = tipoOperacion;
+    this.idGrupo = idGrupo;
+    this.myModal = true;
+  }
+  cerrarModal(e) {
+    this.myModal = e;
+    this.cargarGrupos();
+  }
 
+  cancelarModal(e) {
+    this.myModal = e;
+  }
 }

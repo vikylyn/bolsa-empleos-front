@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { Vacante } from '../../../models/empleador/vacante.model';
 import { VacanteService } from '../../../services/vacante/vacante.service';
 import { EmpresaService } from '../../../services/empleador/empresa.service';
@@ -10,6 +9,7 @@ import { Postulacion } from '../../../models/empleador/postulacion.model';
 import Swal from 'sweetalert2';
 import { ContratacionService } from '../../../services/vacante/contratacion.service';
 import { Contratacion } from '../../../models/empleador/contratacion.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-vacantes-solicitante',
@@ -17,33 +17,47 @@ import { Contratacion } from '../../../models/empleador/contratacion.model';
   styles: [
   ]
 })
-export class VacantesSolicitanteComponent implements OnInit {
+export class VacantesSolicitanteComponent implements OnInit, OnDestroy {
+
+  @Input() visible: boolean;
+  @Input() idVacante: number;
+  @Output() cerrar: EventEmitter<boolean> = new EventEmitter();
+
+
   vacante: Vacante;
-  postularme = true;
+  postulando = false;
   aceptado = false;
   postulacion: Postulacion;
   contratado = false;
   contratacion: Contratacion;
   ocupado = false;
- // terminar = false;
-  constructor(private route: ActivatedRoute,
+  verificacionSubscription: Subscription;
+
+  constructor(
               private vacanteService: VacanteService,
               private empresaService: EmpresaService,
               private postulacionService: PostulacionService,
               private loginService: LoginService,
-              private contratacionService: ContratacionService,
-              private router: Router) {
+              private contratacionService: ContratacionService) {
               }
 
   ngOnInit(): void {
     this.cargarVacante();
+    this.veririficarPostulacionWs();
+  }
+  veririficarPostulacionWs(): void {
+    this.verificacionSubscription =  this.postulacionService.verificarPostulacion()
+        .subscribe(( () => {
+          this.verificarPostulacion();
+        }));
   }
   // verificar si el solicitante ya se postulo a la vacante
   verificarPostulacion(): void {
     this.postulacionService.buscarPorIdSolicitanteVacante(this.loginService.solicitante.id, this.vacante.id)
         .subscribe((resp: any) => {
+          console.log(resp);
           this.ocupado = resp.ocupado;
-          this.postularme = resp.postulando;
+          this.postulando = resp.postulando;
           this.contratado = resp.contratado;
           this.postulacion = resp.postulacion;
           this.contratacion = resp.contratacion;
@@ -53,7 +67,7 @@ export class VacantesSolicitanteComponent implements OnInit {
 
   // cargar vacante por id, no contiene la empresa en caso de empleador con empresa
   cargarVacante(): void{
-    this.vacanteService.buscar(this.route.snapshot.params.id)
+    this.vacanteService.buscar(this.idVacante)
         .subscribe((resp: Vacante) => {
           this.vacante = resp;
           this.verificarPostulacion();
@@ -74,8 +88,10 @@ export class VacantesSolicitanteComponent implements OnInit {
   postular(): void {
     const datos = {
                     id_solicitante: this.loginService.solicitante.id,
-                    id_vacante: this.vacante.id
+                    id_vacante: this.vacante.id,
+                    id_empleador: this.vacante.empleador.id
                   };
+    console.log(datos);
     Swal.fire({
       title: 'Desea de postular a la vacante?',
       text: '',
@@ -87,7 +103,7 @@ export class VacantesSolicitanteComponent implements OnInit {
       if (result.value) {
         this.postulacionService.postular(datos).subscribe( (resp: any ) => {
           this.postulacion = resp.postulacion;
-          this.postularme = false;
+          this.postulando = true;
           Swal.fire(resp.mensaje, '', 'success');
         }, (err) => {
           console.log(err);
@@ -116,7 +132,7 @@ export class VacantesSolicitanteComponent implements OnInit {
       if (result.value) {
         this.postulacionService.eliminar(this.postulacion.id).subscribe((resp: any) => {
           Swal.fire(resp.mensaje, '', 'success');
-          this.postularme = true;
+          this.postulando = true;
         }, (err) => {
           console.log(err);
           Swal.fire('Error al eliminar postulacion', err.error.error || err.error.mensaje, 'error');
@@ -141,7 +157,7 @@ export class VacantesSolicitanteComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
-        this.contratacionService.confirmar(this.postulacion.id).subscribe((resp: any) => {
+        this.postulacionService.confirmar(this.postulacion.id).subscribe((resp: any) => {
           Swal.fire(resp.mensaje, '', 'success');
           this.contratado = true;
           this.ocupado = true;
@@ -175,7 +191,7 @@ export class VacantesSolicitanteComponent implements OnInit {
           this.aceptado = false;
           this.postulacion = null;
           this.contratacion = null;
-          this.postularme = true;
+          this.postulando = true;
         }, (err) => {
           console.log(err);
           Swal.fire('Error al confirmar postulacion', err.error.error || err.error.mensaje, 'error');
@@ -188,5 +204,13 @@ export class VacantesSolicitanteComponent implements OnInit {
         );
       }
     });
+  }
+
+  cerrarModal() {
+    this.cerrar.emit(false);
+  }
+
+  ngOnDestroy(): void {
+    this.verificacionSubscription.unsubscribe();
   }
 }

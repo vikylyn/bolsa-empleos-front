@@ -32,7 +32,7 @@ export class SidebarService {
       titulo: 'Principal',
       icono: 'mdi mdi-gauge',
       submenu: [
-        {titulo: 'Inicio', url: '/dashboard', submenu: []},
+        {titulo: 'Inicio', url: '/inicio-empleador', submenu: []},
         {titulo: 'Vacantes', url: '/vacante', submenu: []},
         {titulo: 'Postulaciones', url: '/postulaciones-empleador', submenu: []},
         {titulo: 'Contrataciones', url: '/contrataciones-empleador', submenu: []},

@@ -1,4 +1,4 @@
-<div class="row animated fadeIn fast">
+<div class="row animated fadeIn fast" *ngIf="!myModal">
     <div class="col-12">
         <div class="card" id="4">
             <div class="card-header">
@@ -17,8 +17,7 @@
                     </div>
                 </div>
                 <br>
-                <button [routerLink]="['/curriculum/idioma/formulario']"
-                        [queryParams] = "{'tipo': 'adicionar', 'id': 0, 'id_curriculum': id_curriculum}" 
+                <button (click)="mostrarModal('adicionar', 0)"
                         class="btn btn-success">
                             Adicionar
                 </button>
@@ -49,13 +48,14 @@
                                     {{idioma.nivel_lectura.nombre}}
                                 </td>
                                 <td class="text-nowrap text-center">
-                                    <a [routerLink]="['/curriculum/idioma/formulario']"
-                                       [queryParams] = "{'tipo': 'modificar', 'id': idioma.id, 'id_curriculum': id_curriculum}" 
-                                        data-toggle="tooltip" > 
+                                    <a class="cursor" (click)="mostrarModal2(idioma.id)"> 
+                                        <i class="fa fa-eye  m-r-10"></i> 
+                                    </a>
+                                    <a class="cursor" (click)="mostrarModal('modificar', idioma.id)"> 
                                             <i class="fa fa-pencil m-r-10"></i> 
                                     </a>
-                                    <a (click)="eliminar(idioma.id)" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-close text-danger"></i> </a>
-
+                                    <a (click)="eliminar(idioma.id)" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-trash-o m-r-10 text-info"></i></a>
+                                  
                                 </td>
                             </tr>
                         </tbody> 
@@ -71,3 +71,14 @@
     </div>
 </div>
 
+<app-formulario-idioma *ngIf="myModal" [visible]="myModal" 
+                                       [idCurriculum]= "idCurriculum" 
+                                       [idIdioma]= "idIdioma" 
+                                       [tipoOperacion]="tipoOperacion" 
+                                       (cerrar)="cerrarModal($event)"
+                                       (cancelar)="cancelarModal($event)">
+</app-formulario-idioma>
+<app-ver-idioma *ngIf="myModal2" [visible]="myModal2" 
+                                      [idIdioma] = "idIdioma"
+                                      (cerrar)="cerrarModal2($event)">
+</app-ver-idioma>

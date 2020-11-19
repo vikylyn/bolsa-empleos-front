@@ -10,6 +10,7 @@ import { Imagen } from '../models/imagen.model';
 import { Empleador } from '../models/empleador/empleador.model';
 import { Solicitante } from '../models/solicitante/solicitante.model';
 import { Administrador } from '../models/administrador/administrador.model';
+import { WebsocketService } from './websocket/websocket.service';
 
 const base_url = environment.base_url;
 
@@ -17,10 +18,7 @@ const base_url = environment.base_url;
   providedIn: 'root'
 })
 export class LoginService {
- // rol: Rol;
- // id: number;
   token: string;
- // imagen: Imagen;
   empleador: Empleador;
   solicitante: Solicitante;
   administrador: Administrador;
@@ -65,12 +63,15 @@ export class LoginService {
     localStorage.setItem('token', token);
     if (usuario.credenciales.rol.nombre === 'ROLE_EMPLEADOR') {
       localStorage.setItem('empleador', JSON.stringify(usuario));
-    }
+      this.cargarStorage();
+    }else
     if (usuario.credenciales.rol.nombre === 'ROLE_SOLICITANTE') {
       localStorage.setItem('solicitante', JSON.stringify(usuario));
+      this.cargarStorage();
     }
     if (usuario.credenciales.rol.nombre === 'ROLE_ADMINISTRADOR') {
       localStorage.setItem('administrador', JSON.stringify(usuario));
+      this.cargarStorage();
     }
   }
   guardarImagenStorage(imagen: Imagen): void{
@@ -96,7 +97,7 @@ export class LoginService {
           tap( (resp: any) => {
             localStorage.setItem('token', resp.token);
             this.guardarStorage(resp.usuario , resp.token);
-            this.cargarStorage();
+         //   this.cargarStorage();
             if ( formData.recuerdame === true ) {
               localStorage.setItem('email', resp.usuario.credenciales.email);
             } else {

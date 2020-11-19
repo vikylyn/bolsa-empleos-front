@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Referencia } from '../../../../models/curriculum/referencia.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 import { ReferenciaService } from '../../../../services/solicitante/curriculum/referencia.service';
 import Swal from 'sweetalert2';
 
@@ -12,30 +12,26 @@ import Swal from 'sweetalert2';
   ]
 })
 export class FormularioReferenciaComponent implements OnInit {
+  @Input() visible: boolean;
+  @Input() idCurriculum: number;
+  @Input() idReferencia: number;
+  @Input() tipoOperacion: string;
+  @Output() cerrar: EventEmitter<boolean> = new EventEmitter();
+  @Output() cancelar: EventEmitter<boolean> = new EventEmitter();
   cargarformulario = false;
   formSubmitted = false;
   referenciaForm: FormGroup;
   referencia: Referencia;
-  tipo: string;
-  id: number;
-  id_curriculum: number;
 
   constructor(
           private route: ActivatedRoute,
-          private router: Router,
           private fb: FormBuilder,
           private referenciaService: ReferenciaService
     ) { }
 
   ngOnInit(): void {
-
-    this.route.queryParams
-    .subscribe(params => {
-        this.tipo = params.tipo;
-        this.id = params.id;
-        this.id_curriculum = params.id_curriculum;
-        if (params.tipo === 'modificar') {
-              this.cargarReferencia(params);
+        if (this.tipoOperacion === 'modificar') {
+              this.cargarReferencia();
         }else{
               this.cargarformulario = true;
               this.referenciaForm = this.fb.group({
@@ -44,15 +40,13 @@ export class FormularioReferenciaComponent implements OnInit {
               empresa: ['' , [Validators.required]],
               cargo: ['' , [Validators.required]],
               telefono: ['' , [Validators.required]],
-              id_curriculum: [this.id_curriculum]
+              id_curriculum: [this.idCurriculum]
         });
       }
-    });
   }
 
-  cargarReferencia(params: any): void {
-      console.log(params)
-      this.referenciaService.buscar(params.id)
+  cargarReferencia(): void {
+      this.referenciaService.buscar(this.idReferencia)
       .subscribe((resp: Referencia) => {
         console.log(resp);
         this.referencia = resp;
@@ -63,7 +57,7 @@ export class FormularioReferenciaComponent implements OnInit {
         empresa: [this.referencia.empresa , [Validators.required]],
         cargo: [this.referencia.cargo , [Validators.required]],
         telefono: [this.referencia.telefono , [Validators.required]],
-        id_curriculum: [this.id_curriculum]
+        id_curriculum: [this.idCurriculum]
       });
     });
   }
@@ -80,11 +74,11 @@ export class FormularioReferenciaComponent implements OnInit {
       return;
     }
     console.log(this.referenciaForm.value);
-    if (this.tipo === 'modificar') {
+    if (this.tipoOperacion === 'modificar') {
       this.referenciaService.modificar(this.referenciaForm.value, this.referencia.id)
           .subscribe((resp: any) => {
             Swal.fire(resp.mensaje, '', 'success');
-            this.router.navigateByUrl('/curriculum/referencia');
+            this.cerrarModal();
           }, (err) => {
             console.log(err);
             Swal.fire('Error al modificar Referencia', err.error.error.error || err.error.error || err.error.mensaje, 'error');
@@ -92,9 +86,8 @@ export class FormularioReferenciaComponent implements OnInit {
     }else {
      this.referenciaService.adicionar(this.referenciaForm.value)
           .subscribe((resp: any) => {
-            console.log(resp);
             Swal.fire(resp.mensaje, '', 'success');
-            this.router.navigateByUrl('/curriculum/referencia');
+            this.cerrarModal();
           }, (err) => {
             console.log(err);
             Swal.fire('Error al adicionar Referencia', err.error.mensaje, 'error');
@@ -102,5 +95,11 @@ export class FormularioReferenciaComponent implements OnInit {
     }
   }
 
+  cerrarModal() {
+    this.cerrar.emit(false);
+  }
 
+  cancelarModal() {
+    this.cancelar.emit(false);
+  }
 }

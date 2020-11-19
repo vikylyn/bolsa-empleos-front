@@ -12,9 +12,17 @@ const base_url = environment.base_url;
 export class VacanteService {
 
   constructor(private http: HttpClient) { }
-  listar(id_empleador: number, desde: number): any {
+  listarTodas(id_empleador: number, desde: number): any {
     const token = localStorage.getItem('token');
     return this.http.get<{total: number, vacantes: Vacante[]}>(`${base_url}/vacante/lista/${id_empleador}?desde=${desde}&token=${token}`);
+  }
+  listarHabilitadas(id_empleador: number, desde: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get<{total: number, vacantes: Vacante[]}>(`${base_url}/vacante/lista-habilitadas/${id_empleador}?desde=${desde}&token=${token}`);
+  }
+  listarInhabilitadas(id_empleador: number, desde: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get<{total: number, vacantes: Vacante[]}>(`${base_url}/vacante/lista-inhabilitadas/${id_empleador}?desde=${desde}&token=${token}`);
   }
 
   adicionar(formData: any): any {
@@ -33,11 +41,26 @@ export class VacanteService {
     const token = localStorage.getItem('token');
     return this.http.put(`${base_url}/vacante/${id}?token=${token}`, formData);
   }
-
-  // Inhabilitar ocupacion
+  // Eliminacion logica, atributo de la vacante pasa a eliminado = true;
+  eliminacionLogica(id: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.put(`${base_url}/vacante/eliminacion-logica/${id}?token=${token}`, {});
+  }
+  // Eliminacion fisica, registro borrado de la tabla;
+  eliminacionFisica(id: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.delete(`${base_url}/vacante/eliminacion-fisica/${id}?token=${token}`);
+  }
+  // Inhabilitar vacante
   inhabilitar(id: number): any {
     const token = localStorage.getItem('token');
     return this.http.put(`${base_url}/vacante/inhabilitar/${id}?token=${token}`, {});
+  }
+
+  // habilitar vacante
+  habilitar(id: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.put(`${base_url}/vacante/habilitar/${id}?token=${token}`, {});
   }
 
   // filtrado para el solicitante
@@ -46,5 +69,10 @@ export class VacanteService {
     const token = localStorage.getItem('token');
     return this.http.post(`${base_url}/vacante/filtrar?desde=${desde}&token=${token}`, formData).
             pipe( map((resp: any) => resp.vacantes));
+  }
+
+  busqueda(valor: string, id_empleador: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get<{vacantes: Vacante[]}>(`${base_url}/vacante/busqueda/${id_empleador}/${valor}?token=${token}`);
   }
 }

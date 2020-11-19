@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Solicitante } from '../../../../models/solicitante/solicitante.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { EstadoCivil } from '../../../../models/estado-civil.model';
@@ -14,12 +14,14 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-formulario-datos-personales',
   templateUrl: './formulario-datos-personales.component.html',
-  styles: [
+  styleUrls: [
   ]
 })
 export class FormularioDatosPersonalesComponent implements OnInit {
+  @Input() visible: boolean;
+  @Output() cerrar: EventEmitter<boolean> = new EventEmitter();
+  @Output() cancelar: EventEmitter<boolean> = new EventEmitter();
 
-  
   cargando = false;
   formSubmitted = false;
   solicitante: Solicitante;
@@ -61,11 +63,11 @@ export class FormularioDatosPersonalesComponent implements OnInit {
             telefono: [this.solicitante.telefono, [Validators.required]],
             nacionalidad: [this.solicitante.nacionalidad, [Validators.required]],
             direccion: [this.solicitante.direccion, [Validators.required]],
-            genero: [ this.solicitante.genero , Validators.required],
-            fecha_nac: [this.solicitante.fecha_nac, Validators.required],
-            id_estado_civil: [ this.solicitante.estado_civil.id, Validators.required],
-            id_pais: [1, Validators.required],
-            id_ciudad: [this.solicitante.ciudad.id, Validators.required],
+            genero: [ this.solicitante.genero , [Validators.required]],
+            fecha_nac: [this.solicitante.fecha_nac, [Validators.required]],
+            id_estado_civil: [ this.solicitante.estado_civil.id, [Validators.required, Validators.min(1)]],
+            id_pais: [1, [Validators.required, Validators.min(1)]],
+            id_ciudad: [this.solicitante.ciudad.id, [Validators.required, Validators.min(1)]],
             habilitado: [true],
       });
     });
@@ -79,7 +81,7 @@ export class FormularioDatosPersonalesComponent implements OnInit {
     this.solicictanteService.modificar(this.perfilForm.value, this.loginService.solicitante.id)
         .subscribe( (resp: any) => {
           Swal.fire(resp.mensaje, this.perfilForm.get('email').value, 'success');
-          this.router.navigateByUrl('/curriculum/administracion');
+          this.cerrarModal();
         }, (err) => {
           console.log(err);
           Swal.fire('Error al modificar perfil', err.error.error || err.error.mensaje, 'error');
@@ -93,14 +95,6 @@ export class FormularioDatosPersonalesComponent implements OnInit {
       return false;
     }
   }
-  selectNoValido( campo: string): boolean {
-    const id = this.perfilForm.get(campo).value;
-    if ( id === 0 && this.formSubmitted) {
-      return true;
-    }else {
-      return false;
-    }
-  }
   seleccionarPais(): void{
     const id_pais = this.perfilForm.get('id_pais').value;
     this.ubicacionService.listarCiudades(id_pais)
@@ -108,5 +102,10 @@ export class FormularioDatosPersonalesComponent implements OnInit {
       this.ciudades = resp;
     });
   }
-
+  cancelarModal() {
+    this.cancelar.emit(false);
+  }
+  cerrarModal() {
+    this.cerrar.emit(false);
+  }
 }

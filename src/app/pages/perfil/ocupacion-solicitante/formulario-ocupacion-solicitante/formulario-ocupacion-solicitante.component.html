@@ -1,61 +1,68 @@
 
-    <div class="container">
-      <div class="row justify-content-center animated fadeIn fast">
+    <div class="modal" *ngIf="visible">
+        <div class="row container-modal animated fadeIn fast justify-content-center">
           <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12">
-              <div class="card">
+              <div class="card rounded">
+                  <div class="card-header pt-0 pb-0 header-modal">
+                    <div class="row justify-content-end">
+                        <div class="col-1 pr-0">
+                          <a class="cursor float-right" (click)="cancelarModal()"><i class="fa fa-window-close  cerrar"></i></a>
+                       </div>
+                    </div>
+                  </div>
                   <div class="card-body">
-                    <h4 class="card-title text-center">Adicionar Ocupacion</h4>
-                    <hr>
+                      <h3 class="text-center">Adicionar Ocupacion</h3>
+                      <hr>
                     <form  class="form p-t-20" 
-                        [formGroup]="ocupacionForm">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Nombre:</label>   
-                                    <ng-select 
-                                               bindLabel="nombre"
-                                               placeholder="Seleccionar Ocupacion"
-                                               notFoundText = "Ocupacion no encontrada"
-                                               formControlName="ocupacion">
-                                               <ng-option [value]= "ocupacion" *ngFor="let ocupacion of ocupaciones">
-                                                {{ocupacion.nombre}}
-                                              </ng-option>
-                                    </ng-select>
-                                    <small *ngIf="select2NoValido('ocupacion')" class="form-control-feedback text-danger">Seleccione una ocupacion</small> 
-                                </div>
-                            </div>  
+                    [formGroup]="ocupacionForm">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Nombre:</label>   
+                                <ng-select 
+                                           bindLabel="nombre"
+                                           [clearable]="false"
+                                           placeholder="Seleccionar Ocupacion"
+                                           notFoundText = "Ocupacion no encontrada"
+                                           formControlName="ocupacion">
+                                           <ng-option [value]= "ocupacion" *ngFor="let ocupacion of ocupaciones">
+                                            {{ocupacion.nombre}}
+                                          </ng-option>
+                                </ng-select>
+                                <small *ngIf="select2NoValido('ocupacion')" class="form-control-feedback text-danger">Seleccione una ocupacion</small> 
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="exampleInputuname">Habilitado</label>
+                                <select formControlName="habilitado" class="form-control custom-select">
+                                    <option value="true">verdadero</option>
+                                    <option value="false">falso</option>
+                                </select>                      
+                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="exampleInputuname">Habilitado</label>
-                                    <select formControlName="habilitado" class="form-control custom-select">
-                                        <option value="true">verdadero</option>
-                                        <option value="false">falso</option>
-                                    </select>                      
-                                </div>
+                        
+                    </div> 
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="text-center">
+                                <button  (click)="guardar()" type="submit" class="btn btn-success waves-effect waves-light">
+                                    <i class="fa fa-save"></i>
+                                    Guardar  
+                                </button>
+                                &nbsp;
+                                <button (click)="cerrarModal()" type="button" class="btn btn-inverse">Cancelar</button>
                             </div>
-                            
-                        </div> 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="text-center">
-                                    <button  (click)="guardar()" type="submit" class="btn btn-success waves-effect waves-light">
-                                        <i class="fa fa-save"></i>
-                                        Guardar  
-                                    </button>
-                                    &nbsp;
-                                    <button routerLink="/ocupaciones-solicitante" type="button" class="btn btn-inverse">Cancelar</button>
-                                </div>
-                            </div>
-                            
-                        </div> 
-                            
-                
+                        </div>
+                        
+                    </div> 
+                        
+            
                     </form>
                   </div>
               </div>
           </div>
-      </div>
-    </div>
- 
+        </div>
+  </div> 

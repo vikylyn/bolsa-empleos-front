@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Administrador } from '../../../models/administrador/administrador.model';
 import { AdministradorService } from '../../../services/administrador/administrador.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { LoginService } from '../../../services/login.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -13,45 +11,39 @@ import Swal from 'sweetalert2';
   ]
 })
 export class FormularioAdministradorComponent implements OnInit {
+  @Input() visible: boolean;
+  @Input() idAdministrador: number;
+  @Input() tipoOperacion: string;
+  @Output() cerrar: EventEmitter<boolean> = new EventEmitter();
+  @Output() cancelar: EventEmitter<boolean> = new EventEmitter();
 
   cargarformulario = false;
   public formSubmitted = false;
   public adminForm: FormGroup;
   public administrador: Administrador;
-  public tipo: string;
-  public id: number;
   constructor(public adminService: AdministradorService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private fb: FormBuilder,
-              private loginService: LoginService) { }
+              private fb: FormBuilder) { }
 
   ngOnInit(): void {
-
-    this.route.queryParams
-      .subscribe(params => {
-        this.tipo = params.tipo;
-        this.id = params.id;
-        if (params.tipo === 'modificar') {
-          this.cargarAdministrador(params);
-        }else{
-          this.cargarformulario = true;
-          this.adminForm = this.fb.group({
-          nombre: ['', [ Validators.required]],
-          apellidos: ['', [Validators.required]],
-          email: ['', [Validators.required, Validators.email]],
-          password: ['', [Validators.required]],
-          password2: ['', [Validators.required]],
-          cedula: ['', [Validators.required]],
-          telefono: ['', [Validators.required]],
-          genero: [ 0 , Validators.required],
-          habilitado: [true, Validators.required],
-          id_rol: [1, [Validators.required]]
-          }, {
-            validators: this.passwordsIguales('password', 'password2')
-          });
-        }
+    if (this.tipoOperacion === 'modificar') {
+      this.cargarAdministrador();
+    }else{
+      this.cargarformulario = true;
+      this.adminForm = this.fb.group({
+      nombre: ['', [ Validators.required]],
+      apellidos: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+      password2: ['', [Validators.required]],
+      cedula: ['', [Validators.required]],
+      telefono: ['', [Validators.required]],
+      genero: [ 0 , Validators.required],
+      habilitado: [true, Validators.required],
+      id_rol: [1, [Validators.required]]
+      }, {
+        validators: this.passwordsIguales('password', 'password2')
       });
+    }
   }
   passwordsIguales(pass1Name: string, pass2Name: string): any {
     return ( group: FormGroup) => {
@@ -90,8 +82,8 @@ export class FormularioAdministradorComponent implements OnInit {
       return false;
     }
   }
-  cargarAdministrador(params: any): void {
-    this.adminService.buscar(params.id)
+  cargarAdministrador(): void {
+    this.adminService.buscar(this.idAdministrador)
     .subscribe((resp: any) => {
       this.administrador = resp;
       this.cargarformulario = true;
@@ -104,8 +96,8 @@ export class FormularioAdministradorComponent implements OnInit {
       genero: [ this.administrador.genero , Validators.required],
       habilitado: [this.administrador.habilitado, Validators.required],
       id_rol: [1, [Validators.required]]
+      });
     });
-  });
   }
   guardar(): void {
     this.formSubmitted = true;
@@ -116,11 +108,11 @@ export class FormularioAdministradorComponent implements OnInit {
       return;
     }
     console.log(this.adminForm.value);
-    if (this.tipo === 'modificar') {
+    if (this.tipoOperacion === 'modificar') {
       this.adminService.modificar(this.adminForm.value, this.administrador.id)
           .subscribe((resp: any) => {
             Swal.fire(resp.mensaje, '', 'success');
-            this.router.navigateByUrl('/administrador');
+            this.cerrarModal();
           }, (err) => {
             console.log(err);
             Swal.fire('Error al modificar Administrador', err.error.mensaje, 'error');
@@ -130,7 +122,7 @@ export class FormularioAdministradorComponent implements OnInit {
           .subscribe((resp: any) => {
             console.log(resp);
             Swal.fire(resp.mensaje, '', 'success');
-            this.router.navigateByUrl('/administrador');
+            this.cerrarModal();
           }, (err) => {
             console.log(err);
             Swal.fire('Error al adicionar Administrador', err.error.mensaje, 'error');
@@ -138,5 +130,12 @@ export class FormularioAdministradorComponent implements OnInit {
     }
   }
 
+  cerrarModal() {
+    this.cerrar.emit(false);
+  }
+
+  cancelarModal() {
+    this.cancelar.emit(false);
+  }
 
 }

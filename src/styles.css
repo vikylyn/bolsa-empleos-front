@@ -28,3 +28,41 @@ ng-select.ng-invalid.ng-touched .ng-select-container {
   width: 100%;
   padding: 2% 0;
 }
+
+.no-leido {
+  background: #F1ECEC;
+}
+   
+
+/* Modal */
+.modal {
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, .4);
+}
+.container-modal {
+  padding-top: 100px;
+  display: flex;
+  margin: auto;
+  height: 100vh;
+  width: 100%;
+  overflow-y: auto;
+
+}
+
+.header-modal {
+  background: #242a33;
+}
+
+
+
+/**/
+.cerrar:hover {
+  color: red;
+}
+
+.cerrar {
+  color: white;
+}

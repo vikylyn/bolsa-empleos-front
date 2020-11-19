@@ -1,0 +1,28 @@
+<div class="modal" *ngIf="visible">
+    <div class="row container-modal animated fadeIn fast justify-content-center">
+      <div class="col-xl-4 col-lg-5 col-md-8 col-sm-12">
+          <div class="card rounded">
+              <div class="card-header pt-0 pb-0 header-modal">
+                <div class="row justify-content-end">
+                    <div class="col-1 pr-0">
+                      <a class="cursor float-right" (click)="cerrarModal()"><i class="fa fa-window-close  cerrar"></i></a>
+                   </div>
+                </div>
+              </div>
+              <div class="card-body" *ngIf="contratacion">
+                    <h3 class="text-center">Datos de la contratacion</h3>
+                    <hr>
+                    <span class="font-weight-bold">Solicitante: </span> {{contratacion.solicitante.nombre}} {{contratacion.solicitante.apellidos}} <br>
+                    <span class="font-weight-bold">Cedula de identidad: </span> {{contratacion.solicitante.cedula}}<br>
+                    <span class="font-weight-bold">Contratado en: </span> {{contratacion.creado_en | date: 'long'}} <br> 
+                    <span class="font-weight-bold">Vacante: </span> {{contratacion.vacante.titulo}} <br>
+                    <span class="font-weight-bold">Ocupacion: </span> {{contratacion.vacante.requisitos.ocupacion.nombre}} <br>
+                    <span class="font-weight-bold">Sueldo: </span> {{contratacion.vacante.sueldo.sueldo}} <br>
+                    <span class="font-weight-bold">Pais: </span> {{contratacion.vacante.ciudad.estado.pais.nombre}} <br>
+                    <span class="font-weight-bold">Ciudad: </span> {{contratacion.vacante.ciudad.nombre}} - {{contratacion.vacante.ciudad.estado.nombre}} <br>
+                    <span class="font-weight-bold">Direccion: </span> {{contratacion.vacante.direccion}} 
+              </div>
+          </div>
+      </div>
+    </div>
+</div> 

@@ -1,4 +1,4 @@
-<div class="container-fluid animated fadeIn fast">
+<div class="container-fluid animated fadeIn fast" *ngIf="!myModal">
     <div class="row">
         <div class="col-12">
             <div class="card" id="4">
@@ -18,8 +18,7 @@
                         </div>
                     </div>
                     <br>
-                    <button [routerLink]="['/curriculum/referencia/formulario']"
-                            [queryParams] = "{'tipo': 'adicionar', 'id': 0, 'id_curriculum': id_curriculum}" 
+                    <button (click)="mostrarModal('adicionar', 0)"
                             class="btn btn-success">
                                 Adicionar 
                     </button>
@@ -54,13 +53,14 @@
                                         {{referencia.telefono}}
                                     </td>
                                     <td class="text-nowrap text-center">
-                                        <a [routerLink]="['/curriculum/referencia/formulario']"
-                                           [queryParams] = "{'tipo': 'modificar', 'id': referencia.id, 'id_curriculum': id_curriculum}" 
-                                            data-toggle="tooltip" > 
+                                        <a class="cursor" (click)="mostrarModal2(referencia.id)"> 
+                                            <i class="fa fa-eye  m-r-10"></i> 
+                                        </a>
+                                        <a class="cursor" (click)="mostrarModal('modificar', referencia.id)" > 
                                                 <i class="fa fa-pencil m-r-10"></i> 
                                         </a>
-                                        <a (click)="eliminar(referencia.id)" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-close text-danger"></i> </a>
-    
+                                        <a (click)="eliminar(referencia.id)" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"><i class="fa fa-trash-o m-r-10 text-info"></i></a>
+                                    
                                     </td>
                                 </tr>
                             </tbody> 
@@ -79,3 +79,15 @@
 </div>
 
 
+<app-formulario-referencia *ngIf="myModal" [visible]="myModal" 
+                                                    [idCurriculum]= "idCurriculum" 
+                                                    [idReferencia]= "idReferencia" 
+                                                    [tipoOperacion]="tipoOperacion" 
+                                                    (cerrar)="cerrarModal($event)"
+                                                    (cancelar)="cancelarModal($event)">
+</app-formulario-referencia>
+
+<app-ver-referencia *ngIf="myModal2" [visible]="myModal2" 
+                                      [idReferencia] = "idReferencia"
+                                      (cerrar)="cerrarModal2($event)">
+</app-ver-referencia>

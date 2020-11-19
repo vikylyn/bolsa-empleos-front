@@ -1,10 +1,13 @@
-<div class="row justify-content-center">
+<div class="row justify-content-center" *ngIf="!myModal && !myModal2">
     <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
+        <button (click)="mostrarModal3()" type="button" class="btn btn-success btn-block">Ver Curriculum</button>
         <div class="card">
+            
             <div class="card-header"> 
                 
             </div>
-            <div class="card-body">
+            <div class="card-body ">
+               
                 <h2 class="text-center">Datos Personales</h2>
                 <hr>
                 <div class="row justify-content-center">
@@ -49,7 +52,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2" >
-                                        <a routerLink="/curriculum/administracion/datos-personales" class="btn btn-info btn-lg btn-block"> Modificar datos</a>
+                                        <a (click)="mostrarModal2()" class="btn btn-info  btn-block text-white"> Modificar datos</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -61,7 +64,7 @@
     </div>
 </div>
 
-<div class="row justify-content-center">
+<div class="row justify-content-center" *ngIf="!myModal && !myModal2">
     <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
         <div id="2" class="card">
             <div class="card-body">
@@ -85,7 +88,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2" >
-                                        <a routerLink="/curriculum/administracion/encabezado" class="btn btn-info btn-lg btn-block"> Modificar datos </a>
+                                        <a (click)="mostrarModal()" class="btn btn-info btn-block text-white"> Modificar datos </a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -99,3 +102,19 @@
 </div>
 
 
+<app-formulario-encabezado  [visible]="myModal" 
+                            (cerrar)="cerrarModal($event)"
+                            (cancelar)="cancelarModal($event)">
+</app-formulario-encabezado>
+
+<app-formulario-datos-personales [visible]="myModal2" (cerrar)="cerrarModal2($event)" (cancelar)="cancelarModal2($event)">
+</app-formulario-datos-personales>
+
+
+<app-vista-completo *ngIf="myModal3" [visible]="myModal3" 
+                                                    [idSolicitante]= "solicitante.id" 
+                                                    [tipoOperacion]="'ver-curriculum'" 
+                                                    (cerrar)="cerrarModal3($event)"
+                                                    (cancelar)="cancelarModal3($event)"
+                                                    >
+</app-vista-completo>

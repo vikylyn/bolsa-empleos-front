@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Habilidad } from '../../../../models/curriculum/habilidad.model';
-import { Router, ActivatedRoute } from '@angular/router';
 import { HabilidadService } from '../../../../services/solicitante/curriculum/habilidad.service';
 import Swal from 'sweetalert2';
 import { CurriculumHabilidad } from '../../../../models/curriculum/curriculum-habilidad.model';
@@ -13,29 +12,29 @@ import { CurriculumHabilidad } from '../../../../models/curriculum/curriculum-ha
   ]
 })
 export class FormularioHabilidadComponent implements OnInit {
+  @Input() visible: boolean;
+  @Input() id_curriculum: number;
+  @Output() cerrar: EventEmitter<boolean> = new EventEmitter();
+  @Output() cancelar: EventEmitter<boolean> = new EventEmitter();
+
+
   cargarformulario = false;
   formSubmitted = false;
   habilidadForm: FormGroup;
   curriculum_habilidad: CurriculumHabilidad;
   habilidades: Habilidad[];
-  id_curriculum: number;
+
   constructor(
-          private route: ActivatedRoute,
-          private router: Router,
           private fb: FormBuilder,
           private habilidadService: HabilidadService
     ) { }
 
   ngOnInit(): void {
-    this.route.queryParams
-    .subscribe(params => {
-        this.id_curriculum = params.id_curriculum;
-        this.cargarHabilidades();
-        this.cargarformulario = true;
-        this.habilidadForm = this.fb.group({
-          id_habilidad: [ null , [Validators.required]],
-          id_curriculum: [this.id_curriculum]
-        });
+    this.cargarHabilidades();
+    this.cargarformulario = true;
+    this.habilidadForm = this.fb.group({
+      id_habilidad: [ null , [Validators.required]],
+      id_curriculum: [this.id_curriculum]
     });
   }
   cargarHabilidades(): void {
@@ -65,11 +64,17 @@ export class FormularioHabilidadComponent implements OnInit {
         .subscribe((resp: any) => {
           console.log(resp);
           Swal.fire(resp.mensaje, '', 'success');
-          this.router.navigateByUrl('/curriculum/habilidad');
+          this.cerrarModal();
         }, (err) => {
           console.log(err);
           Swal.fire('Error al adicionar Habilidad', err.error.mensaje, 'error');
         });
+  }
+  cerrarModal() {
+    this.cerrar.emit(false);
+  }
+  cancelarModal() {
+    this.cancelar.emit(false);
   }
 
 }

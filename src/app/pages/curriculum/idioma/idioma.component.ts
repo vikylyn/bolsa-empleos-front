@@ -13,8 +13,11 @@ import Swal from 'sweetalert2';
   ]
 })
 export class IdiomaComponent implements OnInit {
-
-  id_curriculum: number;
+  myModal = false;
+  myModal2 = false;
+  idCurriculum: number;
+  idIdioma: number;
+  tipoOperacion: string;
   idiomas: CurriculumIdioma[];
   desde = 0;
   cargando = true;
@@ -31,7 +34,7 @@ export class IdiomaComponent implements OnInit {
       if (resp.ok === false) {
         this.router.navigateByUrl('/curriculum');
       }else {
-        this.id_curriculum = resp.curriculum.id;
+        this.idCurriculum = resp.curriculum.id;
         this.cargarIdiomas();
       }
     });
@@ -50,7 +53,7 @@ export class IdiomaComponent implements OnInit {
 
   cargarIdiomas(): void {
     this.cargando = true;
-    this.idiomaService.listar(this.id_curriculum, this.desde)
+    this.idiomaService.listar(this.idCurriculum, this.desde)
     .subscribe(({total, curriculums_idiomas}) => {
       this.idiomas = curriculums_idiomas;
       this.totalIdiomas = total;
@@ -90,4 +93,24 @@ export class IdiomaComponent implements OnInit {
   }
 
 
+  mostrarModal(tipoOperacion: string, idIdioma: number) {
+    this.tipoOperacion = tipoOperacion;
+    this.idIdioma = idIdioma;
+    this.myModal = true;
+  }
+  cerrarModal(e) {
+    this.myModal = e;
+    this.cargarIdiomas();
+  }
+
+  cancelarModal(e) {
+    this.myModal = e;
+  }
+  mostrarModal2(idIdioma: number) {
+    this.idIdioma = idIdioma;
+    this.myModal2 = true;
+  }
+  cerrarModal2(e) {
+    this.myModal2 = e;
+  }
 }

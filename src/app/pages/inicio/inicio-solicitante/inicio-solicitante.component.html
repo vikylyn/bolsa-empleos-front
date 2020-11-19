@@ -1,7 +1,7 @@
-<div class="container">
+<div class="container-fluid" *ngIf="!myModal">
     <div class="row justify-content-center">
-        <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
-            <div class="card">
+        <div class="col-xl-5 col-lg-5 col-md-10 col-sm-12">
+            <div class="card ">
                 <h3 *ngIf="mostrar" class="text-center pt-3"><span class="badge badge-info">Busqueda </span></h3>
                 <div class="card-body">
                     <form *ngIf="mostrar"  autocomplete="off" 
@@ -27,6 +27,7 @@
                                 notFoundText = "Pais no encontrado"
                                 placeholder="Seleccionar Pais"
                                 appendTo="body"
+                                [clearable] = "false"
                                 formControlName="id_pais">
                                 <ng-option [value]= "pais.id" *ngFor="let pais of paises">
                                  {{pais.nombre}}
@@ -38,6 +39,7 @@
                             <ng-select 
                                        placeholder="Seleccionar Ciudad"
                                        appendTo="body"
+                                       [clearable] = "false"
                                        notFoundText = "ciudad no encontrada"
                                        formControlName="id_ciudad">
                                        <ng-option [value]= "0">
@@ -55,6 +57,7 @@
                             <ng-select 
                                        placeholder="Seleccionar Fecha"
                                        appendTo="body"
+                                       [clearable] = "false"
                                        notFoundText = "Fecha no encontrada"
                                        formControlName="fecha">
                                        <ng-option [value]= "fecha.fecha" *ngFor="let fecha of fechas">
@@ -67,12 +70,13 @@
                             <ng-select 
                                         placeholder="Seleccionar Tipo de Contrato"
                                         bindLabel="tipo"
+                                        [clearable] = "false"
                                         notFoundText = "Tipo de contrato no encontrado" 
                                         formControlName="id_tipo_contrato">
                                         <ng-option [value]= "0">
                                             Cualquiera
                                         </ng-option>
-                                        <ng-option [value]= "tipo.id" *ngFor="let tipo of tipo_contratos">
+                                        <ng-option [value]= "tipo.id" *ngFor="let tipo of tipoContratos">
                                             {{tipo.tipo}}
                                           </ng-option>
                             </ng-select>
@@ -88,21 +92,21 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row d-flex justify-content-between align-items-center">
-            <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 " *ngFor="let vacante of vacantes2">
+    </div><!-- d-flex justify-content-between align-items-center // col-xl-6 col-lg-12 col-md-12 col-sm-12  // col-md-6 col-lg-6 col-xlg-4-->
+    <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-6 col-xlg-4" *ngFor="let vacante of vacantes2">
                 <div class="card">
                     <div class="card-body" *ngIf="vacante.empleador.empresa && vacante.empresa">
                         <div class="row">
                             <div class="col-sm-12 col-xl-5 col-lg-5 text-center">
                                 <h5>{{vacante.empresa.nombre}}</h5>
-                                <img class="w100" [src]="vacante.empresa.logo.url" alt="">
+                                <img class="img-circle img-responsive" [src]="vacante.empresa.logo.url" alt="">
                             </div>
                             <div class="col-sm-12 col-xl-7 col-lg-7 text-center">
                                 <h5>{{vacante.titulo}}</h5>
                                 <h5>Trabajo ubicado en {{vacante.ciudad.nombre}} - {{vacante.ciudad.estado.pais.nombre}}</h5>
                                 <h5>Publicado en {{vacante.creado_en}}</h5>
-                                <button routerLink="/inicio-solicitante/vacante/{{vacante.id}}" class="btn btn-success btn-lg btn-block mt-2">ver detalle</button>
+                                <button (click)="mostrarModal(vacante.id)" class="btn btn-success btn-lg btn-block mt-2">ver detalle</button>
                             </div>
                         </div>                        
                     </div>
@@ -123,3 +127,7 @@
         
 </div>
 
+<app-vacantes-solicitante *ngIf="myModal" [visible]="myModal" 
+                                          [idVacante]= "idVacante" 
+                                          (cerrar)="cerrarModal($event)">
+</app-vacantes-solicitante>

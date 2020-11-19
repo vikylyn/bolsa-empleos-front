@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CurriculumIdioma } from '../../../../models/curriculum/curriculum-idioma.model';
 import { Idioma } from '../../../../models/idioma/idioma.model';
@@ -14,19 +14,21 @@ import Swal from 'sweetalert2';
   ]
 })
 export class FormularioIdiomaComponent implements OnInit {
-
+  @Input() visible: boolean;
+  @Input() idCurriculum: number;
+  @Input() idIdioma: number;
+  @Input() tipoOperacion: string;
+  @Output() cerrar: EventEmitter<boolean> = new EventEmitter();
+  @Output() cancelar: EventEmitter<boolean> = new EventEmitter();
   cargarformulario = false;
   formSubmitted = false;
   idiomaForm: FormGroup;
-  curriculum_idioma: CurriculumIdioma;
+  curriculumIdioma: CurriculumIdioma;
   idiomas: Idioma[];
   niveles: NivelIdioma[];
-  tipo: string;
-  id: number;
-  id_curriculum: number;
+
   constructor(
           private route: ActivatedRoute,
-          private router: Router,
           private fb: FormBuilder,
           private idiomaService: IdiomaService
     ) { }
@@ -34,27 +36,22 @@ export class FormularioIdiomaComponent implements OnInit {
   ngOnInit(): void {
     this.cargarIdiomas();
     this.cargarNiveles();
-    this.route.queryParams
-    .subscribe(params => {
-        this.tipo = params.tipo;
-        this.id = params.id;
-        this.id_curriculum = params.id_curriculum;
-        if (params.tipo === 'modificar') {
-              this.cargarIdioma(params);
-        }else{
-              this.cargarformulario = true;
-              this.idiomaForm = this.fb.group({
-              id_curriculum: [this.id_curriculum],
-              id_idioma: [0 , [Validators.required]],
-              id_nivel_escrito: [0 , [Validators.required]],
-              id_nivel_oral: [0 , [Validators.required]],
-              id_nivel_lectura: [0 , [Validators.required]]
+
+    if ( this.tipoOperacion === 'modificar') {
+          this.cargarIdioma();
+    }else{
+          this.cargarformulario = true;
+          this.idiomaForm = this.fb.group({
+          id_curriculum: [this.idCurriculum],
+          id_idioma: [0 , [Validators.required, Validators.min(1)]],
+          id_nivel_escrito: [0 , [Validators.required, Validators.min(1)]],
+          id_nivel_oral: [0 , [Validators.required, Validators.min(1)]],
+          id_nivel_lectura: [0 , [Validators.required, Validators.min(1)]]
         });
-      }
-    });
+    }
   }
   cargarIdiomas(): void {
-    this.idiomaService.listarIdiomas().subscribe(({idiomas}) => {
+    this.idiomaService.listarIdiomasNoAsigandos(this.idCurriculum).subscribe(({idiomas}) => {
       this.idiomas = idiomas;
     });
   }
@@ -63,17 +60,17 @@ export class FormularioIdiomaComponent implements OnInit {
       this.niveles = niveles_idioma;
     });
   }
-  cargarIdioma(params: any): void {
-      this.idiomaService.buscar(params.id)
+  cargarIdioma(): void {
+      this.idiomaService.buscar(this.idIdioma)
       .subscribe((resp: CurriculumIdioma) => {
-        this.curriculum_idioma = resp;
+        this.curriculumIdioma = resp;
         this.cargarformulario = true;
         this.idiomaForm = this.fb.group({
-          id_curriculum: [this.id_curriculum],
-          id_idioma: [this.curriculum_idioma.idioma.id , [Validators.required]],
-          id_nivel_escrito: [this.curriculum_idioma.nivel_escrito.id , [Validators.required]],
-          id_nivel_oral: [this.curriculum_idioma.nivel_oral.id , [Validators.required]],
-          id_nivel_lectura: [this.curriculum_idioma.nivel_lectura.id , [Validators.required]]
+          id_curriculum: [this.idCurriculum],
+          id_idioma: [this.curriculumIdioma.idioma.id , [Validators.required, Validators.min(1)]],
+          id_nivel_escrito: [this.curriculumIdioma.nivel_escrito.id , [Validators.required, Validators.min(1)]],
+          id_nivel_oral: [this.curriculumIdioma.nivel_oral.id , [Validators.required, Validators.min(1)]],
+          id_nivel_lectura: [this.curriculumIdioma.nivel_lectura.id , [Validators.required, Validators.min(1)]]
       });
     });
   }
@@ -84,38 +81,25 @@ export class FormularioIdiomaComponent implements OnInit {
       return false;
    }
   }
-  selectNoValido( campo: string): boolean {
-    const id = this.idiomaForm.get(campo).value;
-    if ( id === 0 && this.formSubmitted) {
-      return true;
-    }else {
-      return false;
-    }
-  }
   guardar(): void {
     this.formSubmitted = true;
-    if (this.idiomaForm.get('id_curriculum').value === 0 || this.idiomaForm.get('id_idioma').value === 0 || this.idiomaForm.get('id_nivel_escrito').value === 0 || this.idiomaForm.get('id_nivel_oral').value === 0 || this.idiomaForm.get('id_nivel_lectura').value === 0) {
-      return;
-    }
     if (this.idiomaForm.invalid) {
       return;
     }
     console.log(this.idiomaForm.value);
-    if (this.tipo === 'modificar') {
-      this.idiomaService.modificar(this.idiomaForm.value, this.curriculum_idioma.id)
+    if (this.tipoOperacion === 'modificar') {
+      this.idiomaService.modificar(this.idiomaForm.value, this.curriculumIdioma.id)
           .subscribe((resp: any) => {
             Swal.fire(resp.mensaje, '', 'success');
-            this.router.navigateByUrl('/curriculum/idioma');
-          }, (err) => {
+            this.cerrarModal();          }, (err) => {
             console.log(err);
             Swal.fire('Error al modificar Idioma', err.error.error.error || err.error.error || err.error.mensaje, 'error');
           });
     }else {
      this.idiomaService.adicionar(this.idiomaForm.value)
           .subscribe((resp: any) => {
-            console.log(resp);
             Swal.fire(resp.mensaje, '', 'success');
-            this.router.navigateByUrl('/curriculum/idioma');
+            this.cerrarModal();
           }, (err) => {
             console.log(err);
             Swal.fire('Error al adicionar Idioma', err.error.mensaje, 'error');
@@ -123,5 +107,11 @@ export class FormularioIdiomaComponent implements OnInit {
     }
   }
 
+  cerrarModal() {
+    this.cerrar.emit(false);
+  }
 
+  cancelarModal() {
+    this.cancelar.emit(false);
+  }
 }

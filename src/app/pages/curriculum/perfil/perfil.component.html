@@ -222,7 +222,8 @@
                             <div class="row">
                                 <div class="col-12">
                                     <button *ngIf="tipo === 'postulacion'" (click)="contratar()" class="btn btn-success btn-block">Contratar</button>
-                                    <button *ngIf="tipo === 'contratacion'" (click)="terminar()" class="btn btn-danger btn-block">Terminar</button>
+                                    <button *ngIf="contratacion && !contratacion.confirmado && tipo === 'contratacion'" (click)="eliminar()" class="btn btn-danger btn-block">Eliminar</button>
+                                    <button *ngIf="contratacion && contratacion.confirmado && tipo === 'contratacion'" (click)="terminar()" class="btn btn-danger btn-block">Terminar</button>
 
                                 </div>
                             </div>

@@ -1,22 +1,5 @@
 
-<div class="row animated fadeIn fast">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <input #txtTermino (keyup)="busqueda(txtTermino.value)" type="text" class="form-control" placeholder="buscar profesion...">
-            <div>
-        </div>
-    </div>
-</div>
-<div class="row animated fadeIn fast" *ngIf="cargando">
-    <div class="col-12">
-        <div class="alert alert-info text-center">
-            <h4>Cargando...</h4>
-            <i class="fa fa-spin fa-refresh fa-2x"></i>
-            <p class="mb-0">Por favor espere</p>
-        </div>
-    </div>
-</div>
+
 <div class="row animated fadeIn fast" *ngIf="!cargando">
     <div class="col-12">
         <div class="card">
@@ -24,22 +7,34 @@
                 <h4 class="card-title">Ocupaciones</h4>
                 <h6>Total: {{totalOcupaciones}} - {{desde}}</h6>
                 
-                <div class="row"> 
-                    <div class="col-md-4">
-                        <h5 class="m-t-30 m-b-10 text-white">Adicionar</h5>
-                        <button [routerLink]="['/profesion/formulario']"
-                            [queryParams] = "{'tipo': 'adicionar', 'id': 0}" 
-                            class="btn btn-success">
-                                 Adicionar
+                <div class="row justify-content-end"> 
+                    
+                    <div class="col-6">
+                        <label>Grupo Ocupacional:</label>
+                        <ng-select (change)="filtrar()"
+                                   appendTo="body"
+                                   [clearable] = "false"
+                                   notFoundText = "grupo no encontrado"
+                                   [(ngModel)]="idGrupo">
+                                   <ng-option [value]= "0">Cualquiera</ng-option>
+                                   <ng-option [value]= "grupo.id" *ngFor="let grupo of gruposOcupacionales" [value]="grupo.id">{{grupo.nombre}}
+                                   </ng-option>
+                        </ng-select>
+                    </div>
+                    
+                    
+                </div>
+                <div class="row ">
+                    <div class="col"> 
+                        <button (click)="mostrarModal('adicionar', 0)"
+                        class="btn btn-success mt-5">
+                             Adicionar
                         </button>
                     </div>
-                    <div class="col-md-8">
-                        <h5 class="m-t-30 m-b-10">Grupo Ocupacional:</h5>
-                        <select [(ngModel)]="id_grupo" (change)="filtrar()" class="form-control" name="" id="">
-                            <option value="0">Cualquiera</option>
-                            <option *ngFor="let grupo of grupos_ocupacionales" [value]="grupo.id">{{grupo.nombre}}</option>
-                        </select>
+                    <div class="col-6">
+                        <input #txtTermino (keyup)="busqueda(txtTermino.value)" type="text" class="form-control mt-5" placeholder="buscar profesion...">
                     </div>
+                   
                 </div>
                 <br>
                 <div class="table-responsive">
@@ -65,16 +60,15 @@
                                     {{ocupacion.grupo_ocupacional.nombre}}
                                 </td>
                                 <td class="text-center hidden-md-down">
-                                    <i *ngIf="ocupacion.habilitado" class="fa fa-thumbs-o-up"></i>
-                                    <i *ngIf="!ocupacion.habilitado" class="fa fa-thumbs-o-down"></i>
+                                    <i *ngIf="ocupacion.habilitado" class="fa  fa-thumbs-up text-info"></i>
+                                    <i *ngIf="!ocupacion.habilitado" class="fa  fa-thumbs-down text-secondary"></i>
                                 </td>
                                 <td class="text-nowrap text-center">
-                                    <a [routerLink]="['/profesion/formulario']"
-                                        [queryParams] = "{'tipo': 'modificar', 'id': ocupacion.id}"
-                                        data-toggle="tooltip"> 
+                                    <a class="cursor" (click)="mostrarModal('modificar', ocupacion.id)"> 
                                             <i class="fa fa-pencil m-r-10"></i> 
                                     </a>
-                                    <a (click)="eliminar(ocupacion.id)" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-close text-danger"></i> </a>
+                                    <a class="cursor" *ngIf="!ocupacion.habilitado" (click)="habilitar(ocupacion.id)"><i class="fa fa-arrow-circle-up text-success m-r-10"></i></a>
+                                    <a *ngIf="ocupacion.habilitado" (click)="inhabilitar(ocupacion.id)" class="cursor" data-toggle="tooltip" data-original-title="Inhabilitar"><i class="fa fa-arrow-circle-down text-danger m-r-10"></i></a>
                                 </td>
                             </tr>
                         </tbody>
@@ -85,7 +79,15 @@
                     &nbsp;
                     <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguiente</button>
                 </div>
-                
+                <div class="row animated fadeIn fast" *ngIf="cargando">
+                    <div class="col-12">
+                        <div class="alert alert-info text-center">
+                            <h4>Cargando...</h4>
+                            <i class="fa fa-spin fa-refresh fa-2x"></i>
+                            <p class="mb-0">Por favor espere</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -94,7 +96,13 @@
 
 
 
-
+<app-formulario-profesion *ngIf="myModal" [visible]="myModal" 
+                                                    [idOcupacion]= "idOcupacion" 
+                                                    [tipoOperacion]="tipoOperacion" 
+                                                    (cerrar)="cerrarModal($event)"
+                                                    (cancelar)="cancelarModal($event)"
+                                                    >
+</app-formulario-profesion>
 
 
 

@@ -39,8 +39,12 @@ export class AdministradorService {
     const token = localStorage.getItem('token');
     return this.http.post(`${base_url}/administrador?token=${token}`, formData);
   }
-  deshabilitar(id: number): any {
+  inhabilitar(id: number): any {
     const token = localStorage.getItem('token');
-    return this.http.get(`${base_url}/administrador/deshabilitar/${id}?token=${token}`);
+    return this.http.get(`${base_url}/administrador/inhabilitar/${id}?token=${token}`);
+  }
+  habilitar(id: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get(`${base_url}/administrador/habilitar/${id}?token=${token}`);
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GrupoOcupacionalService } from '../../../services/administrador/grupo-ocupacional.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,71 +12,67 @@ import Swal from 'sweetalert2';
   ]
 })
 export class FormularioAreaComponent implements OnInit {
+
+  @Input() visible: boolean;
+  @Input() idGrupo: number;
+  @Input() tipoOperacion: string;
+  @Output() cerrar: EventEmitter<boolean> = new EventEmitter();
+  @Output() cancelar: EventEmitter<boolean> = new EventEmitter();
+
   cargarformulario = false;
   public formSubmitted = false;
-  public areaForm: FormGroup;
-  public area: GrupoOcupacional;
-  public tipo: string;
-  public id: number;
+  public grupoForm: FormGroup;
+  public grupo: GrupoOcupacional;
   constructor(public grupoService: GrupoOcupacionalService,
-              private route: ActivatedRoute,
               private router: Router,
               private fb: FormBuilder,
               private loginService: LoginService) { }
 
   ngOnInit(): void {
-
-    this.route.queryParams
-      .subscribe(params => {
-        if (params.tipo === 'modificar') {
-          this.cargarArea(params);
-          this.tipo = params.tipo;
-          this.id = params.id;
-        }else{
-          this.tipo = params.tipo;
-          this.id = params.id;
-          this.cargarformulario = true;
-          this.areaForm = this.fb.group({
-          nombre: ['', [ Validators.required]],
-          habilitado: [true, Validators.required],
-          id_administrador: [this.loginService.administrador.id, [Validators.required]],
-          });
-        }
-      });
+      if (this.tipoOperacion === 'modificar') {
+        this.cargarGrupo();
+      }else{
+        this.cargarformulario = true;
+        this.grupoForm = this.fb.group({
+        nombre: ['', [ Validators.required]],
+        habilitado: [true, Validators.required],
+        id_administrador: [this.loginService.administrador.id, [Validators.required]],
+        });
+      }
   }
-  cargarArea(params: any): void {
-    this.grupoService.buscar(params.id)
+  cargarGrupo(): void {
+    this.grupoService.buscar(this.idGrupo)
     .subscribe((resp: any) => {
-      this.area = resp;
+      this.grupo = resp;
       this.cargarformulario = true;
-      this.areaForm = this.fb.group({
-      nombre: [this.area.nombre, [ Validators.required]],
-      habilitado: [this.area.habilitado, Validators.required],
+      this.grupoForm = this.fb.group({
+      nombre: [this.grupo.nombre, [ Validators.required]],
+      habilitado: [this.grupo.habilitado, Validators.required],
       id_administrador: [this.loginService.administrador.id, [Validators.required]],
-      id: [this.area.id, [Validators.required]],
+      id: [this.grupo.id, [Validators.required]],
     });
   });
   }
   guardar(): void {
     this.formSubmitted = true;
-    if (this.areaForm.invalid) {
+    if (this.grupoForm.invalid) {
       return;
     }
-    if (this.tipo === 'modificar') {
-      this.grupoService.modificar(this.areaForm.value, this.area.id)
+    if (this.tipoOperacion === 'modificar') {
+      this.grupoService.modificar(this.grupoForm.value, this.grupo.id)
           .subscribe((resp: any) => {
             Swal.fire(resp.mensaje, '', 'success');
-            this.router.navigateByUrl('/area-laboral');
+            this.cerrarModal();
           }, (err) => {
             console.log(err);
             Swal.fire('Error al modificar Area laboral', err.mensaje, 'error');
           });
     }else {
-      this.grupoService.adicionar(this.areaForm.value)
+      this.grupoService.adicionar(this.grupoForm.value)
           .subscribe((resp: any) => {
             console.log(resp);
             Swal.fire(resp.mensaje, '', 'success');
-            this.router.navigateByUrl('/area-laboral');
+            this.cerrarModal();
           }, (err) => {
             console.log(err);
             Swal.fire('Error al adicionar Area laboral', err.mensaje, 'error');
@@ -84,10 +80,18 @@ export class FormularioAreaComponent implements OnInit {
     }
   }
   campoNoValido( campo: string): boolean {
-    if (this.areaForm.get(campo).invalid && this.formSubmitted) {
+    if (this.grupoForm.get(campo).invalid && this.formSubmitted) {
       return true;
     }else {
       return false;
     }
+  }
+
+  cerrarModal() {
+    this.cerrar.emit(false);
+  }
+
+  cancelarModal() {
+    this.cancelar.emit(false);
   }
 }

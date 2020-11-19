@@ -1,14 +1,24 @@
-<div class="container" *ngIf="vacante">
-    <div class="row justify-content-center">
-        <div class="col-lg-9 col-md-10 col-sm-12">
-           
-            <div class="row animated fadeIn fast">
+
+<div class="modal" *ngIf="visible">
+    <div *ngIf="vacante">
+        <div class="row container-modal justify-content-center">
+            <div class="col-lg-7  col-md-10 col-sm-12">
+               <div class="card bg-dark animated fadeIn fast">
+                   <div class="card-header pt-0 pb-0 header-modal">
+                    <div class="row justify-content-end">
+                        <div class="col-1 pr-0">
+                          <a class="cursor float-right" (click)="cerrarModal()"><i class="fa fa-window-close  cerrar"></i></a>
+                       </div>
+                    </div>
+                  </div>
+                   <div class="card-body ">
+                    <div class="row animated fadeIn fast">
                         <div class="col-lg-7 col-md-7 col-sm-12">
                             <div class="row">
                                 <div class="col">
                                     <div class="card text-white bg-info mb-3">
                                         <div class="card-header">
-                                            <h2 class="card-title text-light text-center"><strong>{{vacante.titulo}}</strong></h2>
+                                            <h3 class="card-title text-light text-center"><strong>{{vacante.titulo}}</strong> </h3>
                                         </div>
                                         <div class="card-body">
                                             <span class="font-weight-bold">Pais: </span> <span>{{vacante.ciudad.estado.pais.nombre}}</span> <br>
@@ -44,7 +54,7 @@
                         </div>
                         <div class="col-lg-5 col-md-5 col-sm-12">
                             
-                            <div *ngIf="vacante.empleador.empresa && vacante.empresa" class="card text-white bg-dark mb-3">
+                            <div *ngIf="vacante.empleador.empresa && vacante.empresa" class="card text-light bg-dark mb-3">
                                 <img [src]="vacante.empresa.logo.url" alt="">
                                 <div class="card-body">
                                   <span class="font-weight-bold">Empresa: </span> <span>{{vacante.empresa.nombre}}</span> <br>
@@ -55,14 +65,14 @@
                                   <span class="font-weight-bold">Descripcion: </span> <span>{{vacante.empresa.descripcion}}</span>  <br> 
                                   
                                   <!--Solicitante no postulante, ni contratado-->
-                                  <button *ngIf="postularme && !contratado && !aceptado && !ocupado" (click)="postular()" class="btn btn-info btn-lg btn-block mt-2">Postularme</button>
+                                  <button *ngIf="!postulando && !contratado && !aceptado && !ocupado" (click)="postular()" class="btn btn-info btn-lg btn-block mt-2">Postularme</button>
 
                                   <!--Solicitante Aceptado para la vacante pero aun no confirmado-->
-                                  <button *ngIf="aceptado && !contratacion.confirmado && !ocupado" (click)="confirmar()" class="btn btn-info btn-lg btn-block mt-2">Confirmar</button>                          
-                                  <button *ngIf="aceptado && !contratacion.confirmado && !ocupado"  (click)="rechazar()" class="btn btn-danger btn-lg btn-block mt-2">Rechazar</button>   
+                                  <button *ngIf="aceptado  && !ocupado" (click)="confirmar()" class="btn btn-info btn-lg btn-block mt-2">Confirmar</button>                          
+                                  <button *ngIf="aceptado  && !ocupado"  (click)="rechazar()" class="btn btn-danger btn-lg btn-block mt-2">Rechazar</button>   
 
                                   <!--Solicitante postulando para la vacante pero aun no aceptado-->
-                                  <button  *ngIf="!aceptado && !postularme && !postulacion.aceptado" (click)="cancelar()" class="btn btn-danger btn-lg btn-block mt-2">Cancelar</button>
+                                  <button  *ngIf="!aceptado && postulando && !postulacion.aceptado" (click)="cancelar()" class="btn btn-danger btn-lg btn-block mt-2">Cancelar</button>
 
                                   <br>
                                   <!--Alerta cuando el solicitante esta ocupado y cuando el objeto contratacion es nulo (cuando el solicitante carga el componente)-->
@@ -71,8 +81,11 @@
                                   </div>
                                   
                                   <!--Alerta cuando el solicitante esta ocupado y cuando el objeto contratacion no es nulo (cuando el solicitante confirma el contrato)-->
-                                  <div *ngIf="contratado && ocupado && contratacion" class="alert alert-primary" role="alert">
+                                  <div *ngIf="contratado && ocupado && contratacion && contratacion.confirmado" class="alert alert-primary" role="alert">
                                     Usted ha sido contratado para esta vacante!
+                                  </div>
+                                  <div *ngIf="contratado && ocupado && contratacion && !contratacion.confirmado" class="alert alert-danger" role="alert">
+                                    Usted tiene un empleo asignado, no puede confirmar otro.
                                   </div>
                                 </div>
                 
@@ -85,9 +98,13 @@
                                 </div>
                             </div> 
                         </div>
-            </div>
+                    </div>
            
+                   </div>
+               </div>
+
+            </div>
         </div>
+      
     </div>
-    
-</div>
+</div> 

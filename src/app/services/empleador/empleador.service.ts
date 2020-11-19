@@ -28,4 +28,6 @@ export class EmpleadorService {
     const token = localStorage.getItem('token');
     return this.http.put(`${base_url}/empleador/${id}?token=${token}`, formData);
   }
+
+
 }

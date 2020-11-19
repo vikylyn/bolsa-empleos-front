@@ -1,34 +1,43 @@
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
-            <div class="card">
-                <div class="card-body">
-                    <form *ngIf="cargarformulario" class="form p-t-20" 
-                            [formGroup]="areaForm">
-                        <div class="form-group">
-                            <label for="exampleInputuname">Nombre</label>
-                            <input [class.is-invalid]="campoNoValido('nombre')" formControlName="nombre" class="form-control" type="text" placeholder="Nombre">
-                            <small *ngIf="campoNoValido('nombre')" class="form-control-feedback text-danger">El nombre es obligatorio </small>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputuname">Habilitado</label>
-                            <select formControlName="habilitado" class="form-control custom-select">
-                                <option value="true">verdadero</option>
-                                <option value="false">falso</option>
-                            </select>                      
-                        </div>
-                        <div class="text-center">
-                            <button  (click)="guardar()" type="submit" class="btn btn-success waves-effect waves-light">
-                                <i class="fa fa-save"></i>
-                                Guardar  
-                            </button>
-                            &nbsp;
-                            <button  routerLink="/area-laboral" type="button" class="btn btn-inverse">Cancelar</button>
-                        </div>
-                        
-                </form>
+<div class="modal" *ngIf="visible">
+    <div class="row justify-content-center container-modal animated fadeIn fast">
+      <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
+          <div class="card rounded">
+              <div class="card-header pt-0 pb-0 header-modal">
+                <div class="row justify-content-end">
+                    <div class="col-1 pr-0">
+                      <a class="cursor float-right" (click)="cancelarModal()"><i class="fa fa-window-close  cerrar"></i></a>
+                   </div>
                 </div>
-            </div>  
-        </div>
+              </div>
+              <div class="card-body">
+                <h3 class="text-center">{{tipoOperacion | titlecase}} Grupo Ocupacional</h3>
+                <hr>
+                <form *ngIf="cargarformulario" class="form p-t-20" 
+                [formGroup]="grupoForm">
+                    <div class="form-group">
+                        <label for="exampleInputuname">Nombre</label>
+                        <input [class.is-invalid]="campoNoValido('nombre')" formControlName="nombre" class="form-control" type="text" placeholder="Nombre">
+                        <small *ngIf="campoNoValido('nombre')" class="form-control-feedback text-danger">El nombre es obligatorio </small>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputuname">Habilitado</label>
+                        <select formControlName="habilitado" class="form-control custom-select">
+                            <option value="true">verdadero</option>
+                            <option value="false">falso</option>
+                        </select>                      
+                    </div>
+                    <div class="text-center">
+                        <button  (click)="guardar()" type="submit" class="btn btn-success waves-effect waves-light">
+                            <i class="fa fa-save"></i>
+                            Guardar  
+                        </button>
+                        &nbsp;
+                        <button  (click)="cerrarModal()" type="button" class="btn btn-inverse">Cancelar</button>
+                    </div>
+            
+                 </form>
+              </div>
+          </div>
       </div>
-</div>
+    </div>
+</div> 

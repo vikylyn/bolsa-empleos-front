@@ -12,6 +12,8 @@ import { ContratacionService } from '../../../services/vacante/contratacion.serv
   ]
 })
 export class PostulacionSolicitanteComponent implements OnInit {
+  myModal = false;
+  idVacante: number;
   desde = 0;
   totalPostulaciones = 0;
   postulaciones: Postulacion [];
@@ -96,7 +98,7 @@ export class PostulacionSolicitanteComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
-        this.contratacionService.confirmar(id_postulacion).subscribe((resp: any) => {
+        this.postulacionService.confirmar(id_postulacion).subscribe((resp: any) => {
           Swal.fire(resp.mensaje, '', 'success');
           this.cargarPostulaciones();
         }, (err) => {
@@ -138,5 +140,15 @@ export class PostulacionSolicitanteComponent implements OnInit {
         );
       }
     });
+  }
+
+  
+
+  mostrarModal(idVacante: number) {
+    this.idVacante = idVacante;
+    this.myModal = true;
+  }
+  cerrarModal(e) {
+    this.myModal = e;
   }
 }

@@ -11,14 +11,9 @@ const base_url = environment.base_url;
 export class ContratacionService {
 
   constructor(private http: HttpClient) { }
-
-  contratar(id_postulacion): any {
+  buscar(id_contratacion: number): any {
     const token = localStorage.getItem('token');
-    return this.http.post(`${base_url}/contratacion/${id_postulacion}?token=${token}`, {});
-  }
-  confirmar(id_postulacion: number): any {
-    const token = localStorage.getItem('token');
-    return this.http.put(`${base_url}/contratacion/confirmacion/${id_postulacion}?token=${token}`, {});
+    return this.http.get<{contratacion: Contratacion}>(`${base_url}/contratacion/${id_contratacion}?token=${token}`);
   }
 
   rechazar(id_postulacion: number): any {
@@ -26,8 +21,10 @@ export class ContratacionService {
     return this.http.delete(`${base_url}/contratacion/rechazar/${id_postulacion}?token=${token}`);
   }
 
-  terminar(): any {
 
+  desvincularSolicitante(id_contratacion: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.put(`${base_url}/contratacion/desvincular/${id_contratacion}?token=${token}`, {});
   }
 
   listarPorIdSolicitante(id_solicitante: number, desde: number): any {
@@ -35,8 +32,18 @@ export class ContratacionService {
     return this.http.get<{total: number, contrataciones: Contratacion[]}>(`${base_url}/contratacion/lista-solicitante/${id_solicitante}?desde=${desde}&token=${token}`);
   }
 
+  listarPorIdEmpleador(idEmpleador: number, desde: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get<{total: number, contrataciones: Contratacion[]}>(`${base_url}/contratacion/lista-empleador/${idEmpleador}?desde=${desde}&token=${token}`);
+  }
+/*
   listarPorIdVacante(id_vacante: number, desde: number): any {
     const token = localStorage.getItem('token');
     return this.http.get<{contrataciones: Contratacion[]}>(`${base_url}/contratacion/lista/${id_vacante}?desde=${desde}&token=${token}`);
+  }
+*/
+  busqueda(valor: string, id_empleador: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get<{contrataciones: Contratacion[]}>(`${base_url}/contratacion/busqueda/${id_empleador}/${valor}?token=${token}`);
   }
 }

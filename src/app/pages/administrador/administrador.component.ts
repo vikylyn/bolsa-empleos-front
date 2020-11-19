@@ -3,6 +3,7 @@ import { Administrador } from '../../models/administrador/administrador.model';
 import { AdministradorService } from '../../services/administrador/administrador.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-administrador',
@@ -11,14 +12,20 @@ import Swal from 'sweetalert2';
   ]
 })
 export class AdministradorComponent implements OnInit {
-
+  myModal = false;
+  myModal2 = false;
+  idAdministrador: number;
+  tipoOperacion: string;
   totalAdministradores = 0;
   administradores: Administrador [];
   adminTemp: Administrador [];
   desde = 0;
   cargando = true;
+  adminSeleccionados: Administrador [] = [];
 
-  constructor(private administradorService: AdministradorService, public router: Router) { }
+  constructor(private administradorService: AdministradorService,
+              public loginService: LoginService,
+              public router: Router) { }
 
   ngOnInit(): void {
    this.cargarAdministradores();
@@ -52,23 +59,24 @@ export class AdministradorComponent implements OnInit {
     this.administradorService.busqueda(nombre).subscribe(
       (resp: Administrador[]) => {
         this.administradores = resp;
+        this.adminSeleccionados = resp;
       }
     );
   }
-  deshabilitar(id: number): void {
+  inhabilitar(id: number): void {
     console.log(id);
     Swal.fire({
       title: 'Estas seguro ?',
-      text: 'Se deshabilitara el registro',
+      text: 'Se Inhabilitara el registro',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Eliminar!',
+      confirmButtonText: 'Inhabilitar!',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
-        this.administradorService.deshabilitar(id).subscribe( (resp: any) => {
+        this.administradorService.inhabilitar(id).subscribe( (resp: any) => {
           Swal.fire(
-            'Administrador Deshabilitado!',
+            'Administrador Inhabilitado!',
             resp.mensaje,
             'success'
           );
@@ -83,6 +91,53 @@ export class AdministradorComponent implements OnInit {
       }
     });
   }
+  habilitar(id: number): void {
+    console.log(id);
+    Swal.fire({
+      title: 'Estas seguro ?',
+      text: 'Se habilitara el registro',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Habilitar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        this.administradorService.habilitar(id).subscribe( (resp: any) => {
+          Swal.fire(
+            'Administrador habilitado!',
+            resp.mensaje,
+            'success'
+          );
+          this.cargarAdministradores();
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelado',
+          '',
+          'error'
+        );
+      }
+    });
+  }
+  mostrarModal(tipoOperacion: string, idAdministrador: number) {
+    this.tipoOperacion = tipoOperacion;
+    this.idAdministrador = idAdministrador;
+    this.myModal = true;
+  }
+  cerrarModal(e) {
+    this.myModal = e;
+    this.cargarAdministradores();
+  }
 
+  cancelarModal(e) {
+    this.myModal = e;
+  }
 
+  mostrarModal2(idAdministrador: number) {
+    this.idAdministrador = idAdministrador;
+    this.myModal2 = true;
+  }
+  cerrarModal2(e) {
+    this.myModal2 = e;
+  }
 }

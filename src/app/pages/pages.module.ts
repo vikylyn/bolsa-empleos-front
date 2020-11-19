@@ -38,13 +38,28 @@ import { PostulacionEmpleadorComponent } from './postulaciones/postulacion-emple
 import { ContratacionSolicitanteComponent } from './contrataciones/contratacion-solicitante/contratacion-solicitante.component';
 import { ContratacionEmpleadorComponent } from './contrataciones/contratacion-empleador/contratacion-empleador.component';
 import { InicioSolicitanteComponent } from './inicio/inicio-solicitante/inicio-solicitante.component';
-import { VacantesComponent } from './vacante/vacantesEmpleador/vacantes.component';
+import { VacantesComponent } from './vacante/vacantes-empleador/vacantes.component';
 import { OcupacionSolicitanteComponent } from './perfil/ocupacion-solicitante/ocupacion-solicitante.component';
 import { FormularioOcupacionSolicitanteComponent } from './perfil/ocupacion-solicitante/formulario-ocupacion-solicitante/formulario-ocupacion-solicitante.component';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { FormularioVacanteComponent } from './vacante/vacantesEmpleador/formulario-vacante/formulario-vacante.component';
+import { FormularioVacanteComponent } from './vacante/vacantes-empleador/formulario-vacante/formulario-vacante.component';
 import { VacantesSolicitanteComponent } from './vacante/vacantes-solicitante/vacantes-solicitante.component';
 import { PerfilComponent } from './curriculum/perfil/perfil.component';
+import { InicioEmpleadorComponent } from './inicio/inicio-empleador/inicio-empleador.component';
+import { VistaCompletoComponent } from './curriculum/vista-completo/vista-completo.component';
+import { OperacionesComponent } from './curriculum/vista-completo/operaciones/operaciones.component';
+import { VerAdministradorComponent } from './administrador/ver-administrador/ver-administrador.component';
+import { VerContratacionComponent } from './contrataciones/contratacion-empleador/ver-contratacion/ver-contratacion.component';
+import { VerVacanteEmpleadorComponent } from './vacante/vacantes-empleador/ver-vacante-empleador/ver-vacante-empleador.component';
+import { VerExperienciaLaboralComponent } from './curriculum/experiencia-laboral/ver-experiencia-laboral/ver-experiencia-laboral.component';
+import { VerEstudioBasicoComponent } from './curriculum/estudio-basico/ver-estudio-basico/ver-estudio-basico.component';
+import { VerEstudioAvanzadoComponent } from './curriculum/estudio-avanzado/ver-estudio-avanzado/ver-estudio-avanzado.component';
+import { VerReferenciaComponent } from './curriculum/referencia/ver-referencia/ver-referencia.component';
+import { VerIdiomaComponent } from './curriculum/idioma/ver-idioma/ver-idioma.component';
+import { FotoSolicitanteComponent } from './perfil/foto/foto-solicitante/foto-solicitante.component';
+import { FotoEmpleadorComponent } from './perfil/foto/foto-empleador/foto-empleador.component';
+import { FotoEmpresaComponent } from './perfil/foto/foto-empresa/foto-empresa.component';
+import { FotoAdministradorComponent } from './perfil/foto/foto-administrador/foto-administrador.component';
 
 
 @NgModule({
@@ -88,6 +103,21 @@ import { PerfilComponent } from './curriculum/perfil/perfil.component';
     FormularioVacanteComponent,
     VacantesSolicitanteComponent,
     PerfilComponent,
+    InicioEmpleadorComponent,
+    VistaCompletoComponent,
+    OperacionesComponent,
+    VerAdministradorComponent,
+    VerContratacionComponent,
+    VerVacanteEmpleadorComponent,
+    VerExperienciaLaboralComponent,
+    VerEstudioBasicoComponent,
+    VerEstudioAvanzadoComponent,
+    VerReferenciaComponent,
+    VerIdiomaComponent,
+    FotoSolicitanteComponent,
+    FotoEmpleadorComponent,
+    FotoEmpresaComponent,
+    FotoAdministradorComponent,
     ],
   exports: [
     DashboardComponent,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Solicitante } from '../../../../models/solicitante/solicitante.model';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Curriculum } from 'src/app/models/curriculum/curriculum.model';
@@ -10,10 +10,13 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-formulario-encabezado',
   templateUrl: './formulario-encabezado.component.html',
-  styles: [
-  ]
 })
 export class FormularioEncabezadoComponent implements OnInit {
+
+  @Input() visible: boolean;
+  @Input() aleatorio: number;
+  @Output() cerrar: EventEmitter<boolean> = new EventEmitter();
+  @Output() cancelar: EventEmitter<boolean> = new EventEmitter();
 
   cargarFormulario = false;
   solicitante: Solicitante;
@@ -21,12 +24,16 @@ export class FormularioEncabezadoComponent implements OnInit {
   public curriculumForm: FormGroup;
   public curriculum: Curriculum;
 
+
+
   constructor(private curriculumService: CurriculumService,
               private loginService: LoginService,
               private router: Router,
               private fb: FormBuilder) { }
 
+
   ngOnInit(): void {
+    console.log('aleatorio' , this.aleatorio);
     this.solicitante = this.loginService.solicitante;
     this.curriculumService.buscarPorIdSolicitante(this.solicitante.id).subscribe((resp: any) => {
         if (resp.ok === false) {
@@ -63,10 +70,17 @@ export class FormularioEncabezadoComponent implements OnInit {
     .subscribe((resp: any) => {
       console.log(resp);
       Swal.fire(resp.mensaje, '', 'success');
-      this.router.navigateByUrl('/curriculum/administracion');
+      this.cerrarModal();
+     // this.router.navigateByUrl('/curriculum/administracion');
     }, (err) => {
       console.log(err);
       Swal.fire('Error al modificar Curriculum', err.error.error || err.error.mensaje || err.error.errors[0].msg, 'error');
     });
+  }
+  cerrarModal() {
+    this.cerrar.emit(false);
+  }
+  cancelarModal() {
+    this.cancelar.emit(false);
   }
 }

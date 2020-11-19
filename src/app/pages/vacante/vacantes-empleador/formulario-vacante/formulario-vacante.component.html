@@ -1,0 +1,235 @@
+
+<div class="modal" *ngIf="visible">
+    <div class="row container-modal animated fadeIn fast justify-content-center">
+      <div class="col-xl-6 col-lg-7 col-md-8 col-sm-12">
+          <div class="card rounded">
+              <div class="card-header pt-0 pb-0 header-modal">
+                    <div class="row justify-content-end">
+                        <div class="col-1 pr-0">
+                          <a class="cursor float-right" (click)="cerrarModal()"><i class="fa fa-window-close  cerrar"></i></a>
+                       </div>
+                    </div>
+              </div>
+              <div class="card-body">
+                <h3 class="text-center">{{tipoOperacion | titlecase}} Ocupacion</h3>
+                <form *ngIf="cargarformulario" autocomplete="off" 
+                [formGroup]="vacanteForm"
+                >
+                   <div class="form-body">
+                       <h3 class="card-title">Vacante</h3>
+                       <hr>
+                       <div class="row p-t-20">
+                           <div class="col-md-6">
+                               <div class="form-group">
+                                   <label class="control-label">Titulo:</label>
+                                   <input [class.is-invalid]="campoNoValido('titulo')" formControlName="titulo" class="form-control" type="text" placeholder="Titulo">
+                                   <small *ngIf="campoNoValido('titulo')" class="form-control-feedback text-danger">El titulo es obligatorio </small>
+                               </div>
+                           </div>
+                           <!--/span-->
+                           <div class="col-md-6">
+                               <div class="form-group">
+                                   <label class="control-label">Sueldo:</label>
+                                   <select [class.is-invalid]="campoNoValido('id_sueldo')" formControlName="id_sueldo" class="form-control custom-select">
+                                       <option *ngIf="tipoOperacion==='adicionar'" value="0">Seleccionar</option>
+                                       <option *ngFor="let sueldo of sueldos" [value]="sueldo.id">{{sueldo.sueldo}}</option>
+                                   </select>
+                                   <small *ngIf="campoNoValido('id_sueldo')" class="form-control-feedback text-danger">Seleccione un sueldo</small> 
+                               </div>
+                           </div>
+                           <!--/span-->
+                       </div>
+                       <div class="row">
+                           <div class="col-md-12 ">
+                               <div class="form-group">
+                                   <label class="control-label">Direccion:</label>
+                                   <input [class.is-invalid]="campoNoValido('direccion')" formControlName="direccion" class="form-control" type="email"  placeholder="Direccion">
+                                   <small *ngIf="campoNoValido('direccion')" class="form-control-feedback text-danger">La direccion es Obligatoria </small>
+                               </div>
+                           </div>
+                           <div class="col-md-12 ">
+                               <div class="form-group">
+                                   <label class="control-label">Descripcion:</label>
+                                   <textarea formControlName="descripcion" class="form-control rounded-0" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                   <small *ngIf="campoNoValido('descripcion')" class="form-control-feedback text-danger">La Descripcion es Obligatoria</small>
+                               </div>
+                           </div>
+                       </div>
+                       <!--/row-->
+                       <div class="row">
+                           <div class="col-md-6 ">
+                               <div class="form-group">
+                                   <label class="control-label">Horario:</label>
+                                   <select [class.is-invalid]="campoNoValido('id_horario')" formControlName="id_horario" class="form-control custom-select">
+                                       <option *ngIf="tipoOperacion==='adicionar'" value="0">Seleccionar</option>
+                                       <option *ngFor="let horario of horarios" [value]="horario.id">{{horario.nombre}}</option>
+                                   </select>
+                                   <small *ngIf="campoNoValido('id_horario')" class="form-control-feedback text-danger">Seleccione un horario</small> 
+                               </div>
+                           </div>
+                           <div class="col-md-6">
+                               <div class="form-group">
+                                   <label class="control-label">Tipo de Contrato:</label>
+                                   <select [class.is-invalid]="campoNoValido('id_tipo_contrato')" formControlName="id_tipo_contrato" class="form-control custom-select">
+                                       <option *ngIf="tipoOperacion==='adicionar'" value="0">Seleccionar</option>
+                                       <option *ngFor="let tipo of tipoContratos" [value]="tipo.id">{{tipo.tipo}}</option>
+                                   </select>
+                                   <small *ngIf="campoNoValido('id_tipo_contrato')" class="form-control-feedback text-danger">Seleccione un tipo Contrato</small> 
+                               </div>
+                           </div>
+                       </div>
+
+                       <div class="row">
+                           <div class="col-md-6">
+                               <div class="form-group">
+                                   <label>Pais</label>   
+                                   <ng-select 
+                                              notFoundText = "Pais no encontrado"
+                                              placeholder="Seleccionar Pais"
+                                              [clearable] = "false"
+                                              appendTo="body"
+                                              formControlName="id_pais"
+                                              (change)="filtrarCiudades()">
+                                              <ng-option [value]= "pais.id" *ngFor="let pais of paises">
+                                               {{pais.nombre}}
+                                             </ng-option>
+                                   </ng-select>
+                                   <small *ngIf="campoNoValido('id_pais')" class="form-control-feedback text-danger">Seleccione un pais</small> 
+                               </div>
+                           </div>
+                           <!--/span-->
+                           <div class="col-md-6">
+                               <div class="form-group">
+                                   <label>Ciudad</label>
+                                   <ng-select 
+                                              placeholder="Seleccionar Ciudad"
+                                              appendTo="body"
+                                              [clearable] = "false"
+                                              notFoundText = "ciudad no encontrada"
+                                              formControlName="id_ciudad">
+                                              <ng-option [value]= "ciudad.id" *ngFor="let ciudad of ciudades">
+                                                {{ciudad.nombre}} / {{ciudad.estado.nombre}}
+                                              </ng-option>
+                                   </ng-select>
+                                   <small *ngIf="campoNoValido('id_ciudad')" class="form-control-feedback text-danger">Seleccione una ciudad</small> 
+                              </div>
+                           </div>
+                           <!--/span-->
+                       </div>
+                       <div class="row">
+                           <div class="col-md-6 ">
+                               <div class="form-group">
+                                   <label class="control-label">Numero de Vacantes:</label>
+                                   <input *ngIf="tipoOperacion=== 'adicionar'" [class.is-invalid]="campoNoValido('num_vacantes')" formControlName="num_vacantes" type="number" min="1" class="form-control" placeholder="Num Vacantes">
+                                   <input (keyup)="modificarNumDisponibles()" (change)="modificarNumDisponibles()" *ngIf="tipoOperacion=== 'modificar'" [class.is-invalid]="campoNoValido('num_vacantes')" formControlName="num_vacantes" type="number" min="{{vacante.num_postulantes_aceptados}}" class="form-control" placeholder="Num Vacantes">
+                                   <small *ngIf="campoNoValido('num_vacantes') && tipoOperacion=== 'adicionar'" class="form-control-feedback text-danger">El numero de Vacantes es obligatorio, debe ser mayor a cero.</small> 
+                                   <small *ngIf="campoNoValido('num_vacantes') && tipoOperacion=== 'modificar'" class="form-control-feedback text-danger">El numero de Vacantes es obligatorio, debe ser mayor o igual al numero de postulantes aceptados</small> 
+
+                               </div>
+                           </div>
+                           <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputuname">Habilitar publicacion</label>
+                                <select formControlName="habilitado" class="form-control custom-select">
+                                    <option value="true">Habilitar</option>
+                                    <option value="false">Inhabilitar</option>
+                                </select>
+                            </div>
+                            </div>
+
+                       </div>
+                       <div class="row" *ngIf="tipoOperacion=== 'modificar'">
+                            <div class="col-md-6 ">
+                                <div class="form-group">
+                                    <label class="control-label">Numero de Vacantes Disponibles:</label>
+                                    <input formControlName="num_disponibles" type="number" min="1" class="form-control" disabled="true">
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="form-group">
+                                    <label class="control-label">Numero de postulantes aceptados:</label>
+                                    <input formControlName="num_postulantes_aceptados" type="number" min="1" class="form-control" disabled="true">
+                                </div>
+                            </div>
+                       </div>
+                       <div class="row">
+                           <div class="col-md-12 ">
+                               <h3>Requisitos del Solicitante</h3>
+                               <hr>
+                           </div>
+                       </div>
+                       <div class="row">
+                           <div class="col-md-12">
+                                   <div class="form-group">
+                                       <label class="control-label">Ocupacion:</label>
+                                       <ng-select id="id_ocupacion" [items]="ocupaciones" 
+                                       placeholder="Seleccionar Ocupaciones"
+                                       [clearable] = "false"
+                                       bindLabel="nombre"
+                                       notFoundText = "Ocupacion no encontrada" 
+                                       bindValue="id" 
+                                       formControlName="id_ocupacion">
+                                       </ng-select>
+                                   <small *ngIf="campoNoValido('id_ocupacion')" class="form-control-feedback text-danger">Seleccione almenos una ocupacion</small> 
+
+                               </div>
+                           </div>
+                       </div>
+                       <div class="row">
+
+                           <div class="col-md-12">
+                               <div class="form-group">
+                                   <label class="control-label">Experiencia (años):</label>
+                                   <input [class.is-invalid]="campoNoValido('experiencia')" formControlName="experiencia" type="number" min="0" class="form-control" placeholder="Experiencia">
+                                   <small *ngIf="campoNoValido('experiencia')" class="form-control-feedback text-danger">La Experiencia es obligatoria</small> 
+                               </div>
+                           </div>
+                       </div> 
+                       <div class="row">
+                           <div class="col-md-6">
+                               <div class="form-group">
+                                   <label class="control-label">Genero</label>
+                                   <select [class.is-invalid]="selectNoValido('genero')" formControlName="genero" class="form-control custom-select">
+                                       <option value="0">Seleccionar</option>
+                                       <option value="M">Masculino</option>
+                                       <option value="F">Fememino</option>
+                                   </select>
+                                   <small *ngIf="selectNoValido('genero')" class="form-control-feedback text-danger">Seleccione un genero</small> 
+                               </div>
+                           </div>
+                           <!--/span-->
+                           <div class="col-md-6">
+                               <div class="form-group">
+                                   <label class="control-label">Idiomas:</label>
+                                   <select [class.is-invalid]="campoNoValido('id_idioma')" formControlName="id_idioma" class="form-control custom-select">
+                                       <option *ngIf="tipoOperacion==='adicionar'" value="0">Seleccionar</option>
+                                       <option *ngFor="let idioma of idiomas" [value]="idioma.id">{{idioma.nombre}}</option>
+                                   </select>
+                                   <small *ngIf="campoNoValido('id_idioma')" class="form-control-feedback text-danger">Seleccione un idioma</small> 
+                               </div>
+                           </div>
+                           <!--/span-->
+                       </div>      
+                   </div>
+
+                   <hr>
+                   <div class="row animated fadeIn fast" *ngIf="cargando">
+                       <div class="col-12">
+                           <div class="alert alert-info text-center">
+                               <h4>Guardando...</h4>
+                               <i class="fa fa-spin fa-refresh fa-2x"></i>
+                               <p class="mb-0">Por favor espere</p>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="form-actions text-center">
+                       <button (click)="guardar()"  class="btn btn-success"> <i class="fa fa-check"></i> Guardar</button>
+                       &nbsp;
+                       <button  (click)="cerrarModal()" type="button" class="btn btn-inverse">Cancelar</button>
+                   </div>
+                </form>
+              </div>
+          </div>
+      </div>
+    </div>
+</div> 

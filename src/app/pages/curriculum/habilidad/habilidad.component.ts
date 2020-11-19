@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
   ]
 })
 export class HabilidadComponent implements OnInit {
-
+  myModal = false;
   id_curriculum: number;
   habilidades: CurriculumHabilidad[];
   desde = 0;
@@ -100,4 +100,14 @@ export class HabilidadComponent implements OnInit {
     });
   }
 
+  mostrarModal() {
+    this.myModal = true;
+  }
+  cerrarModal(e) {
+    this.myModal = e;
+    this.cargarHabilidades();
+  }
+  cancelarModal(e) {
+    this.myModal = e;
+  }
 }

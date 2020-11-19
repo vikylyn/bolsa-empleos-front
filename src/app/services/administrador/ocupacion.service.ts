@@ -45,9 +45,13 @@ export class OcupacionService {
           return resp.ocupaciones;
         }));
   }
-  eliminar(id: number): any {
+  inhabilitar(id: number): any {
     const token = localStorage.getItem('token');
     return this.http.put(`${base_url}/ocupacion/inhabilitar/${id}?token=${token}`, {});
+  }
+  habilitar(id: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.put(`${base_url}/ocupacion/habilitar/${id}?token=${token}`, {});
   }
   // busqueda por id
   buscar(id: number): any {

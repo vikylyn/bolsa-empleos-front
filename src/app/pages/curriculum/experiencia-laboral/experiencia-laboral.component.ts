@@ -13,7 +13,11 @@ import { Router } from '@angular/router';
   ]
 })
 export class ExperienciaLaboralComponent implements OnInit {
-  id_curriculum: number;
+  myModal = false;
+  myModal2 = false;
+  idCurriculum: number;
+  idExperiencia: number;
+  tipoOperacion: string;
   experiencias: ExperienciaLaboral[];
   desde = 0;
   cargando = true;
@@ -30,7 +34,7 @@ export class ExperienciaLaboralComponent implements OnInit {
       if (resp.ok === false) {
         this.router.navigateByUrl('/curriculum');
       }else {
-        this.id_curriculum = resp.curriculum.id;
+        this.idCurriculum = resp.curriculum.id;
         this.cargarExperiencias();
       }
     });
@@ -49,7 +53,7 @@ export class ExperienciaLaboralComponent implements OnInit {
 
   cargarExperiencias(): void {
     this.cargando = true;
-    this.experienciaService.listar(this.id_curriculum, this.desde)
+    this.experienciaService.listar(this.idCurriculum, this.desde)
     .subscribe(({total, experiencias}) => {
       this.experiencias = experiencias;
       this.totalExperiencias = total;
@@ -97,5 +101,27 @@ export class ExperienciaLaboralComponent implements OnInit {
         );
       }
     });
+  }
+
+  mostrarModal(tipoOperacion: string, idExperiencia: number) {
+    this.tipoOperacion = tipoOperacion;
+    this.idExperiencia = idExperiencia;
+    this.myModal = true;
+  }
+  cerrarModal(e) {
+    this.myModal = e;
+    this.cargarExperiencias();
+  }
+
+  mostrarModal2(idExperiencia: number) {
+    this.idExperiencia = idExperiencia;
+    this.myModal2 = true;
+  }
+  cerrarModal2(e) {
+    this.myModal2 = e;
+  }
+
+  cancelarModal(e) {
+    this.myModal = e;
   }
 }

@@ -7,6 +7,8 @@ import { ImagenService } from '../../services/imagen.service';
 import { Empleador } from '../../models/empleador/empleador.model';
 import { Solicitante } from '../../models/solicitante/solicitante.model';
 import { Administrador } from '../../models/administrador/administrador.model';
+import { NotificacionService } from '../../services/notificacion/notificacion.service';
+import { Subscription } from 'rxjs';
 
 
 
@@ -16,16 +18,21 @@ import { Administrador } from '../../models/administrador/administrador.model';
   styles: [
   ]
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent implements OnInit, OnDestroy {
   empleador: Empleador;
   solicitante: Solicitante;
   administrador: Administrador;
+  actualizacionUsuarioSubscription: Subscription;
+
   constructor(public sidebar: SidebarService,
-              private loginService: LoginService) {
+              private loginService: LoginService,
+              public notificacionService: NotificacionService) {
   }
-  
   ngOnInit(): void {
-    this.empleador = this.loginService.empleador;
+    this.cargarUsuario();
+    this.actualizarUsuario();
+  }
+  cargarUsuario(): void {
     if (this.loginService.solicitante != null) {
       this.solicitante = this.loginService.solicitante;
       console.log(this.solicitante);
@@ -42,6 +49,16 @@ export class SidebarComponent implements OnInit {
   }
   logout(): void {
     this.loginService.logout();
+  }
+  ngOnDestroy(): void {
+    this.actualizacionUsuarioSubscription.unsubscribe();
+
+  }
+  actualizarUsuario(): any {
+    this.actualizacionUsuarioSubscription = this.notificacionService.actualizarUsuario()
+        .subscribe(() => {
+          this.cargarUsuario();
+        });
   }
 
 

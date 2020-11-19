@@ -99,8 +99,13 @@ export class OcupacionSolicitanteComponent implements OnInit {
   mostrarModal() {
     this.myModal = true;
   }
-
   cerrarModal(e) {
     this.myModal = e;
+    this.cargarOcupaciones();
   }
+
+  cancelarModal(e) {
+    this.myModal = e;
+  }
+
 }

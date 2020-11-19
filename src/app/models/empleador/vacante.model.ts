@@ -20,6 +20,8 @@ export class Vacante {
         public tipo_contrato: TipoContrato,
         public ciudad: Ciudad,
         public empleador: Empleador,
+        public eliminado: boolean,
+        public num_postulantes_aceptados: number,
         public id?: number,
         // aumentando atributo para mostrarlo al listar la empresa a la que pertenece la vacante
         public empresa?: Empresa

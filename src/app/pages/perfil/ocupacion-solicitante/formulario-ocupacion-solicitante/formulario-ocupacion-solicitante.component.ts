@@ -13,7 +13,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./formulario-ocupacion-solicitante.component.css']
 })
 export class FormularioOcupacionSolicitanteComponent implements OnInit {
-
+  @Input() visible: boolean;
+  @Output() cerrar: EventEmitter<boolean> = new EventEmitter();
+  @Output() cancelar: EventEmitter<boolean> = new EventEmitter();
   ocupaciones: Ocupacion[];
   formSubmitted = false;
 
@@ -63,11 +65,18 @@ export class FormularioOcupacionSolicitanteComponent implements OnInit {
         .subscribe( (resp: any) => {
           console.log('Ocupacion Asignada');
           Swal.fire(resp.mensaje, '', 'success');
-          this.router.navigate(['/ocupaciones-solicitante']);
+          this.cerrarModal();
         }, (err) => {
           console.log(err);
           Swal.fire('Error al asignar Ocupacion', err.error.mensaje, 'error');
         });
   }
 
+  cerrarModal() {
+    this.cerrar.emit(false);
+  }
+
+  cancelarModal() {
+    this.cancelar.emit(false);
+  }
 }
