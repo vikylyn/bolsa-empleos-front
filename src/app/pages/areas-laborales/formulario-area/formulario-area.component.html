@@ -12,20 +12,29 @@
               <div class="card-body">
                 <h3 class="text-center">{{tipoOperacion | titlecase}} Grupo Ocupacional</h3>
                 <hr>
-                <form *ngIf="cargarformulario" class="form p-t-20" 
+                <form *ngIf="cargarformulario" class="form p-t-10" 
                 [formGroup]="grupoForm">
                     <div class="form-group">
-                        <label for="exampleInputuname">Nombre</label>
+                        <label for="exampleInputuname">Nombre:</label>
                         <input [class.is-invalid]="campoNoValido('nombre')" formControlName="nombre" class="form-control" type="text" placeholder="Nombre">
                         <small *ngIf="campoNoValido('nombre')" class="form-control-feedback text-danger">El nombre es obligatorio </small>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputuname">Habilitado</label>
+            <!--        <div class="form-group">
+                        <label for="exampleInputuname">Codigo:</label>
+                        <input [class.is-invalid]="campoNoValido('codigo')" formControlName="codigo" class="form-control" type="text" placeholder="Nombre">
+                        <small *ngIf="campoNoValido('codigo')" class="form-control-feedback text-danger">El codigo es obligatorio </small>
+                    </div>
+            -->
+     <!--               <div class="form-group">
+                        <label for="exampleInputuname">Habilitar grupo ocupacional:</label>
                         <select formControlName="habilitado" class="form-control custom-select">
-                            <option value="true">verdadero</option>
-                            <option value="false">falso</option>
+                            <option value="true">Si</option>
+                            <option value="false">No</option>
                         </select>                      
                     </div>
+
+      -->    
+                    <hr>
                     <div class="text-center">
                         <button  (click)="guardar()" type="submit" class="btn btn-success waves-effect waves-light">
                             <i class="fa fa-save"></i>

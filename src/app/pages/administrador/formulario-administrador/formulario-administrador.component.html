@@ -63,12 +63,12 @@
                         <div class="col-md-6 ">
                             <div class="form-group">
                                 <label class="control-label">Genero</label>
-                                <select [class.is-invalid]="selectNoValido('genero')" formControlName="genero" class="form-control custom-select">
-                                    <option *ngIf="tipoOperacion==='adicionar'" value="0">Seleccionar</option>
+                                <select [class.is-invalid]="campoNoValido('genero')" formControlName="genero" class="form-control custom-select">
+                                    <option *ngIf="tipoOperacion==='adicionar'" value="seleccionar">Seleccionar</option>
                                     <option value="M">Masculino</option>
                                     <option value="F">Fememino</option>
                                 </select>
-                                <small *ngIf="selectNoValido('genero')" class="form-control-feedback text-danger">Seleccione un genero</small> 
+                                <small *ngIf="campoNoValido('genero')" class="form-control-feedback text-danger">Seleccione un genero</small> 
                             
                             </div>
                         </div>
@@ -90,15 +90,61 @@
                         </div>
                         <div class="col-md-6 ">
                             <div class="form-group">
-                                <label for="exampleInputuname">Habilitado</label>    
+                                <label for="exampleInputuname">Habilitar administrador</label>    
                                 <select formControlName="habilitado" class="form-control custom-select">
-                                    <option value="true">verdadero</option>
-                                    <option value="false">falso</option>
+                                    <option value="true">Habilitar</option>
+                                    <option value="false">Inhabilitar</option>
                                 </select>
                             
                             </div>
                         </div>
+                        
                     </div> 
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label  for="exampleInputEmail1">Direccion</label>
+                                <input [class.is-invalid]="campoNoValido('direccion')" formControlName="direccion" class="form-control" type="text"  placeholder="Direccion">
+                                <small *ngIf="campoNoValido('direccion')" class="form-control-feedback text-danger">La Direcccion es obligatoria</small> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputuname">Pais</label>
+                                <ng-select 
+                                      notFoundText = "Pais no encontrado"
+                                      placeholder="Seleccionar Pais"
+                                      [clearable] = "false"
+                                      appendTo="body"
+                                      formControlName="id_pais">
+                                      <ng-option [value]= "pais.id" *ngFor="let pais of paises">
+                                       {{pais.nombre}}
+                                     </ng-option>
+                                </ng-select>
+                                <small *ngIf="campoNoValido('id_pais')" class="form-control-feedback text-danger">Seleccione un pais</small> 
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Ciudad</label>
+                                <ng-select 
+                                           placeholder="Seleccionar Ciudad"
+                                           appendTo="body"
+                                           [clearable] = "false"
+                                           notFoundText = "ciudad no encontrada"
+                                           formControlName="id_ciudad">
+                                           <ng-option [value]= "ciudad.id" *ngFor="let ciudad of ciudades">
+                                             {{ciudad.nombre}} / {{ciudad.estado.nombre}}
+                                           </ng-option>
+                                </ng-select>
+                                <small *ngIf="campoNoValido('id_ciudad')" class="form-control-feedback text-danger">Seleccione una ciudad</small> 
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
                     <div class="text-center">
                         <button  (click)="guardar()" type="submit" class="btn btn-success waves-effect waves-light">
                             <i class="fa fa-save"></i>

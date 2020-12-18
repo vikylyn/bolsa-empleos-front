@@ -24,7 +24,7 @@
                             <thead>
                                 <tr>
                                     <th>Nombre</th>
-                                    <th class="w100 hidden-md-down">Habilitado</th>
+                                    <th class="w100">Habilitado</th>
                                     <th class="w100">Operaciones</th>
                                 </tr>
                             </thead>
@@ -33,7 +33,7 @@
                                     <td>
                                         {{ocupacion.ocupacion.nombre}}
                                     </td>
-                                    <td class="text-center hidden-md-down">
+                                    <td class="text-center">
                                         <i *ngIf="ocupacion.habilitado" class="fa  fa-thumbs-up text-info"></i>
                                         <i *ngIf="!ocupacion.habilitado" class="fa  fa-thumbs-down text-secondary"></i>
                                     </td>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Contratacion } from '../../../../models/empleador/contratacion.model';
 import { ContratacionService } from '../../../../services/vacante/contratacion.service';
 import Swal from 'sweetalert2';
@@ -15,6 +15,7 @@ export class OperacionesComponent implements OnInit {
   @Input() idSolicitante: number;
   @Input() id: number;
   @Input() tipoOperacion: string;
+  @Output() cerrar: EventEmitter<boolean> = new EventEmitter();
 
 
   contratacion: Contratacion;
@@ -32,8 +33,8 @@ export class OperacionesComponent implements OnInit {
           });
     }else if (this.tipoOperacion === 'postulacion') {
       this.postulacionService.buscar(this.id)
-          .subscribe(({contratacion}) => {
-            this.contratacion = contratacion;
+          .subscribe(({postulacion}) => {
+            this.postulacion = postulacion;
           });
     }
   }
@@ -42,6 +43,7 @@ export class OperacionesComponent implements OnInit {
     this.postulacionService.aceptar(this.id)
         .subscribe((resp: any) => {
           Swal.fire(resp.mensaje, '', 'success');
+          this.cerrarModalPadre();
         }, (err) => {
           console.log(err);
           Swal.fire('Error al contratar solicitante', err.error.error.error || err.error.error || err.error.mensaje, 'error');
@@ -50,7 +52,7 @@ export class OperacionesComponent implements OnInit {
   rechazar(): void {
 
     Swal.fire({
-      title: 'Estas seguro de eliminar la contratacion?',
+      title: 'Estas seguro de rechazar la postulacion?',
       text: '',
       icon: 'warning',
       showCancelButton: true,
@@ -58,8 +60,9 @@ export class OperacionesComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
-        this.postulacionService.rechazar(this.contratacion.id).subscribe((resp: any) => {
+        this.postulacionService.rechazar(this.postulacion.id).subscribe((resp: any) => {
           Swal.fire(resp.mensaje, '', 'success');
+          this.cerrarModalPadre();
         }, (err) => {
           console.log(err);
           Swal.fire('Error al rechazar postulacion', err.error.error || err.error.mensaje, 'error');
@@ -87,6 +90,7 @@ export class OperacionesComponent implements OnInit {
       if (result.value) {
         this.contratacionService.desvincularSolicitante(this.contratacion.id).subscribe((resp: any) => {
           Swal.fire(resp.mensaje, '', 'success');
+          this.cerrarModalPadre();
         }, (err) => {
           console.log(err);
           Swal.fire('Error al eliminar postulacion', err.error.error || err.error.mensaje, 'error');
@@ -99,5 +103,9 @@ export class OperacionesComponent implements OnInit {
         );
       }
     });
+  }
+
+  cerrarModalPadre() {
+    this.cerrar.emit(true);
   }
 }

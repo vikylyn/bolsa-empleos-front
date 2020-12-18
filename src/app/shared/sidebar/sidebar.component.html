@@ -12,17 +12,18 @@
                                 <li><a  routerLink="/perfil-solicitante">Datos personales </a></li>
                                 <li><a  routerLink="/foto-solicitante">Foto de perfil</a></li>
                                 <li><a  routerLink="/ocupaciones-solicitante">Ocupaciones</a></li>
+                                <li><a routerLinkActive="active" routerLink="/credenciales/solicitante">Cambiar Contraseña </a></li>
                                 <li><a (click)="logout()" class="cursor" >logout</a></li>
                             </ul>
                         </li>
                         <li class="nav-devider"></li>
                         <li class="nav-small-cap">PERSONAL</li>
-                        <li *ngFor="let menu of sidebar.menuSolicitante"> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="true"><i [class]="menu.icono"></i><span class="hide-menu">{{ menu.titulo }}<span class="label label-rouded label-success pull-right">{{ menu.submenu.length }}</span></span></a>
+                        <li *ngFor="let menu of sidebar.menuSolicitante"> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i [class]="menu.icono"></i><span class="hide-menu">{{ menu.titulo }}<span class="label label-rouded label-success pull-right">{{ menu.submenu.length }}</span></span></a>
                             <ul aria-expanded="true" class="collapse in">
                                 <li  *ngFor="let submenu of menu.submenu">
                                     <a *ngIf="submenu.submenu.length === 0" routerLinkActive="active" [routerLink]="[submenu.url]">{{ submenu.titulo}}</a>
-                                    <a *ngIf="submenu.submenu.length > 0" routerLinkActive="active" class="has-arrow cursor" aria-expanded="true">{{ submenu.titulo}}<span *ngIf="submenu.submenu.length > 0" class="label label-rounded label-success pull-right">{{ submenu.submenu.length }}</span></a>
-                                    <ul *ngIf="submenu.submenu.length > 0" aria-expanded="true" class="collapse in">
+                                    <a *ngIf="submenu.submenu.length > 0" routerLinkActive="active" class="has-arrow cursor">{{ submenu.titulo}}<span *ngIf="submenu.submenu.length > 0" class="label label-rounded label-success pull-right">{{ submenu.submenu.length }}</span></a>
+                                    <ul *ngIf="submenu.submenu.length > 0" class="collapse">
                                         <li *ngFor="let submenu2 of submenu.submenu"><a routerLinkActive="active" [routerLink]="[submenu2.url]">{{submenu2.titulo}}</a></li>
                                     </ul>
                                 </li>
@@ -34,11 +35,12 @@
                             <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img img [src]="empleador.imagen.url" alt="user" /><span class="hide-menu">{{empleador.nombre}} {{empleador.apellidos}}</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a routerLinkActive="active" class="cursor" routerLink="/perfil-empleador">Datos personales</a></li>
-                                <li><a routerLinkActive="active" class="cursor" routerLink="/foto-empleador">Foto de Perfil</a></li>           
+                                <li><a routerLinkActive="active" class="cursor" routerLink="/foto-empleador">Foto de Perfil</a></li>  
+                                <li><a routerLinkActive="active" routerLink="/credenciales/empleador">Cambiar Contraseña </a></li>         
                             </ul>
                         </li>
                         <li class="user-profile" *ngIf="empleador.empresa">
-                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img img [src]="empleador.imagen.url" alt="user" /><span class="hide-menu">Mi Empresa</span></a>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img img [src]="empresa.logo.url" alt="user" /><span class="hide-menu">{{empresa.nombre}}</span></a>
                             <ul aria-expanded="false" class="collapse">                               
                                 <li *ngIf="empleador.empresa"><a routerLinkActive="active" class="cursor" routerLink="/perfil-empresa">Datos de la Empresa</a></li>
                                 <li *ngIf="empleador.empresa"><a routerLinkActive="active" class="cursor" routerLink="/foto-empresa">Foto de Perfil</a></li>                      
@@ -50,7 +52,7 @@
                             <ul aria-expanded="true" class="collapse in">
                                 <li  *ngFor="let submenu of menu.submenu">
                                     <a *ngIf="submenu.submenu.length === 0" routerLinkActive="active" [routerLink]="[submenu.url]">{{ submenu.titulo}}</a>
-                                    <a *ngIf="submenu.submenu.length > 0" routerLinkActive="active" [routerLink]="[submenu.url]" class="has-arrow" aria-expanded="true">{{ submenu.titulo}}<span *ngIf="submenu.submenu.length > 0" class="label label-rounded label-success pull-right">{{ submenu.submenu.length }}</span></a>
+                                    <a *ngIf="submenu.submenu.length > 0" routerLinkActive="active" class="has-arrow cursor" aria-expanded="true">{{ submenu.titulo}}<span *ngIf="submenu.submenu.length > 0" class="label label-rounded label-success pull-right">{{ submenu.submenu.length }}</span></a>
                                     <ul *ngIf="submenu.submenu.length > 0" aria-expanded="true" class="collapse in">
                                         <li *ngFor="let submenu2 of submenu.submenu"><a routerLinkActive="active" [routerLink]="[submenu2.url]">{{submenu2.titulo}}</a></li>
                                     </ul>
@@ -64,15 +66,21 @@
                             <ul aria-expanded="false" class="collapse">
                                 <li><a routerLinkActive="active" routerLink="/perfil-administrador">Datos personales </a></li>
                                 <li><a routerLinkActive="active" routerLink="/foto-administrador">Foto de perfil </a></li>
+                                <li><a routerLinkActive="active" routerLink="/credenciales/administrador">Cambiar Contraseña </a></li>
                                 <li><a (click)="logout()" class="cursor">Cerrar sesion</a></li>
                             </ul>
                         </li>
                         <li class="nav-devider"></li>
                         <li class="nav-small-cap">PERSONAL</li>
-                        <li   *ngFor="let menu of sidebar.menuAdministrador">  
-                            <a class="has-arrow waves-effect waves-dark" aria-expanded="false"><i [class]="menu.icono"></i><span class="hide-menu">{{ menu.titulo }}<span class="label label-rouded label-themecolor pull-right">{{ menu.submenu.length }}</span></span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li *ngFor="let submenu of menu.submenu"><a routerLinkActive="active" [routerLink]="[submenu.url]">{{ submenu.titulo}}</a></li>
+                        <li *ngFor="let menu of sidebar.menuAdministrador"> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="true"><i [class]="menu.icono"></i><span class="hide-menu">{{ menu.titulo }}<span class="label label-rouded label-success pull-right">{{ menu.submenu.length }}</span></span></a>
+                            <ul aria-expanded="true" class="collapse in">
+                                <li  *ngFor="let submenu of menu.submenu">
+                                    <a *ngIf="submenu.submenu.length === 0" routerLinkActive="active" [routerLink]="[submenu.url]">{{ submenu.titulo}}</a>
+                                    <a *ngIf="submenu.submenu.length > 0" routerLinkActive="active" class="has-arrow cursor" aria-expanded="true">{{ submenu.titulo}}<span *ngIf="submenu.submenu.length > 0" class="label label-rounded label-success pull-right">{{ submenu.submenu.length }}</span></a>
+                                    <ul *ngIf="submenu.submenu.length > 0" aria-expanded="true" class="collapse in">
+                                        <li *ngFor="let submenu2 of submenu.submenu"><a routerLinkActive="active" [routerLink]="[submenu2.url]">{{submenu2.titulo}}</a></li>
+                                    </ul>
+                                </li>
                             </ul>
                         </li>
                     </ul>

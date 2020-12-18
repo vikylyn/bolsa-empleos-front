@@ -19,13 +19,13 @@ export class VerVacanteEmpleadorComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.cargarContratacion();
+    this.cargarVacante();
 
   }
-  cargarContratacion(): void {
+  cargarVacante(): void {
     this.vacanteService.buscar(this.idVacante).subscribe(( resp: Vacante) => {
       this.vacante = resp;
-      console.log(this.vacante);
+      console.log(this.vacante.requisitos.idiomas);
     });
   }
 

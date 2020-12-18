@@ -18,6 +18,8 @@ import { OcupacionService } from '../../../../services/administrador/ocupacion.s
 import Swal from 'sweetalert2';
 import { VacanteService } from '../../../../services/vacante/vacante.service';
 import { LoginService } from '../../../../services/login.service';
+import { NivelIdioma } from '../../../../models/idioma/nivel-idioma.model';
+import { RequisitosIdioma } from '../../../../models/empleador/requisitos-idioma.model';
 
 @Component({
   selector: 'app-formulario-vacante',
@@ -31,26 +33,28 @@ export class FormularioVacanteComponent implements OnInit {
   @Input() idVacante: number;
   @Output() cerrar: EventEmitter<boolean> = new EventEmitter();
   @Output() cancelar: EventEmitter<boolean> = new EventEmitter();
+  myModal = false;
   cargando = false;
   cargarformulario = false;
   formSubmitted = false;
+  formSubmitted2 = false;
   vacanteForm: FormGroup;
+  requisitosForm: FormGroup;
   vacante: Vacante;
-  idiomas: Idioma[];
   horarios: Horario[];
   ciudades: Ciudad[];
   paises: Pais[];
   sueldos: RangoSueldo[];
   tipoContratos: TipoContrato[];
   ocupaciones: Ocupacion[];
-
+  siguiente = false;
+  idiomasSeleccionados: RequisitosIdioma[] = [];
   constructor(
           private fb: FormBuilder,
           private ubicacionService: UbicacionService,
           private horarioService: HorarioService,
           private tipoContratoService: TipoContratoService,
           private rangoSueldoService: RangoSueldoService,
-          private idiomaService: IdiomaService,
           private ocupacionService: OcupacionService,
           private vacanteService: VacanteService,
           private loginService: LoginService
@@ -62,31 +66,29 @@ export class FormularioVacanteComponent implements OnInit {
     this.cargarHorarios();
     this.cargarTipoContratos();
     this.cargarSueldos();
-    this.cargarIdiomas();
     this.cargarOcupaciones();
-
     if (this.tipoOperacion === 'modificar') {
               this.cargarVacante();
     }else{
               this.cargarformulario = true;
               this.vacanteForm = this.fb.group({
-              titulo: ['', [ Validators.required]],
-              id_sueldo: [0, [ Validators.required, Validators.min(1)]],
-              direccion: ['', [ Validators.required]],
-              id_horario: [0, [ Validators.required, Validators.min(1)]],
-              num_vacantes: [0, [ Validators.required, Validators.min(1)]],
-              descripcion: ['', [ Validators.required]],
-              habilitado: [ true , [Validators.required]],
-              id_tipo_contrato: [0, [ Validators.required, Validators.min(1)]],
-              id_pais: [1, [ Validators.required, Validators.min(1)]],
-              id_ciudad: [null, [ Validators.required, Validators.min(1)]],
-              id_empleador: [ this.loginService.empleador.id, [ Validators.required]],
-              experiencia: ['', [ Validators.required, Validators.min(0)]],
-              genero: [ 0 , [ Validators.required]],
-              id_ocupacion: [null, [ Validators.required, Validators.min(1)]],
-              id_idioma: [0, [ Validators.required, Validators.min(1)]],
-
-        });
+                  titulo: ['', [ Validators.required]],
+                  id_sueldo: [0, [ Validators.required, Validators.min(1)]],
+                  direccion: ['', [ Validators.required]],
+                  id_horario: [0, [ Validators.required, Validators.min(1)]],
+                  num_vacantes: [0, [ Validators.required, Validators.min(1)]],
+                  descripcion: ['', [ Validators.required]],
+                  habilitado: [ true , [Validators.required]],
+                  id_tipo_contrato: [0, [ Validators.required, Validators.min(1)]],
+                  id_pais: [1, [ Validators.required, Validators.min(1)]],
+                  id_ciudad: [null, [ Validators.required, Validators.min(1)]],
+                  id_empleador: [ this.loginService.empleador.id, [ Validators.required]]
+              });
+              this.requisitosForm = this.fb.group({
+                experiencia: ['', [ Validators.required, Validators.min(0)]],
+                genero: [ 'seleccionar' , [ Validators.required, Validators.maxLength(1)]],
+                id_ocupacion: [null, [ Validators.required, Validators.min(1)]]
+            });
     }
   }
   cargarOcupaciones(): void {
@@ -94,11 +96,6 @@ export class FormularioVacanteComponent implements OnInit {
     .subscribe( (resp: Ocupacion[]) => {
       this.ocupaciones = resp;
     }, (err) => console.log(err));
-  }
-  cargarIdiomas(): void {
-    this.idiomaService.listarIdiomas().subscribe(({idiomas}) => {
-      this.idiomas = idiomas;
-    });
   }
   cargarSueldos(): void {
     this.rangoSueldoService.listar().subscribe((resp: RangoSueldo[]) => {
@@ -141,17 +138,19 @@ export class FormularioVacanteComponent implements OnInit {
               id_pais: [this.vacante.ciudad.estado.pais.id, [ Validators.required, Validators.min(1)]],
               id_ciudad: [this.vacante.ciudad.id, [ Validators.required, Validators.min(1)]],
               id_empleador: [ this.loginService.empleador.id, [ Validators.required]],
-              experiencia: [this.vacante.requisitos.experiencia, [ Validators.required, Validators.min(0)]],
-              genero: [ this.vacante.requisitos.genero , [ Validators.required]],
-              id_ocupacion: [this.vacante.requisitos.ocupacion.id, [ Validators.required, Validators.min(1)]],
-              id_idioma: [this.vacante.requisitos.idioma.id, [ Validators.required, Validators.min(1)]],
               id_requisitos: [this.vacante.requisitos.id, [ Validators.required]],
               num_disponibles: [ this.vacante.num_disponibles, [Validators.required, 
                                   Validators.min(this.vacante.num_vacantes - this.vacante.num_postulantes_aceptados)]],
               num_postulantes_aceptados: [this.vacante.num_postulantes_aceptados, [Validators.required]]
 
 
-      });
+        });
+        this.requisitosForm = this.fb.group({
+          experiencia: [this.vacante.requisitos.experiencia, [ Validators.required, Validators.min(0)]],
+          genero: [ this.vacante.requisitos.genero , [ Validators.required]],
+          id_ocupacion: [this.vacante.requisitos.ocupacion.id, [ Validators.required, Validators.min(1)]],
+        });
+        this.idiomasSeleccionados = this.vacante.requisitos.idiomas;
         this.cargarformulario = true;
     });
   }
@@ -162,42 +161,47 @@ export class FormularioVacanteComponent implements OnInit {
       return false;
    }
   }
-  selectNoValido( campo: string): boolean {
-    const id = this.vacanteForm.get(campo).value;
-    if ( id === 0 && this.formSubmitted) {
+  campoNoValido2( campo: string): boolean {
+    if (this.requisitosForm.get(campo).invalid && this.formSubmitted2) {
       return true;
     }else {
       return false;
-    }
+   }
   }
   filtrarCiudades(): void {
     const idPais = this.vacanteForm.get('id_pais').value;
     this.cargarCiudades(idPais);
   }
-
-  guardar(): void {
+  siguienteFormulario(): any {
     this.formSubmitted = true;
     console.log(this.vacanteForm.value);
-    if (this.vacanteForm.get('genero').value === 0){
-      return;
-    }
     if (this.vacanteForm.invalid) {
       return;
     }
-    console.log(this.vacanteForm.value);
+    this.siguiente = true;
+  }
+  guardar(): void {
+    this.formSubmitted2 = true;
+    if (this.requisitosForm.invalid || this.idiomasSeleccionados.length < 1) {
+      return;
+    }
+    let formularioCompleto = Object.assign(this.vacanteForm.value, this.requisitosForm.value);
+    const objIdiomas = {
+        idiomas: this.idiomasSeleccionados
+      };
+    formularioCompleto = Object.assign(formularioCompleto, objIdiomas);
     if (this.tipoOperacion === 'modificar') {
-      this.vacanteService.modificar(this.vacanteForm.value, this.vacante.id)
+      this.vacanteService.modificar(formularioCompleto, this.vacante.id)
           .subscribe((resp: any) => {
             Swal.fire(resp.mensaje, '', 'success');
             this.cerrarModal();
           }, (err) => {
             console.log(err);
-            Swal.fire('Error al modificar Experiencia', err.error.error || err.error.mensaje, 'error');
+            Swal.fire('Error al modificar Vacante', err.error.error || err.error.mensaje, 'error');
           });
     }else {
-     this.vacanteService.adicionar(this.vacanteForm.value)
+      this.vacanteService.adicionar(formularioCompleto)
           .subscribe((resp: any) => {
-            console.log(resp);
             Swal.fire(resp.mensaje, '', 'success');
             this.cerrarModal();
           }, (err) => {
@@ -216,5 +220,32 @@ export class FormularioVacanteComponent implements OnInit {
 
   cancelarModal() {
     this.cancelar.emit(false);
+  }
+
+  cancelarModal2(e) {
+    this.myModal = e;
+    this.visible = true;
+  }
+  cerrarModal2(e) {
+    this.myModal = e;
+    this.visible = true;
+  }
+
+  mostrarModal() {
+    this.visible = false;
+    this.myModal = true;
+  }
+  guardarIdioma(e) {
+    console.log('idioma desde el padre: ', e);
+    this.idiomasSeleccionados.push(e);
+  }
+
+  eliminarIdioma(idioma: RequisitosIdioma) {
+      this.idiomasSeleccionados = this.removerElemento(this.idiomasSeleccionados, idioma);
+  }
+  removerElemento( arr: RequisitosIdioma[], item: RequisitosIdioma) {
+    return arr.filter( ( e: RequisitosIdioma ) => {
+        return e.idioma.nombre !== item.idioma.nombre;
+    });
   }
 }

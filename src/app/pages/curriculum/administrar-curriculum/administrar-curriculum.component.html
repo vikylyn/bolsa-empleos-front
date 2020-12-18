@@ -1,105 +1,108 @@
-<div class="row justify-content-center" *ngIf="!myModal && !myModal2">
-    <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
-        <button (click)="mostrarModal3()" type="button" class="btn btn-success btn-block">Ver Curriculum</button>
-        <div class="card">
-            
-            <div class="card-header"> 
+<div class="container" >
+    <div class="row justify-content-center" *ngIf="!myModal || !myModal2 || !myModal3">
+        <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
+            <button (click)="mostrarModal3()" type="button" class="btn btn-success btn-block">Ver Curriculum</button>
+            <div class="card">
                 
-            </div>
-            <div class="card-body ">
-               
-                <h2 class="text-center">Datos Personales</h2>
-                <hr>
-                <div class="row justify-content-center">
-                    <div class="col">
-                        <table *ngIf="solicitante" class="tablesaw table-bordered table-hover table tablesaw-swipe tablesaw-sortable" data-tablesaw-mode="swipe" data-tablesaw-sortable="" data-tablesaw-sortable-switch="" data-tablesaw-minimap="" data-tablesaw-mode-switch="" id="table-949" style="">
-                            <tbody>
-                                <tr>
-                                    <td ><strong>Nombre</strong></td>
-                                    <td> {{solicitante.nombre}}</td>                        
-                                </tr>
-                                <tr>
-                                    <td> <strong> Apellidos</strong></td>
-                                    <td>{{solicitante.apellidos}}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Telefono</strong> </td>
-                                    <td> {{solicitante.telefono}}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong> Cedula</strong></td>
-                                    <td> {{solicitante.cedula}}</td>
-                                </tr>
-                                <tr>
-                                    <td> <strong>Genero</strong> </td>
-                                    <td> {{solicitante.genero}}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Nacionalidad</strong> </td>
-                                    <td>{{solicitante.nacionalidad}}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Direccion</strong></td>
-                                    <td>{{solicitante.direccion}}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Ciudad</strong></td>
-                                    <td>{{solicitante.ciudad.nombre}}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Ocupacdo</strong> </td>
-                                    <td>{{solicitante.ocupado}}</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" >
-                                        <a (click)="mostrarModal2()" class="btn btn-info  btn-block text-white"> Modificar datos</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="card-header"> 
+                    
+                </div>
+                <div class="card-body ">
+                   
+                    <h2 class="text-center">Datos Personales</h2>
+                    <hr>
+                    <div class="row justify-content-center">
+                        <div class="col">
+                            <table *ngIf="solicitante" class="tablesaw table-bordered table-hover table tablesaw-swipe tablesaw-sortable" data-tablesaw-mode="swipe" data-tablesaw-sortable="" data-tablesaw-sortable-switch="" data-tablesaw-minimap="" data-tablesaw-mode-switch="" id="table-949" style="">
+                                <tbody>
+                                    <tr>
+                                        <td ><strong>Nombre</strong></td>
+                                        <td> {{solicitante.nombre}}</td>                        
+                                    </tr>
+                                    <tr>
+                                        <td> <strong> Apellidos</strong></td>
+                                        <td>{{solicitante.apellidos}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Telefono</strong> </td>
+                                        <td> {{solicitante.telefono}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong> Cedula</strong></td>
+                                        <td> {{solicitante.cedula}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td> <strong>Genero</strong> </td>
+                                        <td> {{solicitante.genero}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Nacionalidad</strong> </td>
+                                        <td>{{solicitante.nacionalidad}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Direccion</strong></td>
+                                        <td>{{solicitante.direccion}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Ciudad</strong></td>
+                                        <td>{{solicitante.ciudad.nombre}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Ocupacdo</strong> </td>
+                                        <td>{{solicitante.ocupado}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" >
+                                            <a (click)="mostrarModal2()" class="btn btn-info  btn-block text-white"> Modificar datos</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row justify-content-center" *ngIf="!myModal || !myModal2 || !myModal3">
+        <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
+            <div id="2" class="card">
+                <div class="card-body">
+                    <h2 class="text-center">Datos del Curriculum</h2>
+                    <hr>
+                    <div class="row justify-content-center">
+                        <div class="col">
+                            <table *ngIf="curriculum" class="tablesaw table-bordered table-hover table tablesaw-swipe tablesaw-sortable" data-tablesaw-mode="swipe" data-tablesaw-sortable="" data-tablesaw-sortable-switch="" data-tablesaw-minimap="" data-tablesaw-mode-switch="" id="table-949" style="">
+                                <tbody>
+                                    <tr>
+                                        <td ><strong>Titulo</strong></td>
+                                        <td>{{curriculum.titulo}}</td>                        
+                                    </tr>
+                                    <tr>
+                                        <td> <strong>Pretension salarial Bs.</strong></td>
+                                        <td>{{curriculum.pretension_salarial}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Biografia</strong> </td>
+                                        <td>{{curriculum.biografia}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" >
+                                            <a (click)="mostrarModal()" class="btn btn-info btn-block text-white"> Modificar datos </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row justify-content-center" *ngIf="!myModal && !myModal2">
-    <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
-        <div id="2" class="card">
-            <div class="card-body">
-                <h2 class="text-center">Datos del Curriculum</h2>
-                <hr>
-                <div class="row justify-content-center">
-                    <div class="col">
-                        <table *ngIf="curriculum" class="tablesaw table-bordered table-hover table tablesaw-swipe tablesaw-sortable" data-tablesaw-mode="swipe" data-tablesaw-sortable="" data-tablesaw-sortable-switch="" data-tablesaw-minimap="" data-tablesaw-mode-switch="" id="table-949" style="">
-                            <tbody>
-                                <tr>
-                                    <td ><strong>Titulo</strong></td>
-                                    <td>{{curriculum.titulo}}</td>                        
-                                </tr>
-                                <tr>
-                                    <td> <strong>Pretension salarial Bs.</strong></td>
-                                    <td>{{curriculum.pretension_salarial}}</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Biografia</strong> </td>
-                                    <td>{{curriculum.biografia}}</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2" >
-                                        <a (click)="mostrarModal()" class="btn btn-info btn-block text-white"> Modificar datos </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <app-formulario-encabezado  [visible]="myModal" 

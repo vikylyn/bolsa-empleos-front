@@ -34,12 +34,14 @@ export class FormularioIdiomaComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.cargarIdiomas();
     this.cargarNiveles();
 
     if ( this.tipoOperacion === 'modificar') {
           this.cargarIdioma();
+          this.cargarIdiomas();
+
     }else{
+          this.cargarIdiomasNoAsignados();
           this.cargarformulario = true;
           this.idiomaForm = this.fb.group({
           id_curriculum: [this.idCurriculum],
@@ -51,6 +53,11 @@ export class FormularioIdiomaComponent implements OnInit {
     }
   }
   cargarIdiomas(): void {
+    this.idiomaService.listarIdiomas().subscribe(({idiomas}) => {
+      this.idiomas = idiomas;
+    });
+  }
+  cargarIdiomasNoAsignados(): void {
     this.idiomaService.listarIdiomasNoAsigandos(this.idCurriculum).subscribe(({idiomas}) => {
       this.idiomas = idiomas;
     });

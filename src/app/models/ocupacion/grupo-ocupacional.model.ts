@@ -4,6 +4,7 @@ export class GrupoOcupacional {
         public nombre: string,
         public habilitado: boolean,
         public administrador: Administrador,
+    //    public codigo: string,
         public id?: number
     ){}
 }

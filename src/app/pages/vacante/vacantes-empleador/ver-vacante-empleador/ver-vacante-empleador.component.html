@@ -29,7 +29,16 @@
                     <span class="font-weight-bold">Años de Experiencia: </span> {{vacante.requisitos.experiencia}} <br>
                     <span class="font-weight-bold">Genero: </span> {{vacante.requisitos.genero}} <br>
                     <span class="font-weight-bold">Ocupacion: </span> {{vacante.requisitos.ocupacion.nombre}} <br>
-                    <span class="font-weight-bold">Idioma: </span> {{vacante.requisitos.idioma.nombre}} <br>
+                    <span class="font-weight-bold">Idiomas: </span> 
+                    <ul>
+                      <li *ngFor="let idioma of vacante.requisitos.idiomas">{{idioma.idioma.nombre}}
+                          <ul>
+                            <li >Nivel Escrito: {{idioma.nivel_escrito.nombre}}</li>
+                            <li >Nivel Oral: {{idioma.nivel_oral.nombre}}</li>
+                            <li >Nivel Lectura: {{idioma.nivel_lectura.nombre}}</li>
+                          </ul>
+                      </li>
+                    </ul>
               </div>
           </div>
       </div>

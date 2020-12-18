@@ -3,6 +3,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Administrador } from '../../../models/administrador/administrador.model';
 import { AdministradorService } from '../../../services/administrador/administrador.service';
 import Swal from 'sweetalert2';
+import { Pais } from '../../../models/pais.model';
+import { Ciudad } from '../../../models/ciudad.model';
+import { UbicacionService } from '../../../services/ubicacion/ubicacion.service';
 
 @Component({
   selector: 'app-formulario-administrador',
@@ -21,10 +24,15 @@ export class FormularioAdministradorComponent implements OnInit {
   public formSubmitted = false;
   public adminForm: FormGroup;
   public administrador: Administrador;
+  paises: Pais[];
+  ciudades: Ciudad[];
   constructor(public adminService: AdministradorService,
+              private ubicacionService: UbicacionService,
               private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    this.cargarPaises();
+    this.cargarCiudades();
     if (this.tipoOperacion === 'modificar') {
       this.cargarAdministrador();
     }else{
@@ -37,13 +45,28 @@ export class FormularioAdministradorComponent implements OnInit {
       password2: ['', [Validators.required]],
       cedula: ['', [Validators.required]],
       telefono: ['', [Validators.required]],
-      genero: [ 0 , Validators.required],
+      genero: [ 'seleccionar' , [Validators.required, Validators.maxLength(1)]],
       habilitado: [true, Validators.required],
-      id_rol: [1, [Validators.required]]
+      id_rol: [1, [Validators.required]],
+      direccion: ['', [Validators.required]],
+      id_ciudad: [null , [Validators.required, Validators.min(1)]],
+      id_pais: [1 , [Validators.required, Validators.min(1)]]
       }, {
         validators: this.passwordsIguales('password', 'password2')
       });
     }
+  }
+  cargarCiudades(): void {
+    this.ubicacionService.listarCiudades(1)
+    .subscribe((resp: Ciudad[]) => {
+      this.ciudades = resp;
+    });
+  }
+  cargarPaises(): void {
+    this.ubicacionService.listarPaises()
+    .subscribe( (resp: Pais[]) => {
+      this.paises = resp;
+    });
   }
   passwordsIguales(pass1Name: string, pass2Name: string): any {
     return ( group: FormGroup) => {
@@ -74,14 +97,6 @@ export class FormularioAdministradorComponent implements OnInit {
       return false;
     }
   }
-  selectNoValido( campo: string): boolean {
-    const id = this.adminForm.get(campo).value;
-    if ( id === 0 && this.formSubmitted) {
-      return true;
-    }else {
-      return false;
-    }
-  }
   cargarAdministrador(): void {
     this.adminService.buscar(this.idAdministrador)
     .subscribe((resp: any) => {
@@ -93,9 +108,12 @@ export class FormularioAdministradorComponent implements OnInit {
       email: [this.administrador.credenciales.email, [Validators.required, Validators.email]],
       cedula: [this.administrador.cedula, [Validators.required]],
       telefono: [this.administrador.telefono, [Validators.required]],
-      genero: [ this.administrador.genero , Validators.required],
+      genero: [ this.administrador.genero , [Validators.required, Validators.maxLength(1)]],
       habilitado: [this.administrador.habilitado, Validators.required],
-      id_rol: [1, [Validators.required]]
+      id_rol: [1, [Validators.required]],
+      direccion: [this.administrador.direccion, [Validators.required]],
+      id_ciudad: [this.administrador.ciudad.id, [Validators.required, Validators.min(1)]],
+      id_pais: [this.administrador.ciudad.estado.pais.id, [Validators.required, Validators.min(1)]]
       });
     });
   }

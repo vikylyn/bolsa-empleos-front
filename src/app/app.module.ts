@@ -16,6 +16,13 @@ import { environment } from '../environments/environment';
 // espanol
 import {registerLocaleData} from '@angular/common';
 import localEs from '@angular/common/locales/es';
+import { PdfMakeWrapper } from 'pdfmake-wrapper';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+
+// Set the fonts to use
+PdfMakeWrapper.setFonts(pdfFonts);
 registerLocaleData(localEs);
 
 const config: SocketIoConfig = {
@@ -36,6 +43,7 @@ const config: SocketIoConfig = {
     AppRoutingModule,
     PagesModule,
     AuthModule,
+    BrowserAnimationsModule
   ],
   providers: [
     {

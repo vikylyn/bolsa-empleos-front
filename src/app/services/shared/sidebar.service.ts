@@ -22,7 +22,11 @@ export class SidebarService {
             {titulo: 'Idiomas', url: '/curriculum/idioma'},
 
           ]},
-        {titulo: 'Postulaciones', url: '/postulaciones-solicitante', submenu: []},
+        {titulo: 'Postulaciones', url: '', submenu: [
+          {titulo: 'Pendientes', url: '/postulaciones-pendientes-solicitante'},
+          {titulo: 'Aceptadas', url: '/postulaciones-solicitante'},
+          {titulo: 'Rechazadas', url: '/postulaciones-rechazadas-solicitante'},
+        ]},
         {titulo: 'Contrataciones', url: '/contrataciones-solicitante', submenu: []},
       ]
     }
@@ -34,7 +38,13 @@ export class SidebarService {
       submenu: [
         {titulo: 'Inicio', url: '/inicio-empleador', submenu: []},
         {titulo: 'Vacantes', url: '/vacante', submenu: []},
-        {titulo: 'Postulaciones', url: '/postulaciones-empleador', submenu: []},
+        {titulo: 'Postulantes', url: '', submenu: [
+          {titulo: 'Pendientes', url: '/postulantes-pendientes'},
+          {titulo: 'Favoritos', url: '/postulantes/favoritos'},
+          {titulo: 'Considerados', url: '/postulaciones-empleador'},
+          {titulo: 'Rechazados', url: '/postulantes-rechazados-empleador'},
+
+        ]},
         {titulo: 'Contrataciones', url: '/contrataciones-empleador', submenu: []},
       ]
     }
@@ -44,11 +54,17 @@ export class SidebarService {
       titulo: 'Principal',
       icono: 'mdi mdi-gauge',
       submenu: [
-        {titulo: 'Inicio', url: '/dashboard'},
-        {titulo: 'Administradores', url: '/administrador'},
-        {titulo: 'Grupos Ocupacionales', url: '/area-laboral'},
-        {titulo: 'Ocupaciones', url: '/profesion'},
-        {titulo: 'Reportes', url: '/reporte'},
+        {titulo: 'Inicio', url: '/dashboard', submenu: []},
+        {titulo: 'Administradores', url: '/administrador', submenu: []},
+        {titulo: 'Grupos Ocupacionales', url: '/area-laboral', submenu: []},
+        {titulo: 'Ocupaciones', url: '/profesion', submenu: []},
+        {titulo: 'Reportes', url: '', submenu: [
+          {titulo: 'Reporte de solicitantes por ocupacion', url: '/reporte-solicitante'},
+          {titulo: 'Reporte de empleadores', url: '/reporte-empleador'},
+          {titulo: 'Reporte de empresas', url: '/reporte-empresa'},
+          {titulo: 'Reporte de vacantes', url: '/reporte-vacante'},
+          {titulo: 'Reporte de contrataciones', url: '/reporte-contratacion'},
+        ]},
       ]
     }
   ];

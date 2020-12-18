@@ -42,8 +42,9 @@ export class FormularioProfesionComponent implements OnInit {
       this.cargarformulario = true;
       this.ocupacionForm = this.fb.group({
       nombre: ['', [ Validators.required]],
+  //    codigo: ['', [ Validators.required]],
       habilitado: [true, Validators.required],
-      id_grupo_ocupacional: [0, [Validators.required]],
+      id_grupo_ocupacional: [null, [Validators.required, Validators.min(1)]],
       id_administrador: [this.loginService.administrador.id, [Validators.required]],
       });
     }
@@ -62,14 +63,7 @@ export class FormularioProfesionComponent implements OnInit {
       return false;
     }
   }
-  selectNoValido( campo: string): boolean {
-    const id = this.ocupacionForm.get(campo).value;
-    if ( id === 0 && this.formSubmitted) {
-      return true;
-    }else {
-      return false;
-    }
-  }
+
   cargarOcupacion(): void {
     this.ocupacionService.buscar(this.idOcupacion)
     .subscribe((resp: any) => {
@@ -78,8 +72,9 @@ export class FormularioProfesionComponent implements OnInit {
       this.cargarformulario = true;
       this.ocupacionForm = this.fb.group({
       nombre: [this.ocupacion.nombre, [ Validators.required]],
+ //     codigo: [this.ocupacion.codigo, [ Validators.required]],
       habilitado: [this.ocupacion.habilitado, Validators.required],
-      id_grupo_ocupacional: [this.ocupacion.grupo_ocupacional.id, [Validators.required]],
+      id_grupo_ocupacional: [this.ocupacion.grupo_ocupacional.id, [Validators.required, Validators.min(1)]],
       id_administrador: [this.loginService.administrador.id, [Validators.required]],
       id: [this.idOcupacion, [Validators.required]]
     });

@@ -6,7 +6,7 @@ export class Contratacion {
         public vacante: Vacante,
         public solicitante: Solicitante,
         public habilitado: boolean,
-        public confirmado: boolean,
+        public oculto: boolean,
         public creado_en: Date,
         public id?: number
     ){

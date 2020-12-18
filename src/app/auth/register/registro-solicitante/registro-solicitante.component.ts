@@ -26,7 +26,28 @@ export class RegistroSolicitanteComponent implements OnInit {
   ciudades: Ciudad[];
   estados_civiles: EstadoCivil[];
   formSubmitted = false;
+  fechaActual: Date = new Date();
+  fechaLimiteInf: Date  = new Date();
 
+  dias: any[] = [];
+
+  meses: any[] = [
+    {id: 1 , valor: 'enero'},
+    {id: 2, valor: 'febrero'},
+    {id: 3, valor: 'marzo'},
+    {id: 4, valor: 'abril'},
+    {id: 5, valor: 'mayo'},
+    {id: 6, valor: 'junio'},
+    {id: 7, valor: 'julio'},
+    {id: 8, valor: 'agosto'},
+    {id: 9, valor: 'septiembre'},
+    {id: 10, valor: 'octubre'},
+    {id: 11, valor: 'noviembre'},
+    {id: 12, valor: 'diciembre'},
+    
+  ];
+
+  anios: any[] = [];
 
   constructor(private fb: FormBuilder,
               public router: Router,
@@ -35,6 +56,8 @@ export class RegistroSolicitanteComponent implements OnInit {
               private ubicacionService: UbicacionService,
               private estadoCivilService: EstadoCivilService)
     {
+      this.fechaLimiteInf.setFullYear(this.fechaActual.getFullYear() - 18);
+      this.cargarFechas();
     }
 
   public registerForm = this.fb.group({
@@ -44,16 +67,19 @@ export class RegistroSolicitanteComponent implements OnInit {
     password: ['', [Validators.required]],
     password2: ['', [Validators.required]],
     cedula: ['', [Validators.required]],
+    num_complemento: [''],
     telefono: ['', [Validators.required]],
     nacionalidad: ['', [Validators.required]],
     direccion: ['', [Validators.required]],
-    genero: [ 0 , Validators.required],
-    fecha_nac: ['', Validators.required],
-    id_profesion: [, Validators.required],
-    id_estado_civil: [0 , Validators.required],
+    genero: [ 'seleccionar' , [Validators.required, Validators.maxLength(1)]],
+    id_profesion: [null , [Validators.required, Validators.minLength(1)]],
+    id_estado_civil: [0 , [Validators.required, Validators.min(1)]],
     id_pais: [1, [Validators.required]],
-    id_ciudad: [, Validators.required],
-    id_rol: [2, [Validators.required]]
+    id_ciudad: [null, [Validators.required, Validators.min(1)]],
+    id_rol: [2, [Validators.required]],
+    dia: [new Date().getDate(), [Validators.required, Validators.min(1)]],
+    mes: [new Date().getMonth() + 1, [Validators.required, Validators.min(1)]],
+    anio: [new Date().getFullYear()-18, [Validators.required, Validators.max(new Date().getFullYear()-18), Validators.min(new Date().getFullYear()-118)]],
   }, {
     validators: this.passwordsIguales('password', 'password2')
   });
@@ -63,42 +89,49 @@ export class RegistroSolicitanteComponent implements OnInit {
     this.ocupacionService.listarProfesiones()
     .subscribe( (resp: Ocupacion[]) => {
       this.profesiones = resp;
-      console.log(this.profesiones);
     }, (err) => console.log(err));
     this.ubicacionService.listarPaises()
         .subscribe( (resp: Pais[]) => {
           this.paises = resp;
-          console.log(this.paises);
         });
     this.ubicacionService.listarCiudades(1)
         .subscribe((resp: Ciudad[]) => {
           this.ciudades = resp;
-          console.log(this.ciudades);
         });
     this.estadoCivilService.listar()
     .subscribe((resp: EstadoCivil []) => {
       this.estados_civiles = resp;
-      console.log(this.estados_civiles);
     });
     init_plugins();
   }
-
-  adicionarSolicitante(): void {
-    console.log('pais seleccionado', this.registerForm.value);
-    this.formSubmitted = true;
-    if (
-        this.registerForm.get('genero').value === 0 ||
-        this.registerForm.get('id_estado_civil').value === 0 ) {
-      return;
+  cargarFechas(){
+    let inicio = this.fechaActual.getFullYear() - 18;
+    let fin = this.fechaActual.getFullYear() - 118;
+   
+    for (let index = inicio; index >= fin; index--) {
+      let anio: any = {id: index, valor: index};
+      this.anios.push(anio);
     }
+    for (let index = 1; index <= 31; index++) {
+      this.dias.push({id: index, valor: index})
+    }
+  }
+  adicionarSolicitante(): void {
+    let dia = this.registerForm.get('dia').value;
+    let mes = this.registerForm.get('mes').value;
+    let anio = this.registerForm.get('anio').value;
+    this.formSubmitted = true;
     if (this.registerForm.invalid) {
       return;
     }
-    console.log('ENVIANDO FORMULARIO');
-
-    this.solicitanteService.adicionarSolicitante(this.registerForm.value)
+   
+    let fechaObj = {
+      fecha_nac: anio+'-'+mes+'-'+dia
+    };
+    const form = Object.assign(this.registerForm.value, fechaObj);
+    console.log(form);
+    this.solicitanteService.adicionarSolicitante(form)
         .subscribe( (resp: any) => {
-          console.log('solicitante creado');
           Swal.fire(resp.mensaje, this.registerForm.get('email').value, 'success');
           this.router.navigate(['/login']);
         }, (err) => {
@@ -114,27 +147,27 @@ export class RegistroSolicitanteComponent implements OnInit {
       return false;
     }
   }
-  selectNoValido( campo: string): boolean {
-    const id = this.registerForm.get(campo).value;
-    if ( id === 0 && this.formSubmitted) {
+
+  validarFecha():boolean {
+    let dia = this.registerForm.get('dia').value;
+    let mes = this.registerForm.get('mes').value;
+    let anio = this.registerForm.get('anio').value;
+    let fecha: Date = new Date(anio+'-'+mes+'-'+dia);
+    if (fecha > this.fechaLimiteInf && this.formSubmitted) {
+      return true;
+    }
+    if(fecha <= this.fechaLimiteInf! && !this.existeFecha(dia+'/'+mes+'/'+anio)  && this.formSubmitted) {
       return true;
     }else {
       return false;
     }
   }
-  select2NoValido(campo: string): boolean {
-    const valor = this.registerForm.get(campo).value;
-
-    if ( valor === 0 && this.formSubmitted) {
-      return true;
-    }else if ( valor === null && this.formSubmitted) {
-       // agregar clase
-  //    elem.classList.add('custom');
-      return true;
-    }else if ( valor === '' && this.formSubmitted) {
-      return false;
-
-    }
+  existeFecha(fecha){
+    var fechaf = fecha.split("/");
+        var d = fechaf[0];
+        var m = fechaf[1];
+        var y = fechaf[2];
+        return m > 0 && m < 13 && y > 0 && y < 32768 && d > 0 && d <= (new Date(y, m, 0)).getDate();
   }
   contrasenasNovalidas(): boolean {
     const pass1 = this.registerForm.get('password').value;

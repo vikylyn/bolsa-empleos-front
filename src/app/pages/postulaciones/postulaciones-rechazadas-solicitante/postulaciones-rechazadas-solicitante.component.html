@@ -1,0 +1,96 @@
+<div class="container-fluid animated fadeIn fast">
+    
+    
+    <div class="row" *ngIf="!cargando">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Mis Postulaciones</h4>
+                    <h6>Total: {{totalPostulaciones}} - {{desde}}</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input #txtTermino (keyup)="busqueda(txtTermino.value)" type="text" class="form-control" placeholder="buscar postulacion...">
+                        </div>
+                    </div>
+                    <br><br>
+                    <div class="table-responsive">
+                        <table class="table full-color-table full-inverse-table hover-table">
+                            <thead>
+                                <tr>
+                                    <th>Num</th>
+                                    <th>Publicado en:</th>
+                                    <th>Ocupacion</th>
+                                    <th>Empleador</th>
+                                    <th>Sueldo</th>
+                                    <th>Estado</th>
+                                    <th class="w100">Operaciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let postulacion of postulaciones; let i = index">
+                                    <td align="center">
+                                        <span >{{desde + i + 1}}</span>
+                                    </td>
+                                    <td>
+                                        {{postulacion.creado_en | date: 'longDate'}}
+                                    </td>
+                                    <td>
+                                        {{postulacion.vacante.requisitos.ocupacion.nombre}}
+                                    </td>
+                                    <td>
+                                        {{postulacion.vacante.empleador.nombre}} {{postulacion.vacante.empleador.apellidos}}
+                                    </td>
+                                    <td>
+                                        {{postulacion.vacante.sueldo.sueldo}}
+                                    </td>
+                                    <td class="text-center">
+                                        <span *ngIf="!postulacion.aceptado && !postulacion.rechazado">Pendiente</span>
+                                        <span *ngIf="postulacion.aceptado && !postulacion.rechazado">Aceptado</span>
+                                        <span *ngIf="postulacion.rechazado">Rechazado</span>
+
+                                    </td>
+                                    <td class="text-nowrap text-center">
+<!--                                        <div  class="btn-group btn-group-sm" role="group" aria-label="...">
+                                            <button routerLink="/inicio-solicitante/vacante/{{postulacion.vacante.id}}" type="button" class="btn btn-secondary">ver</button>
+                                            <button (click)="confirmar(postulacion.id)" *ngIf="postulacion.aceptado && !postulacion.solicitante.ocupado" class="btn btn-secondary">Confirmar</button>
+                                            <button (click)="rechazar(postulacion.id)" *ngIf="postulacion.aceptado" type="button" class="btn btn-secondary">Rechazar</button>
+                                            <button (click)="eliminar(postulacion.id)" *ngIf="!postulacion.aceptado" type="button" class="btn btn-secondary">Eliminar</button>
+                                        </div>
+-->
+                                        <a class="cursor" (click)="mostrarModal(postulacion.vacante.id)"> 
+                                            <i class="fa fa-eye  m-r-10"></i> 
+                                        </a>             
+                                        <a class="cursor" (click)="eliminar(postulacion.id)" *ngIf="!postulacion.aceptado" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-trash-o m-r-10 text-info"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center" *ngIf="txtTermino.value.length ===0">
+                        <button (click)="cambiarPagina(-5)" class="btn btn-secondary">Anterior</button> 
+                        &nbsp;
+                        <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguiente</button>
+                    </div>
+                    <div class="row animated fadeIn fast" *ngIf="cargando">
+                        <div class="col-12">
+                            <div class="alert alert-info text-center">
+                                <h4>Cargando...</h4>
+                                <i class="fa fa-spin fa-refresh fa-2x"></i>
+                                <p class="mb-0">Por favor espere</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<app-vacantes-solicitante *ngIf="myModal" [visible]="myModal" 
+                                          [idVacante]= "idVacante" 
+                                          (cerrar)="cerrarModal($event)">
+</app-vacantes-solicitante>
+

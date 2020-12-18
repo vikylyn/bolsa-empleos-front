@@ -21,13 +21,24 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Grupo Ocupacional</label>
-                        <select [class.is-invalid]="selectNoValido('id_grupo_ocupacional')" formControlName="id_grupo_ocupacional" class="form-control custom-select">
-                            <option *ngIf="tipoOperacion==='adicionar'" value="0">Seleccionar</option>
-                            <option *ngFor="let grupo of gruposOcupacionales" [value]="grupo.id">{{grupo.nombre}}</option>
-                        </select>
-                        <small *ngIf="selectNoValido('id_grupo_ocupacional')" class="form-control-feedback text-danger">Seleccione una area laboral</small> 
-                    </div>                
-                    <div class="form-group">
+                        <ng-select 
+                                   placeholder="Seleccionar Grupo ocupacional"
+                                   appendTo="body"
+                                   [clearable] = "false"
+                                   notFoundText = "grupo no encontrado"
+                                   formControlName="id_grupo_ocupacional">
+                                   <ng-option [value]= "grupo.id" *ngFor="let grupo of gruposOcupacionales" [value]="grupo.id">{{grupo.nombre}}
+                                   </ng-option>
+                        </ng-select>
+                        <small *ngIf="campoNoValido('id_grupo_ocupacional')" class="form-control-feedback text-danger">Seleccione un grupo</small> 
+                    </div> 
+    <!--                <div class="form-group">
+                        <label for="exampleInputuname">Codigo:</label>
+                        <input [class.is-invalid]="campoNoValido('codigo')" formControlName="codigo" class="form-control" type="text" placeholder="Nombre">
+                        <small *ngIf="campoNoValido('codigo')" class="form-control-feedback text-danger">El codigo es obligatorio </small>
+                    </div> 
+    -->              
+    <!--                <div class="form-group">
                         <label for="exampleInputuname">Habilitado</label>
 
                         <select formControlName="habilitado" class="form-control custom-select">
@@ -36,7 +47,7 @@
                         </select>
 
                     </div>
-                    <div class="text-center">
+    -->                <div class="text-center">
                         <button  (click)="guardar()" type="submit" class="btn btn-success waves-effect waves-light">
                             <i class="fa fa-save"></i>
                             Guardar

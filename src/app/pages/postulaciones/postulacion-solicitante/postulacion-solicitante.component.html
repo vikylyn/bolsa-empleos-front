@@ -32,7 +32,7 @@
                                         <span >{{desde + i + 1}}</span>
                                     </td>
                                     <td>
-                                        {{postulacion.creado_en}}
+                                        {{postulacion.creado_en | date: 'longDate'}}
                                     </td>
                                     <td>
                                         {{postulacion.vacante.requisitos.ocupacion.nombre}}
@@ -64,8 +64,6 @@
                                             <i class=" fa fa-handshake-o  m-r-10"></i> 
                                         </a>
                                         <a class="cursor" (click)="rechazar(postulacion.id)" *ngIf="postulacion.aceptado" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-trash-o m-r-10 text-info"></i></a>
-                                        <a class="cursor" (click)="eliminar(postulacion.id)" *ngIf="!postulacion.aceptado" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-trash-o m-r-10 text-info"></i></a>
-
                                     </td>
                                 </tr>
                             </tbody>

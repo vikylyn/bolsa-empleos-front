@@ -3,6 +3,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Postulacion } from '../../models/empleador/postulacion.model';
 import { WebsocketService } from '../websocket/websocket.service';
+import { map, delay } from 'rxjs/operators';
 
 
 const base_url = environment.base_url;
@@ -38,6 +39,11 @@ export class PostulacionService {
     const token = localStorage.getItem('token');
     return this.http.put(`${base_url}/postulacion/aceptar/${id_postulacion}?token=${token}`, {});
   }
+    // aceptar postulacion que ha sido rechazada por parte de un empleador
+  aceptarRechazado(id_postulacion: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.put(`${base_url}/postulacion/aceptar-rechazado/${id_postulacion}?token=${token}`, {});
+  }
 
   // confirmar  postulacion que ha sido aceptada (solicitante)
   confirmar(id_postulacion: number): any {
@@ -51,14 +57,44 @@ export class PostulacionService {
   }
 
   // listar postulaciones mediante id de Solicitante
-  listarPorIdSolicitante(id_solicitante: number, desde: number): any {
+  listarPendientesPorIdSolicitante(id_solicitante: number, desde: number): any {
     const token = localStorage.getItem('token');
-    return this.http.get<{total: number, postulaciones: Postulacion[]}>(`${base_url}/postulacion/lista/solicitante/${id_solicitante}?desde=${desde}&token=${token}`);
+    return this.http.get<{total: number, postulaciones: Postulacion[]}>(`${base_url}/postulacion/lista-pendientes/solicitante/${id_solicitante}?desde=${desde}&token=${token}`);
   }
-  // listar postulaciones mediante id de Vacante
-  listarPorIdVacante(id_vacante: number, desde: number): any {
+  // listar postulaciones conisiderados por id de Solicitante
+  listarConsideradosPorIdSolicitante(id_solicitante: number, desde: number): any {
     const token = localStorage.getItem('token');
-    return this.http.get<{total: number, postulaciones: Postulacion[]}>(`${base_url}/postulacion/lista/empleador/${id_vacante}?desde=${desde}&token=${token}`);
+    return this.http.get<{total: number, postulaciones: Postulacion[]}>(`${base_url}/postulacion/lista-considerados/solicitante/${id_solicitante}?desde=${desde}&token=${token}`);
+  }
+
+  // listar postulaciones mediante id de Solicitante
+  listarRechazadasPorIdSolicitante(id_solicitante: number, desde: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get<{total: number, postulaciones: Postulacion[]}>(`${base_url}/postulacion/lista-rechazados/solicitante/${id_solicitante}?desde=${desde}&token=${token}`);
+  }
+  // listar postulaciones consideradas por id de Vacante
+  listarConsideradosPorIdVacante(id_vacante: number, desde: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get<{total: number, postulaciones: Postulacion[]}>(`${base_url}/postulacion/lista-considerados/empleador/${id_vacante}?desde=${desde}&token=${token}`);
+  }
+
+  // listar postulaciones sin considerar por id de Vacante
+  listarNoConsideradosPorIdVacante(id_vacante: number, desde: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get<{total: number, postulaciones: Postulacion[]}>(`${base_url}/postulacion/lista-no-considerados/empleador/${id_vacante}?desde=${desde}&token=${token}`);
+  }
+
+  // listar postulaciones rechazadas por id de Vacante
+  listarRechazadasPorIdVacante(id_vacante: number, desde: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get<{total: number, postulaciones: Postulacion[]}>(`${base_url}/postulacion/lista-rechazados/empleador/${id_vacante}?desde=${desde}&token=${token}`);
+  }
+
+   // listar postulaciones favoritas por id de Vacante
+   listarPorIdVacanteFavoritos(id_vacante: number, desde: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get<{total: number, postulaciones: Postulacion[]}>
+      (`${base_url}/postulacion/favoritos/${id_vacante}?desde=${desde}&token=${token}`);
   }
 
   busqueda(valor: string, id_empleador: number): any {
@@ -77,10 +113,24 @@ export class PostulacionService {
     const token = localStorage.getItem('token');
     return this.http.put(`${base_url}/postulacion/quitar-favorito/${id_postulacion}?token=${token}`, {});
   }
-
+  // invitar a solicitante a postularse
+  invitarPostulacion(formData: any): any {
+    const token = localStorage.getItem('token');
+    return this.http.post(`${base_url}/postulacion/invitacion?token=${token}`, formData);
+  }
+  // invitar a solicitante a postularse
+  buscarInvitacion(idSolicitante: number, idVacante: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get(`${base_url}/postulacion/invitacion/${idSolicitante}/${idVacante}?token=${token}`)
+            .pipe(map((resp: any)=> resp.notificacion), delay(300));
+  }
   // websockets
 
   verificarPostulacion() {
     return  this.wsService.escuchar('verificar-postulacion');
+  }
+
+  actualizarPostulaciones() {
+    return  this.wsService.escuchar('actualizar-postulaciones');
   }
 }

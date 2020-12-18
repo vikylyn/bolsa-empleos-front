@@ -1,8 +1,8 @@
-<div class="form-registro" style="background-image:url(../assets/images/background/login-register2.png);">
+<div  style="background-image:url(../assets/images/background/login-register2.png);">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
-                <div class="card">
+                <div class="card mt-3">
                     <div class="card-body">
                         <form  autocomplete="off" 
                                [formGroup]="registerForm"
@@ -39,7 +39,7 @@
                                     <div class="col-md-12 ">
                                         <div class="form-group">
                                             <label class="control-label">Contraseña:</label>
-                                            <input [class.is-invalid]="campoNoValido('password')" formControlName="password" formControlName="password" class="form-control" type="password"  placeholder="Password">
+                                            <input [class.is-invalid]="campoNoValido('password')" formControlName="password" class="form-control" type="password"  placeholder="Password">
                                             <small *ngIf="campoNoValido('password')" class="form-control-feedback text-danger">La contraseña es obligatoria</small>
                                         </div>
                                     </div>
@@ -54,31 +54,52 @@
                                 </div>
                                 <!--/row-->
                                 <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Fecha de Nacimiento (debe ser mayor de 18 años)</label>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <select [class.is-invalid]="campoNoValido('dia') || validarFecha()" formControlName="dia" class="form-control">
+                                                        <option value="0">Dia</option>
+                                                        <option *ngFor="let dia of dias" value="{{dia.id}}">{{dia.valor}}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-4">
+                                                    <select [class.is-invalid]="campoNoValido('mes') || validarFecha()" formControlName="mes"  class="form-control" >
+                                                        <option value="0">Mes</option>
+                                                        <option *ngFor="let mes of meses" value="{{mes.id}}">{{mes.valor}}</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-4">
+                                                    <select [class.is-invalid]="campoNoValido('anio') || validarFecha()" formControlName="anio" class="form-control" >
+                                                        <option value="0">Año</option>
+                                                        <option *ngFor="let anio of anios" value="{{anio.id}}">{{anio.valor}}</option>
+                                                    </select>    
+                                                </div>
+                                                <div class="col-12">
+                                                    <small *ngIf="validarFecha()" class="form-control-feedback text-danger">Seleccione una fecha valida y debe tener 18 años cumplidos</small>
+                                                </div>  
+
+                                            </div> 
+
+                                        </div>
+                                                                              
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Genero</label>
-                                            <select [class.is-invalid]="selectNoValido('genero')" formControlName="genero" class="form-control custom-select">
-                                                <option value="0">Seleccionar</option>
+                                            <select [class.is-invalid]="campoNoValido('genero')" formControlName="genero" class="form-control custom-select">
+                                                <option value="seleccionar">Seleccionar</option>
                                                 <option value="M">Masculino</option>
                                                 <option value="F">Fememino</option>
                                             </select>
-                                            <small *ngIf="selectNoValido('genero')" class="form-control-feedback text-danger">Seleccione un genero</small> 
+                                            <small *ngIf="campoNoValido('genero')" class="form-control-feedback text-danger">Seleccione un genero</small> 
         
                                         </div>
                                     </div>
                                     <!--/span-->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label class="control-label">Fecha de Nacimiento</label>
-                                            <input [class.is-invalid]="campoNoValido('fecha_nac')" formControlName="fecha_nac"  type="date" class="form-control form-control-sm" placeholder="dd/mm/yyyy">
-                                            <small *ngIf="campoNoValido('fecha_nac')" class="form-control-feedback text-danger">Ingrese una fecha</small> 
-
-                                        </div>
-                                    </div>
-                                    <!--/span-->
-                                </div>
-                                <!--/row-->
-                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Telefono:</label>
@@ -87,11 +108,21 @@
                                         </div>
                                     </div>
                                     <!--/span-->
+                                </div>
+                                <!--/row-->
+                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">Cedula:</label>
+                                            <label class="control-label">Cedula de identidad:</label>
                                             <input [class.is-invalid]="campoNoValido('cedula')" formControlName="cedula" type="text" class="form-control" placeholder="Cedula">
                                             <small *ngIf="campoNoValido('cedula')" class="form-control-feedback text-danger">La cedula de identidad es obligatorio</small> 
+                                        </div>
+                                    </div>
+                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Num Complemento Ci:</label>
+                                            <input [class.is-invalid]="campoNoValido('num_complemento')" formControlName="num_complemento" type="text" class="form-control" placeholder="Complemento CI">
                                         </div>
                                     </div>
                                     <!--/span-->
@@ -99,7 +130,7 @@
                                 <div class="row">
                                     <div class="col-md-12 ">
                                         <div class="form-group">
-                                            <label>Profesion</label>
+                                            <label>Ocupacion:</label>
                                             <ng-select id="id_profesion" [items]="profesiones" 
                                                        placeholder="Seleccionar Ocupaciones"
                                                        bindLabel="nombre"
@@ -108,7 +139,7 @@
                                                        multiple = "true"
                                                        formControlName="id_profesion">
                                             </ng-select>
-                                            <small *ngIf="select2NoValido('id_profesion')" class="form-control-feedback text-danger">Seleccione almenos una profesion</small> 
+                                            <small *ngIf="campoNoValido('id_profesion')" class="form-control-feedback text-danger">Seleccione almenos una profesion</small> 
 
                                         </div>
                                     </div>
@@ -125,11 +156,11 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Estado Civil</label>
-                                            <select [class.is-invalid]="selectNoValido('id_estado_civil')" formControlName="id_estado_civil" class="form-control custom-select">
+                                            <select [class.is-invalid]="campoNoValido('id_estado_civil')" formControlName="id_estado_civil" class="form-control custom-select">
                                                 <option value="0">Seleccionar</option>
                                                 <option *ngFor="let estado_civil of estados_civiles" value="{{estado_civil.id}}">{{estado_civil.estado}}</option>
                                             </select>
-                                            <small *ngIf="selectNoValido('id_estado_civil')" class="form-control-feedback text-danger">Seleccione un estado civil</small> 
+                                            <small *ngIf="campoNoValido('id_estado_civil')" class="form-control-feedback text-danger">Seleccione un estado civil</small> 
                                         </div>
                                     </div>
                                     <!--/span-->
@@ -150,6 +181,7 @@
                                             <label>Pais</label>   
                                             <ng-select 
                                                        notFoundText = "Pais no encontrado"
+                                                       [clearable]="false"
                                                        placeholder="Seleccionar Pais"
                                                        appendTo="body"
                                                        formControlName="id_pais">
@@ -157,7 +189,7 @@
                                                         {{pais.nombre}}
                                                       </ng-option>
                                             </ng-select>
-                                            <small *ngIf="select2NoValido('id_pais')" class="form-control-feedback text-danger">Seleccione un pais</small> 
+                                            <small *ngIf="campoNoValido('id_pais')" class="form-control-feedback text-danger">Seleccione un pais</small> 
                                         </div>
                                     </div>
                                     <!--/span-->
@@ -167,13 +199,14 @@
                                             <ng-select 
                                                        placeholder="Seleccionar Ciudad"
                                                        appendTo="body"
+                                                       [clearable]="false"
                                                        notFoundText = "ciudad no encontrada"
                                                        formControlName="id_ciudad">
                                                        <ng-option [value]= "ciudad.id" *ngFor="let ciudad of ciudades">
                                                          {{ciudad.nombre}} / {{ciudad.estado.nombre}}
                                                        </ng-option>
                                             </ng-select>
-                                            <small *ngIf="select2NoValido('id_ciudad')" class="form-control-feedback text-danger">Seleccione una ciudad</small> 
+                                            <small *ngIf="campoNoValido('id_ciudad')" class="form-control-feedback text-danger">Seleccione una ciudad</small> 
                                         </div>
                                     </div>
                                     <!--/span-->

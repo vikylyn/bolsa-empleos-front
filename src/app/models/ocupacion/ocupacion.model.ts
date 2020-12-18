@@ -7,6 +7,7 @@ export class Ocupacion {
         public area_laboral: GrupoOcupacional,
         public administrador: Administrador,
         public grupo_ocupacional: GrupoOcupacional,
+     //   public codigo: string,
         public id?: number,
     ) {
     }

@@ -10,15 +10,12 @@
                        </div>
                     </div>
               </div>
-              <div class="card-body">
-                <h3 class="text-center">{{tipoOperacion | titlecase}} Ocupacion</h3>
+              <div class="card-body" >
+                <h3 class="text-center" *ngIf="!siguiente">{{tipoOperacion | titlecase}} Vacante</h3>
+                <hr *ngIf="!siguiente">
                 <form *ngIf="cargarformulario" autocomplete="off" 
-                [formGroup]="vacanteForm"
-                >
-                   <div class="form-body">
-                       <h3 class="card-title">Vacante</h3>
-                       <hr>
-                       <div class="row p-t-20">
+                [formGroup]="vacanteForm">
+                       <div *ngIf="!siguiente" class="row p-t-20">
                            <div class="col-md-6">
                                <div class="form-group">
                                    <label class="control-label">Titulo:</label>
@@ -39,7 +36,7 @@
                            </div>
                            <!--/span-->
                        </div>
-                       <div class="row">
+                       <div class="row" *ngIf="!siguiente">
                            <div class="col-md-12 ">
                                <div class="form-group">
                                    <label class="control-label">Direccion:</label>
@@ -50,13 +47,13 @@
                            <div class="col-md-12 ">
                                <div class="form-group">
                                    <label class="control-label">Descripcion:</label>
-                                   <textarea formControlName="descripcion" class="form-control rounded-0" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                   <textarea [class.is-invalid]="campoNoValido('descripcion')" formControlName="descripcion" class="form-control rounded-0" id="exampleFormControlTextarea1" rows="3"></textarea>
                                    <small *ngIf="campoNoValido('descripcion')" class="form-control-feedback text-danger">La Descripcion es Obligatoria</small>
                                </div>
                            </div>
                        </div>
                        <!--/row-->
-                       <div class="row">
+                       <div class="row" *ngIf="!siguiente">
                            <div class="col-md-6 ">
                                <div class="form-group">
                                    <label class="control-label">Horario:</label>
@@ -79,7 +76,7 @@
                            </div>
                        </div>
 
-                       <div class="row">
+                       <div class="row" *ngIf="!siguiente">
                            <div class="col-md-6">
                                <div class="form-group">
                                    <label>Pais</label>   
@@ -116,7 +113,7 @@
                            </div>
                            <!--/span-->
                        </div>
-                       <div class="row">
+                       <div class="row" *ngIf="!siguiente">
                            <div class="col-md-6 ">
                                <div class="form-group">
                                    <label class="control-label">Numero de Vacantes:</label>
@@ -138,7 +135,7 @@
                             </div>
 
                        </div>
-                       <div class="row" *ngIf="tipoOperacion=== 'modificar'">
+                       <div class="row" *ngIf="tipoOperacion=== 'modificar' && !siguiente">
                             <div class="col-md-6 ">
                                 <div class="form-group">
                                     <label class="control-label">Numero de Vacantes Disponibles:</label>
@@ -151,85 +148,105 @@
                                     <input formControlName="num_postulantes_aceptados" type="number" min="1" class="form-control" disabled="true">
                                 </div>
                             </div>
-                       </div>
-                       <div class="row">
-                           <div class="col-md-12 ">
-                               <h3>Requisitos del Solicitante</h3>
-                               <hr>
-                           </div>
-                       </div>
-                       <div class="row">
-                           <div class="col-md-12">
-                                   <div class="form-group">
-                                       <label class="control-label">Ocupacion:</label>
-                                       <ng-select id="id_ocupacion" [items]="ocupaciones" 
-                                       placeholder="Seleccionar Ocupaciones"
-                                       [clearable] = "false"
-                                       bindLabel="nombre"
-                                       notFoundText = "Ocupacion no encontrada" 
-                                       bindValue="id" 
-                                       formControlName="id_ocupacion">
-                                       </ng-select>
-                                   <small *ngIf="campoNoValido('id_ocupacion')" class="form-control-feedback text-danger">Seleccione almenos una ocupacion</small> 
+                       </div>       
+                    
+                   <hr *ngIf="!siguiente">
+                   <div class="form-actions text-center" *ngIf="!siguiente">
+                    <button (click)="siguienteFormulario()"  class="btn btn-success"> <i class="fa fa-check"></i> Siguiente</button>
+                    &nbsp;
+                    <button  (click)="cerrarModal()" type="button" class="btn btn-inverse">Cancelar</button>
+                    </div>
+                </form>
+                <form *ngIf="cargarformulario" autocomplete="off" 
+                [formGroup]="requisitosForm">   
+                    <div class="row" *ngIf="siguiente">
+                        <div class="col-md-12 ">
+                            <h3 class="text-center">Requisitos del Solicitante</h3>
+                            <hr *ngIf="siguiente">
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="siguiente">
+                        <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Ocupacion:</label>
+                                    <ng-select id="id_ocupacion" [items]="ocupaciones" 
+                                    placeholder="Seleccionar Ocupaciones"
+                                    [clearable] = "false"
+                                    bindLabel="nombre"
+                                    notFoundText = "Ocupacion no encontrada" 
+                                    bindValue="id" 
+                                    formControlName="id_ocupacion">
+                                    </ng-select>
+                                <small *ngIf="campoNoValido2('id_ocupacion')" class="form-control-feedback text-danger">Seleccione almenos una ocupacion</small> 
 
-                               </div>
-                           </div>
-                       </div>
-                       <div class="row">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="siguiente">
 
-                           <div class="col-md-12">
-                               <div class="form-group">
-                                   <label class="control-label">Experiencia (años):</label>
-                                   <input [class.is-invalid]="campoNoValido('experiencia')" formControlName="experiencia" type="number" min="0" class="form-control" placeholder="Experiencia">
-                                   <small *ngIf="campoNoValido('experiencia')" class="form-control-feedback text-danger">La Experiencia es obligatoria</small> 
-                               </div>
-                           </div>
-                       </div> 
-                       <div class="row">
-                           <div class="col-md-6">
-                               <div class="form-group">
-                                   <label class="control-label">Genero</label>
-                                   <select [class.is-invalid]="selectNoValido('genero')" formControlName="genero" class="form-control custom-select">
-                                       <option value="0">Seleccionar</option>
-                                       <option value="M">Masculino</option>
-                                       <option value="F">Fememino</option>
-                                   </select>
-                                   <small *ngIf="selectNoValido('genero')" class="form-control-feedback text-danger">Seleccione un genero</small> 
-                               </div>
-                           </div>
-                           <!--/span-->
-                           <div class="col-md-6">
-                               <div class="form-group">
-                                   <label class="control-label">Idiomas:</label>
-                                   <select [class.is-invalid]="campoNoValido('id_idioma')" formControlName="id_idioma" class="form-control custom-select">
-                                       <option *ngIf="tipoOperacion==='adicionar'" value="0">Seleccionar</option>
-                                       <option *ngFor="let idioma of idiomas" [value]="idioma.id">{{idioma.nombre}}</option>
-                                   </select>
-                                   <small *ngIf="campoNoValido('id_idioma')" class="form-control-feedback text-danger">Seleccione un idioma</small> 
-                               </div>
-                           </div>
-                           <!--/span-->
-                       </div>      
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Experiencia (años):</label>
+                                <input [class.is-invalid]="campoNoValido2('experiencia')" formControlName="experiencia" type="number" min="0" class="form-control" placeholder="Experiencia">
+                                <small *ngIf="campoNoValido2('experiencia')" class="form-control-feedback text-danger">La Experiencia es obligatoria</small> 
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                         <div class="form-group">
+                             <label class="control-label">Genero</label>
+                             <select [class.is-invalid]="campoNoValido2('genero')" formControlName="genero" class="form-control custom-select">
+                                 <option value="seleccionar">Seleccionar</option>
+                                 <option value="M">Masculino</option>
+                                 <option value="F">Fememino</option>
+                             </select>
+                             <small *ngIf="campoNoValido2('genero')" class="form-control-feedback text-danger">Seleccione un genero</small> 
+                         </div>
+                        </div>
+                    </div> 
+                    <div class="row" *ngIf="siguiente">
+                     <div class="col-md-12">
+                        <label class="control-label">Idiomas:         <button class="btn btn-success btn-sm" (click)="mostrarModal()"><i class="fa fa-plus"></i></button>
+                        </label>
+                        <br>
+                        <small *ngIf="idiomasSeleccionados.length < 1" class="form-control-feedback text-danger">Seleccione al menos un idioma</small> 
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <th>Idioma</th>
+                                    <th>Nivel Oral</th>
+                                    <th>Nivel Lectura</th>
+                                    <th>Nivel Escrito</th>
+                                    <th>Operaciones</th>
+                                </tr>
+                                <tr *ngFor="let idioma of idiomasSeleccionados">
+                                    <td>{{idioma.idioma.nombre}}</td>
+                                    <td>{{idioma.nivel_oral.nombre}}</td>
+                                    <td>{{idioma.nivel_lectura.nombre}}</td>
+                                    <td>{{idioma.nivel_escrito.nombre}}</td>
+                                    <td><button (click)="eliminarIdioma(idioma)"  class="btn btn-danger btn-sm">Eliminar</button></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                     </div>
                    </div>
-
-                   <hr>
-                   <div class="row animated fadeIn fast" *ngIf="cargando">
-                       <div class="col-12">
-                           <div class="alert alert-info text-center">
-                               <h4>Guardando...</h4>
-                               <i class="fa fa-spin fa-refresh fa-2x"></i>
-                               <p class="mb-0">Por favor espere</p>
-                           </div>
-                       </div>
-                   </div>
-                   <div class="form-actions text-center">
+                   <hr *ngIf="siguiente">
+                   <div class="form-actions text-center" *ngIf="siguiente">
                        <button (click)="guardar()"  class="btn btn-success"> <i class="fa fa-check"></i> Guardar</button>
                        &nbsp;
-                       <button  (click)="cerrarModal()" type="button" class="btn btn-inverse">Cancelar</button>
+                       <button  (click)="siguiente = false" type="button" class="btn btn-inverse">Retornar</button>
                    </div>
+                 
                 </form>
               </div>
+
           </div>
       </div>
     </div>
 </div> 
+
+<app-idioma-vacante *ngIf="myModal" [visible]="myModal" [idiomasSeleccionados]="idiomasSeleccionados"
+                                       (cerrar)="cerrarModal2($event)"
+                                       (guardarIdioma)="guardarIdioma($event)">
+</app-idioma-vacante>

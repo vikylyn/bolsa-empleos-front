@@ -28,9 +28,9 @@ export class AdministradorService {
   }
 
   // busqueda por expresion regular - nombre
-  busqueda(nombre: string): any {
+  busqueda(valor: string): any {
     const token = localStorage.getItem('token');
-    return this.http.get(`${base_url}/administrador/busqueda/${nombre}?token=${token}`)
+    return this.http.get(`${base_url}/administrador/busqueda/${valor}?token=${token}`)
     .pipe(map((resp: any) => {
           return resp.administradores;
         }));

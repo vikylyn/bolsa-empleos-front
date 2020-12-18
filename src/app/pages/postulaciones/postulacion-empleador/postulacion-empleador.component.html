@@ -1,10 +1,16 @@
 <div class="container-fluid">
-    
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-danger" role="alert" *ngIf="cargarMensaje">
+                No tiene ninguna vacante Habilitada
+            </div>
+        </div>
+    </div>
     <div class="row animated fadeIn fast" *ngIf="!cargando">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Mis Postulaciones</h4>
+                    <h4 class="card-title">Mis Postulantes</h4>
                     <h6>Total: {{totalPostulaciones}} - {{desde}}</h6>
                     <br><br>
                     <div class="row"> 
@@ -33,6 +39,7 @@
                                             <th>Publicado en:</th>
                                             <th>Ocupacion</th>
                                             <th>Solicitante</th>
+                                            <th>Estado del Solicitante</th>
                                             <th>Sueldo</th>
                                             <th>Estado</th>
                                             <th class="w100 text-center">Operaciones</th>
@@ -44,13 +51,17 @@
                                                 <span >{{desde + i + 1}}</span>
                                             </td>
                                             <td>
-                                                {{postulacion.creado_en}}
+                                                {{postulacion.creado_en | date: 'longDate'}}
                                             </td>
                                             <td>
                                                 {{postulacion.vacante.requisitos.ocupacion.nombre}}
                                             </td>
                                             <td>
                                                 {{postulacion.solicitante.nombre}} {{postulacion.solicitante.apellidos}}
+                                            </td>
+                                            <td>
+                                                <span *ngIf="postulacion.solicitante.ocupado">Ocupado (ya tiene un empleo, no podra confirmar su participacion)</span>
+                                                <span *ngIf="!postulacion.solicitante.ocupado">Disponible</span>
                                             </td>
                                             <td>
                                                 {{postulacion.vacante.sueldo.sueldo}}

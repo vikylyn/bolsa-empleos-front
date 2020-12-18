@@ -21,14 +21,14 @@ ng-select.ng-invalid.ng-touched .ng-select-container {
 .oculto {
   display: none;
 }  
-.form-registro {
+/*.form-registro {
     
   background-position: center center;
   height: 100%;
   width: 100%;
   padding: 2% 0;
 }
-
+*/
 .no-leido {
   background: #F1ECEC;
 }

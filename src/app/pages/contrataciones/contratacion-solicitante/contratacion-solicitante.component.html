@@ -43,7 +43,7 @@
                                         <span >{{desde + i + 1}}</span>
                                     </td>
                                     <td>
-                                        {{contratacion.creado_en}}
+                                        {{contratacion.creado_en | date: 'longDate'}}
                                     </td>
                                     <td>
                                         {{contratacion.vacante.requisitos.ocupacion.nombre}}
@@ -54,11 +54,17 @@
                                     <td>
                                         {{contratacion.vacante.sueldo.sueldo}}
                                     </td>
-                                    <td class="text-center"><span class="label label-danger">{{contratacion.habilitado}}</span></td>
+                                    <td class="text-center">
+                                        <i *ngIf="contratacion.habilitado" class="fa  fa-thumbs-up text-info"></i>
+                                        <i *ngIf="!contratacion.habilitado" class="fa  fa-thumbs-down text-secondary"></i>
+                                    </td>
                                     <td class="text-nowrap text-center">
-                                        <a routerLink="/inicio-solicitante/vacante/{{contratacion.vacante.id}}"  class="btn btn-info cursor"> <i class="fa fa-eye"></i> Ver</a> &nbsp;
-                                        <a   class="btn btn-danger cursor text-white" > <i class="fa fa-close text-white"></i> terminar </a>
-
+                                        <a class="cursor" (click)="mostrarModal(contratacion.vacante.id)"> 
+                                            <i class="fa fa-eye  m-r-10"></i> 
+                                        </a>
+        
+                                        <a class="cursor" *ngIf="!contratacion.habilitado" (click)="eliminar(contratacion.id)" > <i class="fa fa-trash-o m-r-10 text-info"></i></a>
+                                    
                                     </td>
                                 </tr>
                             </tbody>
@@ -76,6 +82,10 @@
     </div>
 </div>
 
+<app-vacantes-solicitante *ngIf="myModal" [visible]="myModal" 
+                                          [idVacante]= "idVacante" 
+                                          (cerrar)="cerrarModal($event)">
+</app-vacantes-solicitante>
 
 
 

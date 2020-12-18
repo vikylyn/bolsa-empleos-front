@@ -10,6 +10,8 @@ import { RegistroEmpleadorComponent } from './register/registro-empleador/regist
 import { ActivacionComponent } from './activacion/activacion.component';
 
 import { NgSelectModule } from '@ng-select/ng-select';
+import { RestablecerPasswordComponent } from './restablecer-password/restablecer-password.component';
+import { EjecutarRestablecerPasswordComponent } from './ejecutar-restablecer-password/ejecutar-restablecer-password.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +20,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     RegistroSolicitanteComponent,
     RegistroEmpleadorComponent,
     ActivacionComponent,
+    RestablecerPasswordComponent,
+    EjecutarRestablecerPasswordComponent,
   ],
   exports: [
     LoginComponent,

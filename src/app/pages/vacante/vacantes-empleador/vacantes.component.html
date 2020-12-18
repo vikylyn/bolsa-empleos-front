@@ -19,7 +19,7 @@
                 <br>
                 <button (click)="mostrarModal('adicionar', 0)"
                         class="btn btn-success">
-                        <i class="fa fa-plus"></i>
+                        Adicionar
                 </button>
                 <br><br>
                 <div class="row mb-2">
@@ -87,7 +87,7 @@
                         </tbody> 
                     </table>
                 </div>
-                <div class="text-center">
+                <div class="text-center" *ngIf="!txtTermino.value">
                     <button (click)="cambiarPagina(-5)" class="btn btn-secondary">Anterior</button> 
                     &nbsp;
                     <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguiente</button>

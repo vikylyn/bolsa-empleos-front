@@ -52,7 +52,7 @@ export class FotoSolicitanteComponent implements OnInit {
      this.imagenService.cambiarImagen(this.imagenSubir, 'solicitante', this.solicitante.id).subscribe(
        (resp: any) => {
         Swal.fire('Imagen actualizada con exito', 'La imagen ha sido actualizada con exito', 'success');
-        this.loginService.guardarImagenStorage(resp);
+        this.loginService.guardarImagenStorage(resp, this.loginService.solicitante.credenciales.rol.nombre);
         this.cargando = false;
      });
 

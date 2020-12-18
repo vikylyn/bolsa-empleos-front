@@ -1,0 +1,81 @@
+<div class="modal" *ngIf="visible">
+        <div class="row container-modal justify-content-center">
+            <div class="col-xlg-5 col-lg-7  col-md-10 col-sm-12">
+               <div class="card animated fadeIn fast">
+                   <div class="card-header pt-0 pb-0 header-modal">
+                    <div class="row justify-content-end">
+                        <div class="col-1 pr-0">
+                          <a class="cursor float-right" (click)="cerrarModal()"><i class="fa fa-window-close  cerrar"></i></a>
+                       </div>
+                    </div>
+                  </div>
+                  <div class="row animated fadeIn fast" *ngIf="cargando">
+                    <div class="col-12">
+                        <div class="alert alert-info text-center">
+                            <h4>Cargando...</h4> 
+                            <i class="fa fa-spin fa-refresh fa-2x"></i>
+                            <p class="mb-0">Por favor espere</p>
+                        </div>
+                    </div>
+                  </div>
+                   <div class="card-body ">
+                       <div class="row">
+                           <div class="col">
+                                <div class="alert alert-danger" role="alert" *ngIf="cargarMensaje">
+                                    No tiene ninguna vacante Habilitada
+                                </div>
+                           </div>
+                       </div>
+                       <div class="row" *ngIf="vacante">
+                           <div class="col">
+                                <h5 class="">Vacantes:</h5>
+                                <ng-select [items]="vacantes" 
+                                           bindLabel="titulo" 
+                                           bindValue="id" 
+                                           [clearable] = "false"
+                                           [(ngModel)]="idVacante"
+                                           (change)="cambiar()">
+                                </ng-select>    
+                           </div>
+                       </div>
+
+                       <div class="row mt-3" *ngIf="vacante">
+                           <div class="col-md-12">
+                              <div class="card text-dark">
+                                    <div class="card-body">
+                                        <h3 class="card-title text-center"><strong>Vacante: {{vacante.titulo}}</strong> </h3>
+                                        <span class="font-weight-bold">Fecha de publicacion: </span> <span>{{vacante.creado_en | date: 'longDate'}}</span> <br>   
+                                        <span class="font-weight-bold">Direccion: </span> <span>{{vacante.direccion}}</span> <br>    
+                                        <span class="font-weight-bold">Pais: </span> <span>{{vacante.ciudad.estado.pais.nombre}}</span> <br>
+                                        <span class="font-weight-bold">Ciudad: </span> <span>{{vacante.ciudad.nombre}} / {{vacante.ciudad.estado.nombre}}</span> <br>
+                                        <span class="font-weight-bold">Vacantes Disponibles: </span> <span>{{vacante.num_disponibles}}</span> <br>
+                                        <span class="font-weight-bold">Horario: </span> <span>{{vacante.horario.nombre}}</span> <br>   
+                                        <span class="font-weight-bold">Tipo de Contrato: </span> <span>{{vacante.tipo_contrato.tipo}}</span> <br>                    
+                                        <span class="font-weight-bold">Descripcion: </span><span class="card-text">{{vacante.descripcion}}</span> <br> 
+                                       
+                                        <hr>
+    
+                                        <h3 class="card-title text-center"><strong>Requisitos para el cargo</strong> </h3>
+                                        <span class="font-weight-bold">Ocupacion: </span> <span>{{vacante.requisitos.ocupacion.nombre}}</span> <br>
+                                        <span class="font-weight-bold">Años de Experiencia: </span> <span>{{vacante.requisitos.experiencia}}</span> <br>
+                                        <span class="font-weight-bold">Genero: </span> <span>{{vacante.requisitos.genero}}</span> <br>
+                                        <span class="font-weight-bold">Idiomas: </span> 
+                                         <ul>
+                                             <li *ngFor="let idioma  of vacante.requisitos.idiomas"><span>{{idioma.idioma.nombre}}</span></li>
+                                         </ul>
+                                         <button *ngIf="!notificacion" (click)="invitar()" class="btn btn-info btn-block">Invitar a Postularse</button>
+                                         <div *ngIf="notificacion" class="alert alert-info">
+                                            Ya se envio una invitacion!
+                                         </div>
+                                    </div>
+                                   
+                              </div>
+                           </div>
+                       </div>
+                    </div>             
+               </div>
+
+            </div>
+        </div>
+      
+</div> 

@@ -95,27 +95,41 @@
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="row">
-                            <div class="col-md-6 ">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="exampleInputuname">Pais</label>
-                                    <select (change)="seleccionarPais()" formControlName="id_pais" class="form-control custom-select">
-                                        <option *ngFor="let pais of paises" value="{{pais.id}}">{{pais.nombre}}</option>
-                                    </select>  
-                                    <small *ngIf="selectNoValido('id_pais')" class="form-control-feedback text-danger">Seleccione un pais</small> 
+                                    <label>Pais</label>   
+                                    <ng-select 
+                                               notFoundText = "Pais no encontrado"
+                                               [clearable]="false"
+                                               placeholder="Seleccionar Pais"
+                                               appendTo="body"
+                                               formControlName="id_pais">
+                                               <ng-option [value]= "pais.id" *ngFor="let pais of paises">
+                                                {{pais.nombre}}
+                                              </ng-option>
+                                    </ng-select>
+                                    <small *ngIf="campoNoValido('id_pais')" class="form-control-feedback text-danger">Seleccione un pais</small> 
                                 </div>
                             </div>
-                            <div class="col-md-6 ">
+                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="exampleInputuname">Ciudad</label>
-                                    <select  formControlName="id_ciudad" class="form-control custom-select">
-                                        <option *ngFor="let ciudad of ciudades" value="{{ciudad.id}}">{{ciudad.nombre}} / {{ciudad.estado.nombre}}</option>
-                                    </select>
-                                    <small *ngIf="selectNoValido('id_ciudad')" class="form-control-feedback text-danger">Seleccione una ciudad</small> 
+                                    <label>Ciudad</label>
+                                    <ng-select 
+                                               placeholder="Seleccionar Ciudad"
+                                               [clearable]="false"
+                                               appendTo="body"
+                                               notFoundText = "ciudad no encontrada"
+                                               formControlName="id_ciudad">
+                                               <ng-option [value]= "ciudad.id" *ngFor="let ciudad of ciudades">
+                                                 {{ciudad.nombre}} / {{ciudad.estado.nombre}}
+                                               </ng-option>
+                                    </ng-select>
+                                    <small *ngIf="campoNoValido('id_ciudad')" class="form-control-feedback text-danger">Seleccione una ciudad</small> 
                                 </div>
                             </div>
-                        </div> 
+                            <!--/span-->
+                        </div>
                         <div class="row animated fadeIn fast" *ngIf="cargando">
                             <div class="col-12">
                                 <div class="alert alert-info text-center">

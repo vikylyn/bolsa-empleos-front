@@ -60,10 +60,28 @@ import { FotoSolicitanteComponent } from './perfil/foto/foto-solicitante/foto-so
 import { FotoEmpleadorComponent } from './perfil/foto/foto-empleador/foto-empleador.component';
 import { FotoEmpresaComponent } from './perfil/foto/foto-empresa/foto-empresa.component';
 import { FotoAdministradorComponent } from './perfil/foto/foto-administrador/foto-administrador.component';
-
+import { ReporteSolicitantesComponent } from './reportes/reporte-solicitantes/reporte-solicitantes.component';
+import { ReporteEmpleadoresComponent } from './reportes/reporte-empleadores/reporte-empleadores.component';
+import { ReporteVacantesComponent } from './reportes/reporte-vacantes/reporte-vacantes.component';
+import { ReporteContratacionesComponent } from './reportes/reporte-contrataciones/reporte-contrataciones.component';
+import { IdiomaVacanteComponent } from './vacante/vacantes-empleador/formulario-vacante/idioma-vacante/idioma-vacante.component';
+import { CambiarPasswordComponent } from './cambiar-password/cambiar-password.component';
+import { PostulacionesEmpleadorFavoritosComponent } from './postulaciones/postulaciones-empleador-favoritos/postulaciones-empleador-favoritos.component';
+import { ReporteEmpresasComponent } from './reportes/reporte-empresas/reporte-empresas.component';
+import { VerNotificacionEmpleadorComponent } from './notificaciones/ver-notificacion-postulacion-empleador/ver-notificacion-empleador.component';
+import { VerNotificacionContratacionEmpleadorComponent } from './notificaciones/ver-notificacion-contratacion-empleador/ver-notificacion-contratacion-empleador.component';
+import { VerNotificacionPostulacionSolicitanteComponent } from './notificaciones/ver-notificacion-postulacion-solicitante/ver-notificacion-postulacion-solicitante.component';
+import { PostulacionesRechazadasEmpleadorComponent } from './postulaciones/postulaciones-rechazadas-empleador/postulaciones-rechazadas-empleador.component';
+import { PostulacionesRechazadasSolicitanteComponent } from './postulaciones/postulaciones-rechazadas-solicitante/postulaciones-rechazadas-solicitante.component';
+import { VerSolicitanteComponent } from './inicio/inicio-empleador/ver-solicitante/ver-solicitante.component';
+import { PostulacionesSinConsiderarEmpleadorComponent } from './postulaciones/postulaciones-sin-considerar-empleador/postulaciones-sin-considerar-empleador.component';
+import { PostulacionesPendientesSolicitanteComponent } from './postulaciones/postulaciones-pendientes-solicitante/postulaciones-sin-considerar-solicitante.component';
+import { InvitacionPostulacionComponent } from './inicio/inicio-empleador/invitacion-postulacion/invitacion-postulacion.component';
+import { GeneroPipe } from '../pipes/genero.pipe';
 
 @NgModule({
   declarations: [
+    GeneroPipe,
     DashboardComponent,
     PagesComponent,
     PerfilAdministradorComponent,
@@ -118,6 +136,23 @@ import { FotoAdministradorComponent } from './perfil/foto/foto-administrador/fot
     FotoEmpleadorComponent,
     FotoEmpresaComponent,
     FotoAdministradorComponent,
+    ReporteSolicitantesComponent,
+    ReporteEmpleadoresComponent,
+    ReporteVacantesComponent,
+    ReporteContratacionesComponent,
+    IdiomaVacanteComponent,
+    CambiarPasswordComponent,
+    PostulacionesEmpleadorFavoritosComponent,
+    ReporteEmpresasComponent,
+    VerNotificacionEmpleadorComponent,
+    VerNotificacionContratacionEmpleadorComponent,
+    VerNotificacionPostulacionSolicitanteComponent,
+    PostulacionesRechazadasEmpleadorComponent,
+    PostulacionesRechazadasSolicitanteComponent,
+    VerSolicitanteComponent,
+    PostulacionesSinConsiderarEmpleadorComponent,
+    PostulacionesPendientesSolicitanteComponent,
+    InvitacionPostulacionComponent,
     ],
   exports: [
     DashboardComponent,

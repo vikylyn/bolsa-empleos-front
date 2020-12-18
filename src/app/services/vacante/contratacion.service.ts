@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Contratacion } from '../../models/empleador/contratacion.model';
+import { WebsocketService } from '../websocket/websocket.service';
 
 
 const base_url = environment.base_url;
@@ -10,7 +11,8 @@ const base_url = environment.base_url;
 })
 export class ContratacionService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              public wsService: WebsocketService) { }
   buscar(id_contratacion: number): any {
     const token = localStorage.getItem('token');
     return this.http.get<{contratacion: Contratacion}>(`${base_url}/contratacion/${id_contratacion}?token=${token}`);
@@ -20,8 +22,10 @@ export class ContratacionService {
     const token = localStorage.getItem('token');
     return this.http.delete(`${base_url}/contratacion/rechazar/${id_postulacion}?token=${token}`);
   }
-
-
+  ocultar(id_contratacion: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.put(`${base_url}/contratacion/oculto/${id_contratacion}?token=${token}`, {});
+  }
   desvincularSolicitante(id_contratacion: number): any {
     const token = localStorage.getItem('token');
     return this.http.put(`${base_url}/contratacion/desvincular/${id_contratacion}?token=${token}`, {});
@@ -45,5 +49,10 @@ export class ContratacionService {
   busqueda(valor: string, id_empleador: number): any {
     const token = localStorage.getItem('token');
     return this.http.get<{contrataciones: Contratacion[]}>(`${base_url}/contratacion/busqueda/${id_empleador}/${valor}?token=${token}`);
+  }
+
+
+  actualizarContrataciones() {
+    return  this.wsService.escuchar('actualizar-contrataciones');
   }
 }

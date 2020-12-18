@@ -77,11 +77,19 @@ export class PerfilEmpleadorComponent implements OnInit {
         .subscribe( (resp: any) => {
           Swal.fire(resp.mensaje, this.perfilForm.get('email').value, 'success');
           this.cargandoFormulario = false;
-          // modificando la variable de Tipo empleador de loginService para actualizar los atributos cambiados del sidebar y header
-          this.empleadorService.buscar(this.loginService.empleador.id).subscribe(( respuesta: Empleador) => {
-              this.loginService.guardarStorage(respuesta, this.loginService.token);
+          if(this.empleador.empresa){
+            this.empleadorService.buscarEmpleadorEmpresa(this.empleador.id).subscribe((resp: any) => {
+              this.loginService.guardarStorage(resp.empleador, this.loginService.token, resp.empresa);
               this.wsService.emitir('actualizar-usuario');
-          });
+            });
+          }else {
+            // modificando la variable de Tipo empleador de loginService para actualizar los atributos cambiados del sidebar y header
+            this.empleadorService.buscar(this.loginService.empleador.id).subscribe(( respuesta: Empleador) => {
+            this.loginService.guardarStorage(respuesta, this.loginService.token);
+            this.wsService.emitir('actualizar-usuario');
+            });
+          }
+ 
         }, (err) => {
           console.log(err);
           Swal.fire('Error al modificar perfil', err.error.error || err.error.mensaje, 'error');

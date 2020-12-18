@@ -1,0 +1,151 @@
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="card text-white bg-dark">
+                <div class="card-body">
+                    <form class="form p-t-20" [formGroup]="reporteForm"> 
+                        <div class="row">
+                            <div class="col-md-3 col-xl-3">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Seleccionar un rango de Fechas:</label>
+                                    <input class="form-control" type="text" id="daterange3" name="daterange3" value="01/01/2018 - 01/15/2018" />
+                                </div>
+                            </div>
+                            <div class="col-md-9 justify-content-center">
+                                <div class="demo-radio-button mt-5">
+                                    <input formControlName="habilitado" name="habilitado" value="cualquiera" type="radio" id="radio_1" checked="" class="with-gap">
+                                    <label for="radio_1">Todos</label>
+                                    <input formControlName="habilitado" name="habilitado" value="true" type="radio" id="radio_2" class="with-gap">
+                                    <label for="radio_2">Habilitados</label>
+                                    <input formControlName="habilitado" name="habilitado" value="false" type="radio" class="with-gap" id="radio_3">
+                                    <label for="radio_3">Inhabilitados</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <label for="">Ocupacion:</label>
+                                <ng-select id="id_ocupacion" [items]="ocupaciones" 
+                                           placeholder="Seleccionar Ocupaciones"
+                                           [clearable]="false"
+                                           bindLabel="nombre"
+                                           notFoundText = "Ocupacion no encontrada" 
+                                           bindValue="id" 
+                                           formControlName="id_ocupacion">
+                                </ng-select>
+                                <small *ngIf="campoNoValido('id_ocupacion')" class="form-control-feedback text-danger">Seleccione una ocupacion </small>
+                            </div>
+                            <div class="col">
+                                <label for="">Pais:</label>
+                                <ng-select 
+                                    notFoundText = "Pais no encontrado"
+                                    placeholder="Seleccionar Pais"
+                                    appendTo="body"
+                                    [clearable] = "false"
+                                    formControlName="id_pais">
+                                    <ng-option [value]= "pais.id" *ngFor="let pais of paises">
+                                     {{pais.nombre}}
+                                    </ng-option>
+                                </ng-select>
+                            </div>
+                            <div class="col">
+                                <label for="">Ciudad:</label>
+                                <ng-select 
+                                           placeholder="Seleccionar Ciudad"
+                                           appendTo="body"
+                                           [clearable] = "false"
+                                           notFoundText = "ciudad no encontrada"
+                                           formControlName="id_ciudad">
+                                           <ng-option [value]= "0">
+                                             Cualquiera
+                                           </ng-option>
+                                           <ng-option [value]= "ciudad.id" *ngFor="let ciudad of ciudades">
+                                             {{ciudad.nombre}} / {{ciudad.estado.nombre}}
+                                           </ng-option>
+                                </ng-select>
+                            </div>
+                        </div>
+                        <div class="row justify-content-end">
+                            <div class="col-md-3 mt-5">
+                                <a class="btn btn-success  m-r-10 text-white btn-block" (click)="filtrar()">Filtrar</a>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>  
+    <div class="row">
+        <div class="col">
+            <table id="encabezado" class="table-sm">
+                <tr>
+                    <td><span class="font-weight-bold">Desde:</span> {{desde | date: 'longDate'}}</td>
+                    <td class="w100"></td>
+                    <td><span class="font-weight-bold"> Hasta: </span> {{hasta | date: 'longDate'}}</td>
+
+                </tr>
+                <tr>
+                    <td ><span class="font-weight-bold">usuario: </span> {{this.loginService.administrador.nombre}} {{this.loginService.administrador.apellidos}} - {{this.loginService.administrador.credenciales.email}}</td>
+                    <td class="w100"></td>
+                    <td><span class="font-weight-bold">Fecha actual: </span> {{fechaActual | date: 'longDate'}}</td>
+                </tr>
+                <tr>
+                    <td><span class="font-weight-bold">Total:</span> {{total}} Vacantes</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div *ngIf="vacantes.length > 0" class="row justify-content-end">
+        <div class="col-md-3 mt-3">
+            <a (click)="generarPDF()" class="btn btn-info text-white float-right">Descargar PDF</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="table-responsive mt-5">
+
+                        <table id="lista" class="table color-bordered-table inverse-bordered-table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Titulo</th>
+                                    <th>Ocupacion</th>
+                                    <th>Num postulantes</th>
+                                    <th>Tipo Contrato</th>
+                                    <th>Horario</th>
+                                    <th>Ciudad</th>
+                                    <th>Empleador</th>
+                                    <th>Estado</th>
+                                    <th>Creado en:</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="!vacantes || vacantes.length === 0">
+                                    <td colspan="10" align="center">
+                                        Sin resultados...
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let vacante of vacantes; let i = index;">
+                                    <td>{{i+1}}</td>
+                                    <td>{{vacante.titulo}}</td>
+                                    <td>{{vacante.requisitos.ocupacion.nombre}}</td>
+                                    <td>{{vacante.num_postulantes_aceptados}}</td>
+                                    <td>{{vacante.tipo_contrato.tipo}}</td>
+                                    <td>{{vacante.horario.nombre}}</td>
+                                    <td>{{vacante.ciudad.nombre}} - {{vacante.ciudad.estado.nombre}} - {{vacante.ciudad.estado.pais.nombre}}</td>
+                                    <td>{{vacante.empleador.nombre}} {{vacante.empleador.apellidos}}</td>
+                                    <td>
+                                        <span *ngIf="vacante.habilitado">Habilitado</span>
+                                        <span *ngIf="!vacante.habilitado">Inhabilitado</span>
+                                    </td>
+                                    <td>{{vacante.creado_en | date: 'long'}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+            </div>
+        </div>
+    </div>
+</div>    
+

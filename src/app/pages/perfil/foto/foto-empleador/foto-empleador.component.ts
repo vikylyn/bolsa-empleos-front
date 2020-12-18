@@ -51,7 +51,7 @@ export class FotoEmpleadorComponent implements OnInit {
      this.imagenService.cambiarImagen(this.imagenSubir, 'empleador', this.empleador.id).subscribe(
        (resp: any) => {
         Swal.fire('Imagen actualizada con exito', 'La imagen ha sido actualizada con exito', 'success');
-        this.loginService.guardarImagenStorage(resp);
+        this.loginService.guardarImagenStorage(resp, this.loginService.empleador.credenciales.rol.nombre);
         this.cargandoImagen = false;
      });
 

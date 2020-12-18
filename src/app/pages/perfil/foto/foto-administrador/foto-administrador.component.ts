@@ -51,7 +51,7 @@ export class FotoAdministradorComponent implements OnInit {
      this.imagenService.cambiarImagen(this.imagenSubir, 'administrador', this.administrador.id).subscribe(
        (resp: any) => {
         Swal.fire('Imagen actualizada con exito', 'La imagen ha sido actualizada con exito', 'success');
-        this.loginService.guardarImagenStorage(resp);
+        this.loginService.guardarImagenStorage(resp, this.loginService.administrador.credenciales.rol.nombre);
         this.cargando = false;
      });
 

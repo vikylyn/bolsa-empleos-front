@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ContratacionService } from '../../../services/vacante/contratacion.service';
 import { LoginService } from '../../../services/login.service';
 import { Contratacion } from '../../../models/empleador/contratacion.model';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-contratacion-solicitante',
@@ -15,6 +16,8 @@ export class ContratacionSolicitanteComponent implements OnInit {
   contrataciones: Contratacion [];
   contratacionesTemp: Contratacion [];
   cargando = true;
+  myModal = false;
+  idVacante: number;
   constructor(private contratacionService: ContratacionService,
               private loginService: LoginService) {
                 this.cargarContrataciones();
@@ -52,5 +55,41 @@ export class ContratacionSolicitanteComponent implements OnInit {
       this.desde -= valor;
     }
     this.cargarContrataciones();
+  }
+
+  eliminar(id: number) {
+    Swal.fire({
+      title: 'Estas seguro de eliminar la contratacion?',
+      text: '',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        this.contratacionService.ocultar(id).subscribe((resp: any) => {
+          Swal.fire(resp.mensaje, '', 'success');
+          this.cargarContrataciones();
+        }, (err) => {
+          console.log(err);
+          Swal.fire('Error al eliminar contratacion', err.error.error || err.error.mensaje, 'error');
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelado',
+          '',
+          'error'
+        );
+      }
+    });
+  }
+
+  mostrarModal(idVacante: number) {
+    console.log('id de la Vacantee',idVacante)
+    this.idVacante = idVacante;
+    this.myModal = true;
+  }
+  cerrarModal(e) {
+    this.myModal = e;
   }
 }

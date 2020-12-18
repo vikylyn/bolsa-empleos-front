@@ -15,26 +15,17 @@
                             [formGroup]="curriculumForm">
                         <div class="form-group">
                             <label for="exampleInputuname">Titulo</label>
-                            <div class="input-group">
-                                <div class="input-group-addon"><i class="ti-user"></i></div>
-                                <input formControlName="titulo" class="form-control" type="text" placeholder="Titulo">
-                            </div>
+                            <input [class.is-invalid]="campoNoValido('titulo')" formControlName="titulo" class="form-control" type="text" placeholder="Titulo">
                             <small *ngIf="campoNoValido('titulo')" class="form-control-feedback text-danger">El titulo es Obligatorio</small> 
                         </div>
                         <div class="form-group">
                             <label for="exampleInputuname">Pretension Salarial Bs.</label>
-                            <div class="input-group">
-                                <div class="input-group-addon"><i class="ti-user"></i></div>
-                                <input formControlName="pretension_salarial" class="form-control" type="number" placeholder="Pretension salarial">
-                            </div>
+                            <input [class.is-invalid]="campoNoValido('pretension_salarial')" formControlName="pretension_salarial" class="form-control" type="number" placeholder="Pretension salarial">
                             <small *ngIf="campoNoValido('pretension_salarial')" class="form-control-feedback text-danger">La pretension salarial es Obligatoria</small> 
                         </div>
                         <div class="form-group">
                             <label for="exampleInputuname">Biografia</label>
-                            <div class="input-group">
-                                <div class="input-group-addon"><i class="ti-user"></i></div>
-                                <textarea formControlName="biografia" class="form-control rounded-0" id="exampleFormControlTextarea1" rows="3"></textarea>
-                            </div>
+                            <textarea [class.is-invalid]="campoNoValido('biografia')" formControlName="biografia" class="form-control rounded" id="exampleFormControlTextarea1" rows="3"></textarea>
                             <small *ngIf="campoNoValido('biografia')" class="form-control-feedback text-danger">La biografia es Obligatoria</small> 
                         </div>
                         <div class="text-center">

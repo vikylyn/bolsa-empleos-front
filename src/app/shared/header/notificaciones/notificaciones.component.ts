@@ -3,7 +3,8 @@ import { Subscription } from 'rxjs';
 import { NotificacionService } from '../../../services/notificacion/notificacion.service';
 import { LoginService } from '../../../services/login.service';
 import { Notificacion } from '../../../models/notificacion';
-import { Router, RouterLink } from '@angular/router';
+import { Router} from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-notificaciones',
@@ -22,19 +23,10 @@ export class NotificacionesComponent implements OnInit, OnDestroy {
 
 
   cargarNotificaciones(): void {
-    if (this.loginService.empleador) {
-      this.notificacionService.listarNoleidas(this.loginService.empleador.id, this.loginService.empleador.credenciales.rol.id)
-      .subscribe((resp: Notificacion[]) => {
-        console.log(resp);
-        this.notificaciones = resp;
-      });
-    } else if (this.loginService.solicitante) {
-      this.notificacionService.listarNoleidas(this.loginService.solicitante.id, this.loginService.solicitante.credenciales.rol.id)
-      .subscribe((resp: Notificacion[]) => {
-        console.log(resp);
-        this.notificaciones = resp;
-      });
-    }
+    this.notificacionService.listar(this.loginService.solicitante.id, this.loginService.solicitante.credenciales.rol.id)
+    .subscribe((resp: Notificacion[]) => {
+      this.notificaciones = resp;
+    });
   }
   ngOnInit(): void {
      this.notificacionesSubscription =  this.notificacionService.recibirNotificacionesNuevas()
@@ -46,26 +38,23 @@ export class NotificacionesComponent implements OnInit, OnDestroy {
   leerNotificacion(idNotificacion: number, leido: boolean, tipoNotificacion: string ): void {
     // hay que cambiar para que acepte a ambos usuario solicitante y empleador
     if (!leido) {
-      this.notificacionService.leerNotificacion(idNotificacion, this.loginService.empleador.credenciales.rol.id)
+      this.notificacionService.leerNotificacion(idNotificacion, this.loginService.solicitante.credenciales.rol.id)
       .subscribe((resp: any) => {
-        this.redireccionar(tipoNotificacion);
+        this.redireccionar(tipoNotificacion, idNotificacion);
         this.cargarNotificaciones();
       });
     }else {
-      this.redireccionar(tipoNotificacion);
+      this.redireccionar(tipoNotificacion, idNotificacion);
     }
 
   }
 
-  redireccionar(tipoNotificacion: string): void {
-    if (tipoNotificacion === 'nueva_postulacion' || tipoNotificacion === 'postulacion_rechazada_solicitante') {
-      this.router.navigateByUrl(`/postulaciones-empleador`);
-    }else   if (tipoNotificacion === 'postulacion_confirmada') {
-      this.router.navigateByUrl(`/contrataciones-empleador`);
-    }else  if (tipoNotificacion === '') {
+  redireccionar(tipoNotificacion: string, idNotificacion: number): void {
+    if (tipoNotificacion === 'postulacion_aceptada' || tipoNotificacion === 'postulacion_rechazada_empleador' || tipoNotificacion === 'invitacion_postulacion') {
+      this.router.navigateByUrl(`/postulaciones-solicitante/notificacion/${idNotificacion}`);
 
-    }else  if (tipoNotificacion === '') {
-
+    }else  if (tipoNotificacion === 'desvinculacion_solicitante') {
+      this.router.navigateByUrl(`/contrataciones-solicitante/notificacion/${idNotificacion}`);
     }
   }
 
@@ -73,5 +62,31 @@ export class NotificacionesComponent implements OnInit, OnDestroy {
     this.notificacionesSubscription.unsubscribe();
   }
 
+  eliminar(idNotificacion: number): void {
+    Swal.fire({
+      title: 'Desea eliminar esta notificacion?',
+      text: '',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        this.notificacionService.eliminar(idNotificacion, this.loginService.solicitante.credenciales.rol.id).subscribe( (resp: any ) => {
+          Swal.fire(resp.mensaje, '', 'success');
+          this.notificaciones = this.notificaciones.filter( (notificacion: Notificacion) => notificacion.id !== idNotificacion);
+        }, (err) => {
+          console.log(err);
+          Swal.fire('Error al eliminar notificacion', err.error.error || err.error.mensaje, 'error');
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelado',
+          '',
+          'error'
+        );
+      }
+    });
+  }
 
 }

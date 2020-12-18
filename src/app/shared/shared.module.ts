@@ -6,6 +6,7 @@ import { HeaderComponent } from './header/header.component';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
 import { NotificacionesComponent } from './header/notificaciones/notificaciones.component';
+import { NotificacionesEmpleadorComponent } from './header/notificaciones-empleador/notificaciones-empleador.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { NotificacionesComponent } from './header/notificaciones/notificaciones.
     HeaderComponent,
     FooterComponent,
     NotificacionesComponent,
+    NotificacionesEmpleadorComponent,
   ],
   exports: [
     BreadcrumbsComponent,

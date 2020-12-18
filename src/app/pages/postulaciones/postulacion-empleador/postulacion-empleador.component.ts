@@ -5,6 +5,7 @@ import { Vacante } from '../../../models/empleador/vacante.model';
 import Swal from 'sweetalert2';
 import { PostulacionService } from '../../../services/vacante/postulacion.service';
 import { VacanteService } from '../../../services/vacante/vacante.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-postulacion-empleador',
@@ -23,6 +24,9 @@ export class PostulacionEmpleadorComponent implements OnInit {
   cargando = true;
   vacantes: Vacante[];
   idVacante: number;
+  cargarMensaje = false;
+  actualizacionSubscription: Subscription;
+
   constructor(
               private postulacionService: PostulacionService,
               private loginService: LoginService,
@@ -31,10 +35,17 @@ export class PostulacionEmpleadorComponent implements OnInit {
               }
 
   ngOnInit(): void {
+    this.actualizacionSubscription =  this.postulacionService.actualizarPostulaciones()
+        .subscribe(( (id: number) => {
+          const existe = this.postulaciones.find( elemento => elemento.id === id);
+          if(existe) {
+            this.cargarPostulaciones();
+          }
+        }));
   }
   cargarPostulaciones(): void {
     this.cargando = true;
-    this.postulacionService.listarPorIdVacante(this.idVacante, this.desde)
+    this.postulacionService.listarConsideradosPorIdVacante(this.idVacante, this.desde)
         .subscribe(({total, postulaciones}) => {
           this.totalPostulaciones = total;
           this.postulaciones = postulaciones;
@@ -45,12 +56,16 @@ export class PostulacionEmpleadorComponent implements OnInit {
 
   cargarVacantes(): void {
     this.cargando = true;
-    this.vacanteService.listarHabilitadas(this.loginService.empleador.id, this.desde)
-    .subscribe(({total, vacantes}) => {
+    this.vacanteService.listarHabilitadasSinPaginacion(this.loginService.empleador.id)
+    .subscribe(({vacantes}) => {
       this.vacantes = vacantes;
-      this.idVacante = this.vacantes[0].id;
-      this.cargando = false;
-      this.cargarPostulaciones();
+      if (this.vacantes.length === 0) {
+        this.cargarMensaje = true;
+      }else {
+        this.idVacante = this.vacantes[0].id;
+        this.cargando = false;
+        this.cargarPostulaciones();
+      }
     });
   }
   filtrar(): void {
@@ -154,6 +169,7 @@ export class PostulacionEmpleadorComponent implements OnInit {
        });
   }
   mostrarModal(idSolicitante: number, idPostulacion: number) {
+    console.log(idSolicitante, idPostulacion);
     this.idPostulacion = idPostulacion;
     this.idSolicitante = idSolicitante;
     this.myModal = true;

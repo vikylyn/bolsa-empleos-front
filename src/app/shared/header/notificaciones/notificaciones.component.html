@@ -3,22 +3,22 @@
     <li>
         <div class="drop-title">Notificaciones recientes</div>
     </li>
-    <li>
+    <li >
         <div class="message-center notificacion">
             <div [class.no-leido]="!notificacion.leido" *ngFor="let notificacion of notificaciones">
                 <!-- Message -->
+                <a (click)="eliminar(notificacion.id)" class="float-right cursor">x</a>
                 <a  (click)="leerNotificacion(notificacion.id, notificacion.leido,notificacion.tipo_notificacion.tipo)" class="cursor" >
                     <div  class="btn btn-danger btn-circle"><i class="fa fa-link"></i></div>
                     <div  class="mail-contnet ">
-                        <h5 class="text-center" *ngIf="notificacion.tipo_notificacion.tipo === 'nueva_postulacion'">Nuevo Postulante para {{notificacion.vacante.titulo}} </h5>
-                        <h5 class="text-center" *ngIf="notificacion.tipo_notificacion.tipo === 'postulacion_rechazada_solicitante'">Contratacion rechazada para {{notificacion.vacante.titulo}} </h5>
                         <h5 class="text-center" *ngIf="notificacion.tipo_notificacion.tipo === 'postulacion_aceptada'">Ha sido aceptado para {{notificacion.vacante.titulo}} </h5>
                         <h5 class="text-center" *ngIf="notificacion.tipo_notificacion.tipo === 'postulacion_rechazada_empleador'">Ha sido rechazado para {{notificacion.vacante.titulo}} </h5>
-                        <h5 class="text-center" *ngIf="notificacion.tipo_notificacion.tipo === 'postulacion_confirmada'">Solicitante confirmado para {{notificacion.vacante.titulo}} </h5>
+                        <h5 class="text-center" *ngIf="notificacion.tipo_notificacion.tipo === 'desvinculacion_solicitante'">Su contrato  para {{notificacion.vacante.titulo}} ha terminado</h5>
+                        <h5 class="text-center" *ngIf="notificacion.tipo_notificacion.tipo === 'invitacion_postulacion'">Ha sido invitado a postular para {{notificacion.vacante.titulo}} </h5>
 
-                            <span class="mail-desc text-right">solicitante: {{notificacion.solicitante.nombre}}</span>
+                            <span  class="mail-desc text-right">empleador: {{notificacion.empleador.nombre}}</span>
                             <span class="mail-desc text-right">ocupacion: {{notificacion.vacante.requisitos.ocupacion.nombre}}</span>  
-                            <span class="time text-right">{{notificacion.creado_en}}</span> 
+                            <span class="time text-right">{{notificacion.creado_en | date: 'mediumDate'}} {{notificacion.creado_en | date: 'shortTime'}}</span> 
                     </div>
                 </a>
                 <!-- Message -->

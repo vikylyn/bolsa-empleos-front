@@ -40,9 +40,9 @@ export class RegistroEmpleadorComponent implements OnInit {
     telefono: ['', [Validators.required]],
     nacionalidad: ['', [Validators.required]],
     direccion: ['', [Validators.required]],
-    genero: [ 0 , Validators.required],
-    id_pais: [0, Validators.required],
-    id_ciudad: [0, Validators.required],
+    genero: [ 'seleccionar' , [Validators.required, Validators.maxLength(1)]],
+    id_pais: [1, [Validators.required, Validators.min(1)]],
+    id_ciudad: [null, [Validators.required, Validators.min(1)]],
     id_rol: [3, [Validators.required]],
     empresa: [false, [Validators.required]],
     empresa_nombre: ['', [Validators.required]],
@@ -50,8 +50,8 @@ export class RegistroEmpleadorComponent implements OnInit {
     empresa_direccion: ['', [Validators.required]],
     empresa_telefono: ['', [Validators.required]],
     empresa_descripcion:['', [Validators.required]],
-    empresa_id_ciudad: [ 0, [Validators.required]],
-    empresa_id_pais: [0, Validators.required],
+    empresa_id_ciudad: [ null, [Validators.required, Validators.min(1)]],
+    empresa_id_pais: [1, [Validators.required, Validators.min(1)]],
   }, {
     validators: this.passwordsIguales('password', 'password2')
   });
@@ -114,7 +114,8 @@ export class RegistroEmpleadorComponent implements OnInit {
         Swal.fire('Error al crear Empleador', err.error.mensaje, 'error');
       });
     }else {
-       this.empleadorService.adicionarEmpleador(this.registerForm.value)
+      console.log(this.registerForm.value);
+    /*   this.empleadorService.adicionarEmpleador(this.registerForm.value)
         .subscribe( (resp: any) => {
           Swal.fire(resp.mensaje, this.registerForm.get('email').value, 'success');
           this.cargando = false;
@@ -123,6 +124,7 @@ export class RegistroEmpleadorComponent implements OnInit {
           console.log(err);
           Swal.fire('Error al crear Empleador', err.error.mensaje, 'error');
         });
+    */
     }
   }
   campoNoValido( campo: string): boolean {
@@ -132,16 +134,17 @@ export class RegistroEmpleadorComponent implements OnInit {
       return false;
     }
   }
-  selectNoValido( campo: string): boolean {
-    const id = this.registerForm.get(campo).value;
-    if ( id === 0 && this.formSubmitted) {
-      return true;
-    }else {
-      return false;
-    }
-  }
   mostrar(): boolean {
     if ( this.registerForm.get('empresa').value === true) {
+      if (this.formSubmitted) {
+        this.registerForm.get('empresa_nombre').enable();
+        this.registerForm.get('empresa_dominio_web').enable();
+        this.registerForm.get('empresa_direccion').enable();
+        this.registerForm.get('empresa_telefono').enable();
+        this.registerForm.get('empresa_descripcion').enable();
+        this.registerForm.get('empresa_id_ciudad').enable();
+        this.registerForm.get('empresa_id_pais').enable();
+      }
       return true;
     }else {
       return false;

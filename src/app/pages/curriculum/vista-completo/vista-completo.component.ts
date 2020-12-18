@@ -1,9 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { Curriculum } from '../../../models/curriculum/curriculum.model';
 import { CurriculumService } from '../../../services/solicitante/curriculum/curriculum.service';
-import { Columns, Img, PdfMakeWrapper } from 'pdfmake-wrapper';
-//import pdfFonts from 'pdfmake/build/vfs_fonts'; // fonts provided for pdfmake
-//PdfMakeWrapper.setFonts(pdfFonts);
+import Swal from 'sweetalert2';
+
 
 
 @Component({
@@ -22,13 +21,19 @@ export class VistaCompletoComponent implements OnInit {
   @Output() cerrar: EventEmitter<boolean> = new EventEmitter();
   @Output() cancelar: EventEmitter<boolean> = new EventEmitter();
   curriculum: Curriculum;
-
+  cargando = true;
   constructor(private curriculumService: CurriculumService) { }
 
   ngOnInit(): void {
     this.curriculumService.buscarPorIdSolicitanteCompleto(this.idSolicitante)
         .subscribe(({curriculum}) => {
+          this.cargando = false;
           this.curriculum = curriculum;
+          console.log( this.curriculum);
+        }, (err) => {
+          Swal.fire(err.error.mensaje, '', 'error');
+          console.log(err);
+          this.cancelarModal();
         });
   }
 
@@ -38,14 +43,6 @@ export class VistaCompletoComponent implements OnInit {
 
   cancelarModal() {
     this.cancelar.emit(false);
-  }
-
-  async descargarPDF(): Promise<any> {
-    const pdf = new PdfMakeWrapper();
-    pdf.add(this.curriculum.titulo);
-    pdf.add(new Columns([
-      await (await new Img(this.curriculum.solicitante.imagen.url).width(100).build()) , 'world' ]).end);
-    pdf.create().open();
   }
 
 }

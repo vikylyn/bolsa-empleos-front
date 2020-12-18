@@ -29,5 +29,11 @@ export class EmpleadorService {
     return this.http.put(`${base_url}/empleador/${id}?token=${token}`, formData);
   }
 
+   // buscar por id
+  buscarEmpleadorEmpresa(id: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get(`${base_url}/empleador/empresa/${id}?token=${token}`);
+  }
+
 
 }

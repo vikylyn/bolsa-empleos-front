@@ -8,6 +8,7 @@ import { LoginService } from '../../../services/login.service';
 import { UbicacionService } from '../../../services/ubicacion/ubicacion.service';
 import { Empresa } from '../../../models/empleador/empresa.model';
 import Swal from 'sweetalert2';
+import { WebsocketService } from '../../../services/websocket/websocket.service';
 
 @Component({
   selector: 'app-perfil-empresa',
@@ -27,6 +28,7 @@ export class PerfilEmpresaComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private empresaService: EmpresaService,
               private loginService: LoginService,
+              private wsService: WebsocketService,
               private ubicacionService: UbicacionService) {
                 this.ubicacionService.listarPaises()
                 .subscribe( (resp: Pais[]) => {
@@ -69,6 +71,11 @@ export class PerfilEmpresaComponent implements OnInit {
         .subscribe( (resp: any) => {
           Swal.fire(resp.mensaje, '', 'success');
           this.cargandoFormulario = false;
+          // modificando la variable de empresa de loginService para actualizar los atributos cambiados del sidebar y header
+          this.empresaService.buscarPorIdEmpleador(this.loginService.empleador.id).subscribe(( respuesta: Empresa) => {
+            this.loginService.guardarStorage(this.loginService.empleador, this.loginService.token, respuesta);
+            this.wsService.emitir('actualizar-usuario');
+        });
         }, (err) => {
           console.log(err);
           Swal.fire('Error al modificar perfil', err.error.error || err.error.mensaje, 'error');

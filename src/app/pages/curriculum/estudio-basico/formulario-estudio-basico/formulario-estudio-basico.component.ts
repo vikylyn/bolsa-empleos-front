@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { EstudioBasico } from '../../../../models/curriculum/estudio-basico.model';
-import { ActivatedRoute, Router } from '@angular/router';
 import { EstudioBasicoService } from '../../../../services/solicitante/curriculum/estudio-basico.service';
 import Swal from 'sweetalert2';
 import { UbicacionService } from '../../../../services/ubicacion/ubicacion.service';
@@ -31,8 +30,6 @@ export class FormularioEstudioBasicoComponent implements OnInit {
   grados: GradoEscolar[];
 
   constructor(
-          private route: ActivatedRoute,
-          private router: Router,
           private fb: FormBuilder,
           private estudioService: EstudioBasicoService,
           private ubicacionService: UbicacionService,

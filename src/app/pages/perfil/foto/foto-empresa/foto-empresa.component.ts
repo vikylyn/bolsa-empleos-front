@@ -53,7 +53,9 @@ export class FotoEmpresaComponent implements OnInit {
      this.cargandoLogo = true;
      this.imagenService.cambiarImagen(this.imagenSubir, 'empresa', this.empresa.id).subscribe(
        (resp: any) => {
+        console.log('respuesta imagen empresa', resp);
         Swal.fire('Imagen actualizada con exito', 'La imagen ha sido actualizada con exito', 'success');
+        this.loginService.guardarImagenStorage(resp, 'ROLE_EMPRESA');
         this.cargandoLogo = false;
      });
 

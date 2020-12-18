@@ -30,8 +30,10 @@ export class InicioSolicitanteComponent implements OnInit {
   fechaActual: Date;
   desde = 0;
   vacantes: Vacante[];
-  vacantes2: Vacante[];
+  vacantes2: Vacante[] = [];
   mostrar = true;
+  formSubmitted = false;
+  total = 0;
   public filtradoForm;
 
   constructor( private ocupacionService: OcupacionService,
@@ -48,17 +50,24 @@ export class InicioSolicitanteComponent implements OnInit {
        this.cargarCiudades(1);
        this.cargarFechas();
        this.filtradoForm = this.fb.group({
-        id_ocupacion: [5, Validators.required],
+        id_ocupacion: [null, Validators.required],
         fecha: [`${this.fechaActual.getFullYear()}-${this.fechaActual.getMonth() + 1}-${this.fechaActual.getDate()}`, [Validators.required]],
-        id_ciudad: [12, Validators.required],
+        id_ciudad: [0, Validators.required],
         id_pais: [1, Validators.required],
-        id_tipo_contrato: [1, [Validators.required]]
+        id_tipo_contrato: [0, [Validators.required]],
+        ascendente:[true, [Validators.required]]
       });
       }
 
   ngOnInit(): void {
   }
-
+  campoNoValido( campo: string): boolean {
+    if (this.filtradoForm.get(campo).invalid && this.formSubmitted) {
+      return true;
+    }else {
+      return false;
+    }
+  }
   listarOcupaciones(): void {
     this.ocupacionService.listarProfesiones()
         .subscribe( (resp: Ocupacion[]) => {
@@ -98,17 +107,31 @@ export class InicioSolicitanteComponent implements OnInit {
     return `${fecha.getFullYear()}-${mes}-${fecha.getDate()}`;
   }
   buscar(): void {
-    console.log(this.filtradoForm.value);
-    this.vacanteService.filtrar(this.filtradoForm.value, this.desde).subscribe(
-      (resp: Vacante[]) => {
-        this.vacantes = resp;
-        this.cargarEmpresas();
-        this.mostrar = false;
+    this.formSubmitted = true;
+    if (this.filtradoForm.invalid) {
+      return;
+    }
 
+    this.vacanteService.filtrar(this.filtradoForm.value, this.desde).subscribe(
+      ({vacantes, total}) => {
+        this.vacantes = vacantes;
+        this.total = total;
+        this.cargarEmpresas();
+        // ocultando panel de busqueda
+        this.mostrar = false;
       }
     );
   }
-
+  cambiarPagina(valor: number): void {
+    this.desde += valor;
+    if (this.desde < 0 ) {
+      this.desde = 0;
+    }
+    else if (this.desde >= this.total) {
+      this.desde -= valor;
+    }
+    this.buscar();
+  }
   cargarEmpresas(): void {
     this.vacantes2 = this.vacantes.map((x: Vacante) => {
       if ( x.empleador.empresa) {
@@ -122,7 +145,7 @@ export class InicioSolicitanteComponent implements OnInit {
         return x;
       }
     });
- 
+
   }
 
 

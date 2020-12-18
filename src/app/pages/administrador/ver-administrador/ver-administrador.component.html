@@ -12,14 +12,14 @@
               <div class="card-body">
                   <h3 class="text-center">Datos del Administrador</h3>
                   <span class="font-weight-bold">Nombre: </span> {{administrador.nombre}} {{administrador.apellidos}} <br>
+                  <span class="font-weight-bold">Correo electronico: </span> {{administrador.credenciales.email}} <br>
                   <span class="font-weight-bold">Telefono: </span> {{administrador.telefono}} <br> 
                   <span class="font-weight-bold">Cedula: </span> {{administrador.cedula}} <br>
                   <span class="font-weight-bold">Genero: </span> {{administrador.genero}} <br>
                   <span class="font-weight-bold">Habilitado: </span> {{administrador.habilitado}} <br>
                   <span class="font-weight-bold">Ciudad: </span> {{administrador.nombre}} <br>
-                  <span class="font-weight-bold">Direccion: </span> {{administrador.nombre}} <br>
-                  <span class="font-weight-bold">Correo electronico: </span> {{administrador.credenciales.email}} 
-                  
+                  <span class="font-weight-bold">Direccion: </span> {{administrador.direccion}} <br>
+                  <span class="font-weight-bold">Pais: </span> {{administrador.ciudad.estado.pais.nombre}} <br>           
               </div>
           </div>
       </div>

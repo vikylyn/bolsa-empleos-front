@@ -1,7 +1,6 @@
 import { Injectable, NgZone, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Rol } from 'src/app/models/rol.model';
 import { tap } from 'rxjs/internal/operators/tap';
 import { map, catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
@@ -10,7 +9,7 @@ import { Imagen } from '../models/imagen.model';
 import { Empleador } from '../models/empleador/empleador.model';
 import { Solicitante } from '../models/solicitante/solicitante.model';
 import { Administrador } from '../models/administrador/administrador.model';
-import { WebsocketService } from './websocket/websocket.service';
+import { Empresa } from '../models/empleador/empresa.model';
 
 const base_url = environment.base_url;
 
@@ -22,6 +21,7 @@ export class LoginService {
   empleador: Empleador;
   solicitante: Solicitante;
   administrador: Administrador;
+  empresa: Empresa;
   constructor(private http: HttpClient,
               private router: Router) {
                 this.cargarStorage();
@@ -46,6 +46,9 @@ export class LoginService {
       if (localStorage.getItem('empleador')) {
         this.empleador = JSON.parse(localStorage.getItem('empleador'));
       }
+      if (localStorage.getItem('empresa')) {
+        this.empresa = JSON.parse(localStorage.getItem('empresa'));
+      }
       if (localStorage.getItem('solicitante')) {
         this.solicitante = JSON.parse(localStorage.getItem('solicitante'));
       }
@@ -57,12 +60,14 @@ export class LoginService {
       this.solicitante = null;
       this.empleador = null;
       this.administrador = null;
+      this.empresa = null;
     }
   }
-  guardarStorage(usuario: any, token: string): void {
+  guardarStorage(usuario: any, token: string, empresa: Empresa = null): void {
     localStorage.setItem('token', token);
     if (usuario.credenciales.rol.nombre === 'ROLE_EMPLEADOR') {
       localStorage.setItem('empleador', JSON.stringify(usuario));
+      localStorage.setItem('empresa', JSON.stringify(empresa));
       this.cargarStorage();
     }else
     if (usuario.credenciales.rol.nombre === 'ROLE_SOLICITANTE') {
@@ -74,19 +79,22 @@ export class LoginService {
       this.cargarStorage();
     }
   }
-  guardarImagenStorage(imagen: Imagen): void{
-    localStorage.setItem('imagen', JSON.stringify(imagen));
-    if (this.solicitante != null) {
+  guardarImagenStorage(imagen: Imagen, rol: string): void{
+    if (rol === 'ROLE_SOLICITANTE') {
       this.solicitante.imagen = imagen;
       localStorage.setItem('solicitante', JSON.stringify(this.solicitante));
-    }
-    if (this.administrador != null) {
+    }else
+    if (rol === 'ROLE_ADMINISTRADOR') {
       this.administrador.imagen = imagen;
       localStorage.setItem('administrador', JSON.stringify(this.administrador));
-    }
-    if (this.empleador != null) {
+    }else
+    if ( rol === 'ROLE_EMPLEADOR') {
       this.empleador.imagen = imagen;
       localStorage.setItem('empleador', JSON.stringify(this.empleador));
+
+    }else if ( rol === 'ROLE_EMPRESA') {
+      this.empresa.logo = imagen;
+      localStorage.setItem('empresa', JSON.stringify(this.empresa));
 
     }
     this.cargarStorage();
@@ -96,7 +104,7 @@ export class LoginService {
         .pipe(
           tap( (resp: any) => {
             localStorage.setItem('token', resp.token);
-            this.guardarStorage(resp.usuario , resp.token);
+            this.guardarStorage(resp.usuario , resp.token, resp.empresa);
          //   this.cargarStorage();
             if ( formData.recuerdame === true ) {
               localStorage.setItem('email', resp.usuario.credenciales.email);
@@ -114,6 +122,7 @@ export class LoginService {
     localStorage.removeItem('empleador');
     localStorage.removeItem('solicitante');
     localStorage.removeItem('administrador');
+    localStorage.removeItem('empresa');
     this.router.navigateByUrl('/login');
   }
 }

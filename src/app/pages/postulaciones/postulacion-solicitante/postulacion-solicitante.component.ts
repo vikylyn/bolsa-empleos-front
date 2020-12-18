@@ -29,8 +29,9 @@ export class PostulacionSolicitanteComponent implements OnInit {
   }
   cargarPostulaciones(): void {
     this.cargando = true;
-    this.postulacionService.listarPorIdSolicitante(this.loginService.solicitante.id, this.desde)
+    this.postulacionService.listarConsideradosPorIdSolicitante(this.loginService.solicitante.id, this.desde)
         .subscribe(({total, postulaciones}) => {
+          console.log(postulaciones);
           this.totalPostulaciones = total;
           this.postulaciones = postulaciones;
           this.cargando = false;
@@ -57,35 +58,6 @@ export class PostulacionSolicitanteComponent implements OnInit {
       this.desde -= valor;
     }
     this.cargarPostulaciones();
-  }
-
-  // eliminar la postulacion que no ha sido aceptada por el empleador
-  eliminar(id_postulacion: number): void {
-
-    Swal.fire({
-      title: 'Estas seguro de eliminar su postulacion?',
-      text: '',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Confirmar!',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.value) {
-        this.postulacionService.eliminar(id_postulacion).subscribe((resp: any) => {
-          Swal.fire(resp.mensaje, '', 'success');
-          this.cargarPostulaciones();
-        }, (err) => {
-          console.log(err);
-          Swal.fire('Error al eliminar postulacion', err.error.error || err.error.mensaje, 'error');
-        });
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Cancelado',
-          '',
-          'error'
-        );
-      }
-    });
   }
 
   confirmar(id_postulacion: number): void {

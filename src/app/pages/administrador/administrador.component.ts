@@ -92,7 +92,6 @@ export class AdministradorComponent implements OnInit {
     });
   }
   habilitar(id: number): void {
-    console.log(id);
     Swal.fire({
       title: 'Estas seguro ?',
       text: 'Se habilitara el registro',

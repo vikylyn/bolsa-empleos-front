@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { GrupoOcupacionalService } from '../../../services/administrador/grupo-ocupacional.service';
-import { ActivatedRoute, Router } from '@angular/router';
 import { GrupoOcupacional } from '../../../models/ocupacion/grupo-ocupacional.model';
 import { LoginService } from '../../../services/login.service';
 import Swal from 'sweetalert2';
@@ -24,7 +23,6 @@ export class FormularioAreaComponent implements OnInit {
   public grupoForm: FormGroup;
   public grupo: GrupoOcupacional;
   constructor(public grupoService: GrupoOcupacionalService,
-              private router: Router,
               private fb: FormBuilder,
               private loginService: LoginService) { }
 
@@ -35,6 +33,7 @@ export class FormularioAreaComponent implements OnInit {
         this.cargarformulario = true;
         this.grupoForm = this.fb.group({
         nombre: ['', [ Validators.required]],
+  //      codigo: ['', [ Validators.required]],
         habilitado: [true, Validators.required],
         id_administrador: [this.loginService.administrador.id, [Validators.required]],
         });
@@ -47,6 +46,7 @@ export class FormularioAreaComponent implements OnInit {
       this.cargarformulario = true;
       this.grupoForm = this.fb.group({
       nombre: [this.grupo.nombre, [ Validators.required]],
+  //    codigo: [this.grupo.codigo, [ Validators.required]],
       habilitado: [this.grupo.habilitado, Validators.required],
       id_administrador: [this.loginService.administrador.id, [Validators.required]],
       id: [this.grupo.id, [Validators.required]],

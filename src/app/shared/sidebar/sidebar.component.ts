@@ -9,6 +9,7 @@ import { Solicitante } from '../../models/solicitante/solicitante.model';
 import { Administrador } from '../../models/administrador/administrador.model';
 import { NotificacionService } from '../../services/notificacion/notificacion.service';
 import { Subscription } from 'rxjs';
+import { Empresa } from '../../models/empleador/empresa.model';
 
 
 
@@ -20,6 +21,7 @@ import { Subscription } from 'rxjs';
 })
 export class SidebarComponent implements OnInit, OnDestroy {
   empleador: Empleador;
+  empresa: Empresa;
   solicitante: Solicitante;
   administrador: Administrador;
   actualizacionUsuarioSubscription: Subscription;
@@ -35,16 +37,17 @@ export class SidebarComponent implements OnInit, OnDestroy {
   cargarUsuario(): void {
     if (this.loginService.solicitante != null) {
       this.solicitante = this.loginService.solicitante;
-      console.log(this.solicitante);
     }
     if (this.loginService.administrador != null) {
       this.administrador = this.loginService.administrador;
-      console.log(this.administrador);
 
     }
     if (this.loginService.empleador != null) {
       this.empleador = this.loginService.empleador;
-      console.log(this.empleador);
+      this.empresa = this.loginService.empresa;
+    }
+    if (this.loginService.empresa != null) {
+      this.empresa = this.loginService.empresa;
     }
   }
   logout(): void {

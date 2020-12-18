@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Vacante } from '../../models/empleador/vacante.model';
 import { environment } from '../../../environments/environment';
-import { map } from 'rxjs/operators';
+import { map, delay } from 'rxjs/operators';
 
 
 const base_url = environment.base_url;
@@ -19,6 +19,11 @@ export class VacanteService {
   listarHabilitadas(id_empleador: number, desde: number): any {
     const token = localStorage.getItem('token');
     return this.http.get<{total: number, vacantes: Vacante[]}>(`${base_url}/vacante/lista-habilitadas/${id_empleador}?desde=${desde}&token=${token}`);
+  }
+  listarHabilitadasSinPaginacion(id_empleador: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get<{vacantes: Vacante[]}>(`${base_url}/vacante/lista-completa-habilitadas/${id_empleador}?token=${token}`)
+          .pipe( delay(300));
   }
   listarInhabilitadas(id_empleador: number, desde: number): any {
     const token = localStorage.getItem('token');
@@ -67,12 +72,11 @@ export class VacanteService {
 
   filtrar(formData: any, desde: number): any{
     const token = localStorage.getItem('token');
-    return this.http.post(`${base_url}/vacante/filtrar?desde=${desde}&token=${token}`, formData).
-            pipe( map((resp: any) => resp.vacantes));
+    return this.http.post<{vacantes: Vacante[], total: number}>
+    (`${base_url}/vacante/filtrar?desde=${desde}&token=${token}`, formData);
   }
-
-  busqueda(valor: string, id_empleador: number): any {
+  busqueda(valor: string, idEmpleador: number): any {
     const token = localStorage.getItem('token');
-    return this.http.get<{vacantes: Vacante[]}>(`${base_url}/vacante/busqueda/${id_empleador}/${valor}?token=${token}`);
+    return this.http.get<{vacantes: Vacante[]}>(`${base_url}/vacante/busqueda/${idEmpleador}/${valor}?token=${token}`);
   }
 }

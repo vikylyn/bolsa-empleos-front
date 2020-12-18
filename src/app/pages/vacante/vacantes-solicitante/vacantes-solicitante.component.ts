@@ -25,14 +25,11 @@ export class VacantesSolicitanteComponent implements OnInit, OnDestroy {
 
 
   vacante: Vacante;
-  postulando = false;
-  aceptado = false;
   postulacion: Postulacion;
-  contratado = false;
   contratacion: Contratacion;
   ocupado = false;
   verificacionSubscription: Subscription;
-
+  postulando = false;
   constructor(
               private vacanteService: VacanteService,
               private empresaService: EmpresaService,
@@ -57,11 +54,8 @@ export class VacantesSolicitanteComponent implements OnInit, OnDestroy {
         .subscribe((resp: any) => {
           console.log(resp);
           this.ocupado = resp.ocupado;
-          this.postulando = resp.postulando;
-          this.contratado = resp.contratado;
           this.postulacion = resp.postulacion;
           this.contratacion = resp.contratacion;
-          this.aceptado = resp.aceptado;
         });
   }
 
@@ -132,7 +126,7 @@ export class VacantesSolicitanteComponent implements OnInit, OnDestroy {
       if (result.value) {
         this.postulacionService.eliminar(this.postulacion.id).subscribe((resp: any) => {
           Swal.fire(resp.mensaje, '', 'success');
-          this.postulando = true;
+          this.verificarPostulacion();
         }, (err) => {
           console.log(err);
           Swal.fire('Error al eliminar postulacion', err.error.error || err.error.mensaje, 'error');
@@ -159,8 +153,7 @@ export class VacantesSolicitanteComponent implements OnInit, OnDestroy {
       if (result.value) {
         this.postulacionService.confirmar(this.postulacion.id).subscribe((resp: any) => {
           Swal.fire(resp.mensaje, '', 'success');
-          this.contratado = true;
-          this.ocupado = true;
+          this.verificarPostulacion();
         }, (err) => {
           console.log(err);
           Swal.fire('Error al confirmar postulacion', err.error.error || err.error.mensaje, 'error');
@@ -187,11 +180,7 @@ export class VacantesSolicitanteComponent implements OnInit, OnDestroy {
       if (result.value) {
         this.contratacionService.rechazar(this.postulacion.id).subscribe((resp: any) => {
           Swal.fire(resp.mensaje, '', 'success');
-          this.contratado = false;
-          this.aceptado = false;
-          this.postulacion = null;
-          this.contratacion = null;
-          this.postulando = true;
+          this.verificarPostulacion();
         }, (err) => {
           console.log(err);
           Swal.fire('Error al confirmar postulacion', err.error.error || err.error.mensaje, 'error');

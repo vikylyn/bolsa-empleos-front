@@ -12,6 +12,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~10.0.9",
+    "@angular/cdk": "^10.2.7",
     "@angular/common": "~10.0.9",
     "@angular/compiler": "~10.0.9",
     "@angular/core": "~10.0.9",
@@ -22,6 +23,7 @@
     "@angular/router": "~10.0.9",
     "@ng-select/ng-select": "^5.0.8",
     "jspdf": "^1.5.3",
+    "jspdf-autotable": "^3.5.13",
     "ngx-socket-io": "^3.2.0",
     "pdfmake": "^0.1.68",
     "pdfmake-wrapper": "^2.0.0",
@@ -38,7 +40,6 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/jquery": "^3.5.1",
     "@types/node": "^12.11.1",
-    "@types/pdfmake": "^0.1.16",
     "codelyzer": "^6.0.0",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~5.0.0",

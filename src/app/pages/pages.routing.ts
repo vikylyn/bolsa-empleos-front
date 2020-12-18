@@ -33,6 +33,20 @@ import { FotoSolicitanteComponent } from './perfil/foto/foto-solicitante/foto-so
 import { FotoEmpleadorComponent } from './perfil/foto/foto-empleador/foto-empleador.component';
 import { FotoEmpresaComponent } from './perfil/foto/foto-empresa/foto-empresa.component';
 import { FotoAdministradorComponent } from './perfil/foto/foto-administrador/foto-administrador.component';
+import { ReporteSolicitantesComponent } from './reportes/reporte-solicitantes/reporte-solicitantes.component';
+import { ReporteEmpleadoresComponent } from './reportes/reporte-empleadores/reporte-empleadores.component';
+import { ReporteVacantesComponent } from './reportes/reporte-vacantes/reporte-vacantes.component';
+import { ReporteContratacionesComponent } from './reportes/reporte-contrataciones/reporte-contrataciones.component';
+import { CambiarPasswordComponent } from './cambiar-password/cambiar-password.component';
+import { PostulacionesEmpleadorFavoritosComponent } from './postulaciones/postulaciones-empleador-favoritos/postulaciones-empleador-favoritos.component';
+import { ReporteEmpresasComponent } from './reportes/reporte-empresas/reporte-empresas.component';
+import { VerNotificacionEmpleadorComponent } from './notificaciones/ver-notificacion-postulacion-empleador/ver-notificacion-empleador.component';
+import { VerNotificacionContratacionEmpleadorComponent } from './notificaciones/ver-notificacion-contratacion-empleador/ver-notificacion-contratacion-empleador.component';
+import { VerNotificacionPostulacionSolicitanteComponent } from './notificaciones/ver-notificacion-postulacion-solicitante/ver-notificacion-postulacion-solicitante.component';
+import { PostulacionesRechazadasSolicitanteComponent } from './postulaciones/postulaciones-rechazadas-solicitante/postulaciones-rechazadas-solicitante.component';
+import { PostulacionesRechazadasEmpleadorComponent } from './postulaciones/postulaciones-rechazadas-empleador/postulaciones-rechazadas-empleador.component';
+import { PostulacionesSinConsiderarEmpleadorComponent } from './postulaciones/postulaciones-sin-considerar-empleador/postulaciones-sin-considerar-empleador.component';
+import { PostulacionesPendientesSolicitanteComponent } from './postulaciones/postulaciones-pendientes-solicitante/postulaciones-sin-considerar-solicitante.component';
 
 const routes: Routes = [
     {
@@ -52,11 +66,18 @@ const routes: Routes = [
             { path: '', component: PerfilAdministradorComponent, data: { titulo: 'Perfil de Administrador'}}        ],
     },
     {
+        path: 'credenciales/:rol',
+        component: PagesComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: '', component: CambiarPasswordComponent, data: { titulo: 'Cambiar Contraseña'}}        ],
+    },
+    {
         path: 'administrador',
         component: PagesComponent,
         canActivate: [AuthGuard],
         children: [
-            { path: '', component: AdministradorComponent, data: { titulo: 'Gestion de Administradores'}},
+            { path: '', component: AdministradorComponent, data: { titulo: 'Administradores'}},
         ],
     },
     {
@@ -64,7 +85,7 @@ const routes: Routes = [
         component: PagesComponent,
         canActivate: [AuthGuard],
         children: [
-            { path: '', component: AreasLaboralesComponent, data: { titulo: 'Administracion de Grupos ocupacionales'}},
+            { path: '', component: AreasLaboralesComponent, data: { titulo: 'Grupos ocupacionales'}},
         ],
     },
     {
@@ -72,7 +93,47 @@ const routes: Routes = [
         component: PagesComponent,
         canActivate: [AuthGuard],
         children: [
-            { path: '', component: ProfesionComponent, data: { titulo: 'Administracion de Ocupaciones'}},
+            { path: '', component: ProfesionComponent, data: { titulo: 'Ocupaciones'}},
+        ],
+    },
+    {
+        path: 'reporte-solicitante',
+        component: PagesComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: '', component: ReporteSolicitantesComponent, data: { titulo: 'Reporte de solicitantes por ocupacion'}},
+        ],
+    },
+    {
+        path: 'reporte-empleador',
+        component: PagesComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: '', component: ReporteEmpleadoresComponent, data: { titulo: 'Reporte de empleadores'}},
+        ],
+    },
+    {
+        path: 'reporte-empresa',
+        component: PagesComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: '', component: ReporteEmpresasComponent, data: { titulo: 'Reporte de empresas'}},
+        ],
+    },
+    {
+        path: 'reporte-vacante',
+        component: PagesComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: '', component: ReporteVacantesComponent, data: { titulo: 'Reporte de vacantes'}},
+        ],
+    },
+    {
+        path: 'reporte-contratacion',
+        component: PagesComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: '', component: ReporteContratacionesComponent, data: { titulo: 'Reporte de contrataciones'}},
         ],
     },
     {
@@ -155,6 +216,23 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [
             { path: '', component: PostulacionSolicitanteComponent, data: { titulo: 'Postulaciones'}},
+            { path: 'notificacion/:id', component: VerNotificacionPostulacionSolicitanteComponent, data: { titulo: 'Postulaciones'}},
+        ],
+    },
+    {
+        path: 'postulaciones-rechazadas-solicitante',
+        component: PagesComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: '', component: PostulacionesRechazadasSolicitanteComponent, data: { titulo: 'Postulaciones Rechazadas'}},
+        ],
+    },
+    {
+        path: 'postulaciones-pendientes-solicitante',
+        component: PagesComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: '', component: PostulacionesPendientesSolicitanteComponent, data: { titulo: 'Postulaciones Pendietes'}},
         ],
     },
     {
@@ -163,6 +241,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [
             { path: '', component: ContratacionSolicitanteComponent, data: { titulo: 'Contrataciones'}},
+            { path: 'notificacion/:id', component: VerNotificacionPostulacionSolicitanteComponent, data: { titulo: 'Contrataciones'}},
         ],
     },
     {
@@ -203,7 +282,33 @@ const routes: Routes = [
         component: PagesComponent,
         canActivate: [AuthGuard],
         children: [
-            { path: '', component: PostulacionEmpleadorComponent, data: { titulo: 'Postulaciones'}},
+            { path: '', component: PostulacionEmpleadorComponent, data: { titulo: 'Postulantes'}},
+            { path: 'favoritos', component: PostulacionesEmpleadorFavoritosComponent, data: { titulo: 'Postulantes Favoritos'}},
+            { path: 'notificacion/:id', component: VerNotificacionEmpleadorComponent, data: { titulo: 'Postulantes'}},
+        ],
+    },
+    {
+        path: 'postulantes-rechazados-empleador',
+        component: PagesComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: '', component: PostulacionesRechazadasEmpleadorComponent, data: { titulo: 'Postulantes Rechazados'}},
+        ],
+    },
+    {
+        path: 'postulantes-pendientes',
+        component: PagesComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: '', component: PostulacionesSinConsiderarEmpleadorComponent, data: { titulo: 'Postulantes Pendientes'}},
+        ],
+    },
+    {
+        path: 'postulantes/favoritos',
+        component: PagesComponent,
+        canActivate: [AuthGuard],
+        children: [
+            { path: '', component: PostulacionesEmpleadorFavoritosComponent, data: { titulo: 'Postulantes Favoritos'}},
         ],
     },
     {
@@ -220,6 +325,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         children: [
             { path: '', component: ContratacionEmpleadorComponent, data: { titulo: 'Contrataciones'}},
+            { path: 'notificacion/:id', component: VerNotificacionContratacionEmpleadorComponent, data: { titulo: 'Contrataciones'}},
         ],
     },
 ];
