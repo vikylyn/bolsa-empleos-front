@@ -68,18 +68,24 @@
                                             <small *ngIf="campoNoValido('cedula')" class="form-control-feedback text-danger">La cedula de identidad es obligatorio</small> 
                                         </div>
                                     </div>
-                                    <!--/span-->
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 ">
+                                        <div class="form-group">
+                                            <label class="control-label">Num Complemento Ci:</label>
+                                            <input [class.is-invalid]="campoNoValido('num_complemento_ci')" formControlName="num_complemento_ci" type="text" class="form-control" placeholder="Complemento CI">
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                                <div class="row">
+                                
+                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Nacionalidad</label>
                                             <input [class.is-invalid]="campoNoValido('nacionalidad')" formControlName="nacionalidad" type="text" class="form-control" placeholder="Nacionalidad">
                                             <small *ngIf="campoNoValido('nacionalidad')" class="form-control-feedback text-danger">La nacionalidad es Obligatoria</small> 
                                         </div>
-                                    </div>
-                                    <!--/span-->
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12 ">
+                                    </div> 
+                                    <div class="col-md-6 ">
                                         <div class="form-group">
                                             <label>Direccion</label>
                                             <input [class.is-invalid]="campoNoValido('direccion')" formControlName="direccion" type="text" class="form-control" placeholder="Direccion">
@@ -105,7 +111,6 @@
                                         <div class="form-group">
                                             <label>Ciudad</label>
                                             <select [class.is-invalid]="selectNoValido('id_ciudad')" formControlName="id_ciudad" class="form-control custom-select">
-                                                <option value="0">Seleccionar</option>
                                                 <option *ngFor="let ciudad of ciudades" value="{{ciudad.id}}">{{ciudad.nombre}} / {{ciudad.estado.nombre}}</option>
                                             </select>
                                             <small *ngIf="selectNoValido('id_ciudad')" class="form-control-feedback text-danger">Seleccione una ciudad</small> 

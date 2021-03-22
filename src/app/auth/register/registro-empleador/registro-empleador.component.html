@@ -8,7 +8,7 @@
                                [formGroup]="registerForm"
                                >
                             <div class="form-body">
-                                <h3 class="card-title">Registrarme</h3>
+                                <h3 class="card-title text-center">Registrarme</h3>
                                 <hr>
                                 <div class="row p-t-20">
                                     <div class="col-md-6">
@@ -85,7 +85,14 @@
                                             <small *ngIf="campoNoValido('cedula')" class="form-control-feedback text-danger">La cedula de identidad es obligatorio</small> 
                                         </div>
                                     </div>
-                                    <!--/span-->
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Complemento CI (opcional):</label>
+                                            <input [class.is-invalid]="campoNoValido('num_complemento_ci')" formControlName="num_complemento_ci" type="text" class="form-control" placeholder="Complemento CI">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Nacionalidad</label>
@@ -93,10 +100,7 @@
                                             <small *ngIf="campoNoValido('nacionalidad')" class="form-control-feedback text-danger">La nacionalidad es Obligatoria</small> 
                                         </div>
                                     </div>
-                                    <!--/span-->
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12 ">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Direccion</label>
                                             <input [class.is-invalid]="campoNoValido('direccion')" formControlName="direccion" type="text" class="form-control" placeholder="Direccion">

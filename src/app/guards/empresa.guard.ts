@@ -12,7 +12,7 @@ export class EmpresaGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if (this.loginService.empleador.empresa === true ){
+      if (this.loginService.empleador.empresa){
         return true;
       }else {
         this.router.navigateByUrl('/perfil-empleador');

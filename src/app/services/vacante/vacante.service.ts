@@ -46,15 +46,11 @@ export class VacanteService {
     const token = localStorage.getItem('token');
     return this.http.put(`${base_url}/vacante/${id}?token=${token}`, formData);
   }
-  // Eliminacion logica, atributo de la vacante pasa a eliminado = true;
-  eliminacionLogica(id: number): any {
+
+  // Eliminacion fisica, registro borrado de la tabla vacantes;
+  eliminacion(id: number): any {
     const token = localStorage.getItem('token');
-    return this.http.put(`${base_url}/vacante/eliminacion-logica/${id}?token=${token}`, {});
-  }
-  // Eliminacion fisica, registro borrado de la tabla;
-  eliminacionFisica(id: number): any {
-    const token = localStorage.getItem('token');
-    return this.http.delete(`${base_url}/vacante/eliminacion-fisica/${id}?token=${token}`);
+    return this.http.delete(`${base_url}/vacante/${id}?token=${token}`);
   }
   // Inhabilitar vacante
   inhabilitar(id: number): any {

@@ -1036,7 +1036,8 @@ File: scss
     min-height: 70px;
     padding: 0px; }
     .topbar .top-navbar .dropdown-toggle::after {
-      display: none; }
+      display: none; 
+    }
     .topbar .top-navbar .navbar-header {
       line-height: 55px;
       padding-left: 10px; }
@@ -4654,7 +4655,7 @@ File: scss
   padding-top: 15px; }
 
 .mailbox .message-center {
-  height: 200px;
+  height: 400px;
   overflow: auto;
   position: relative; }
   .mailbox .message-center a {
@@ -4663,7 +4664,7 @@ File: scss
     text-decoration: none;
     padding: 9px 15px; }
     .mailbox .message-center a:hover {
-      background: #e9edf2; }
+      background: #9fb1c7; }
     .mailbox .message-center a div {
       white-space: normal; }
     .mailbox .message-center a .user-img {
@@ -4692,7 +4693,7 @@ File: scss
         background: #ffb22b; }
     .mailbox .message-center a .mail-contnet {
       display: inline-block;
-      width: 75%;
+      width: 95%;
       vertical-align: middle; }
       .mailbox .message-center a .mail-contnet h5 {
         margin: 5px 0px 0; }

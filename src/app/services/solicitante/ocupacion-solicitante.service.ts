@@ -19,7 +19,7 @@ export class OcupacionSolicitanteService {
   }
 
   // Habilitar ocupacion
-  habilitar(id: number): any {
+/*  habilitar(id: number): any {
     const token = localStorage.getItem('token');
     return this.http.put(`${base_url}/ocupacion-solicitante/habilitar/${id}?token=${token}`, {});
   }
@@ -27,6 +27,11 @@ export class OcupacionSolicitanteService {
   inhabilitar(id: number): any {
     const token = localStorage.getItem('token');
     return this.http.put(`${base_url}/ocupacion-solicitante/inhabilitar/${id}?token=${token}`, {});
+  }
+*/
+  eliminar(id: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.delete(`${base_url}/ocupacion-solicitante/${id}?token=${token}`, {});
   }
 
   adicionar(formData: any): any {

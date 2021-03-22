@@ -1,0 +1,115 @@
+
+<div class="row animated fadeIn fast" *ngIf="!cargando">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h2><span class="badge badge-info">Administración de Ocupaciones</span></h2>
+                <h6>Total: {{totalOcupaciones}} - {{desde}}</h6>
+                
+                <div class="row justify-content-end"> 
+                    
+                    <div class="col-6">
+                        <label>Grupo Ocupacional:</label>
+                        <ng-select (change)="filtrar()"
+                                   appendTo="body"
+                                   [clearable] = "false"
+                                   notFoundText = "grupo no encontrado"
+                                   [(ngModel)]="idGrupo">
+                                   <ng-option [value]= "0">Cualquiera</ng-option>
+                                   <ng-option [value]= "grupo.id" *ngFor="let grupo of gruposOcupacionales" [value]="grupo.id">{{grupo.nombre}}
+                                   </ng-option>
+                        </ng-select>
+                    </div>
+                    
+                    
+                </div>
+                <div class="row ">
+                    <div class="col"> 
+                        <button (click)="mostrarModal('adicionar', 0)"
+                        class="btn btn-success mt-5">
+                             Adicionar
+                        </button>
+                    </div>
+                    <div class="col-6">
+                        <input #txtTermino (keyup)="busqueda(txtTermino.value)" type="text" class="form-control mt-5" placeholder="buscar profesion...">
+                    </div>
+                   
+                </div>
+                <br>
+                <div class="table-responsive">
+                    <table class="table full-color-table full-inverse-table hover-table">
+                        <thead>
+                            <tr>
+                                <th>Num</th>
+                                <th>Nombre</th>
+                                <th>Grupo Ocupacional</th>
+                                <th class="w100 text-center">Estado</th>
+                                <th class="w100 text-center">modificar</th>
+                                <th class="w100 text-center">habilitar</th>
+                                <th class="w100 text-center">inhabilitar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr  *ngFor="let ocupacion of this.ocupaciones; let i = index">
+                                <td align="center">
+                                    <span >{{desde + i + 1}}</span>
+                                </td>
+                                <td>
+                                    {{ocupacion.nombre}}
+                                </td>
+                                <td>
+                                    {{ocupacion.grupo_ocupacional.nombre}}
+                                </td>
+                                <td class="text-center">
+                                    <i *ngIf="ocupacion.habilitado" class="fa  fa-thumbs-up text-info"></i>
+                                    <i *ngIf="!ocupacion.habilitado" class="fa  fa-thumbs-down text-secondary"></i>
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <a class="cursor" (click)="mostrarModal('modificar', ocupacion.id)"> 
+                                            <i class="fa fa-pencil m-r-10"></i> 
+                                    </a>
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <span *ngIf="ocupacion.habilitado"><i class="fa fa-minus"></i></span>
+                                    <a class="cursor" *ngIf="!ocupacion.habilitado" (click)="habilitar(ocupacion.id)"><i class="fa fa-thumbs-o-up"></i></a>
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <span *ngIf="!ocupacion.habilitado"><i class="fa fa-minus"></i></span>
+                                    <a *ngIf="ocupacion.habilitado" (click)="inhabilitar(ocupacion.id)" class="cursor" data-toggle="tooltip" data-original-title="Inhabilitar"><i class="fa fa-thumbs-o-down"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center" *ngIf="txtTermino.value.length ===0">
+                    <button (click)="cambiarPagina(-5)" class="btn btn-secondary">Anterior</button> 
+                    &nbsp;
+                    <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguiente</button>
+                </div>
+                <div class="row animated fadeIn fast" *ngIf="cargando">
+                    <div class="col-12">
+                        <div class="alert alert-info text-center">
+                            <h4>Cargando...</h4>
+                            <i class="fa fa-spin fa-refresh fa-2x"></i>
+                            <p class="mb-0">Por favor espere</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<app-formulario-ocupacion *ngIf="myModal" [visible]="myModal" 
+                                                    [idOcupacion]= "idOcupacion" 
+                                                    [tipoOperacion]="tipoOperacion" 
+                                                    (cerrar)="cerrarModal($event)"
+                                                    (cancelar)="cancelarModal($event)"
+                                                    >
+</app-formulario-ocupacion>
+
+
+

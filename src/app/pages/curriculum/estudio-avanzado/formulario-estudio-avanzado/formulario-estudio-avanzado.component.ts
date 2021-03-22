@@ -7,6 +7,7 @@ import { EstudioAvanzadoService } from '../../../../services/solicitante/curricu
 import { UbicacionService } from '../../../../services/ubicacion/ubicacion.service';
 import { NivelEstudioService } from '../../../../services/solicitante/curriculum/nivel-estudio.service';
 import Swal from 'sweetalert2';
+import { Ciudad } from '../../../../models/ciudad.model';
 
 @Component({
   selector: 'app-formulario-estudio-avanzado',
@@ -28,6 +29,8 @@ export class FormularioEstudioAvanzadoComponent implements OnInit {
   estudio: EstudioAvanzado;
   paises: Pais[];
   niveles: NivelEstudio[];
+  ciudades: Ciudad[] ;
+  mostrarCampos = false;
 
   constructor(
           private fb: FormBuilder,
@@ -49,9 +52,11 @@ export class FormularioEstudioAvanzadoComponent implements OnInit {
           carrera: ['' , [Validators.required]],
           fecha_inicio: ['' , [Validators.required]],
           fecha_fin: ['' , [Validators.required]],
+          pais: ['' , [Validators.required]],
           estado: ['' , [Validators.required]],
           ciudad: ['' , [Validators.required]],
           id_pais: [1 , [Validators.required, Validators.min(1)]],
+          id_ciudad: [null , [Validators.required, Validators.min(1)]],
           id_nivel_estudio: [0 , [Validators.required, Validators.min(1)]],
           id_curriculum: [this.idCurriculum]
           });
@@ -65,6 +70,14 @@ export class FormularioEstudioAvanzadoComponent implements OnInit {
   cargarPaises(): void {
     this.ubicacionService.listarPaises().subscribe((resp: Pais[]) => {
       this.paises = resp;
+      this.cargarCiudades(this.paises[0].id);
+
+    });
+  }
+  cargarCiudades(idPais: number): void {
+    this.ciudades = [];
+    this.ubicacionService.listarCiudades(idPais).subscribe((resp: Ciudad[]) => {
+      this.ciudades = resp;
     });
   }
   cargarEstudio(): void {
@@ -73,17 +86,38 @@ export class FormularioEstudioAvanzadoComponent implements OnInit {
       .subscribe((resp: EstudioAvanzado) => {
         this.estudio = resp;
         this.cargarformulario = true;
-        this.estudioForm = this.fb.group({
-          institucion: [this.estudio.institucion , [Validators.required]],
-          carrera: [this.estudio.carrera , [Validators.required]],
-          fecha_inicio: [ this.estudio.fecha_inicio , [Validators.required]],
-          fecha_fin: [this.estudio.fecha_fin , [Validators.required]],
-          estado: [ this.estudio.estado , [Validators.required]],
-          ciudad: [ this.estudio.ciudad , [Validators.required]],
-          id_pais: [this.estudio.pais.id , [Validators.required, Validators.min(1)]],
-          id_nivel_estudio: [this.estudio.nivel_estudio.id , [Validators.required, Validators.min(1)]],
-          id_curriculum: [this.idCurriculum]
-      });
+        this.cargarCiudades(this.estudio.ciudad.estado.pais.id);
+        if ( this.estudio.ciudad.estado.pais.id === 2 &&  this.estudio.otraCiudad) {
+          this.mostrarCampos = true;
+          this.estudioForm = this.fb.group({
+            institucion: [this.estudio.institucion , [Validators.required]],
+            carrera: [this.estudio.carrera , [Validators.required]],
+            fecha_inicio: [ this.estudio.fecha_inicio , [Validators.required]],
+            fecha_fin: [this.estudio.fecha_fin , [Validators.required]],
+            pais: [this.estudio.otraCiudad.pais , [Validators.required]],
+            estado: [this.estudio.otraCiudad.estado , [Validators.required]],
+            ciudad: [ this.estudio.otraCiudad.ciudad , [Validators.required]],
+            id_pais: [this.estudio.ciudad.estado.pais.id, [Validators.required, Validators.min(1)]],
+            id_ciudad: ['', [Validators.required, Validators.min(1)]],
+            id_nivel_estudio: [this.estudio.nivel_estudio.id , [Validators.required, Validators.min(1)]],
+            id_curriculum: [this.idCurriculum]
+          });
+        }else {
+          this.mostrarCampos = false;
+          this.estudioForm = this.fb.group({
+            institucion: [this.estudio.institucion , [Validators.required]],
+            carrera: [this.estudio.carrera , [Validators.required]],
+            fecha_inicio: [ this.estudio.fecha_inicio , [Validators.required]],
+            fecha_fin: [this.estudio.fecha_fin , [Validators.required]],
+            pais: ['' , [Validators.required]],
+            estado: ['', [Validators.required]],
+            ciudad: [ '' , [Validators.required]],
+            id_pais: [this.estudio.ciudad.estado.pais.id, [Validators.required, Validators.min(1)]],
+            id_ciudad: [this.estudio.ciudad.id, [Validators.required, Validators.min(1)]],
+            id_nivel_estudio: [this.estudio.nivel_estudio.id , [Validators.required, Validators.min(1)]],
+            id_curriculum: [this.idCurriculum]
+          });
+        }
     });
   }
   campoNoValido( campo: string): boolean {
@@ -95,6 +129,25 @@ export class FormularioEstudioAvanzadoComponent implements OnInit {
   }
   guardar(): void {
     this.formSubmitted = true;
+    console.log(this.estudioForm.value);
+
+    if (!this.mostrarCampos) {
+      this.estudioForm.get('ciudad').disable();
+      this.estudioForm.get('estado').disable();
+      this.estudioForm.get('pais').disable();
+      this.estudioForm.get('id_ciudad').enable();
+      this.estudioForm.value.ciudad = '';
+      this.estudioForm.value.estado = '';
+      this.estudioForm.value.pais = '';
+
+    }else {
+      this.estudioForm.get('ciudad').enable();
+      this.estudioForm.get('estado').enable();
+      this.estudioForm.get('pais').enable();
+      this.estudioForm.get('id_ciudad').disable();
+      this.estudioForm.value.id_ciudad = this.ciudades[0].id;
+
+    }
     if (this.estudioForm.invalid) {
       return;
     }
@@ -118,6 +171,26 @@ export class FormularioEstudioAvanzadoComponent implements OnInit {
             Swal.fire('Error al adicionar Estudio Avanzado', err.error.mensaje, 'error');
           });
     }
+  }
+  cambiarPais(): void {
+    let id = this.estudioForm.get('id_pais').value;
+    if (id === 2) {
+      this.mostrarCampos = true;
+      this.estudioForm.get('ciudad').enable();
+      this.estudioForm.get('estado').enable();
+      this.estudioForm.get('pais').enable();
+      this.estudioForm.get('id_ciudad').disable();
+    }else {
+      this.mostrarCampos = false;
+      this.estudioForm.get('ciudad').disable();
+      this.estudioForm.get('estado').disable();
+      this.estudioForm.get('pais').disable();
+      this.estudioForm.get('id_ciudad').enable();
+      this.estudioForm.value.id_ciudad = this.ciudades[0].id;
+
+    }
+    this.cargarCiudades(parseInt(id));
+
   }
   cerrarModal() {
     this.cerrar.emit(false);

@@ -37,6 +37,7 @@ export class RegistroEmpleadorComponent implements OnInit {
     password: ['', [Validators.required]],
     password2: ['', [Validators.required]],
     cedula: ['', [Validators.required]],
+    num_complemento_ci: [''],
     telefono: ['', [Validators.required]],
     nacionalidad: ['', [Validators.required]],
     direccion: ['', [Validators.required]],
@@ -115,7 +116,7 @@ export class RegistroEmpleadorComponent implements OnInit {
       });
     }else {
       console.log(this.registerForm.value);
-    /*   this.empleadorService.adicionarEmpleador(this.registerForm.value)
+      this.empleadorService.adicionarEmpleador(this.registerForm.value)
         .subscribe( (resp: any) => {
           Swal.fire(resp.mensaje, this.registerForm.get('email').value, 'success');
           this.cargando = false;
@@ -124,7 +125,7 @@ export class RegistroEmpleadorComponent implements OnInit {
           console.log(err);
           Swal.fire('Error al crear Empleador', err.error.mensaje, 'error');
         });
-    */
+    
     }
   }
   campoNoValido( campo: string): boolean {

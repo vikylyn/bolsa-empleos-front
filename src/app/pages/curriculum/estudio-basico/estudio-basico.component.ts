@@ -55,6 +55,7 @@ export class EstudioBasicoComponent implements OnInit {
     this.cargando = true;
     this.estudioService.listar(this.idCurriculum, this.desde)
     .subscribe(({total, estudios_basicos}) => {
+      console.log(estudios_basicos);
       this.estudiosBasicos = estudios_basicos;
       this.totalEstudios = total;
       this.cargando = false;
@@ -63,11 +64,11 @@ export class EstudioBasicoComponent implements OnInit {
 
   eliminar(id: number): void {
     Swal.fire({
-      title: 'Estas seguro?',
-      text: 'Se eliminara el Estudio basico seleccionado',
+      title: 'Estas seguro de eliminar el estudio básico?',
+      text: '',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Eliminar!',
+      confirmButtonText: 'Confirmar!',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {

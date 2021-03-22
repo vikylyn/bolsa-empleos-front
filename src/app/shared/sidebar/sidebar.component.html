@@ -11,7 +11,7 @@
                             <ul aria-expanded="false" class="collapse">
                                 <li><a  routerLink="/perfil-solicitante">Datos personales </a></li>
                                 <li><a  routerLink="/foto-solicitante">Foto de perfil</a></li>
-                                <li><a  routerLink="/ocupaciones-solicitante">Ocupaciones</a></li>
+                                <li><a  routerLink="/ocupaciones-solicitante">Mis Ocupaciones</a></li>
                                 <li><a routerLinkActive="active" routerLink="/credenciales/solicitante">Cambiar Contraseña </a></li>
                                 <li><a (click)="logout()" class="cursor" >logout</a></li>
                             </ul>
@@ -40,10 +40,10 @@
                             </ul>
                         </li>
                         <li class="user-profile" *ngIf="empleador.empresa">
-                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img img [src]="empresa.logo.url" alt="user" /><span class="hide-menu">{{empresa.nombre}}</span></a>
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img img [src]="empleador.empresa.logo.url" alt="user" /><span class="hide-menu">{{empleador.empresa.nombre}}</span></a>
                             <ul aria-expanded="false" class="collapse">                               
                                 <li *ngIf="empleador.empresa"><a routerLinkActive="active" class="cursor" routerLink="/perfil-empresa">Datos de la Empresa</a></li>
-                                <li *ngIf="empleador.empresa"><a routerLinkActive="active" class="cursor" routerLink="/foto-empresa">Foto de Perfil</a></li>                      
+                                <li *ngIf="empleador.empresa"><a routerLinkActive="active" class="cursor" routerLink="/foto-empresa">Logo</a></li>                      
                             </ul>
                         </li>
                         <li class="nav-devider"></li>

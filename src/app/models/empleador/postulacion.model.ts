@@ -9,6 +9,7 @@ export class Postulacion {
         public rechazado: boolean,
         public favorito: boolean,
         public creado_en: Date,
+        public oculto: boolean,
         public id?: number
     ){
 

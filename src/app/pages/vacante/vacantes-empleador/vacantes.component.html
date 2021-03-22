@@ -45,7 +45,11 @@
                                 <th>Num Vacantes</th>
                                 <th>Vacantes disponibles</th>
                                 <th class="text-center hidden-md-down">Habilitado</th>
-                                <th class="w100">Operaciones</th>
+                                <th class="w100 text-center">ver</th>
+                                <th class="w100 text-center">modificar</th>
+                                <th class="w100 text-center">habilitar</th>
+                                <th class="w100 text-center">inhabilitar</th>
+                                <th class="w100 text-center">eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -72,16 +76,28 @@
                                     <i *ngIf="vacante.habilitado" class="fa  fa-thumbs-up text-info"></i>
                                     <i *ngIf="!vacante.habilitado" class="fa  fa-thumbs-down text-secondary"></i>
                                 </td>
+                               
                                 <td class="text-nowrap text-center">
                                     <a class="cursor" (click)="mostrarModal2(vacante.id)"> 
-                                        <i class="fa fa-eye  m-r-10"></i> 
+                                        <i class="fa fa-eye"></i> 
                                     </a>
+                                </td>
+                                <td class="text-nowrap text-center">
+                               
                                     <a class="cursor" (click)="mostrarModal('modificar', vacante.id)"> 
-                                            <i class="fa fa-pencil  m-r-10"></i> 
+                                            <i class="fa fa-pencil"></i> 
                                     </a>
-                                    <a *ngIf="!vacante.habilitado" class="cursor" (click)="habilitar(vacante.id)" ><i class="fa fa-arrow-circle-up text-success m-r-10"></i></a>
-                                    <a *ngIf="vacante.habilitado" class="cursor" (click)="inhabilitar(vacante.id)"><i class="fa fa-arrow-circle-down text-danger m-r-10"></i></a>
-                                    <a class="cursor" (click)="eliminar(vacante.id, vacante.num_postulantes_aceptados)" > <i class="fa fa-trash-o m-r-10 text-info"></i></a>
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <span *ngIf="vacante.habilitado"><i class="fa fa-minus"></i></span>
+                                    <a *ngIf="!vacante.habilitado" class="cursor" (click)="habilitar(vacante.id)" ><i class="fa fa-thumbs-o-up"></i></a>
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <span *ngIf="!vacante.habilitado"><i class="fa fa-minus"></i></span>
+                                    <a *ngIf="vacante.habilitado" class="cursor" (click)="inhabilitar(vacante.id)"><i class="fa fa-thumbs-o-down"></i></a>
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <a class="cursor" (click)="eliminar(vacante.id)" > <i class="fa fa-trash-o text-info"></i></a>
                                 </td>
                             </tr>
                         </tbody> 

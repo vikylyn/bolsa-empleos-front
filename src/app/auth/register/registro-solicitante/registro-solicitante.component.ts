@@ -28,7 +28,7 @@ export class RegistroSolicitanteComponent implements OnInit {
   formSubmitted = false;
   fechaActual: Date = new Date();
   fechaLimiteInf: Date  = new Date();
-
+  cargando = false;
   dias: any[] = [];
 
   meses: any[] = [
@@ -67,7 +67,7 @@ export class RegistroSolicitanteComponent implements OnInit {
     password: ['', [Validators.required]],
     password2: ['', [Validators.required]],
     cedula: ['', [Validators.required]],
-    num_complemento: [''],
+    num_complemento_ci: [''],
     telefono: ['', [Validators.required]],
     nacionalidad: ['', [Validators.required]],
     direccion: ['', [Validators.required]],
@@ -124,19 +124,23 @@ export class RegistroSolicitanteComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-   
+    if(!this.existeFecha(dia+'/'+mes+'/'+anio)  && this.formSubmitted) {
+      return;
+    }
+    this.cargando = true;
     let fechaObj = {
       fecha_nac: anio+'-'+mes+'-'+dia
     };
     const form = Object.assign(this.registerForm.value, fechaObj);
-    console.log(form);
     this.solicitanteService.adicionarSolicitante(form)
         .subscribe( (resp: any) => {
           Swal.fire(resp.mensaje, this.registerForm.get('email').value, 'success');
+          this.cargando = false;
           this.router.navigate(['/login']);
         }, (err) => {
           console.log(err);
           Swal.fire('Error al crear Solicitante', err.error.mensaje, 'error');
+          this.cargando = false;
         });
   }
 

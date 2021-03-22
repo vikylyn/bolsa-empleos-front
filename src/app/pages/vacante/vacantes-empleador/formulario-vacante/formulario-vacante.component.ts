@@ -18,7 +18,6 @@ import { OcupacionService } from '../../../../services/administrador/ocupacion.s
 import Swal from 'sweetalert2';
 import { VacanteService } from '../../../../services/vacante/vacante.service';
 import { LoginService } from '../../../../services/login.service';
-import { NivelIdioma } from '../../../../models/idioma/nivel-idioma.model';
 import { RequisitosIdioma } from '../../../../models/empleador/requisitos-idioma.model';
 
 @Component({
@@ -139,9 +138,9 @@ export class FormularioVacanteComponent implements OnInit {
               id_ciudad: [this.vacante.ciudad.id, [ Validators.required, Validators.min(1)]],
               id_empleador: [ this.loginService.empleador.id, [ Validators.required]],
               id_requisitos: [this.vacante.requisitos.id, [ Validators.required]],
-              num_disponibles: [ this.vacante.num_disponibles, [Validators.required, 
+              num_disponibles: [{ value: this.vacante.num_disponibles, disabled: true}, [Validators.required,
                                   Validators.min(this.vacante.num_vacantes - this.vacante.num_postulantes_aceptados)]],
-              num_postulantes_aceptados: [this.vacante.num_postulantes_aceptados, [Validators.required]]
+              num_postulantes_aceptados: [{value: this.vacante.num_postulantes_aceptados, disabled: true}, [Validators.required]]
 
 
         });
@@ -174,22 +173,30 @@ export class FormularioVacanteComponent implements OnInit {
   }
   siguienteFormulario(): any {
     this.formSubmitted = true;
-    console.log(this.vacanteForm.value);
     if (this.vacanteForm.invalid) {
       return;
     }
     this.siguiente = true;
   }
   guardar(): void {
+
+
     this.formSubmitted2 = true;
     if (this.requisitosForm.invalid || this.idiomasSeleccionados.length < 1) {
       return;
     }
+
     let formularioCompleto = Object.assign(this.vacanteForm.value, this.requisitosForm.value);
     const objIdiomas = {
         idiomas: this.idiomasSeleccionados
       };
     formularioCompleto = Object.assign(formularioCompleto, objIdiomas);
+    if (this.tipoOperacion === 'adicionar') {
+      formularioCompleto = Object.assign(formularioCompleto, {num_disponibles: formularioCompleto.num_vacantes});
+    }else {
+      formularioCompleto.num_disponibles = this.vacanteForm.get('num_disponibles').value;
+    }
+    console.log(formularioCompleto);
     if (this.tipoOperacion === 'modificar') {
       this.vacanteService.modificar(formularioCompleto, this.vacante.id)
           .subscribe((resp: any) => {

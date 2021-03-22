@@ -73,7 +73,7 @@
                                         <h3 class="card-title text-center"><strong>Requisitos para el cargo</strong> </h3>
                                         <span class="font-weight-bold">Ocupacion: </span> <span>{{notificacion.vacante.requisitos.ocupacion.nombre}}</span> <br>
                                         <span class="font-weight-bold">Años de Experiencia: </span> <span>{{notificacion.vacante.requisitos.experiencia}}</span> <br>
-                                        <span class="font-weight-bold">Genero: </span> <span>{{notificacion.vacante.requisitos.genero}}</span> <br>
+                                        <span class="font-weight-bold">Genero: </span> <span>{{notificacion.vacante.requisitos.genero | genero:notificacion.vacante.requisitos.genero}}</span> <br>
                                         <span class="font-weight-bold">Idiomas: </span> 
                                          <ul>
                                              <li *ngFor="let idioma  of notificacion.vacante.requisitos.idiomas"><span>{{idioma.idioma.nombre}}</span>
@@ -92,15 +92,15 @@
                     </div>
                     <div class="col-lg-5 col-md-5 col-sm-12">
                         
-                        <div *ngIf="notificacion && notificacion.vacante.empleador.empresa && notificacion.vacante.empresa" class="card text-light bg-dark mb-3">
-                            <img [src]="notificacion.vacante.empresa.logo.url" alt="">
+                        <div *ngIf="notificacion && notificacion.vacante.empleador.empresa && notificacion.vacante.empleador.empresa" class="card text-light bg-dark mb-3">
+                            <img [src]="notificacion.vacante.empleador.empresa.logo.url" alt="">
                             <div class="card-body">
-                              <span *ngIf="notificacion.vacante.empleador.empresa" class="font-weight-bold">Empresa: </span> <span>{{notificacion.vacante.empresa.nombre}}</span> <br>
-                              <span *ngIf="notificacion.vacante.empleador.empresa" class="font-weight-bold">Pais: </span> <span>{{notificacion.vacante.empresa.ciudad.estado.pais.nombre}} / {{notificacion.vacante.ciudad.estado.nombre}}</span> <br>
-                              <span *ngIf="notificacion.vacante.empleador.empresa" class="font-weight-bold">Ciudad: </span> <span>{{notificacion.vacante.empresa.ciudad.nombre}} / {{notificacion.vacante.empresa.ciudad.estado.nombre}}</span> <br>
-                              <span *ngIf="notificacion.vacante.empleador.empresa" class="font-weight-bold">Direccion: </span> <span>{{notificacion.vacante.empresa.direccion}}</span> <br>   
-                              <span *ngIf="notificacion.vacante.empleador.empresa" class="font-weight-bold">Telefono: </span> <span>{{notificacion.vacante.empresa.telefono}}</span>  <br>                              
-                              <span *ngIf="notificacion.vacante.empleador.empresa" class="font-weight-bold">Descripcion: </span> <span>{{notificacion.vacante.empresa.descripcion}}</span>  <br> 
+                              <span *ngIf="notificacion.vacante.empleador.empresa" class="font-weight-bold">Empresa: </span> <span>{{notificacion.vacante.empleador.empresa.nombre}}</span> <br>
+                              <span *ngIf="notificacion.vacante.empleador.empresa" class="font-weight-bold">Pais: </span> <span>{{notificacion.vacante.empleador.empresa.ciudad.estado.pais.nombre}} / {{notificacion.vacante.ciudad.estado.nombre}}</span> <br>
+                              <span *ngIf="notificacion.vacante.empleador.empresa" class="font-weight-bold">Ciudad: </span> <span>{{notificacion.vacante.empleador.empresa.ciudad.nombre}} / {{notificacion.vacante.empleador.empresa.ciudad.estado.nombre}}</span> <br>
+                              <span *ngIf="notificacion.vacante.empleador.empresa" class="font-weight-bold">Direccion: </span> <span>{{notificacion.vacante.empleador.empresa.direccion}}</span> <br>   
+                              <span *ngIf="notificacion.vacante.empleador.empresa" class="font-weight-bold">Telefono: </span> <span>{{notificacion.vacante.empleador.empresa.telefono}}</span>  <br>                              
+                              <span *ngIf="notificacion.vacante.empleador.empresa" class="font-weight-bold">Descripcion: </span> <span>{{notificacion.vacante.empleador.empresa.descripcion}}</span>  <br> 
                               
                              
                             </div>
@@ -120,9 +120,9 @@
                       
                                  <!--Solicitante no postulante, ni contratado-->
                               <button *ngIf="!contratacion && !postulacion && !ocupado && notificacion.tipo_notificacion.tipo != 'postulacion_rechazada_empleador' && notificacion.tipo_notificacion.tipo != 'postulacion_aceptada'" (click)="postular()" class="btn btn-info btn-block mt-2">Postularme</button>                              <!--Solicitante Aceptado para la vacante pero aun no confirmado-->
-                              <button *ngIf="postulacion && postulacion.aceptado && !postulacion.rechazado  && !contratacion && !postulacion.solicitante.ocupado" (click)="confirmar()" class="btn btn-success btn-block mt-2">Confirmar</button>                          
+                              <button *ngIf="postulacion && postulacion.aceptado && !postulacion.rechazado  && !contratacion" (click)="confirmar()" class="btn btn-success btn-block mt-2">Confirmar</button>                          
                     <!--         <button *ngIf="contratacion && contratacion.habilitado && !contratacion.oculto  && !ocupado "  (click)="rechazar()" class="btn btn-danger btn-lg btn-block mt-2">Rechazar</button>   --> 
-                              <button *ngIf="postulacion && postulacion.aceptado  && !postulacion.rechazado  && !contratacion && !postulacion.solicitante.ocupado"  (click)="rechazar()" class="btn btn-danger btn-block mt-2">Rechazar</button>  
+                              <button *ngIf="postulacion && postulacion.aceptado  && !postulacion.rechazado  && !contratacion"  (click)="rechazar()" class="btn btn-danger btn-block mt-2">Rechazar</button>  
                               <!--Solicitante postulando para la vacante pero aun no aceptado-->
                               <button  *ngIf="postulacion && !postulacion.aceptado && !postulacion.rechazado" (click)="cancelar()" class="btn btn-danger btn-block mt-2">Cancelar</button>                              <br>
 

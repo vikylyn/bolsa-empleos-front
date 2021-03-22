@@ -106,6 +106,6 @@ export class OperacionesComponent implements OnInit {
   }
 
   cerrarModalPadre() {
-    this.cerrar.emit(true);
+    this.cerrar.emit();
   }
 }

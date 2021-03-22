@@ -2,9 +2,6 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { SubirArchivoService } from './subir-archivo/subir-archivo.service';
-import Swal from 'sweetalert2';
-
 const base_url = environment.base_url;
 @Injectable({
   providedIn: 'root'

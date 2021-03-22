@@ -7,6 +7,7 @@ import { Empleador } from '../../models/empleador/empleador.model';
 import { Vacante } from '../../models/empleador/vacante.model';
 import { Contratacion } from '../../models/empleador/contratacion.model';
 import { Empresa } from '../../models/empleador/empresa.model';
+import { Postulacion } from '../../models/empleador/postulacion.model';
 
 const base_url = environment.base_url;
 @Injectable({
@@ -19,6 +20,17 @@ export class ReporteService {
   generarListadoSolicitantes(formData: any): any {
     const token = localStorage.getItem('token');
     return this.http.post<{solicitantes: Solicitante[], ocupacion: Ocupacion, total: number}>(`${base_url}/reportes/solicitante?token=${token}`, formData);
+  }
+
+  generarListadoSolicitantesContratados(formData: any): any {
+    const token = localStorage.getItem('token');
+    return this.http.post<{contrataciones: Contratacion[], ocupacion: Ocupacion}>
+           (`${base_url}/reportes/solicitantes-aceptados?token=${token}`, formData);
+  }
+
+  generarListadoPostulacionesRechazadas(formData: any): any {
+    const token = localStorage.getItem('token');
+    return this.http.post<{postulaciones: Postulacion[], ocupacion: Ocupacion, total: number}>(`${base_url}/reportes/postulaciones-rechazadas?token=${token}`, formData);
   }
 
   generarListadoEmpleadores(formData: any): any {

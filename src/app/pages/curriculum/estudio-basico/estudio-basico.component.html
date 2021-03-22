@@ -28,14 +28,14 @@
                             <thead>
                                 <tr>
                                     <th>Colegio</th>
-                                    <th>Fecha Inicio</th>
-                                    <th>Fecha fin</th>
                                     <th>Pais</th>
-                                    <th>Estado/Departamento</th>
-                                    <th>Ciudad</th>
+                                    <th>Ciudad - Estado</th>
                                     <th>Grado inicio</th>
                                     <th>Grado fin</th>
-                                    <th class="w100">Operaciones</th>
+                                    <th class="w100 text-center">ver</th>
+                                    <th class="w100 text-center">modificar</th>
+                                    <th class="w100 text-center">eliminar</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,20 +44,13 @@
                                         {{estudio.colegio}}
                                     </td>
                                     <td> 
-                                        {{estudio.fecha_inicio}}
+                                        <span *ngIf="!estudio.otraCiudad">{{estudio.ciudad.estado.pais.nombre}}</span>
+                                        <span *ngIf="estudio.otraCiudad">{{estudio.otraCiudad.pais}}</span>
                                     </td>
                                     <td> 
-                                        {{estudio.fecha_fin}}
-                                    </td>
-                                    <td> 
-                                        {{estudio.pais.nombre}}
-                                    </td>
-                                    <td> 
-                                        {{estudio.estado}}
-                                    </td>
-                                    
-                                    <td> 
-                                        {{estudio.ciudad}}
+                                        <span *ngIf="!estudio.otraCiudad">{{estudio.ciudad.nombre}} - {{estudio.ciudad.estado.nombre}}</span>
+                                        <span *ngIf="estudio.otraCiudad">{{estudio.otraCiudad.ciudad}} - {{estudio.otraCiudad.estado}}</span>
+
                                     </td>
                                     <td> 
                                         {{estudio.grado_inicio.grado}} / {{estudio.grado_inicio.nivel_escolar.nivel}}
@@ -70,9 +63,15 @@
                                         <a class="cursor" (click)="mostrarModal2(estudio.id)"> 
                                             <i class="fa fa-eye  m-r-10"></i> 
                                         </a>
+                                       
+                                    </td>
+                                    <td class="text-nowrap text-center cursor">
+
                                         <a (click)="mostrarModal('modificar', estudio.id)" > 
                                             <i class="fa fa-pencil m-r-10"></i> 
                                         </a>
+                                    </td>
+                                    <td class="text-nowrap text-center cursor">
                                         <a (click)="eliminar(estudio.id)"  class="cursor" data-toggle="tooltip" data-original-title="Eliminar"><i class="fa fa-trash-o m-r-10 text-info"></i></a>
                                     </td>
                                 </tr>

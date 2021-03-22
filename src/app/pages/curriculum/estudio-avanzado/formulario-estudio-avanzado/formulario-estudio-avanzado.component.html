@@ -54,7 +54,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row p-t-20">
+                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputuname">Pais</label>
@@ -63,15 +63,40 @@
                                           placeholder="Seleccionar Pais"
                                           [clearable] = "false"
                                           appendTo="body"
-                                          formControlName="id_pais">
+                                          formControlName="id_pais"
+                                          (change)="cambiarPais()">
                                           <ng-option [value]= "pais.id" *ngFor="let pais of paises">
                                            {{pais.nombre}}
                                          </ng-option>
                                     </ng-select>
                                     <small *ngIf="campoNoValido('id_pais')" class="form-control-feedback text-danger">Seleccione un pais</small> 
-                                
                                 </div>
                             </div>
+                            <div class="col-md-6" *ngIf="!mostrarCampos">
+                                <div class="form-group">
+                                    <label>Ciudad</label>
+                                    <ng-select 
+                                               placeholder="Seleccionar Ciudad"
+                                               appendTo="body"
+                                               [clearable]="false"
+                                               notFoundText = "ciudad no encontrada"
+                                               formControlName="id_ciudad">
+                                               <ng-option [value]= "ciudad.id" *ngFor="let ciudad of ciudades">
+                                                 {{ciudad.nombre}} / {{ciudad.estado.nombre}}
+                                               </ng-option>
+                                    </ng-select>
+                                    <small *ngIf="campoNoValido('id_ciudad')" class="form-control-feedback text-danger">Seleccione una ciudad</small> 
+                                </div>
+                            </div>
+                            <div class="col-md-6" *ngIf="mostrarCampos">
+                                <div class="form-group">
+                                    <label class="text-white" for="exampleInputuname">Pais:</label>
+                                    <input [class.is-invalid]="campoNoValido('pais')" formControlName="pais" class="form-control" type="text" placeholder="Ingrese el nombre del pais">
+                                    <small *ngIf="campoNoValido('pais')" class="form-control-feedback text-danger">El pais es obligatorio </small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-t-20" *ngIf="mostrarCampos">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputuname">Estado/departamento:</label>
@@ -79,8 +104,6 @@
                                     <small *ngIf="campoNoValido('estado')" class="form-control-feedback text-danger">El estado es obligatorio </small>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row p-t-20">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputuname">ciudad:</label>
@@ -88,7 +111,9 @@
                                     <small *ngIf="campoNoValido('ciudad')" class="form-control-feedback text-danger">La ciudad es obligatoria </small>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                        </div>
+                        <div class="row p-t-20">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="control-label">Nivel de estudio</label>
                                     <select [class.is-invalid]="campoNoValido('id_nivel_estudio')" formControlName="id_nivel_estudio" class="form-control custom-select">

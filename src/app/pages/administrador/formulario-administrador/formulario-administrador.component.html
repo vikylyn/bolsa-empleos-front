@@ -90,15 +90,10 @@
                         </div>
                         <div class="col-md-6 ">
                             <div class="form-group">
-                                <label for="exampleInputuname">Habilitar administrador</label>    
-                                <select formControlName="habilitado" class="form-control custom-select">
-                                    <option value="true">Habilitar</option>
-                                    <option value="false">Inhabilitar</option>
-                                </select>
-                            
+                                <label class="control-label">Complemento CI (opcional):</label>
+                                <input [class.is-invalid]="campoNoValido('num_complemento_ci')" formControlName="num_complemento_ci" type="text" class="form-control" placeholder="Complemento CI">
                             </div>
                         </div>
-                        
                     </div> 
                     <div class="row">
                         <div class="col-md-12">

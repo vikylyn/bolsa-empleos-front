@@ -21,7 +21,7 @@ export class LoginService {
   empleador: Empleador;
   solicitante: Solicitante;
   administrador: Administrador;
-  empresa: Empresa;
+ 
   constructor(private http: HttpClient,
               private router: Router) {
                 this.cargarStorage();
@@ -46,9 +46,6 @@ export class LoginService {
       if (localStorage.getItem('empleador')) {
         this.empleador = JSON.parse(localStorage.getItem('empleador'));
       }
-      if (localStorage.getItem('empresa')) {
-        this.empresa = JSON.parse(localStorage.getItem('empresa'));
-      }
       if (localStorage.getItem('solicitante')) {
         this.solicitante = JSON.parse(localStorage.getItem('solicitante'));
       }
@@ -60,14 +57,12 @@ export class LoginService {
       this.solicitante = null;
       this.empleador = null;
       this.administrador = null;
-      this.empresa = null;
     }
   }
-  guardarStorage(usuario: any, token: string, empresa: Empresa = null): void {
+  guardarStorage(usuario: any, token: string): void {
     localStorage.setItem('token', token);
     if (usuario.credenciales.rol.nombre === 'ROLE_EMPLEADOR') {
       localStorage.setItem('empleador', JSON.stringify(usuario));
-      localStorage.setItem('empresa', JSON.stringify(empresa));
       this.cargarStorage();
     }else
     if (usuario.credenciales.rol.nombre === 'ROLE_SOLICITANTE') {
@@ -87,24 +82,23 @@ export class LoginService {
     if (rol === 'ROLE_ADMINISTRADOR') {
       this.administrador.imagen = imagen;
       localStorage.setItem('administrador', JSON.stringify(this.administrador));
-    }else
-    if ( rol === 'ROLE_EMPLEADOR') {
+    }else if ( rol === 'ROLE_EMPLEADOR') {
       this.empleador.imagen = imagen;
       localStorage.setItem('empleador', JSON.stringify(this.empleador));
-
-    }else if ( rol === 'ROLE_EMPRESA') {
-      this.empresa.logo = imagen;
-      localStorage.setItem('empresa', JSON.stringify(this.empresa));
-
+    }else  if ( rol === 'ROLE_EMPRESA') {
+      this.empleador.empresa.logo = imagen;
+      localStorage.setItem('empleador', JSON.stringify(this.empleador));
     }
     this.cargarStorage();
   }
+
   login( formData: any): any {
     return this.http.post(`${base_url}/login`, formData)
         .pipe(
           tap( (resp: any) => {
+            console.log('respuesta autenticacion', resp);
             localStorage.setItem('token', resp.token);
-            this.guardarStorage(resp.usuario , resp.token, resp.empresa);
+            this.guardarStorage(resp.usuario, resp.token);
          //   this.cargarStorage();
             if ( formData.recuerdame === true ) {
               localStorage.setItem('email', resp.usuario.credenciales.email);

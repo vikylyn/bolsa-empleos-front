@@ -44,11 +44,12 @@ export class SidebarComponent implements OnInit, OnDestroy {
     }
     if (this.loginService.empleador != null) {
       this.empleador = this.loginService.empleador;
+  //    this.empresa = this.loginService.empresa;
+    }
+  /*  if (this.loginService.empresa != null) {
       this.empresa = this.loginService.empresa;
     }
-    if (this.loginService.empresa != null) {
-      this.empresa = this.loginService.empresa;
-    }
+  */
   }
   logout(): void {
     this.loginService.logout();

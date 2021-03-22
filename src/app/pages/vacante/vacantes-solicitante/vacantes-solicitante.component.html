@@ -14,29 +14,19 @@
                    <div class="card-body ">
                     <div class="row">
                         <div class="col">
-                            <!--Alerta cuando el solicitante esta ocupado y cuando el objeto contratacion es nulo (cuando el solicitante carga el componente)-->
-                            <div *ngIf="!contratacion && !postulacion && ocupado" class="alert alert-danger" role="alert">
-                                Usted tiene un empleo asignado, contacte a su empleador para terminar con su contrato
+                
+                              <div *ngIf="contratacion && contratacion.habilitado" class="alert alert-primary text-center" role="alert">
+                                Actualmete está contratado para esta vacante!
                               </div>
 
-                              <!--Alerta cuando el solicitante esta ocupado y cuando el objeto contratacion es nulo (cuando el solicitante carga el componente)-->
-                              <div *ngIf="!contratacion && postulacion && ocupado" class="alert alert-danger" role="alert">
-                                Usted tiene un empleo asignado, contacte a su empleador para terminar con su contrato
-                              </div>
-                              
-                              <!--Alerta cuando el solicitante esta ocupado y cuando el objeto contratacion no es nulo (cuando el solicitante confirma el contrato)-->
-                              <div *ngIf="ocupado && contratacion" class="alert alert-primary" role="alert">
+                              <div *ngIf="!ocupado && contratacion && !contratacion.habilitado" class="alert alert-primary text-center" role="alert">
                                 Usted ha sido contratado para esta vacante!
                               </div>
 
-                              <div *ngIf="!ocupado && contratacion && !contratacion.habilitado" class="alert alert-primary" role="alert">
-                                Usted ha sido contratado para esta vacante!
-                              </div>
-
-                              <div *ngIf="postulacion && postulacion.rechazado && postulacion.aceptado" class="alert alert-primary" role="alert">
+                              <div *ngIf="postulacion && postulacion.rechazado && postulacion.aceptado" class="alert alert-primary text-center" role="alert">
                                 Usted ha rechazado esta vacante!
                               </div>
-                              <div *ngIf="postulacion && postulacion.rechazado && !postulacion.aceptado" class="alert alert-primary" role="alert">
+                              <div *ngIf="postulacion && postulacion.rechazado && !postulacion.aceptado" class="alert alert-primary text-center" role="alert">
                                 Usted ha sido rechazado para esta vacante!
                               </div>
                         </div>
@@ -62,7 +52,7 @@
                                             
                                             <span class="font-weight-bold">Ocupacion: </span> <span>{{vacante.requisitos.ocupacion.nombre}}</span> <br>
                                             <span class="font-weight-bold">Años de Experiencia: </span> <span>{{vacante.requisitos.experiencia}}</span> <br>
-                                            <span class="font-weight-bold">Genero: </span> <span>{{vacante.requisitos.genero}}</span> <br>
+                                            <span class="font-weight-bold">Genero: </span> <span>{{vacante.requisitos.genero | genero:vacante.requisitos.genero}}</span> <br>
                                             <span class="font-weight-bold">Idiomas: </span> 
                                              <ul>
                                                  <li *ngFor="let idioma  of vacante.requisitos.idiomas"><span>{{idioma.idioma.nombre}}</span>
@@ -82,15 +72,15 @@
                         </div>
                         <div class="col-lg-5 col-md-5 col-sm-12">
                             
-                            <div *ngIf="vacante.empleador.empresa && vacante.empresa" class="card text-light bg-dark mb-3">
-                                <img [src]="vacante.empresa.logo.url" alt="">
+                            <div *ngIf="vacante.empleador.empresa" class="card text-light bg-dark mb-3">
+                                <img [src]="vacante.empleador.empresa.logo.url" alt="">
                                 <div class="card-body">
-                                  <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Empresa: </span> <span>{{vacante.empresa.nombre}}</span> <br>
-                                  <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Pais: </span> <span>{{vacante.empresa.ciudad.estado.pais.nombre}} / {{vacante.ciudad.estado.nombre}}</span> <br>
-                                  <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Ciudad: </span> <span>{{vacante.empresa.ciudad.nombre}} / {{vacante.empresa.ciudad.estado.nombre}}</span> <br>
-                                  <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Direccion: </span> <span>{{vacante.empresa.direccion}}</span> <br>   
-                                  <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Telefono: </span> <span>{{vacante.empresa.telefono}}</span>  <br>                              
-                                  <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Descripcion: </span> <span>{{vacante.empresa.descripcion}}</span>  <br> 
+                                  <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Empresa: </span> <span>{{vacante.empleador.empresa.nombre}}</span> <br>
+                                  <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Pais: </span> <span>{{vacante.empleador.empresa.ciudad.estado.pais.nombre}} / {{vacante.ciudad.estado.nombre}}</span> <br>
+                                  <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Ciudad: </span> <span>{{vacante.empleador.empresa.ciudad.nombre}} / {{vacante.empleador.empresa.ciudad.estado.nombre}}</span> <br>
+                                  <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Direccion: </span> <span>{{vacante.empleador.empresa.direccion}}</span> <br>   
+                                  <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Telefono: </span> <span>{{vacante.empleador.empresa.telefono}}</span>  <br>                              
+                                  <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Descripcion: </span> <span>{{vacante.empleador.empresa.descripcion}}</span>  <br> 
                                   
                                  
                                 </div>
@@ -99,7 +89,7 @@
                             <div *ngIf="!vacante.empleador.empresa" class="card text-white bg-dark mb-3">
                                 <img [src]="vacante.empleador.imagen.url" alt="">
                                 <div class="card-body">  
-                                    <span *ngIf="!vacante.empleador.empresa" class="font-weight-bold">Empleador: </span> <span>{{vacante.empleador.nombre}}</span> <br>
+                                    <span *ngIf="!vacante.empleador.empresa" class="font-weight-bold">Empleador: </span> <span>{{vacante.empleador.nombre}} {{vacante.empleador.apellidos}}</span> <br>
                                     <span *ngIf="!vacante.empleador.empresa" class="font-weight-bold">Pais: </span> <span>{{vacante.empleador.ciudad.estado.pais.nombre}}</span> <br>
                                     <span *ngIf="!vacante.empleador.empresa" class="font-weight-bold">Ciudad: </span> <span>{{vacante.empleador.ciudad.nombre}} / {{vacante.empleador.ciudad.estado.nombre}}</span> <br>
                                     <span *ngIf="!vacante.empleador.empresa" class="font-weight-bold">Direccion: </span> <span>{{vacante.empleador.direccion}}</span> <br>   
@@ -113,12 +103,12 @@
                                   <button *ngIf="!contratacion && !postulacion && !ocupado" (click)="postular()" class="btn btn-info btn-block mt-2">Postularme</button>
 
                                   <!--Solicitante Aceptado para la vacante pero aun no confirmado-->
-                                  <button *ngIf="postulacion && postulacion.aceptado && !postulacion.rechazado  && !contratacion && !postulacion.solicitante.ocupado" (click)="confirmar()" class="btn btn-success btn-block mt-2">Confirmar</button>                          
+                                  <button *ngIf="postulacion && postulacion.aceptado && !postulacion.rechazado  && !contratacion" (click)="confirmar()" class="btn btn-success btn-block mt-2">Confirmar</button>                          
                         <!--         <button *ngIf="contratacion && contratacion.habilitado && !contratacion.oculto  && !ocupado "  (click)="rechazar()" class="btn btn-danger btn-lg btn-block mt-2">Rechazar</button>   --> 
-                                  <button *ngIf="postulacion && postulacion.aceptado && !postulacion.rechazado  && !contratacion && !postulacion.solicitante.ocupado"  (click)="rechazar()" class="btn btn-danger btn-block mt-2">Rechazar</button>   
+                                  <button *ngIf="postulacion && postulacion.aceptado && !postulacion.rechazado  && !contratacion"  (click)="rechazar()" class="btn btn-danger btn-block mt-2">Rechazar</button>   
 
                                   <!--Solicitante postulando para la vacante pero aun no aceptado-->
-                                  <button  *ngIf="postulacion && !postulacion.aceptado " (click)="cancelar()" class="btn btn-danger btn-block mt-2">Cancelar</button>
+                                  <button  *ngIf="postulacion && !postulacion.aceptado && !postulacion.rechazado" (click)="cancelar()" class="btn btn-danger btn-block mt-2">Cancelar</button>
                                 </div>
                             </div>
                         </div>

@@ -52,7 +52,7 @@
                                                  [idSolicitante]= "curriculum.solicitante.id" 
                                                  [id] = "idOperacion"
                                                  [tipoOperacion]="tipoOperacion"
-                                                 (cerrar)="cerrarModal($event)">
+                                                 (cerrar)="cerrarModal()">
                                 </app-operaciones>
                             </div>
                         </div>
@@ -99,8 +99,10 @@
                                                         <span class="font-weight-bold">Intitucion: </span> <span>{{estudio.institucion}}</span> <br>
                                                         <span class="font-weight-bold">Carrera/ curso/ seminario/ otros: </span> <span>{{estudio.carrera}}</span> <br>
                                                         <span class="font-weight-bold">Nivel de Estudio: </span> <span>{{estudio.nivel_estudio.nombre}}</span> <br>
-                                                        <span class="font-weight-bold">Pais: </span> <span>{{estudio.pais.nombre}}</span> <br>
-                                                        <span class="font-weight-bold">Ciudad: </span> <span>{{estudio.ciudad}} - {{estudio.estado}}</span>
+                                                        <span *ngIf="!estudio.otraCiudad" class="font-weight-bold">Pais: </span> <span *ngIf="!estudio.otraCiudad">{{estudio.ciudad.estado.pais.nombre}} </span> <br *ngIf="!estudio.otraCiudad">
+                                                        <span *ngIf="!estudio.otraCiudad" class="font-weight-bold">Ciudad - Estado: </span> <span *ngIf="!estudio.otraCiudad"> {{estudio.ciudad.nombre}} - {{estudio.ciudad.estado.nombre}}</span> <br *ngIf="!estudio.otraCiudad">
+                                                        <span *ngIf="estudio.otraCiudad" class="font-weight-bold">Pais: </span> <span *ngIf="estudio.otraCiudad"> {{estudio.otraCiudad.pais}} </span><br *ngIf="estudio.otraCiudad">
+                                                        <span *ngIf="estudio.otraCiudad" class="font-weight-bold">Ciudad - Estado: </span><span *ngIf="estudio.otraCiudad">{{estudio.otraCiudad.ciudad}} - {{estudio.otraCiudad.estado}}</span> <br *ngIf="estudio.otraCiudad">
                                                     
                                                     </div>
                                                 </div> 
@@ -129,8 +131,10 @@
                                                         <span class="font-weight-bold">Colegio: </span> <span>{{estudio.colegio}}</span> <br>
                                                         <span class="font-weight-bold">Grado de inicio: </span> <span>{{estudio.grado_inicio.grado}} de {{estudio.grado_inicio.nivel_escolar.nivel}}</span> <br>
                                                         <span class="font-weight-bold">Grado fin: </span> <span>{{estudio.grado_fin.grado}} de {{estudio.grado_fin.nivel_escolar.nivel}}</span> <br>
-                                                        <span class="font-weight-bold">Pais: </span> <span>{{estudio.pais.nombre}}</span> <br>
-                                                        <span class="font-weight-bold">Ciudad: </span> <span>{{estudio.ciudad}} - {{estudio.estado}}</span>
+                                                        <span *ngIf="!estudio.otraCiudad" class="font-weight-bold">Pais: </span> <span *ngIf="!estudio.otraCiudad">{{estudio.ciudad.estado.pais.nombre}} </span> <br *ngIf="!estudio.otraCiudad">
+                                                        <span *ngIf="!estudio.otraCiudad" class="font-weight-bold">Ciudad - Estado: </span> <span *ngIf="!estudio.otraCiudad"> {{estudio.ciudad.nombre}} - {{estudio.ciudad.estado.nombre}}</span> <br *ngIf="!estudio.otraCiudad">
+                                                        <span *ngIf="estudio.otraCiudad" class="font-weight-bold">Pais: </span> <span *ngIf="estudio.otraCiudad"> {{estudio.otraCiudad.pais}} </span><br *ngIf="estudio.otraCiudad">
+                                                        <span *ngIf="estudio.otraCiudad" class="font-weight-bold">Ciudad - Estado: </span><span *ngIf="estudio.otraCiudad">{{estudio.otraCiudad.ciudad}} - {{estudio.otraCiudad.estado}}</span> <br *ngIf="estudio.otraCiudad">
                                                     
                                                     </div>
                                                 </div>
@@ -185,8 +189,10 @@
                                                     <div class="col-md-6 col-lg-6 mb-5" *ngFor="let experiencia of curriculum.experiencias_laborales">
                                                         <span class="font-weight-bold">De: </span> <span>{{experiencia.fecha_inicio | date:'mediumDate'}}</span> <br>
                                                         <span class="font-weight-bold">al: </span> <span>{{experiencia.fecha_fin | date:'mediumDate'}}</span> <br>
-                                                        <span class="font-weight-bold">Pais: </span> <span>{{experiencia.pais.nombre}}</span> <br>
-                                                        <span class="font-weight-bold">Ciudad: </span> <span>{{experiencia.ciudad}} - {{experiencia.estado}}</span> <br>
+                                                        <span *ngIf="!experiencia.otraCiudad" class="font-weight-bold">Pais: </span> <span *ngIf="!experiencia.otraCiudad">{{experiencia.ciudad.estado.pais.nombre}} </span> <br *ngIf="!experiencia.otraCiudad">
+                                                        <span *ngIf="!experiencia.otraCiudad" class="font-weight-bold">Ciudad - Estado: </span> <span *ngIf="!experiencia.otraCiudad"> {{experiencia.ciudad.nombre}} - {{experiencia.ciudad.estado.nombre}}</span> <br *ngIf="!experiencia.otraCiudad">
+                                                        <span *ngIf="experiencia.otraCiudad" class="font-weight-bold">Pais: </span> <span *ngIf="experiencia.otraCiudad"> {{experiencia.otraCiudad.pais}} </span><br *ngIf="experiencia.otraCiudad">
+                                                        <span *ngIf="experiencia.otraCiudad" class="font-weight-bold">Ciudad - Estado: </span><span *ngIf="experiencia.otraCiudad">{{experiencia.otraCiudad.ciudad}} - {{experiencia.otraCiudad.estado}}</span> <br *ngIf="experiencia.otraCiudad"> <br>
                                                         <span class="font-weight-bold">Empresa: </span> <span>{{experiencia.empresa}}</span> <br>
                                                         <span class="font-weight-bold">Puesto: </span> <span>{{experiencia.puesto}}</span> <br>
                                                         <span class="font-weight-bold">Descripcion:</span> <p class="card-text text-justify">{{experiencia.descripcion}}</p>
@@ -212,7 +218,7 @@
                                                 <h4 class="text-white text-center">No tiene</h4>
                                             </div>
                                             <div class="row" [class.justify-content-center]="curriculum.curriculum_habilidades.length ===1">
-                                                <div class="col-md-6 col-lg-6" *ngFor="let habilidad of curriculum.curriculum_habilidades">
+                                                <div class="col-md-12 col-lg-12" *ngFor="let habilidad of curriculum.curriculum_habilidades">
                                                     <ul >
                                                         <li>
                                                             <h5 class="text-white">{{habilidad.habilidad.habilidad}}</h5>                                            

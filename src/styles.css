@@ -32,6 +32,10 @@ ng-select.ng-invalid.ng-touched .ng-select-container {
 .no-leido {
   background: #F1ECEC;
 }
+
+.leido {
+  background: white;
+}
    
 
 /* Modal */

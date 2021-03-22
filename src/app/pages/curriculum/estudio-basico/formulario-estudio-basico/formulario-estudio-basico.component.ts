@@ -7,6 +7,7 @@ import { UbicacionService } from '../../../../services/ubicacion/ubicacion.servi
 import { GradoEscolarService } from '../../../../services/solicitante/curriculum/grado-escolar.service';
 import { Pais } from '../../../../models/pais.model';
 import { GradoEscolar } from '../../../../models/estudio/grado-escolar.model';
+import { Ciudad } from '../../../../models/ciudad.model';
 
 @Component({
   selector: 'app-formulario-estudio-basico',
@@ -27,8 +28,9 @@ export class FormularioEstudioBasicoComponent implements OnInit {
   estudioForm: FormGroup;
   estudio: EstudioBasico;
   paises: Pais[];
+  ciudades: Ciudad[] ;
   grados: GradoEscolar[];
-
+  mostrarCampos = false;
   constructor(
           private fb: FormBuilder,
           private estudioService: EstudioBasicoService,
@@ -47,9 +49,11 @@ export class FormularioEstudioBasicoComponent implements OnInit {
           colegio: ['' , [Validators.required]],
           fecha_inicio: ['' , [Validators.required]],
           fecha_fin: ['' , [Validators.required]],
+          pais: ['' , [Validators.required]],
           estado: ['' , [Validators.required]],
           ciudad: ['' , [Validators.required]],
           id_pais: [1 , [Validators.required, Validators.min(1)]],
+          id_ciudad: [null , [Validators.required, Validators.min(1)]],
           id_grado_inicio: [0 , [Validators.required, Validators.min(1)]],
           id_grado_fin: [0 , [Validators.required, Validators.min(1)]],
           id_curriculum: [this.idCurriculum]
@@ -64,6 +68,7 @@ export class FormularioEstudioBasicoComponent implements OnInit {
   cargarPaises(): void {
     this.ubicacionService.listarPaises().subscribe((resp: Pais[]) => {
       this.paises = resp;
+      this.cargarCiudades(this.paises[0].id);
     });
   }
   cargarEstudio(): void {
@@ -71,17 +76,39 @@ export class FormularioEstudioBasicoComponent implements OnInit {
       .subscribe((resp: EstudioBasico) => {
         this.estudio = resp;
         this.cargarformulario = true;
-        this.estudioForm = this.fb.group({
-          colegio: [ this.estudio.colegio , [Validators.required]],
-          fecha_inicio: [ this.estudio.fecha_inicio , [Validators.required]],
-          fecha_fin: [this.estudio.fecha_fin , [Validators.required]],
-          estado: [ this.estudio.estado , [Validators.required]],
-          ciudad: [ this.estudio.ciudad , [Validators.required]],
-          id_pais: [this.estudio.pais.id , [Validators.required, Validators.min(1)]],
-          id_grado_inicio: [this.estudio.grado_inicio.id , [Validators.required, Validators.min(1)]],
-          id_grado_fin: [this.estudio.grado_fin.id , [Validators.required, Validators.min(1)]],
-          id_curriculum: [this.idCurriculum]
-      });
+        this.cargarCiudades(this.estudio.ciudad.estado.pais.id);
+        if ( this.estudio.ciudad.estado.pais.id === 2 &&  this.estudio.otraCiudad) {
+          this.mostrarCampos = true;
+          this.estudioForm = this.fb.group({
+            colegio: [ this.estudio.colegio , [Validators.required]],
+            fecha_inicio: [ this.estudio.fecha_inicio , [Validators.required]],
+            fecha_fin: [this.estudio.fecha_fin , [Validators.required]],
+            pais: [this.estudio.otraCiudad.pais , [Validators.required]],
+            estado: [this.estudio.otraCiudad.estado , [Validators.required]],
+            ciudad: [ this.estudio.otraCiudad.ciudad , [Validators.required]],
+            id_pais: [this.estudio.ciudad.estado.pais.id, [Validators.required, Validators.min(1)]],
+            id_ciudad: ['', [Validators.required, Validators.min(1)]],
+            id_grado_inicio: [this.estudio.grado_inicio.id , [Validators.required, Validators.min(1)]],
+            id_grado_fin: [this.estudio.grado_fin.id , [Validators.required, Validators.min(1)]],
+            id_curriculum: [this.idCurriculum]
+        });
+        }else {
+          this.mostrarCampos = false;
+          this.estudioForm = this.fb.group({
+            colegio: [ this.estudio.colegio , [Validators.required]],
+            fecha_inicio: [ this.estudio.fecha_inicio , [Validators.required]],
+            fecha_fin: [this.estudio.fecha_fin , [Validators.required]],
+            pais: ['' , [Validators.required]],
+            estado: ['', [Validators.required]],
+            ciudad: [ '' , [Validators.required]],
+            id_pais: [this.estudio.ciudad.estado.pais.id, [Validators.required, Validators.min(1)]],
+            id_ciudad: [this.estudio.ciudad.id, [Validators.required, Validators.min(1)]],
+            id_grado_inicio: [this.estudio.grado_inicio.id , [Validators.required, Validators.min(1)]],
+            id_grado_fin: [this.estudio.grado_fin.id , [Validators.required, Validators.min(1)]],
+            id_curriculum: [this.idCurriculum]
+        });
+        }
+
     });
   }
   campoNoValido( campo: string): boolean {
@@ -93,10 +120,29 @@ export class FormularioEstudioBasicoComponent implements OnInit {
   }
   guardar(): void {
     this.formSubmitted = true;
+    if ( !this.mostrarCampos) {
+      this.estudioForm.get('ciudad').disable();
+      this.estudioForm.get('estado').disable();
+      this.estudioForm.get('pais').disable();
+      this.estudioForm.get('id_ciudad').enable();
+      this.estudioForm.value.ciudad = '';
+      this.estudioForm.value.estado = '';
+      this.estudioForm.value.pais = '';
+
+    }else {
+      this.estudioForm.get('ciudad').enable();
+      this.estudioForm.get('estado').enable();
+      this.estudioForm.get('pais').enable();
+      this.estudioForm.get('id_ciudad').disable();
+      this.estudioForm.value.id_ciudad = this.ciudades[0].id;
+
+    }
     if (this.estudioForm.invalid) {
       return;
     }
+    console.log('enviandoooo');
     console.log(this.estudioForm.value);
+
     if (this.tipoOperacion === 'modificar') {
       this.estudioService.modificar(this.estudioForm.value, this.estudio.id)
           .subscribe((resp: any) => {
@@ -117,6 +163,34 @@ export class FormularioEstudioBasicoComponent implements OnInit {
             Swal.fire('Error al adicionar Estudio Basico', err.error.mensaje, 'error');
           });
     }
+  }
+  cambiarPais(): void {
+    let id = this.estudioForm.get('id_pais').value;
+    if(id === 2) {
+      this.mostrarCampos = true;
+      this.estudioForm.get('ciudad').enable();
+      this.estudioForm.get('estado').enable();
+      this.estudioForm.get('pais').enable();
+      this.estudioForm.get('id_ciudad').disable();
+    }else {
+      this.mostrarCampos = false;  
+      this.estudioForm.get('ciudad').disable();
+      this.estudioForm.get('estado').disable();
+      this.estudioForm.get('pais').disable();
+      this.estudioForm.get('id_ciudad').enable();
+      this.estudioForm.value.id_ciudad = this.ciudades[0].id;
+
+    }
+    this.cargarCiudades(parseInt(id));
+
+  }
+  cargarCiudades(idPais: number): void {
+    this.ciudades = [];
+    this.ubicacionService.listarCiudades(idPais).subscribe((resp: Ciudad[])=> {
+      this.ciudades = resp;
+     // this.estudioForm.value.id_ciudad = this.ciudades[0].nombre;
+
+    });
   }
   cerrarModal() {
     this.cerrar.emit(false);

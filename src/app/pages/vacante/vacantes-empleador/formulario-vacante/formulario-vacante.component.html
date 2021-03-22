@@ -139,13 +139,13 @@
                             <div class="col-md-6 ">
                                 <div class="form-group">
                                     <label class="control-label">Numero de Vacantes Disponibles:</label>
-                                    <input formControlName="num_disponibles" type="number" min="1" class="form-control" disabled="true">
+                                    <input formControlName="num_disponibles" type="number" min="1" class="form-control" >
                                 </div>
                             </div>
                             <div class="col-md-6 ">
                                 <div class="form-group">
                                     <label class="control-label">Numero de postulantes aceptados:</label>
-                                    <input formControlName="num_postulantes_aceptados" type="number" min="1" class="form-control" disabled="true">
+                                    <input formControlName="num_postulantes_aceptados" type="number" min="1" class="form-control">
                                 </div>
                             </div>
                        </div>       
@@ -170,7 +170,7 @@
                                 <div class="form-group">
                                     <label class="control-label">Ocupacion:</label>
                                     <ng-select id="id_ocupacion" [items]="ocupaciones" 
-                                    placeholder="Seleccionar Ocupaciones"
+                                    placeholder="Seleccionar una ocupacion"
                                     [clearable] = "false"
                                     bindLabel="nombre"
                                     notFoundText = "Ocupacion no encontrada" 

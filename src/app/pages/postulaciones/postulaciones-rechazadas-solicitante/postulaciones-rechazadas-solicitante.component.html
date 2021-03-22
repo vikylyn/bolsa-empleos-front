@@ -5,9 +5,9 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Mis Postulaciones</h4>
+                    <h4 class="card-title">Mis Postulaciones Rechazadas</h4>
                     <h6>Total: {{totalPostulaciones}} - {{desde}}</h6>
-                    <div class="row">
+                    <div class="row justify-content-end">
                         <div class="col-md-6">
                             <input #txtTermino (keyup)="busqueda(txtTermino.value)" type="text" class="form-control" placeholder="buscar postulacion...">
                         </div>
@@ -23,7 +23,8 @@
                                     <th>Empleador</th>
                                     <th>Sueldo</th>
                                     <th>Estado</th>
-                                    <th class="w100">Operaciones</th>
+                                    <th class="w100 text-center">ver</th>
+                                    <th class="w100 text-center">eliminar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,17 +51,12 @@
 
                                     </td>
                                     <td class="text-nowrap text-center">
-<!--                                        <div  class="btn-group btn-group-sm" role="group" aria-label="...">
-                                            <button routerLink="/inicio-solicitante/vacante/{{postulacion.vacante.id}}" type="button" class="btn btn-secondary">ver</button>
-                                            <button (click)="confirmar(postulacion.id)" *ngIf="postulacion.aceptado && !postulacion.solicitante.ocupado" class="btn btn-secondary">Confirmar</button>
-                                            <button (click)="rechazar(postulacion.id)" *ngIf="postulacion.aceptado" type="button" class="btn btn-secondary">Rechazar</button>
-                                            <button (click)="eliminar(postulacion.id)" *ngIf="!postulacion.aceptado" type="button" class="btn btn-secondary">Eliminar</button>
-                                        </div>
--->
                                         <a class="cursor" (click)="mostrarModal(postulacion.vacante.id)"> 
                                             <i class="fa fa-eye  m-r-10"></i> 
                                         </a>             
-                                        <a class="cursor" (click)="eliminar(postulacion.id)" *ngIf="!postulacion.aceptado" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-trash-o m-r-10 text-info"></i></a>
+                                    </td>
+                                    <td class="text-nowrap text-center">        
+                                        <a class="cursor" (click)="eliminar(postulacion.id)"  data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-trash-o m-r-10 text-info"></i></a>
                                     </td>
                                 </tr>
                             </tbody>

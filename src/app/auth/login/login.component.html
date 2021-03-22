@@ -7,7 +7,7 @@
                             <form (ngSubmit)="ingresar()"
                                 [formGroup]="registerForm"
                                 class="form-horizontal form-material animated fadeIn fast" id="loginform" >
-                                <h3 class="box-title m-b-20 text-center">Ingreso al Sistema</h3>
+                                <h3 class="box-title m-b-20 text-center">Iniciar sesión</h3>
                                 <div class="form-group">
                                     <input [class.is-invalid]="campoNoValido('email')" formControlName="email" class="form-control" type="email"  placeholder="Email">
                                     <small *ngIf="campoNoValido('email')" class="form-control-feedback text-danger">El email es obligatorio </small>

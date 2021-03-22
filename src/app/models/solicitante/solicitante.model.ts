@@ -10,6 +10,7 @@ export class Solicitante {
         public apellidos: string,
         public telefono: string,
         public cedula: string,
+        public num_complemento_ci: string,
         public genero: string,
         public credenciales: Credenciales,
         public nacionalidad: string,
@@ -22,7 +23,6 @@ export class Solicitante {
         public imagen?: Imagen,
         public habilitado?: boolean,
         public creado_en?: Date,
-        public ocupado?: boolean,
         public ocupaciones?: OcupacionSolicitante[]
     ){
     }

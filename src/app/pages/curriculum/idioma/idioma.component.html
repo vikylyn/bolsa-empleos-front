@@ -30,7 +30,9 @@
                                 <th>Nivel escrito</th>
                                 <th>Nivel oral</th>
                                 <th>Nivel lectura</th>
-                                <th class="w100">Operaciones</th>
+                                <th class="w100 text-center">ver</th>
+                                <th class="w100 text-center">modificar</th>
+                                <th class="w100 text-center">eliminar</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -51,9 +53,13 @@
                                     <a class="cursor" (click)="mostrarModal2(idioma.id)"> 
                                         <i class="fa fa-eye  m-r-10"></i> 
                                     </a>
+                                </td>
+                                <td class="text-nowrap text-center">
                                     <a class="cursor" (click)="mostrarModal('modificar', idioma.id)"> 
                                             <i class="fa fa-pencil m-r-10"></i> 
                                     </a>
+                                </td>
+                                <td class="text-nowrap text-center">
                                     <a (click)="eliminar(idioma.id)" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-trash-o m-r-10 text-info"></i></a>
                                   
                                 </td>

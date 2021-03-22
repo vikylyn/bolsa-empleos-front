@@ -28,23 +28,27 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-
-                                <div class="form-group">
-                                    <label for="exampleInputuname">Telefono</label>
-                                    <input [class.is-invalid]="campoNoValido('telefono')" formControlName="telefono" type="text" class="form-control" placeholder="Telefono">    
-                                    <small *ngIf="campoNoValido('telefono')" class="form-control-feedback text-danger">El telefono es obligatorio</small>            
-                                </div>
-                               
-                            </div>
-                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputuname">Cedula</label>
                                     <input [class.is-invalid]="campoNoValido('cedula')" formControlName="cedula" type="text" class="form-control" placeholder="Cedula">
                                     <small *ngIf="campoNoValido('cedula')" class="form-control-feedback text-danger">La cedula de identidad es obligatoria</small> 
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">Num Complemento Ci:</label>
+                                    <input [class.is-invalid]="campoNoValido('num_complemento_ci')" formControlName="num_complemento_ci" type="text" class="form-control" placeholder="Complemento CI">
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Telefono</label>
+                                    <input [class.is-invalid]="campoNoValido('telefono')" formControlName="telefono" type="text" class="form-control" placeholder="Telefono">    
+                                    <small *ngIf="campoNoValido('telefono')" class="form-control-feedback text-danger">El telefono es obligatorio</small>            
+                                </div> 
+                            </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputuname">Genero</label>
@@ -55,13 +59,7 @@
                                     <small *ngIf="campoNoValido('genero')" class="form-control-feedback text-danger">Seleccione una genero</small> 
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Correo electronico</label>
-                                    <input [class.is-invalid]="campoNoValido('email')" formControlName="email" class="form-control" type="email"  placeholder="Email">
-                                    <small *ngIf="campoNoValido('email')" class="form-control-feedback text-danger">El email es obligatorio</small> 
-                                </div>
-                            </div>
+                            
                         </div>
                         <div class="row">
                             <div class="col-md-12">
@@ -69,6 +67,15 @@
                                     <label for="exampleInputEmail1">Direccion</label>
                                     <input [class.is-invalid]="campoNoValido('direccion')" formControlName="direccion" class="form-control" type="text"  placeholder="Direccion">
                                     <small *ngIf="campoNoValido('direccion')" class="form-control-feedback text-danger">La direccion es obligatoria</small> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Correo electronico</label>
+                                    <input [class.is-invalid]="campoNoValido('email')" formControlName="email" class="form-control" type="email"  placeholder="Email">
+                                    <small *ngIf="campoNoValido('email')" class="form-control-feedback text-danger">El email es obligatorio</small> 
                                 </div>
                             </div>
                         </div>

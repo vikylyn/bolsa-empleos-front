@@ -8,6 +8,8 @@ import { Administrador } from '../../models/administrador/administrador.model';
 import { WebsocketService } from '../../services/websocket/websocket.service';
 import { NotificacionService } from '../../services/notificacion/notificacion.service';
 import { Subscription } from 'rxjs';
+import { InformacionAppService } from '../../services/informacion-app.service';
+import { InformacionApp } from '../../models/informacion-app.model';
 
 @Component({
   selector: 'app-header',
@@ -22,16 +24,26 @@ export class HeaderComponent  implements OnInit, OnDestroy {
   totalNotificaciones = 0;
   notificacionesSubscription: Subscription;
   actualizacionUsuarioSubscription: Subscription;
+  actualizacionInfoAppSubscription: Subscription;
+  informacion: InformacionApp;
 
   constructor(public loginService: LoginService,
               public wsService: WebsocketService,
+              private infoService: InformacionAppService,
               public notificacionService: NotificacionService
              ) {
   }
   ngOnInit(): void {
    this.recibirTotalNotificaciones();
    this.cargarUsuario();
-   this.actualizarUsuario();
+   this.actualizarUsuarioWs();
+   this.actualizarInfoAppWs();
+   this.cargarInformacionApp();
+  }
+  cargarInformacionApp(): void {
+    this.infoService.buscar(1).subscribe((resp: InformacionApp) => {
+      this.informacion = resp;
+    });
   }
   cargarUsuario(): void {
     if (this.loginService.solicitante != null) {
@@ -56,10 +68,16 @@ export class HeaderComponent  implements OnInit, OnDestroy {
           this.totalNotificaciones = msg;
         }));
   }
-  actualizarUsuario() {
+  actualizarUsuarioWs() {
     this.actualizacionUsuarioSubscription = this.notificacionService.actualizarUsuario()
         .subscribe(() => {
           this.cargarUsuario();
+        });
+  }
+  actualizarInfoAppWs() {
+    this.actualizacionInfoAppSubscription = this.notificacionService.actualizarInformacionApp()
+        .subscribe(() => {
+          this.cargarInformacionApp();
         });
   }
 

@@ -9,7 +9,7 @@ import { LoginService } from '../../../../services/login.service';
 import { UbicacionService } from '../../../../services/ubicacion/ubicacion.service';
 import { EstadoCivilService } from '../../../../services/solicitante/estado-civil.service';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-formulario-datos-personales',
@@ -34,8 +34,7 @@ export class FormularioDatosPersonalesComponent implements OnInit {
               private solicictanteService: SolicitanteService,
               private loginService: LoginService,
               private ubicacionService: UbicacionService,
-              private estadoCivilService: EstadoCivilService,
-              private router: Router) {
+              private estadoCivilService: EstadoCivilService) {
                 this.ubicacionService.listarPaises()
                 .subscribe( (resp: Pais[]) => {
                   this.paises = resp;
@@ -60,6 +59,7 @@ export class FormularioDatosPersonalesComponent implements OnInit {
             apellidos: [this.solicitante.apellidos, [Validators.required]],
             email: [this.solicitante.credenciales.email, [Validators.required, Validators.email]],
             cedula: [this.solicitante.cedula, [Validators.required]],
+            num_complemento_ci: [this.solicitante.num_complemento_ci],
             telefono: [this.solicitante.telefono, [Validators.required]],
             nacionalidad: [this.solicitante.nacionalidad, [Validators.required]],
             direccion: [this.solicitante.direccion, [Validators.required]],

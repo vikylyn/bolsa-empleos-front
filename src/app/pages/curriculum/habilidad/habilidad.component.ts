@@ -71,11 +71,11 @@ export class HabilidadComponent implements OnInit {
   }
   eliminar(id: number): void {
     Swal.fire({
-      title: 'Estas seguro?',
-      text: 'Se eliminara la habilidad Asignada',
+      title: 'Estas seguro de eliminar la habilidad?',
+      text: '',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Eliminar!',
+      confirmButtonText: 'Confirmar!',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {

@@ -38,25 +38,13 @@ export class NotificacionesEmpleadorComponent implements OnInit {
     if (!leido) {
       this.notificacionService.leerNotificacion(idNotificacion, this.loginService.empleador.credenciales.rol.id)
       .subscribe((resp: any) => {
-        this.redireccionar(tipoNotificacion, idNotificacion);
+        this.router.navigateByUrl(`/notificaciones-empleador/${idNotificacion}`);
         this.cargarNotificaciones();
       });
     }else {
-      this.redireccionar(tipoNotificacion, idNotificacion);
-    }
-
-  }
-
-  redireccionar(tipoNotificacion: string, idNotificacion: number): void {
-    if (tipoNotificacion === 'nueva_postulacion' || tipoNotificacion === 'postulacion_rechazada_solicitante') {
-      this.router.navigateByUrl(`/postulaciones-empleador/notificacion/${idNotificacion}`);
-    }else   if (tipoNotificacion === 'postulacion_confirmada') {
-    //  this.router.navigateByUrl(`/contrataciones-empleador`);
-      this.router.navigateByUrl(`/contrataciones-empleador/notificacion/${idNotificacion}`);
-
+      this.router.navigateByUrl(`/notificaciones-empleador/${idNotificacion}`);
     }
   }
-
   ngOnDestroy(): void {
     this.notificacionesSubscription.unsubscribe();
   }

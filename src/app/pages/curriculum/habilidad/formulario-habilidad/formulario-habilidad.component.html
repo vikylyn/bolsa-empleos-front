@@ -23,7 +23,7 @@
                                                        notFoundText = "Habilidad no encotrada"
                                                        placeholder="Seleccionar Habilidad"
                                                        appendTo="body"
-                                                       multiple="true"
+                                                       [multiple]="true"
                                                        formControlName="id_habilidad">
                                                        <ng-option [value]= "habilidad.id" *ngFor="let habilidad of habilidades">
                                                         {{habilidad.habilidad}}

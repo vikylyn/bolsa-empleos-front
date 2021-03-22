@@ -17,7 +17,7 @@ export class ContratacionService {
     const token = localStorage.getItem('token');
     return this.http.get<{contratacion: Contratacion}>(`${base_url}/contratacion/${id_contratacion}?token=${token}`);
   }
-
+  
   rechazar(id_postulacion: number): any {
     const token = localStorage.getItem('token');
     return this.http.delete(`${base_url}/contratacion/rechazar/${id_postulacion}?token=${token}`);

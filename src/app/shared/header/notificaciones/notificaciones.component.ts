@@ -5,7 +5,7 @@ import { LoginService } from '../../../services/login.service';
 import { Notificacion } from '../../../models/notificacion';
 import { Router} from '@angular/router';
 import Swal from 'sweetalert2';
-
+declare var alertify: any;
 @Component({
   selector: 'app-notificaciones',
   templateUrl: './notificaciones.component.html',
@@ -36,6 +36,7 @@ export class NotificacionesComponent implements OnInit, OnDestroy {
   }
 
   leerNotificacion(idNotificacion: number, leido: boolean, tipoNotificacion: string ): void {
+    
     // hay que cambiar para que acepte a ambos usuario solicitante y empleador
     if (!leido) {
       this.notificacionService.leerNotificacion(idNotificacion, this.loginService.solicitante.credenciales.rol.id)
@@ -62,31 +63,5 @@ export class NotificacionesComponent implements OnInit, OnDestroy {
     this.notificacionesSubscription.unsubscribe();
   }
 
-  eliminar(idNotificacion: number): void {
-    Swal.fire({
-      title: 'Desea eliminar esta notificacion?',
-      text: '',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Confirmar!',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.value) {
-        this.notificacionService.eliminar(idNotificacion, this.loginService.solicitante.credenciales.rol.id).subscribe( (resp: any ) => {
-          Swal.fire(resp.mensaje, '', 'success');
-          this.notificaciones = this.notificaciones.filter( (notificacion: Notificacion) => notificacion.id !== idNotificacion);
-        }, (err) => {
-          console.log(err);
-          Swal.fire('Error al eliminar notificacion', err.error.error || err.error.mensaje, 'error');
-        });
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Cancelado',
-          '',
-          'error'
-        );
-      }
-    });
-  }
 
 }

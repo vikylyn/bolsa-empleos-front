@@ -44,9 +44,6 @@ export class VerNotificacionPostulacionSolicitanteComponent implements OnInit {
           this.loginService.solicitante.credenciales.rol.id).subscribe((resp: Notificacion) => {
             this.notificacion = resp;
             this.verificarPostulacion();
-            if (resp.vacante.empleador.empresa) {
-              this.cargarEmpresa();
-            }
           }, (err) => {
             Swal.fire(err.error.mensaje, 'Error al buscar notificacion' , 'error');
             console.log(err);
@@ -72,14 +69,6 @@ export class VerNotificacionPostulacionSolicitanteComponent implements OnInit {
           this.ocupado = resp.ocupado;
           this.postulacion = resp.postulacion;
           this.contratacion = resp.contratacion;
-        });
-  }
-
-  // cargar la empresa en la vacante
-  cargarEmpresa(): void {
-    this.empresaService.buscarPorIdEmpleador(this.notificacion.vacante.empleador.id)
-        .subscribe((resp: Empresa) => {
-          this.notificacion.vacante.empresa = resp;
         });
   }
 

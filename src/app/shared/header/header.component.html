@@ -9,9 +9,10 @@
                     <a class="navbar-brand" href="index.html">
                         <!-- Logo icon --><b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-                            <!-- Dark Logo icon -->
-                            <img src="assets/images/maletin.png" width="40px" alt="homepage" class="dark-logo" />
-                           
+                            <!-- Dark Logo icon 
+                            <img *ngIf="informacion" src="assets/images/maletin.png" width="40px" alt="homepage" class="dark-logo" /> 
+                            -->
+                            <img *ngIf="informacion" [src]="informacion.imagen.url" width="40px" alt="homepage" class="dark-logo" />
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text<span>
@@ -39,7 +40,7 @@
                     <!-- ============================================================== -->
                     <ul class="navbar-nav my-lg-0">
                         <!-- ============================================================== -->
-                         <li class="nav-item dropdown">
+                         <li class="nav-item dropdown" *ngIf="!this.loginService.administrador">
                             <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-message"></i>
                                 <div *ngIf="totalNotificaciones > 0" class="notify"><span class="heartbit"></span> <span class="point"></span> </div>
                             </a>

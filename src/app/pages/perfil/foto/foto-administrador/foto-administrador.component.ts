@@ -12,7 +12,7 @@ import { LoginService } from '../../../../services/login.service';
   ]
 })
 export class FotoAdministradorComponent implements OnInit {
-
+  
   cargando = false;
   administrador: Administrador;
   imagenSubir: File;

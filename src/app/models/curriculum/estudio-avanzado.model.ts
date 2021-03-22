@@ -1,6 +1,7 @@
 import { Curriculum } from './curriculum.model';
-import { Pais } from '../pais.model';
 import { NivelEstudio } from '../estudio/nivel-estudio.model';
+import { Ciudad } from '../ciudad.model';
+import { OtraCiudadEAvanzado } from './otrasCiudades/otraCiudadEAvanzado.model';
 export class EstudioAvanzado {
     constructor(
         public institucion: string,
@@ -8,10 +9,10 @@ export class EstudioAvanzado {
         public fecha_inicio: Date,
         public fecha_fin: Date,
         public estado: string,
-        public ciudad: string,
+        public ciudad: Ciudad,
         public curriculum: Curriculum,
-        public pais: Pais,
         public nivel_estudio: NivelEstudio,
+        public otraCiudad?: OtraCiudadEAvanzado,
         public id?: number
     ) {}
 }

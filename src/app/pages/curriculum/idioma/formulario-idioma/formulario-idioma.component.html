@@ -20,9 +20,13 @@
                                 <div class="form-group">
                                     <label for="exampleInputuname">Idioma</label>
                                     
-                                    <select [class.is-invalid]="campoNoValido('id_idioma')" formControlName="id_idioma" class="form-control custom-select">
-                                        <option *ngIf="tipoOperacion==='adicionar'" value="0">Seleccionar</option>
-                                        <option *ngFor="let idioma of idiomas" value="{{idioma.id}}">{{idioma.nombre}}</option>
+                                    <select *ngIf="tipoOperacion==='adicionar'" [class.is-invalid]="campoNoValido('id_idioma')" formControlName="id_idioma" class="form-control custom-select">
+                                        <option  value="0">Seleccionar</option>
+                                        <option  *ngFor="let idioma of idiomas" value="{{idioma.id}}">{{idioma.nombre}}</option>
+                                    </select>
+                                    <select disabled *ngIf="tipoOperacion==='modificar'" [class.is-invalid]="campoNoValido('id_idioma')" formControlName="id_idioma" class="form-control custom-select">
+                                        <option  value="0">Seleccionar</option>
+                                        <option  *ngFor="let idioma of idiomas" value="{{idioma.id}}">{{idioma.nombre}}</option>
                                     </select>
                                     <small *ngIf="campoNoValido('id_idioma')" class="form-control-feedback text-danger">Seleccione un Idioma</small> 
                                 

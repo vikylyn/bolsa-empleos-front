@@ -50,6 +50,7 @@ export class PerfilAdministradorComponent implements OnInit {
           apellidos: [this.administrador.apellidos, [Validators.required]],
           email: [this.administrador.credenciales.email, [Validators.required, Validators.email]],
           cedula: [this.administrador.cedula, [Validators.required]],
+          num_complemento_ci: [this.administrador.num_complemento_ci],
           telefono: [this.administrador.telefono, [Validators.required]],
           genero: [ this.administrador.genero , Validators.required],
           habilitado: [this.administrador.habilitado, Validators.required],

@@ -25,6 +25,7 @@ export class VistaCompletoComponent implements OnInit {
   constructor(private curriculumService: CurriculumService) { }
 
   ngOnInit(): void {
+    console.log(this.tipoOperacion, this.idOperacion);
     this.curriculumService.buscarPorIdSolicitanteCompleto(this.idSolicitante)
         .subscribe(({curriculum}) => {
           this.cargando = false;

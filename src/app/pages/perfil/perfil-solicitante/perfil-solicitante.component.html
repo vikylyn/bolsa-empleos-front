@@ -52,21 +52,52 @@
                             </div>
                             <div class="col-md-6 ">
                                 <div class="form-group">
+                                    <label class="control-label">Num Complemento Ci:</label>
+                                    <input [class.is-invalid]="campoNoValido('num_complemento_ci')" formControlName="num_complemento_ci" type="text" class="form-control" placeholder="Complemento CI">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Fecha de Nacimiento (debe ser mayor de 18 años)</label>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <select [class.is-invalid]="campoNoValido('dia') || validarFecha()" formControlName="dia" class="form-control">
+                                                <option value="0">Dia</option>
+                                                <option *ngFor="let dia of dias" value="{{dia.id}}">{{dia.valor}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-4">
+                                            <select [class.is-invalid]="campoNoValido('mes') || validarFecha()" formControlName="mes"  class="form-control" >
+                                                <option value="0">Mes</option>
+                                                <option *ngFor="let mes of meses" value="{{mes.id}}">{{mes.valor}}</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-4">
+                                            <select [class.is-invalid]="campoNoValido('anio') || validarFecha()" formControlName="anio" class="form-control" >
+                                                <option value="0">Año</option>
+                                                <option *ngFor="let anio of anios" value="{{anio.id}}">{{anio.valor}}</option>
+                                            </select>    
+                                        </div>
+                                        <div class="col-12">
+                                            <small *ngIf="validarFecha()" class="form-control-feedback text-danger">Seleccione una fecha valida, debe tener 18 años cumplidos</small>
+                                        </div>  
+
+                                    </div> 
+
+                                </div>
+                                                                      
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 ">
+                                <div class="form-group">
                                     <label for="exampleInputuname">Genero</label>
                                         <select formControlName="genero" class="form-control custom-select">
                                             <option value="M">Masculino</option>
                                             <option value="F">Fememino</option>
                                         </select>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6 ">
-                                <div class="form-group">
-                                    <label for="exampleInputuname">Fecha de Nacimiento</label>
-                                    <input [class.is-invalid]="campoNoValido('fecha_nac')" formControlName="fecha_nac"  type="date" class="form-control" placeholder="dd/mm/yyyy">
-                                    <small *ngIf="campoNoValido('fecha_nac')" class="form-control-feedback text-danger">La fecha de nacimiento es Obligatoria</small> 
                                 </div>
                             </div>
                             <div class="col-md-6 ">

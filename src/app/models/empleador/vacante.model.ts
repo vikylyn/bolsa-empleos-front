@@ -23,8 +23,6 @@ export class Vacante {
         public eliminado: boolean,
         public num_postulantes_aceptados: number,
         public id?: number,
-        // aumentando atributo para mostrarlo al listar la empresa a la que pertenece la vacante
-        public empresa?: Empresa
     ) {
     }
 }

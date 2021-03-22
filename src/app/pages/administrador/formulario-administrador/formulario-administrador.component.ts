@@ -19,7 +19,7 @@ export class FormularioAdministradorComponent implements OnInit {
   @Input() tipoOperacion: string;
   @Output() cerrar: EventEmitter<boolean> = new EventEmitter();
   @Output() cancelar: EventEmitter<boolean> = new EventEmitter();
-
+  
   cargarformulario = false;
   public formSubmitted = false;
   public adminForm: FormGroup;
@@ -44,6 +44,7 @@ export class FormularioAdministradorComponent implements OnInit {
       password: ['', [Validators.required]],
       password2: ['', [Validators.required]],
       cedula: ['', [Validators.required]],
+      num_complemento_ci: [''],
       telefono: ['', [Validators.required]],
       genero: [ 'seleccionar' , [Validators.required, Validators.maxLength(1)]],
       habilitado: [true, Validators.required],
@@ -107,6 +108,7 @@ export class FormularioAdministradorComponent implements OnInit {
       apellidos: [this.administrador.apellidos, [Validators.required]],
       email: [this.administrador.credenciales.email, [Validators.required, Validators.email]],
       cedula: [this.administrador.cedula, [Validators.required]],
+      num_complemento_ci: [this.administrador.num_complemento_ci],
       telefono: [this.administrador.telefono, [Validators.required]],
       genero: [ this.administrador.genero , [Validators.required, Validators.maxLength(1)]],
       habilitado: [this.administrador.habilitado, Validators.required],

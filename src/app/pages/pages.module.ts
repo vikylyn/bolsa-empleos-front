@@ -8,12 +8,12 @@ import { SharedModule } from '../shared/shared.module';
 import { PerfilAdministradorComponent } from './perfil/perfil-administrador/perfil-administrador.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { AreasLaboralesComponent } from './areas-laborales/areas-laborales.component';
-import { FormularioAreaComponent } from './areas-laborales/formulario-area/formulario-area.component';
+import { GrupoOcupacionalComponent } from './grupos-ocupacionales/grupos-ocupacionales.component';
+import { FormularioGrupoOcupacionalComponent } from './grupos-ocupacionales/formulario-grupo-ocupacional/formulario-grupo-ocupacional.component';
 import { AdministradorComponent } from './administrador/administrador.component';
 import { FormularioAdministradorComponent } from './administrador/formulario-administrador/formulario-administrador.component';
-import { ProfesionComponent } from './profesion/profesion.component';
-import { FormularioProfesionComponent } from './profesion/formulario-profesion/formulario-profesion.component';
+import { OcupacionComponent } from './ocupacion/ocupacion.component';
+import { FormularioOcupacionComponent } from './ocupacion/formulario-ocupacion/formulario-ocupacion.component';
 import { PerfilSolicitanteComponent } from './perfil/perfil-solicitante/perfil-solicitante.component';
 import { CurriculumComponent } from './curriculum/curriculum.component';
 import { AdministrarCurriculumComponent } from './curriculum/administrar-curriculum/administrar-curriculum.component';
@@ -26,15 +26,16 @@ import { IdiomaComponent } from './curriculum/idioma/idioma.component';
 import { FormularioExperienciaLaboralComponent } from './curriculum/experiencia-laboral/formulario-experiencia-laboral/formulario-experiencia-laboral.component';
 import { FormularioHabilidadComponent } from './curriculum/habilidad/formulario-habilidad/formulario-habilidad.component';
 import { FormularioEstudioAvanzadoComponent } from './curriculum/estudio-avanzado/formulario-estudio-avanzado/formulario-estudio-avanzado.component';
-import { FormularioEstudioBasicoComponent } from './curriculum/estudio-basico/formulario-estudio-basico/formulario-estudio-basico.component';
+import { FormularioEstudioBasicoComponent } from 
+  './curriculum/estudio-basico/formulario-estudio-basico/formulario-estudio-basico.component';
 import { FormularioIdiomaComponent } from './curriculum/idioma/formulario-idioma/formulario-idioma.component';
 import { FormularioReferenciaComponent } from './curriculum/referencia/formulario-referencia/formulario-referencia.component';
 import { PerfilEmpleadorComponent } from './perfil/perfil-empleador/perfil-empleador.component';
 import { FormularioDatosPersonalesComponent } from './curriculum/administrar-curriculum/formulario-datos-personales/formulario-datos-personales.component';
 import { FormularioEncabezadoComponent } from './curriculum/administrar-curriculum/formulario-encabezado/formulario-encabezado.component';
 import { PerfilEmpresaComponent } from './perfil/perfil-empresa/perfil-empresa.component';
-import { PostulacionSolicitanteComponent } from './postulaciones/postulacion-solicitante/postulacion-solicitante.component';
-import { PostulacionEmpleadorComponent } from './postulaciones/postulacion-empleador/postulacion-empleador.component';
+import { PostulacionSolicitanteComponent } from './postulaciones/postulacion-solicitante/postulacion-aceptadas-solicitante.component';
+import { PostulacionEmpleadorComponent } from './postulaciones/postulacion-empleador/postulacion-consideradas-empleador.component';
 import { ContratacionSolicitanteComponent } from './contrataciones/contratacion-solicitante/contratacion-solicitante.component';
 import { ContratacionEmpleadorComponent } from './contrataciones/contratacion-empleador/contratacion-empleador.component';
 import { InicioSolicitanteComponent } from './inicio/inicio-solicitante/inicio-solicitante.component';
@@ -44,7 +45,6 @@ import { FormularioOcupacionSolicitanteComponent } from './perfil/ocupacion-soli
 import { NgSelectModule } from '@ng-select/ng-select';
 import { FormularioVacanteComponent } from './vacante/vacantes-empleador/formulario-vacante/formulario-vacante.component';
 import { VacantesSolicitanteComponent } from './vacante/vacantes-solicitante/vacantes-solicitante.component';
-import { PerfilComponent } from './curriculum/perfil/perfil.component';
 import { InicioEmpleadorComponent } from './inicio/inicio-empleador/inicio-empleador.component';
 import { VistaCompletoComponent } from './curriculum/vista-completo/vista-completo.component';
 import { OperacionesComponent } from './curriculum/vista-completo/operaciones/operaciones.component';
@@ -60,7 +60,7 @@ import { FotoSolicitanteComponent } from './perfil/foto/foto-solicitante/foto-so
 import { FotoEmpleadorComponent } from './perfil/foto/foto-empleador/foto-empleador.component';
 import { FotoEmpresaComponent } from './perfil/foto/foto-empresa/foto-empresa.component';
 import { FotoAdministradorComponent } from './perfil/foto/foto-administrador/foto-administrador.component';
-import { ReporteSolicitantesComponent } from './reportes/reporte-solicitantes/reporte-solicitantes.component';
+import { ReporteSolicitantesComponent } from './reportes/reporte-solicitantes-registrados/reporte-solicitantes-registrados.component';
 import { ReporteEmpleadoresComponent } from './reportes/reporte-empleadores/reporte-empleadores.component';
 import { ReporteVacantesComponent } from './reportes/reporte-vacantes/reporte-vacantes.component';
 import { ReporteContratacionesComponent } from './reportes/reporte-contrataciones/reporte-contrataciones.component';
@@ -68,29 +68,35 @@ import { IdiomaVacanteComponent } from './vacante/vacantes-empleador/formulario-
 import { CambiarPasswordComponent } from './cambiar-password/cambiar-password.component';
 import { PostulacionesEmpleadorFavoritosComponent } from './postulaciones/postulaciones-empleador-favoritos/postulaciones-empleador-favoritos.component';
 import { ReporteEmpresasComponent } from './reportes/reporte-empresas/reporte-empresas.component';
-import { VerNotificacionEmpleadorComponent } from './notificaciones/ver-notificacion-postulacion-empleador/ver-notificacion-empleador.component';
-import { VerNotificacionContratacionEmpleadorComponent } from './notificaciones/ver-notificacion-contratacion-empleador/ver-notificacion-contratacion-empleador.component';
+import { VerNotificacionEmpleadorComponent } from './notificaciones/ver-notificacion-empleador/ver-notificacion-empleador.component';
 import { VerNotificacionPostulacionSolicitanteComponent } from './notificaciones/ver-notificacion-postulacion-solicitante/ver-notificacion-postulacion-solicitante.component';
 import { PostulacionesRechazadasEmpleadorComponent } from './postulaciones/postulaciones-rechazadas-empleador/postulaciones-rechazadas-empleador.component';
 import { PostulacionesRechazadasSolicitanteComponent } from './postulaciones/postulaciones-rechazadas-solicitante/postulaciones-rechazadas-solicitante.component';
 import { VerSolicitanteComponent } from './inicio/inicio-empleador/ver-solicitante/ver-solicitante.component';
 import { PostulacionesSinConsiderarEmpleadorComponent } from './postulaciones/postulaciones-sin-considerar-empleador/postulaciones-sin-considerar-empleador.component';
-import { PostulacionesPendientesSolicitanteComponent } from './postulaciones/postulaciones-pendientes-solicitante/postulaciones-sin-considerar-solicitante.component';
+import { PostulacionesPendientesSolicitanteComponent } from './postulaciones/postulaciones-pendientes-solicitante/postulaciones-pendientes-solicitante.component';
 import { InvitacionPostulacionComponent } from './inicio/inicio-empleador/invitacion-postulacion/invitacion-postulacion.component';
 import { GeneroPipe } from '../pipes/genero.pipe';
-
+import { DatePipe } from '@angular/common';
+import { ReporteSolicitantesRechazadosComponent } from './reportes/reporte-solicitantes-rechazados/reporte-solicitantes-rechazados.component';
+import { ReporteSolicitantesContratadosComponent } from './reportes/reporte-solicitantes-contratados/reporte-solicitantes-contratados.component';
+import { InformacionAppComponent } from './informacion-app/informacion-app.component';
+import { ListaNotificacionesSolicitanteComponent } from './notificaciones/lista-notificaciones-solicitante/lista-notificaciones-solicitante.component';
+import { ListaNotificacionesEmpleadorComponent } from './notificaciones/lista-notificaciones-empleador/lista-notificaciones-empleador.component';
+import { NotificacionPostulacionSolicitanteComponent } from './notificaciones/lista-notificaciones-solicitante/notificacion-postulacion-solicitante/notificacion-postulacion-solicitante.component';
+import { NotificacionEmpleadorComponent } from './notificaciones/lista-notificaciones-empleador/notificacion-empleador/notificacion-empleador.component';
 @NgModule({
   declarations: [
     GeneroPipe,
     DashboardComponent,
     PagesComponent,
     PerfilAdministradorComponent,
-    AreasLaboralesComponent,
-    FormularioAreaComponent,
+    GrupoOcupacionalComponent,
+    FormularioGrupoOcupacionalComponent,
     AdministradorComponent,
     FormularioAdministradorComponent,
-    ProfesionComponent,
-    FormularioProfesionComponent,
+    OcupacionComponent,
+    FormularioOcupacionComponent,
     PerfilSolicitanteComponent,
     CurriculumComponent,
     AdministrarCurriculumComponent,
@@ -120,7 +126,6 @@ import { GeneroPipe } from '../pipes/genero.pipe';
     FormularioOcupacionSolicitanteComponent,
     FormularioVacanteComponent,
     VacantesSolicitanteComponent,
-    PerfilComponent,
     InicioEmpleadorComponent,
     VistaCompletoComponent,
     OperacionesComponent,
@@ -145,7 +150,6 @@ import { GeneroPipe } from '../pipes/genero.pipe';
     PostulacionesEmpleadorFavoritosComponent,
     ReporteEmpresasComponent,
     VerNotificacionEmpleadorComponent,
-    VerNotificacionContratacionEmpleadorComponent,
     VerNotificacionPostulacionSolicitanteComponent,
     PostulacionesRechazadasEmpleadorComponent,
     PostulacionesRechazadasSolicitanteComponent,
@@ -153,6 +157,13 @@ import { GeneroPipe } from '../pipes/genero.pipe';
     PostulacionesSinConsiderarEmpleadorComponent,
     PostulacionesPendientesSolicitanteComponent,
     InvitacionPostulacionComponent,
+    ReporteSolicitantesRechazadosComponent,
+    ReporteSolicitantesContratadosComponent,
+    InformacionAppComponent,
+    ListaNotificacionesSolicitanteComponent,
+    ListaNotificacionesEmpleadorComponent,
+    NotificacionPostulacionSolicitanteComponent,
+    NotificacionEmpleadorComponent,
     ],
   exports: [
     DashboardComponent,
@@ -166,6 +177,7 @@ import { GeneroPipe } from '../pipes/genero.pipe';
     NgSelectModule,
     ReactiveFormsModule,
     HttpClientModule
-  ]
+  ],
+  providers: [DatePipe]
 })
 export class PagesModule { }

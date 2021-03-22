@@ -4,7 +4,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Mis Contrataciones</h4>
+                    <h2><span class="badge badge-info">Mis Contrataciones</span></h2>
                     <h6>Total: {{totalContrataciones}} - {{desde}}</h6>
                     <br><br>
                    
@@ -36,7 +36,8 @@
                                             <th>Empleado</th>
                                             <th>Ocupacion</th>
                                             <th>Vacante</th>
-                                            <th class="w100 text-center">Operaciones</th>
+                                            <th class="w100 text-center">ver</th>
+                                            <th class="w100 text-center">eliminar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -45,7 +46,7 @@
                                                 <span >{{desde + i + 1}}</span>
                                             </td>
                                             <td>
-                                                {{contratacion.creado_en}}
+                                                {{contratacion.creado_en | date: 'long'}}
                                             </td>
                                             <td>
                                                 {{contratacion.solicitante.nombre}} {{contratacion.solicitante.apellidos}}
@@ -60,6 +61,8 @@
                                                 <a class="cursor" (click)="mostrarModal(contratacion.solicitante.id, contratacion.id)"> 
                                                     <i class="fa fa-eye  m-r-10"></i> 
                                                 </a>
+                                            </td>
+                                            <td class="text-nowrap text-center">
                                                 <a class="cursor" *ngIf="contratacion.habilitado" (click)="terminar(contratacion.id)" > <i class="fa fa-trash-o m-r-10 text-info"></i></a>
                                             </td>
                                         </tr>

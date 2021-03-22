@@ -28,20 +28,18 @@
                             <thead>
                                 <tr>
                                     <th>Nombre</th>
-                                    <th>Apellidos</th>
                                     <th>Empresa</th>
                                     <th>Cargo</th>
                                     <th>Telefono</th>
-                                    <th class="w100">Operaciones</th>
+                                    <th class="w100 text-center">ver</th>
+                                    <th class="w100 text-center">modificar</th>
+                                    <th class="w100 text-center">eliminar</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let referencia of referencias">
                                     <td> 
-                                        {{referencia.nombre}}
-                                    </td>
-                                    <td> 
-                                        {{referencia.apellidos}}
+                                        {{referencia.nombre}}  {{referencia.apellidos}}
                                     </td>
                                     <td> 
                                         {{referencia.empresa}}
@@ -56,9 +54,13 @@
                                         <a class="cursor" (click)="mostrarModal2(referencia.id)"> 
                                             <i class="fa fa-eye  m-r-10"></i> 
                                         </a>
+                                    </td>
+                                    <td class="text-nowrap text-center">
                                         <a class="cursor" (click)="mostrarModal('modificar', referencia.id)" > 
                                                 <i class="fa fa-pencil m-r-10"></i> 
                                         </a>
+                                    </td>
+                                    <td class="text-nowrap text-center">
                                         <a (click)="eliminar(referencia.id)" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"><i class="fa fa-trash-o m-r-10 text-info"></i></a>
                                     
                                     </td>

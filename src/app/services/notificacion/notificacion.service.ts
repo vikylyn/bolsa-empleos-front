@@ -3,6 +3,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { delay, map } from 'rxjs/operators';
 import { WebsocketService } from '../websocket/websocket.service';
+import { Notificacion } from '../../models/notificacion';
 
 
 const base_url = environment.base_url;
@@ -18,6 +19,10 @@ export class NotificacionService {
     const token = localStorage.getItem('token');
     return this.http.get(`${base_url}/notificacion/${idUsuario}/${idRol}?token=${token}`)
                .pipe( map( (resp: any) => resp.notificaciones));
+  }
+  listarConPaginacion( idUsuario: number, idRol: number,desde: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get<{total:number, notificaciones:Notificacion [],totalNoLeidas: number}>(`${base_url}/notificacion/paginacion/${idUsuario}/${idRol}/${desde}?token=${token}`);
   }
   contarNoleidas( idUsuario: number, idRol: number): any {
     const token = localStorage.getItem('token');
@@ -52,5 +57,10 @@ export class NotificacionService {
   // para cargar Informacion del usuario cuando este la modifique
   actualizarUsuario(): any {
     return this.wsService.escuchar('actualizando-usuario');
+  }
+
+  // para cargar la informacion de la aplicacion cuando esta la modifique (logo y demas datos)
+  actualizarInformacionApp(): any {
+    return this.wsService.escuchar('actualizando-informacion-app');
   }
 }

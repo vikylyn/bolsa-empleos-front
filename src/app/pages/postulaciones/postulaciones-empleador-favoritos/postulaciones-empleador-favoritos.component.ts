@@ -86,7 +86,7 @@ export class PostulacionesEmpleadorFavoritosComponent implements OnInit {
   rechazar(idPostulacion: number): void {
 
     Swal.fire({
-      title: 'Estas seguro de eliminar la postulacion?',
+      title: 'Estas seguro de rechazar la postulacion?',
       text: '',
       icon: 'warning',
       showCancelButton: true,
@@ -113,7 +113,7 @@ export class PostulacionesEmpleadorFavoritosComponent implements OnInit {
 
   aceptar(idPostulacion: number): void {
     Swal.fire({
-      title: 'Desea contratar al solicitante?',
+      title: 'Estas seguro de contratar al solicitante?',
       text: '',
       icon: 'warning',
       showCancelButton: true,

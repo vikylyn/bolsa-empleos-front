@@ -9,6 +9,7 @@ export class Administrador {
         public apellidos: string,
         public telefono: string,
         public cedula: string,
+        public num_complemento_ci: string,
         public genero: string,
         public habilitado: boolean,
         public creado_en: Date,

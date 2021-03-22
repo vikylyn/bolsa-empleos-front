@@ -10,7 +10,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Mis Postulantes</h4>
+                    <h2><span class="badge badge-info">Mis Postulantes Rechazados</span></h2>
                     <h6>Total: {{totalPostulaciones}} - {{desde}}</h6>
                     <br><br>
                     <div class="row"> 
@@ -39,10 +39,10 @@
                                             <th>Publicado en:</th>
                                             <th>Ocupacion</th>
                                             <th>Solicitante</th>
-                                            <th>Estado del Solicitante</th>
                                             <th>Sueldo</th>
                                             <th>Estado</th>
-                                            <th class="w100 text-center">Operaciones</th>
+                                            <th class="w100 text-center">ver</th>
+                                            <th class="w100 text-center">contratar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -60,10 +60,6 @@
                                                 {{postulacion.solicitante.nombre}} {{postulacion.solicitante.apellidos}}
                                             </td>
                                             <td>
-                                                <span *ngIf="postulacion.solicitante.ocupado">Ocupado (ya tiene un empleo, no podra confirmar su participacion)</span>
-                                                <span *ngIf="!postulacion.solicitante.ocupado">Disponible</span>
-                                            </td>
-                                            <td>
                                                 {{postulacion.vacante.sueldo.sueldo}}
                                             </td>
                                             <td class="text-center">
@@ -72,10 +68,12 @@
                                             </td>
                                             <td class="text-nowrap text-center">
                                                 <a class="cursor" (click)="mostrarModal(postulacion.solicitante.id, postulacion.id)"> 
-                                                    <i class="fa fa-eye  m-r-10"></i> 
+                                                    <i class="fa fa-eye"></i> 
                                                 </a>
+                                            </td>
+                                            <td class="text-nowrap text-center">
                                                 <a class="cursor" *ngIf="!postulacion.aceptado" (click)="aceptar(postulacion.id)" data-toggle="tooltip" data-original-title="Aceptar"> 
-                                                    <i class=" fa fa-handshake-o  m-r-10"></i> 
+                                                    <i class=" fa fa-handshake-o"></i> 
                                                 </a>
                                             </td>
                                         </tr>

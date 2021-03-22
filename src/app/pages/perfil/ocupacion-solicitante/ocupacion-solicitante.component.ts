@@ -41,7 +41,34 @@ export class OcupacionSolicitanteComponent implements OnInit {
     }
     this.cargarOcupaciones();
   }
-  inhabilitar(id: number): void {
+  eliminar(id: number): void {
+    Swal.fire({
+      title: 'Estas seguro de eliminar la ocupación?',
+      text: '',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        this.ocupacionSolicitanteService.eliminar(id).subscribe( (resp: any) => {
+          Swal.fire(
+            'Eliminado!',
+            resp.mensaje,
+            'success'
+          );
+          this.cargarOcupaciones();
+        });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelado',
+          '',
+          'error'
+        );
+      }
+    });
+  }
+ /* inhabilitar(id: number): void {
     Swal.fire({
       title: 'Estas seguro ?',
       text: 'Se inhabilitara el registro',
@@ -68,7 +95,8 @@ export class OcupacionSolicitanteComponent implements OnInit {
       }
     });
   }
-  habilitar(id: number): void {
+*/
+/*  habilitar(id: number): void {
     Swal.fire({
       title: 'Estas seguro ?',
       text: 'Se habilitara el registro',
@@ -95,7 +123,7 @@ export class OcupacionSolicitanteComponent implements OnInit {
       }
     });
   }
-
+*/
   mostrarModal() {
     this.myModal = true;
   }

@@ -11,6 +11,8 @@ export class SidebarService {
       submenu: [
         {titulo: 'Inicio', url: '/inicio-solicitante',
           submenu: []},
+        {titulo: 'Notificaciones', url: '/notificaciones-solicitante',
+          submenu: []},
         {titulo: 'Curriculum', url: '',
           submenu: [
             {titulo: 'Administracion', url: '/curriculum/administracion'},
@@ -37,6 +39,7 @@ export class SidebarService {
       icono: 'mdi mdi-gauge',
       submenu: [
         {titulo: 'Inicio', url: '/inicio-empleador', submenu: []},
+        {titulo: 'Notificaciones', url: '/notificaciones-empleador', submenu: []},
         {titulo: 'Vacantes', url: '/vacante', submenu: []},
         {titulo: 'Postulantes', url: '', submenu: [
           {titulo: 'Pendientes', url: '/postulantes-pendientes'},
@@ -55,11 +58,14 @@ export class SidebarService {
       icono: 'mdi mdi-gauge',
       submenu: [
         {titulo: 'Inicio', url: '/dashboard', submenu: []},
+        {titulo: 'Administrar Informacion de la Aplicacion', url: '/informacion-app', submenu: []},
         {titulo: 'Administradores', url: '/administrador', submenu: []},
         {titulo: 'Grupos Ocupacionales', url: '/area-laboral', submenu: []},
         {titulo: 'Ocupaciones', url: '/profesion', submenu: []},
         {titulo: 'Reportes', url: '', submenu: [
-          {titulo: 'Reporte de solicitantes por ocupacion', url: '/reporte-solicitante'},
+          {titulo: 'Reporte de solicitantes registrados', url: '/reporte-solicitante'},
+          {titulo: 'Reporte de solicitantes rechazados', url: '/reporte-solicitantes-rechazados'},
+          {titulo: 'Reporte de solicitantes contratados', url: '/reporte-solicitantes-contratados'},
           {titulo: 'Reporte de empleadores', url: '/reporte-empleador'},
           {titulo: 'Reporte de empresas', url: '/reporte-empresa'},
           {titulo: 'Reporte de vacantes', url: '/reporte-vacante'},

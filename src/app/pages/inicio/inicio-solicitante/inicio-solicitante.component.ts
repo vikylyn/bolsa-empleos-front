@@ -30,7 +30,6 @@ export class InicioSolicitanteComponent implements OnInit {
   fechaActual: Date;
   desde = 0;
   vacantes: Vacante[];
-  vacantes2: Vacante[] = [];
   mostrar = true;
   formSubmitted = false;
   total = 0;
@@ -114,9 +113,9 @@ export class InicioSolicitanteComponent implements OnInit {
 
     this.vacanteService.filtrar(this.filtradoForm.value, this.desde).subscribe(
       ({vacantes, total}) => {
+        console.log(vacantes);
         this.vacantes = vacantes;
         this.total = total;
-        this.cargarEmpresas();
         // ocultando panel de busqueda
         this.mostrar = false;
       }
@@ -132,22 +131,6 @@ export class InicioSolicitanteComponent implements OnInit {
     }
     this.buscar();
   }
-  cargarEmpresas(): void {
-    this.vacantes2 = this.vacantes.map((x: Vacante) => {
-      if ( x.empleador.empresa) {
-        this.empresaService.buscarPorIdEmpleador(x.empleador.id)
-            .subscribe((resp: Empresa) => {
-              x.empresa = resp;
-            });
-        return x;
-
-      }else {
-        return x;
-      }
-    });
-
-  }
-
 
   mostrarModal(idVacante: number) {
     this.idVacante = idVacante;

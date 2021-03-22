@@ -73,7 +73,8 @@ export class PerfilEmpresaComponent implements OnInit {
           this.cargandoFormulario = false;
           // modificando la variable de empresa de loginService para actualizar los atributos cambiados del sidebar y header
           this.empresaService.buscarPorIdEmpleador(this.loginService.empleador.id).subscribe(( respuesta: Empresa) => {
-            this.loginService.guardarStorage(this.loginService.empleador, this.loginService.token, respuesta);
+            this.loginService.empleador.empresa = respuesta;
+            this.loginService.guardarStorage(this.loginService.empleador, this.loginService.token);
             this.wsService.emitir('actualizar-usuario');
         });
         }, (err) => {

@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-body">
 
-                    <h4 class="card-title">Gestion de Administradores</h4>
+                    <h2><span class="badge badge-info">Gestion de Administradores</span></h2>
                     <h6>Total: {{totalAdministradores}} - {{desde}}</h6>
                     
                     <div class="row">
@@ -26,12 +26,12 @@
                                 <tr>
                                     <th>Num</th>
                                     <th>Nombre</th>
-                                    <th>Apellidos</th>
-                                    <th>Telefono</th>
-                                    <th>Cedula</th>
                                     <th>Genero</th>
-                                    <th class="w100">Habilitado</th>
-                                    <th class="w100">Operaciones</th>
+                                    <th class="w100 text-center">Estado</th>
+                                    <th class="w100 text-center">ver</th>
+                                    <th class="w100 text-center">modificar</th>
+                                    <th class="w100 text-center">habilitar</th>
+                                    <th class="w100 text-center">inhabilitar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,19 +40,10 @@
                                         <span >{{desde + i + 1}}</span>
                                     </td>
                                     <td>
-                                        {{administrador.nombre}}
+                                        {{administrador.nombre}} {{administrador.apellidos}}
                                     </td>
                                     <td>
-                                        {{administrador.apellidos}}
-                                    </td>
-                                    <td>
-                                        {{administrador.telefono}}
-                                    </td>
-                                    <td>
-                                        {{administrador.cedula}}
-                                    </td>
-                                    <td>
-                                        {{administrador.genero}}
+                                        {{administrador.genero | genero:administrador.genero}}
                                     </td>
                                     <td class="text-center">
                                         <i *ngIf="administrador.habilitado" class="fa  fa-thumbs-up text-info"></i>
@@ -62,11 +53,19 @@
                                         <a class="cursor" (click)="mostrarModal2(administrador.id)"> 
                                             <i class="fa fa-eye m-r-10"></i> 
                                         </a>
+                                    </td>
+                                    <td class="text-nowrap text-center">
                                         <a class="cursor" (click)="mostrarModal('modificar', administrador.id)"> 
                                                 <i class="fa fa-pencil m-r-10"></i> 
                                         </a>
-                                        <a class="cursor" *ngIf="!administrador.habilitado" (click)="habilitar(administrador.id)"><i class="fa fa-arrow-circle-up text-success m-r-10"></i></a>
-                                        <a *ngIf="administrador.habilitado && administrador.id != this.loginService.administrador.id" (click)="inhabilitar(administrador.id)" class="cursor" data-toggle="tooltip" data-original-title="Inhabilitar"><i class="fa fa-arrow-circle-down text-danger m-r-10"></i></a>
+                                    </td>
+                                    <td class="text-center">
+                                        <a class="cursor" *ngIf="!administrador.habilitado" (click)="habilitar(administrador)"><i class="fa fa-thumbs-o-up"></i></a>
+                                        <span *ngIf="administrador.habilitado"><i class="fa fa-minus"></i></span>
+                                    </td>
+                                    <td class="text-nowrap text-center">
+                                        <span *ngIf="!administrador.habilitado || administrador.id === this.loginService.administrador.id"><i class="fa fa-minus"></i></span>
+                                        <a *ngIf="administrador.habilitado && administrador.id != this.loginService.administrador.id" (click)="inhabilitar(administrador)" class="cursor" data-toggle="tooltip" data-original-title="Inhabilitar"><i class="fa fa-thumbs-o-down"></i></a>
                                     </td>
                                 </tr>
                             </tbody>

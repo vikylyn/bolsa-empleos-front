@@ -26,8 +26,7 @@ export class FormularioOcupacionSolicitanteComponent implements OnInit {
               private loginService: LoginService) { }
   public ocupacionForm = this.fb.group({
     ocupacion: [ null , [ Validators.required]],
-    solicitante: [ this.loginService.solicitante, [Validators.required]],
-    habilitado: [true, [Validators.required]]
+    solicitante: [ this.loginService.solicitante, [Validators.required]]
   });
   ngOnInit() {
     this.cargarOcupaciones();

@@ -63,21 +63,20 @@ export class AdministradorComponent implements OnInit {
       }
     );
   }
-  inhabilitar(id: number): void {
-    console.log(id);
+  inhabilitar(administrador: Administrador): void {
     Swal.fire({
-      title: 'Estas seguro ?',
-      text: 'Se Inhabilitara el registro',
+      title: `Estas seguro de inhabilitar a ${administrador.nombre} ${administrador.apellidos}?`,
+      text: '',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Inhabilitar!',
+      confirmButtonText: 'Confirmar!',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
-        this.administradorService.inhabilitar(id).subscribe( (resp: any) => {
+        this.administradorService.inhabilitar(administrador.id).subscribe( (resp: any) => {
           Swal.fire(
-            'Administrador Inhabilitado!',
             resp.mensaje,
+            '',
             'success'
           );
           this.cargarAdministradores();
@@ -91,20 +90,20 @@ export class AdministradorComponent implements OnInit {
       }
     });
   }
-  habilitar(id: number): void {
+  habilitar(administrador: Administrador): void {
     Swal.fire({
-      title: 'Estas seguro ?',
-      text: 'Se habilitara el registro',
+      title: `Estas seguro de habilitar a ${administrador.nombre} ${administrador.apellidos}?`,
+      text: '',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Habilitar!',
+      confirmButtonText: 'Confirmar!',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
-        this.administradorService.habilitar(id).subscribe( (resp: any) => {
+        this.administradorService.habilitar(administrador.id).subscribe( (resp: any) => {
           Swal.fire(
-            'Administrador habilitado!',
             resp.mensaje,
+            '',
             'success'
           );
           this.cargarAdministradores();

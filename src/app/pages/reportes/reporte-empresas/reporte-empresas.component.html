@@ -126,7 +126,7 @@
                                         <span *ngIf="empresa.empleador.habilitado">Habilitado</span>
                                         <span *ngIf="!empresa.empleador.habilitado">Inhabilitado</span>
                                     </td>
-                                    <td>{{empresa.creado_en | date: 'long'}}</td>
+                                    <td>{{empresa.creado_en | date: 'short'}}</td>
                                 </tr>
                             </tbody>
                         </table>

@@ -4,6 +4,7 @@ import { EmpresaService } from '../../../../services/empleador/empresa.service';
 import { ImagenService } from '../../../../services/imagen.service';
 import { LoginService } from '../../../../services/login.service';
 import Swal from 'sweetalert2';
+import { Imagen } from '../../../../models/imagen.model';
 
 @Component({
   selector: 'app-foto-empresa',
@@ -52,10 +53,9 @@ export class FotoEmpresaComponent implements OnInit {
   cambiarImagen(): void {
      this.cargandoLogo = true;
      this.imagenService.cambiarImagen(this.imagenSubir, 'empresa', this.empresa.id).subscribe(
-       (resp: any) => {
-        console.log('respuesta imagen empresa', resp);
+       (resp: Imagen) => {
         Swal.fire('Imagen actualizada con exito', 'La imagen ha sido actualizada con exito', 'success');
-        this.loginService.guardarImagenStorage(resp, 'ROLE_EMPRESA');
+        this.loginService.guardarImagenStorage(resp, 'ROLE_EMPRESA'); // Se creo este rol solo para actualizar el logo de la empresa
         this.cargandoLogo = false;
      });
 

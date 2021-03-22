@@ -63,11 +63,11 @@ export class IdiomaComponent implements OnInit {
 
   eliminar(id: number): void {
     Swal.fire({
-      title: 'Estas seguro?',
-      text: 'Se eliminara el idioma Asignado',
+      title: 'Estas seguro de eliminar el idioma?',
+      text: '',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Eliminar!',
+      confirmButtonText: 'Confirmar!',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {

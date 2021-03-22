@@ -7,7 +7,7 @@ export class Notificacion {
     constructor(
         public leido: boolean,
         public solicitante: Solicitante,
-        public empleador: Empleador,
+       // public empleador: Empleador,
         public vacante: Vacante,
         public tipo_notificacion: TipoNotificacion,
         public id?: number,

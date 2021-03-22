@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { map } from 'rxjs/operators';
+import { map, delay } from 'rxjs/operators';
 import { Solicitante } from '../../models/solicitante/solicitante.model';
 
 const base_url = environment.base_url;
@@ -14,7 +14,8 @@ export class SolicitanteService {
   constructor(private http: HttpClient) { }
 
   adicionarSolicitante( formData: any): any {
-    return this.http.post(`${base_url}/solicitante`, formData);
+    return this.http.post(`${base_url}/solicitante`, formData)
+    .pipe(delay(300));
   }
    // buscar por id
   buscar(id: number): any {
@@ -24,7 +25,9 @@ export class SolicitanteService {
   }
   modificar(formData: any, id: number): any{
     const token = localStorage.getItem('token');
-    return this.http.put(`${base_url}/solicitante/modificar/${id}?token=${token}`, formData);
+    return this.http.put(`${base_url}/solicitante/modificar/${id}?token=${token}`, formData)
+    .pipe(delay(400));
+
   }
 
   filtrar(formData: any, desde: number): any {

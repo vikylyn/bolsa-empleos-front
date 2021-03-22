@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 import { Administrador } from '../../models/administrador/administrador.model';
 
 const base_url = environment.base_url;
@@ -37,7 +37,8 @@ export class AdministradorService {
   }
   adicionar(formData: any): any {
     const token = localStorage.getItem('token');
-    return this.http.post(`${base_url}/administrador?token=${token}`, formData);
+    return this.http.post(`${base_url}/administrador?token=${token}`, formData)
+        .pipe(delay(300));
   }
   inhabilitar(id: number): any {
     const token = localStorage.getItem('token');

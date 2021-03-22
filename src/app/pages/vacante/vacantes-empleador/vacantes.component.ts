@@ -92,11 +92,11 @@ export class VacantesComponent implements OnInit {
   }
   habilitar(id: number): void {
     Swal.fire({
-      title: 'Estas seguro ?',
-      text: 'Se habilitara la vacante',
+      title: 'Estas seguro de habilitar la vacante?',
+      text: '',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Habilitar!',
+      confirmButtonText: 'Confirmar!',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
@@ -122,11 +122,11 @@ export class VacantesComponent implements OnInit {
   }
   inhabilitar(id: number): void {
     Swal.fire({
-      title: 'Estas seguro ?',
-      text: 'Se inhabilitara la vacante',
+      title: 'Estas seguro de inhabilitar la vacante?',
+      text: '',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Inhabilitar!',
+      confirmButtonText: 'Confirmar!',
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
@@ -150,73 +150,39 @@ export class VacantesComponent implements OnInit {
       }
       });
   }
-  eliminar(idVacante: number, num_postulantes_aceptados: number): void {
-    if (num_postulantes_aceptados > 0) {
-        this.eliminacionLogica(idVacante);
-    }else {
-        this.eliminacionFisica(idVacante);
-    }
-  }
-  eliminacionLogica(id: number): void {
-    Swal.fire({
-      title: 'Estas seguro ?',
-      text: 'Se eliminara la vacante',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Eliminar!',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.value) {
-        this.vacanteService.eliminacionLogica(id).subscribe( (resp: any) => {
+  eliminar(idVacante: number): void {
+
+      Swal.fire({
+        title: 'Estas seguro de eliminar la vacante?',
+        text: '',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Confirmar!',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.value) {
+          this.vacanteService.eliminacion(idVacante).subscribe( (resp: any) => {
+            Swal.fire(
+              'Eliminado!',
+              resp.mensaje,
+              'success'
+            );
+            this.cargarVacantes();
+          },(err) => {
+            console.log(err);
+            Swal.fire('Error al eliminar Vacante', err.error.error || err.error.mensaje, 'error');
+          });
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
           Swal.fire(
-            'Eliminado!',
-            resp.mensaje,
-            'success'
+            'Cancelado',
+            '',
+            'error'
           );
-          this.cargarVacantes();
-        },(err) => {
-          console.log(err);
-          Swal.fire('Error al eliminar Vacante', err.error.error || err.error.mensaje, 'error');
-        });
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Cancelado',
-          '',
-          'error'
-        );
-      }
+        }
       });
   }
-  eliminacionFisica(id: number): void {
-    Swal.fire({
-      title: 'Estas seguro ?',
-      text: 'Se eliminara la vacante',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Eliminar!',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.value) {
-        this.vacanteService.eliminacionFisica(id).subscribe( (resp: any) => {
-          Swal.fire(
-            'Eliminado!',
-            resp.mensaje,
-            'success'
-          );
-          this.cargarVacantes();
-        },(err) => {
-          console.log(err);
-          Swal.fire('Error al eliminar Vacante', err.error.error || err.error.mensaje, 'error');
-        });
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire(
-          'Cancelado',
-          '',
-          'error'
-        );
-      }
-      });
-  }
+
+
   mostrarModal(tipoOperacion: string, idVacante: number) {
     this.tipoOperacion = tipoOperacion;
     this.idVacante = idVacante;

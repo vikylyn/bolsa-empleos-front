@@ -24,13 +24,15 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <div class="demo-radio-button mt-5">
-                                    <input formControlName="empresa" name="empresa" value="cualquiera" type="radio" id="radio1" checked="true" class="with-gap">
-                                    <label for="radio1">Todos</label>
-                                    <input formControlName="empresa" name="empresa" value="false" type="radio" id="radio2" class="with-gap">
-                                    <label for="radio2">Particular</label>
+                                <div class="demo-radio-button mt-5"> 
                                     <input formControlName="empresa" name="empresa" value="true" type="radio" class="with-gap" id="radio3">
                                     <label for="radio3">Empresa</label>
+                                    <input formControlName="empresa" name="empresa" value="false" type="radio" id="radio2" class="with-gap">
+                                    <label for="radio2">Particular</label>
+                                    <input formControlName="empresa" name="empresa" value="cualquiera" type="radio" id="radio1" checked="true" class="with-gap">
+                                    <label for="radio1">Cualquiera</label>
+                                   
+                                   
                                 </div>
                             </div>
                             <div class="col">
@@ -141,7 +143,7 @@
                                         <span *ngIf="empleador.habilitado">Habilitado</span>
                                         <span *ngIf="!empleador.habilitado">Inhabilitado</span>
                                     </td>
-                                    <td>{{empleador.creado_en | date: 'long'}}</td>
+                                    <td>{{empleador.creado_en | date: 'short'}}</td>
                                     <td>
                                         <span *ngIf="empleador.empresa">Empresa registrada</span>
                                         <span *ngIf="!empleador.empresa">Sin empresa</span>

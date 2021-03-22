@@ -77,7 +77,7 @@
                                                     </select>    
                                                 </div>
                                                 <div class="col-12">
-                                                    <small *ngIf="validarFecha()" class="form-control-feedback text-danger">Seleccione una fecha valida y debe tener 18 años cumplidos</small>
+                                                    <small *ngIf="validarFecha()" class="form-control-feedback text-danger">Seleccione una fecha valida, debe tener 18 años cumplidos</small>
                                                 </div>  
 
                                             </div> 
@@ -122,7 +122,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Num Complemento Ci:</label>
-                                            <input [class.is-invalid]="campoNoValido('num_complemento')" formControlName="num_complemento" type="text" class="form-control" placeholder="Complemento CI">
+                                            <input [class.is-invalid]="campoNoValido('num_complemento_ci')" formControlName="num_complemento_ci" type="text" class="form-control" placeholder="Complemento CI">
                                         </div>
                                     </div>
                                     <!--/span-->
@@ -136,7 +136,7 @@
                                                        bindLabel="nombre"
                                                        notFoundText = "Ocupacion no encontrada" 
                                                        bindValue="id" 
-                                                       multiple = "true"
+                                                       [multiple] = "true"
                                                        formControlName="id_profesion">
                                             </ng-select>
                                             <small *ngIf="campoNoValido('id_profesion')" class="form-control-feedback text-danger">Seleccione almenos una profesion</small> 
@@ -214,6 +214,15 @@
         
                             </div>
                             <hr>
+                            <div class="row animated fadeIn fast" *ngIf="cargando">
+                                <div class="col-12">
+                                    <div class="alert alert-info text-center">
+                                        <h4>Cargando...</h4> 
+                                        <i class="fa fa-spin fa-refresh fa-2x"></i>
+                                        <p class="mb-0">Por favor espere</p>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="form-actions text-center">
                                 <button type="submit" class="btn btn-success"> <i class="fa fa-check"></i> Guardar</button>
                                 &nbsp;

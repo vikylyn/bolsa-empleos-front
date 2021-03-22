@@ -27,14 +27,13 @@
                             <tr>
                                 <th>Empresa</th>
                                 <th>Puesto</th>
-                                <th>Descripcion</th>
-                                <th>Fecha inicio</th>
-                                <th>Fecha Fin</th>
                                 <th>Tipo Contrato</th>
-                                <th>pais</th>
-                                <th>Estado</th>
-                                <th>Ciudad</th>
-                                <th class="w100">Operaciones</th>
+                                <th>Pais</th>
+                                <th>Ciudad - Estado</th>
+                                <th class="w100 text-center">ver</th>
+                                <th class="w100 text-center">modificar</th>
+                                <th class="w100 text-center">eliminar</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -46,34 +45,30 @@
                                     {{experiencia.puesto}}
                                 </td>
                                 <td> 
-                                    {{experiencia.descripcion}}
-                                </td>
-                                <td> 
-                                    {{experiencia.fecha_inicio}}
-                                </td>
-                                <td> 
-                                    {{experiencia.fecha_fin}}
-                                </td>
-                                <td> 
                                     {{experiencia.tipo_contrato.tipo}}
                                 </td>
                                 <td> 
-                                    {{experiencia.pais.nombre}}
+                                    <span *ngIf="!experiencia.otraCiudad">{{experiencia.ciudad.estado.pais.nombre}}</span>
+                                    <span *ngIf="experiencia.otraCiudad">{{experiencia.otraCiudad.pais}}</span>
                                 </td>
                                 <td> 
-                                    {{experiencia.estado}}
-                                </td>
-                                <td> 
-                                    {{experiencia.ciudad}}
+                                    <span *ngIf="!experiencia.otraCiudad">{{experiencia.ciudad.nombre}} - {{experiencia.ciudad.estado.nombre}}</span>
+                                    <span *ngIf="experiencia.otraCiudad">{{experiencia.otraCiudad.ciudad}} - {{experiencia.otraCiudad.estado}}</span>
+
                                 </td>
                                 <td class="text-nowrap text-center cursor">
                                     <a class="cursor" (click)="mostrarModal2(experiencia.id)"> 
                                         <i class="fa fa-eye  m-r-10"></i> 
                                     </a>
+                                </td>
+                                <td class="text-nowrap text-center cursor">
+                                   
                                     <a (click)="mostrarModal('modificar', experiencia.id)"
                                         > 
                                             <i class="fa fa-pencil  m-r-10"></i> 
                                     </a>
+                                </td>
+                                <td class="text-nowrap text-center cursor">
                                     <a (click)="eliminar(experiencia.id)" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"><i class="fa fa-trash-o m-r-10 text-info"></i></a>
                                 </td>
                             </tr>

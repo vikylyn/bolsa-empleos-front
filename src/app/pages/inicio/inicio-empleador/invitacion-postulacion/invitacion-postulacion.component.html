@@ -63,7 +63,7 @@
                                          <ul>
                                              <li *ngFor="let idioma  of vacante.requisitos.idiomas"><span>{{idioma.idioma.nombre}}</span></li>
                                          </ul>
-                                         <button *ngIf="!notificacion" (click)="invitar()" class="btn btn-info btn-block">Invitar a Postularse</button>
+                                         <button *ngIf="!notificacion" (click)="invitar()" class="btn btn-info btn-block">Enviar invitacion</button>
                                          <div *ngIf="notificacion" class="alert alert-info">
                                             Ya se envio una invitacion!
                                          </div>

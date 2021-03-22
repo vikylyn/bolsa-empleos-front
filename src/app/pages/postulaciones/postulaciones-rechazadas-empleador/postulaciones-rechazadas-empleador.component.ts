@@ -87,7 +87,7 @@ export class PostulacionesRechazadasEmpleadorComponent implements OnInit {
 
   aceptar(idPostulacion: number): void {
     Swal.fire({
-      title: 'Desea contratar al solicitante?',
+      title: 'Estas seguro de contratar al solicitante?',
       text: '',
       icon: 'warning',
       showCancelButton: true,

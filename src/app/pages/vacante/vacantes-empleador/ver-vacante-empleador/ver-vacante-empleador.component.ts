@@ -25,7 +25,7 @@ export class VerVacanteEmpleadorComponent implements OnInit {
   cargarVacante(): void {
     this.vacanteService.buscar(this.idVacante).subscribe(( resp: Vacante) => {
       this.vacante = resp;
-      console.log(this.vacante.requisitos.idiomas);
+      console.log(this.vacante);
     });
   }
 

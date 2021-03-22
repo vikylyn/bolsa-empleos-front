@@ -59,23 +59,11 @@ export class VacantesSolicitanteComponent implements OnInit, OnDestroy {
         });
   }
 
-  // cargar vacante por id, no contiene la empresa en caso de empleador con empresa
   cargarVacante(): void{
     this.vacanteService.buscar(this.idVacante)
         .subscribe((resp: Vacante) => {
           this.vacante = resp;
           this.verificarPostulacion();
-          if (this.vacante.empleador.empresa) {
-            this.cargarEmpresa();
-          }
-        });
-  }
-
-  // cargar la empresa en la vacante
-  cargarEmpresa(): void {
-    this.empresaService.buscarPorIdEmpleador(this.vacante.empleador.id)
-        .subscribe((resp: Empresa) => {
-          this.vacante.empresa = resp;
         });
   }
 

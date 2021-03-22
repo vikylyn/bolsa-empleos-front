@@ -59,11 +59,8 @@
                             </div>
                             <div class="col-md-6 ">
                                 <div class="form-group">
-                                    <label for="exampleInputuname">Genero:</label>
-                                    <select formControlName="genero" class="form-control custom-select">
-                                        <option value="M">Masculino</option>
-                                        <option value="F">Fememino</option>
-                                    </select>
+                                    <label class="control-label">Num Complemento Ci:</label>
+                                    <input [class.is-invalid]="campoNoValido('num_complemento_ci')" formControlName="num_complemento_ci" type="text" class="form-control" placeholder="Complemento CI">
                                 </div>
                             </div>
                         </div>
@@ -77,10 +74,13 @@
                             </div>
                             <div class="col-md-6 ">
                                 <div class="form-group">
-                                    <label for="exampleInputuname">Nacionalidad:</label>
-                                    <input [class.is-invalid]="campoNoValido('nacionalidad')" formControlName="nacionalidad" type="text" class="form-control" placeholder="Nacionalidad">
-                                    <small *ngIf="campoNoValido('nacionalidad')" class="form-control-feedback text-danger">La nacionalidad es Obligatoria</small> 
+                                    <label for="exampleInputuname">Genero:</label>
+                                    <select formControlName="genero" class="form-control custom-select">
+                                        <option value="M">Masculino</option>
+                                        <option value="F">Fememino</option>
+                                    </select>
                                 </div>
+                               
                             </div>
                         </div>
                         <div class="row">
@@ -95,13 +95,22 @@
                             </div>
                             <div class="col-md-6 ">
                                 <div class="form-group">
+                                    
+                                    <label for="exampleInputuname">Nacionalidad:</label>
+                                    <input [class.is-invalid]="campoNoValido('nacionalidad')" formControlName="nacionalidad" type="text" class="form-control" placeholder="Nacionalidad">
+                                    <small *ngIf="campoNoValido('nacionalidad')" class="form-control-feedback text-danger">La nacionalidad es Obligatoria</small> 
+                                </div>            
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <label for="exampleInputuname">Direccion:</label>
                                     <input [class.is-invalid]="campoNoValido('direccion')" formControlName="direccion" type="text" class="form-control" placeholder="Direccion">
                                     <small *ngIf="campoNoValido('direccion')" class="form-control-feedback text-danger">La nacionalidad es Obligatoria</small> 
                                 </div>
                             </div>
                         </div>
-                        
                         <div class="row">
                             <div class="col-md-6 ">
                                 <div class="form-group">

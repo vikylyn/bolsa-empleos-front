@@ -97,7 +97,7 @@ export class PostulacionesSinConsiderarEmpleadorComponent implements OnInit {
   rechazar(idPostulacion: number): void {
 
     Swal.fire({
-      title: 'Estas seguro de eliminar la postulacion?',
+      title: 'Estas seguro de rechazar la postulación?',
       text: '',
       icon: 'warning',
       showCancelButton: true,

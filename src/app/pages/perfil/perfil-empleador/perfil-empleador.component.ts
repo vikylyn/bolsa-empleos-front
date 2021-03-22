@@ -57,6 +57,7 @@ export class PerfilEmpleadorComponent implements OnInit {
       apellidos: [this.empleador.apellidos, [Validators.required]],
       email: [this.empleador.credenciales.email, [Validators.required, Validators.email]],
       cedula: [this.empleador.cedula, [Validators.required]],
+      num_complemento_ci: [this.empleador.num_complemento_ci],
       telefono: [this.empleador.telefono, [Validators.required]],
       nacionalidad: [this.empleador.nacionalidad, [Validators.required]],
       direccion: [this.empleador.direccion, [Validators.required]],
@@ -77,19 +78,11 @@ export class PerfilEmpleadorComponent implements OnInit {
         .subscribe( (resp: any) => {
           Swal.fire(resp.mensaje, this.perfilForm.get('email').value, 'success');
           this.cargandoFormulario = false;
-          if(this.empleador.empresa){
-            this.empleadorService.buscarEmpleadorEmpresa(this.empleador.id).subscribe((resp: any) => {
-              this.loginService.guardarStorage(resp.empleador, this.loginService.token, resp.empresa);
-              this.wsService.emitir('actualizar-usuario');
-            });
-          }else {
-            // modificando la variable de Tipo empleador de loginService para actualizar los atributos cambiados del sidebar y header
-            this.empleadorService.buscar(this.loginService.empleador.id).subscribe(( respuesta: Empleador) => {
-            this.loginService.guardarStorage(respuesta, this.loginService.token);
-            this.wsService.emitir('actualizar-usuario');
-            });
-          }
- 
+          // modificando la variable de Tipo empleador de loginService para actualizar los atributos cambiados del sidebar y header
+          this.empleadorService.buscar(this.loginService.empleador.id).subscribe(( respuesta: Empleador) => {
+          this.loginService.guardarStorage(respuesta, this.loginService.token);
+          this.wsService.emitir('actualizar-usuario');
+          });
         }, (err) => {
           console.log(err);
           Swal.fire('Error al modificar perfil', err.error.error || err.error.mensaje, 'error');

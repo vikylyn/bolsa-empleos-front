@@ -2,8 +2,8 @@
     <div *ngIf="!cargarFormulario" class="row justify-content-center">
         <div class="card text-center">
             <div class="card-body">
-              <p class="card-text">Es necesario que agrege un curriculum.</p>
-              <button (click)="agregarCurriculum()" class="btn btn-info">Agregar Curriculum</button>
+              <p class="card-text">Es necesario que adicione un curriculum.</p>
+              <button (click)="agregarCurriculum()" class="btn btn-info">Adicionar Curriculum</button>
             </div>
         </div>
     </div>
@@ -13,6 +13,8 @@
                 <div class="card-body">
                     <form class="form p-t-20" 
                             [formGroup]="curriculumForm">
+                            <h3 class="text-center">Adicionar Curriculum</h3>
+                        <hr>
                         <div class="form-group">
                             <label for="exampleInputuname">Titulo</label>
                             <input [class.is-invalid]="campoNoValido('titulo')" formControlName="titulo" class="form-control" type="text" placeholder="Titulo">
@@ -28,6 +30,7 @@
                             <textarea [class.is-invalid]="campoNoValido('biografia')" formControlName="biografia" class="form-control rounded" id="exampleFormControlTextarea1" rows="3"></textarea>
                             <small *ngIf="campoNoValido('biografia')" class="form-control-feedback text-danger">La biografia es Obligatoria</small> 
                         </div>
+                        <hr>
                         <div class="text-center">
                             <button  (click)="guardar()" type="submit" class="btn btn-success waves-effect waves-light">
                                 <i class="fa fa-save"></i>
