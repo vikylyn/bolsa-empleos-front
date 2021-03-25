@@ -17,7 +17,7 @@
                     <span class="font-weight-bold">Contratado en: </span> {{contratacion.creado_en | date: 'long'}} <br> 
                     <span class="font-weight-bold">Vacante: </span> {{contratacion.vacante.titulo}} <br>
                     <span class="font-weight-bold">Ocupacion: </span> {{contratacion.vacante.requisitos.ocupacion.nombre}} <br>
-                    <span class="font-weight-bold">Sueldo: </span> {{contratacion.vacante.sueldo.sueldo}} <br>
+                    <span class="font-weight-bold">Sueldo: </span> {{contratacion.vacante.sueldo.sueldo}}  &nbsp; <span class="font-weight-bold">Pago: </span> {{contratacion.vacante.periodo_pago.periodo}}<br>
                     <span class="font-weight-bold">Pais: </span> {{contratacion.vacante.ciudad.estado.pais.nombre}} <br>
                     <span class="font-weight-bold">Ciudad: </span> {{contratacion.vacante.ciudad.nombre}} - {{contratacion.vacante.ciudad.estado.nombre}} <br>
                     <span class="font-weight-bold">Direccion: </span> {{contratacion.vacante.direccion}} 

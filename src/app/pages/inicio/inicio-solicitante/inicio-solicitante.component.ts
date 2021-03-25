@@ -113,7 +113,6 @@ export class InicioSolicitanteComponent implements OnInit {
 
     this.vacanteService.filtrar(this.filtradoForm.value, this.desde).subscribe(
       ({vacantes, total}) => {
-        console.log(vacantes);
         this.vacantes = vacantes;
         this.total = total;
         // ocultando panel de busqueda

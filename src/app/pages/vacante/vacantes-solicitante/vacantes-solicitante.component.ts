@@ -52,7 +52,6 @@ export class VacantesSolicitanteComponent implements OnInit, OnDestroy {
   verificarPostulacion(): void {
     this.postulacionService.buscarPorIdSolicitanteVacante(this.loginService.solicitante.id, this.vacante.id)
         .subscribe((resp: any) => {
-          console.log(resp);
           this.ocupado = resp.ocupado;
           this.postulacion = resp.postulacion;
           this.contratacion = resp.contratacion;

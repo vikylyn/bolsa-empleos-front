@@ -6,6 +6,8 @@ import { UbicacionService } from '../../../services/ubicacion/ubicacion.service'
 import { Pais } from '../../../models/pais.model';
 import { Ciudad } from '../../../models/ciudad.model';
 import Swal from 'sweetalert2';
+import { RazonSocialService } from '../../../services/empleador/razon-social.service';
+import { RazonSocial } from '../../../models/empleador/razon-social.model';
 declare function init_plugins();
 
 @Component({
@@ -20,12 +22,13 @@ export class RegistroEmpleadorComponent implements OnInit {
   ciudades: Ciudad[];
   formSubmitted = false;
   cargando = false;
-
+  razonesSociales: RazonSocial [];
 
 
   constructor(private fb: FormBuilder,
               public router: Router,
               private empleadorService: EmpleadorService,
+              private razonSocialService: RazonSocialService,
               private ubicacionService: UbicacionService)
     {
     }
@@ -47,6 +50,7 @@ export class RegistroEmpleadorComponent implements OnInit {
     id_rol: [3, [Validators.required]],
     empresa: [false, [Validators.required]],
     empresa_nombre: ['', [Validators.required]],
+    id_razon_social: [ 0 , [Validators.required, Validators.min(1)]],
     empresa_dominio_web: [''],
     empresa_direccion: ['', [Validators.required]],
     empresa_telefono: ['', [Validators.required]],
@@ -61,6 +65,7 @@ export class RegistroEmpleadorComponent implements OnInit {
     init_plugins();
     this.cargarPaises();
     this.cargarCiudades();
+    this.cargarRazonesSociales();
   }
   cargarCiudades(): void {
     this.ubicacionService.listarPaises()
@@ -74,6 +79,11 @@ export class RegistroEmpleadorComponent implements OnInit {
       this.ciudades = resp;
     });
   }
+  cargarRazonesSociales(): void {
+    this.razonSocialService.listar().subscribe(({razones_sociales}) => {
+      this.razonesSociales = razones_sociales;
+    });
+  }
   adicionarEmpleador(): void {
     this.formSubmitted = true;
     console.log(this.registerForm.value);
@@ -85,6 +95,7 @@ export class RegistroEmpleadorComponent implements OnInit {
     }
     if ( this.registerForm.get('empresa').value === false) {
       this.registerForm.get('empresa_nombre').disable();
+      this.registerForm.get('id_razon_social').disable();
       this.registerForm.get('empresa_dominio_web').disable();
       this.registerForm.get('empresa_direccion').disable();
       this.registerForm.get('empresa_telefono').disable();
@@ -101,6 +112,7 @@ export class RegistroEmpleadorComponent implements OnInit {
     if ( this.registerForm.get('empresa').value === true) {
       if (
         this.registerForm.get('empresa_id_ciudad').value === 0 ||
+        this.registerForm.get('id_razon_social').value === 0 ||
         this.registerForm.get('empresa_id_pais').value === 0 ) {
           this.cargando = false;
           return;
@@ -139,6 +151,7 @@ export class RegistroEmpleadorComponent implements OnInit {
     if ( this.registerForm.get('empresa').value === true) {
       if (this.formSubmitted) {
         this.registerForm.get('empresa_nombre').enable();
+        this.registerForm.get('id_razon_social').enable();
         this.registerForm.get('empresa_dominio_web').enable();
         this.registerForm.get('empresa_direccion').enable();
         this.registerForm.get('empresa_telefono').enable();

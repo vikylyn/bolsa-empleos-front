@@ -9,6 +9,8 @@ import { UbicacionService } from '../../../services/ubicacion/ubicacion.service'
 import { Empresa } from '../../../models/empleador/empresa.model';
 import Swal from 'sweetalert2';
 import { WebsocketService } from '../../../services/websocket/websocket.service';
+import { RazonSocialService } from '../../../services/empleador/razon-social.service';
+import { RazonSocial } from '../../../models/empleador/razon-social.model';
 
 @Component({
   selector: 'app-perfil-empresa',
@@ -25,31 +27,31 @@ export class PerfilEmpresaComponent implements OnInit {
   cargarformulario = false;
   paises: Pais[];
   ciudades: Ciudad[];
+  razonesSociales: RazonSocial [];
+
   constructor(private fb: FormBuilder,
               private empresaService: EmpresaService,
               private loginService: LoginService,
               private wsService: WebsocketService,
+              private razonSocialService: RazonSocialService,
               private ubicacionService: UbicacionService) {
-                this.ubicacionService.listarPaises()
-                .subscribe( (resp: Pais[]) => {
-                  this.paises = resp;
-                });
-                this.ubicacionService.listarCiudades(1)
-                .subscribe((resp: Ciudad[]) => {
-                  this.ciudades = resp;
-                });
   }
   ngOnInit(): void {
+    this.cargarPaises();
+    this.cargarCiudades();
+    this.cargarRazonesSociales();
     this.cargarFormularioEmpresa();
 
   }
   cargarFormularioEmpresa(): void{
     this.empresaService.buscarPorIdEmpleador(this.loginService.empleador.id)
         .subscribe((resp: Empresa) => {
+          console.log(this.empresa);
           this.empresa = resp;
           this.cargarformulario = true;
           this.perfilForm = this.fb.group({
             nombre: [resp.nombre, [Validators.required]],
+            id_razon_social: [ resp.razon_social.id , [Validators.required, Validators.min(1)]],
             dominio_web: [resp.dominio_web],
             direccion: [resp.direccion, [Validators.required]],
             telefono: [resp.telefono, [Validators.required]],
@@ -102,6 +104,24 @@ export class PerfilEmpresaComponent implements OnInit {
   seleccionarPais(): void{
     const id_pais = this.perfilForm.get('id_pais').value;
     this.ubicacionService.listarCiudades(id_pais)
+    .subscribe((resp: Ciudad[]) => {
+      this.ciudades = resp;
+    });
+  }
+
+  cargarRazonesSociales(): void {
+    this.razonSocialService.listar().subscribe(({razones_sociales}) => {
+      this.razonesSociales = razones_sociales;
+    });
+  }
+  cargarCiudades(): void {
+    this.ubicacionService.listarPaises()
+    .subscribe( (resp: Pais[]) => {
+      this.paises = resp;
+     });
+  }
+  cargarPaises(): void {
+    this.ubicacionService.listarCiudades(1)
     .subscribe((resp: Ciudad[]) => {
       this.ciudades = resp;
     });

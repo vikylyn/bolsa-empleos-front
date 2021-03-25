@@ -19,6 +19,8 @@ import Swal from 'sweetalert2';
 import { VacanteService } from '../../../../services/vacante/vacante.service';
 import { LoginService } from '../../../../services/login.service';
 import { RequisitosIdioma } from '../../../../models/empleador/requisitos-idioma.model';
+import { PeriodoPagoService } from '../../../../services/vacante/periodo-pago.service';
+import { PeriodoPago } from '../../../../models/empleador/periodo-pago.model';
 
 @Component({
   selector: 'app-formulario-vacante',
@@ -44,6 +46,7 @@ export class FormularioVacanteComponent implements OnInit {
   ciudades: Ciudad[];
   paises: Pais[];
   sueldos: RangoSueldo[];
+  periodosPago: PeriodoPago[];
   tipoContratos: TipoContrato[];
   ocupaciones: Ocupacion[];
   siguiente = false;
@@ -56,6 +59,7 @@ export class FormularioVacanteComponent implements OnInit {
           private rangoSueldoService: RangoSueldoService,
           private ocupacionService: OcupacionService,
           private vacanteService: VacanteService,
+          private periodoPagoService: PeriodoPagoService,
           private loginService: LoginService
     ) { }
 
@@ -65,6 +69,7 @@ export class FormularioVacanteComponent implements OnInit {
     this.cargarHorarios();
     this.cargarTipoContratos();
     this.cargarSueldos();
+    this.cargarPeriodosDePago();
     this.cargarOcupaciones();
     if (this.tipoOperacion === 'modificar') {
               this.cargarVacante();
@@ -73,6 +78,7 @@ export class FormularioVacanteComponent implements OnInit {
               this.vacanteForm = this.fb.group({
                   titulo: ['', [ Validators.required]],
                   id_sueldo: [0, [ Validators.required, Validators.min(1)]],
+                  id_periodo_pago: [0, [ Validators.required, Validators.min(1)]],
                   direccion: ['', [ Validators.required]],
                   id_horario: [0, [ Validators.required, Validators.min(1)]],
                   num_vacantes: [0, [ Validators.required, Validators.min(1)]],
@@ -99,6 +105,11 @@ export class FormularioVacanteComponent implements OnInit {
   cargarSueldos(): void {
     this.rangoSueldoService.listar().subscribe((resp: RangoSueldo[]) => {
       this.sueldos = resp;
+    });
+  }
+  cargarPeriodosDePago(): void {
+    this.periodoPagoService.listar().subscribe((resp: PeriodoPago[]) => {
+      this.periodosPago = resp;
     });
   }
   cargarTipoContratos(): void {
@@ -128,6 +139,7 @@ export class FormularioVacanteComponent implements OnInit {
         this.vacanteForm = this.fb.group({
               titulo: [this.vacante.titulo, [ Validators.required]],
               id_sueldo: [this.vacante.sueldo.id, [ Validators.required, Validators.min(1)]],
+              id_periodo_pago: [this.vacante.periodo_pago.id, [ Validators.required, Validators.min(1)]],
               direccion: [this.vacante.direccion, [ Validators.required]],
               id_horario: [this.vacante.horario.id, [ Validators.required, Validators.min(1)]],
               num_vacantes: [this.vacante.num_vacantes, [ Validators.required, Validators.min(this.vacante.num_postulantes_aceptados)]],

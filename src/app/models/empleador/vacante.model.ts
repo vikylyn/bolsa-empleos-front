@@ -4,11 +4,12 @@ import { Requisitos } from './requisito.model';
 import { TipoContrato } from './tipo-contrato.model';
 import { Ciudad } from '../ciudad.model';
 import { Empleador } from './empleador.model';
-import { Empresa } from './empresa.model';
+import { PeriodoPago } from './periodo-pago.model';
 export class Vacante {
     constructor(
         public titulo: string,
         public sueldo: RangoSueldo,
+        public periodo_pago: PeriodoPago,
         public direccion: string,
         public horario: Horario,
         public num_vacantes: number,

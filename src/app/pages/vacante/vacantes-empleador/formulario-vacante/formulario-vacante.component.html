@@ -16,25 +16,37 @@
                 <form *ngIf="cargarformulario" autocomplete="off" 
                 [formGroup]="vacanteForm">
                        <div *ngIf="!siguiente" class="row p-t-20">
-                           <div class="col-md-6">
+                           <div class="col-md-12">
                                <div class="form-group">
                                    <label class="control-label">Titulo:</label>
                                    <input [class.is-invalid]="campoNoValido('titulo')" formControlName="titulo" class="form-control" type="text" placeholder="Titulo">
                                    <small *ngIf="campoNoValido('titulo')" class="form-control-feedback text-danger">El titulo es obligatorio </small>
                                </div>
                            </div>
-                           <!--/span-->
-                           <div class="col-md-6">
-                               <div class="form-group">
-                                   <label class="control-label">Sueldo:</label>
-                                   <select [class.is-invalid]="campoNoValido('id_sueldo')" formControlName="id_sueldo" class="form-control custom-select">
-                                       <option *ngIf="tipoOperacion==='adicionar'" value="0">Seleccionar</option>
-                                       <option *ngFor="let sueldo of sueldos" [value]="sueldo.id">{{sueldo.sueldo}}</option>
-                                   </select>
-                                   <small *ngIf="campoNoValido('id_sueldo')" class="form-control-feedback text-danger">Seleccione un sueldo</small> 
-                               </div>
-                           </div>
-                           <!--/span-->
+                       </div>
+                       <div *ngIf="!siguiente" class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Sueldo:</label>
+                                <select [class.is-invalid]="campoNoValido('id_sueldo')" formControlName="id_sueldo" class="form-control custom-select">
+                                    <option *ngIf="tipoOperacion==='adicionar'" value="0">Seleccionar</option>
+                                    <option *ngFor="let sueldo of sueldos" [value]="sueldo.id">{{sueldo.sueldo}}</option>
+                                </select>
+                                <small *ngIf="campoNoValido('id_sueldo')" class="form-control-feedback text-danger">Seleccione un sueldo</small> 
+                            </div>
+                        </div>
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Pago:</label>
+                                <select [class.is-invalid]="campoNoValido('id_periodo_pago')" formControlName="id_periodo_pago" class="form-control custom-select">
+                                    <option *ngIf="tipoOperacion==='adicionar'" value="0">Seleccionar</option>
+                                    <option *ngFor="let periodo of periodosPago" [value]="periodo.id">{{periodo.periodo}}</option>
+                                </select>
+                                <small *ngIf="campoNoValido('id_periodo_pago')" class="form-control-feedback text-danger">Seleccione un periodo de pago</small> 
+                            </div>
+                        </div>
+                        <!--/span-->
                        </div>
                        <div class="row" *ngIf="!siguiente">
                            <div class="col-md-12 ">

@@ -22,14 +22,24 @@
                                             <small *ngIf="campoNoValido('nombre')" class="form-control-feedback text-danger">El nombre de la empresa es obligatorio</small> 
                                         </div>
                                     </div>
-                                    <!--/span-->
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">Dominio Web:</label>
+                                            <label class="control-label">Razón social:</label>
+                                            <select [class.is-invalid]="campoNoValido('id_razon_social')" formControlName="id_razon_social" class="form-control custom-select">
+                                                <option *ngFor="let razon of razonesSociales" value="{{razon.id}}"> {{razon.sigla}} ({{razon.tipo}})</option>
+                                            </select>
+                                            <small *ngIf="campoNoValido('id_razon_social')" class="form-control-feedback text-danger">Seleccione una razón social</small> 
+                                        </div>
+                                      
+                                    </div>                    
+                                </div> 
+                                <div  class="row">    
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Dominio Web (opcional):</label>
                                             <input formControlName="dominio_web" type="text" class="form-control" placeholder="Dominio web">
                                         </div>
                                     </div>
-                                    <!--/span-->
                                 </div> 
                                 <div class="row">
                                     <div class="col-md-6 ">
