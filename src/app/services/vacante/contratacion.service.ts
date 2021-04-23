@@ -17,11 +17,6 @@ export class ContratacionService {
     const token = localStorage.getItem('token');
     return this.http.get<{contratacion: Contratacion}>(`${base_url}/contratacion/${id_contratacion}?token=${token}`);
   }
-  
-  rechazar(id_postulacion: number): any {
-    const token = localStorage.getItem('token');
-    return this.http.delete(`${base_url}/contratacion/rechazar/${id_postulacion}?token=${token}`);
-  }
   ocultar(id_contratacion: number): any {
     const token = localStorage.getItem('token');
     return this.http.put(`${base_url}/contratacion/oculto/${id_contratacion}?token=${token}`, {});
@@ -40,19 +35,16 @@ export class ContratacionService {
     const token = localStorage.getItem('token');
     return this.http.get<{total: number, contrataciones: Contratacion[]}>(`${base_url}/contratacion/lista-empleador/${idEmpleador}?desde=${desde}&token=${token}`);
   }
-/*
-  listarPorIdVacante(id_vacante: number, desde: number): any {
-    const token = localStorage.getItem('token');
-    return this.http.get<{contrataciones: Contratacion[]}>(`${base_url}/contratacion/lista/${id_vacante}?desde=${desde}&token=${token}`);
-  }
-*/
-  busqueda(valor: string, id_empleador: number): any {
-    const token = localStorage.getItem('token');
-    return this.http.get<{contrataciones: Contratacion[]}>(`${base_url}/contratacion/busqueda/${id_empleador}/${valor}?token=${token}`);
-  }
 
-
-  actualizarContrataciones() {
+  busquedaEmpleador(valor: string, id_empleador: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get<{contrataciones: Contratacion[]}>(`${base_url}/contratacion/busqueda-empleador/${id_empleador}/${valor}?token=${token}`);
+  }
+  busquedaSolicitante(valor: string, id_solicitante: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get<{contrataciones: Contratacion[]}>(`${base_url}/contratacion/busqueda-solicitante/${id_solicitante}/${valor}?token=${token}`);
+  }
+  actualizarContrataciones(): any {
     return  this.wsService.escuchar('actualizar-contrataciones');
   }
 }

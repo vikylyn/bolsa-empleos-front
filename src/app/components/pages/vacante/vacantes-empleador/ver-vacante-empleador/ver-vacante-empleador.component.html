@@ -1,0 +1,58 @@
+<div class="modal" *ngIf="visible">
+  <div class="row container-modal justify-content-center animated fadeIn fast" *ngIf="cargando">
+    <div class="col-xl-4 col-lg-5 col-md-8 col-sm-12">
+        <div class="alert alert-info text-center">
+            <h4>Cargando...</h4> 
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere</p>
+        </div>
+    </div>
+  </div>
+    <div class="row container-modal animated fadeIn fast justify-content-center">
+      <div class="col-xl-4 col-lg-5 col-md-8 col-sm-12">
+          <div class="card rounded">
+              <div class="card-header pt-0 pb-0 header-modal">
+                <div class="row justify-content-end">
+                    <div class="col-1 pr-0">
+                      <a class="cursor float-right" (click)="cerrarModal()"><i class="fa fa-window-close  cerrar"></i></a>
+                   </div>
+                </div>
+              </div>
+              <div class="card-body" *ngIf="vacante">
+                    <h3 class="text-center">Datos de la Vacante</h3>
+                    <span class="font-weight-bold">Titulo: </span> {{vacante.titulo}} <br>
+                    <span class="font-weight-bold">Sueldo: </span> {{vacante.sueldo.sueldo}} <br>
+                    <span class="font-weight-bold"> Periodo de pago: </span> {{vacante.periodo_pago.periodo}}<br>
+                    <span class="font-weight-bold">Tipo de Contrato: </span> {{vacante.tipo_contrato.tipo}} <br>
+                    <span class="font-weight-bold">Tipo de Jornada: </span> {{vacante.tipo_jornada.tipo}} <br>
+                    <span class="font-weight-bold">Horario: </span> {{vacante.horario.nombre}} <br>
+                    <span class="font-weight-bold">Direccion: </span> {{vacante.direccion}} <br>             
+                    <span class="font-weight-bold">Nº total de vacantes: </span> {{vacante.num_vacantes}} <br>
+                    <span class="font-weight-bold">Nº de vacantes disponibles: </span> {{vacante.num_disponibles}} <br>
+                    <span class="font-weight-bold">Nº de postulantes aceptados: </span> {{vacante.num_postulantes_aceptados}} <br>
+                    <span class="font-weight-bold">Descripcion: </span> {{vacante.descripcion}} <br>
+                    <span class="font-weight-bold">Publicado en: </span> {{vacante.creado_en | date: 'long'}} <br>
+                    <span class="font-weight-bold">Pais: </span> {{vacante.ciudad.estado.pais.nombre}} <br>
+                    <span class="font-weight-bold">Ciudad: </span> {{vacante.ciudad.nombre}} - {{vacante.ciudad.estado.nombre}} 
+
+                    <hr>
+                    <h3 class="text-center">Requisitos del solicitante</h3>
+                    <span class="font-weight-bold">Años de Experiencia: </span> {{vacante.requisitos.experiencia}} <br>
+                    <span class="font-weight-bold">Genero: </span> {{vacante.requisitos.genero | genero:vacante.requisitos.genero}} <br>
+                    <span class="font-weight-bold">Ocupacion: </span> {{vacante.requisitos.ocupacion.nombre}} <br>
+                    <span class="font-weight-bold">Idiomas: </span> 
+                    <ul>
+                      <li *ngFor="let idioma of vacante.requisitos.idiomas">{{idioma.idioma.nombre}}
+                          <ul>
+                            <li >Nivel Escrito: {{idioma.nivel_escrito.nombre}}</li>
+                            <li >Nivel Oral: {{idioma.nivel_oral.nombre}}</li>
+                            <li >Nivel Lectura: {{idioma.nivel_lectura.nombre}}</li>
+                          </ul>
+                      </li>
+                    </ul>
+              </div>
+          </div>
+      </div>
+    </div>
+</div> 
+

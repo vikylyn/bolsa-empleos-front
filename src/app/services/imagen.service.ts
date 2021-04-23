@@ -20,7 +20,7 @@ export class ImagenService {
   cambiarImagen(archivo: File, tipo: string, id: number): any {
     const formData = new FormData();
     formData.append('image', archivo, archivo.name);
-    return this.http.put(`${base_url}/upload/${tipo}/${id}`, formData)
-           .pipe( map( (resp: any) => resp.imagen));
+    return this.http.put(`${base_url}/upload/${tipo}/${id}`, formData);
+          // .pipe( map( (resp: any) => resp.imagen));
   }
 }

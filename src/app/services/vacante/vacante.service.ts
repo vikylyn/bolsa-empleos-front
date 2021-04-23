@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Vacante } from '../../models/empleador/vacante.model';
 import { environment } from '../../../environments/environment';
-import { map, delay } from 'rxjs/operators';
+import { map} from 'rxjs/operators';
 
 
 const base_url = environment.base_url;
@@ -22,8 +22,7 @@ export class VacanteService {
   }
   listarHabilitadasSinPaginacion(id_empleador: number): any {
     const token = localStorage.getItem('token');
-    return this.http.get<{vacantes: Vacante[]}>(`${base_url}/vacante/lista-completa-habilitadas/${id_empleador}?token=${token}`)
-          .pipe( delay(300));
+    return this.http.get<{vacantes: Vacante[]}>(`${base_url}/vacante/lista-completa-habilitadas/${id_empleador}?token=${token}`);
   }
   listarInhabilitadas(id_empleador: number, desde: number): any {
     const token = localStorage.getItem('token');
@@ -47,11 +46,6 @@ export class VacanteService {
     return this.http.put(`${base_url}/vacante/${id}?token=${token}`, formData);
   }
 
-  // Eliminacion fisica, registro borrado de la tabla vacantes;
-  eliminacion(id: number): any {
-    const token = localStorage.getItem('token');
-    return this.http.delete(`${base_url}/vacante/${id}?token=${token}`);
-  }
   // Inhabilitar vacante
   inhabilitar(id: number): any {
     const token = localStorage.getItem('token');

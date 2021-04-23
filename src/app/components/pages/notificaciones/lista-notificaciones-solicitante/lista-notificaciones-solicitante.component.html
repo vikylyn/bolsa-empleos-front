@@ -1,0 +1,60 @@
+
+
+<div class="container">
+    <app-cargando [tamanio]="'col-md-12'" *ngIf="cargando"></app-cargando>
+    <div class="row" *ngIf="!cargando">
+        <div class="col">
+            <div class="card pt-2 pb-2 bg-dark text-light rounded" >
+                <div class="row">
+                    <div class="col">
+                        <span class="ml-2">Total: {{total}} - {{desde}}</span> 
+                    </div>
+                    <div class="col">
+                        <span class="ml-2">leidas: {{leidas}}</span> 
+                    </div>
+                    <div class="col">
+                        <span class="ml-2">sin leer: {{noLeidas}}</span> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center"  *ngFor="let notificacion of notificaciones; let i = index">
+        <div class="col-md-8 col-sm-12">
+            <table class="table">
+                <tr class="mb-0">
+                    <td [class.no-leido]="!notificacion.leido" [class.leido]="notificacion.leido">
+                       <a  (click)="leerNotificacion(notificacion.id, notificacion.leido,notificacion.tipo_notificacion.tipo)" class="cursor" >
+                            <div  class="mail-contnet ">
+                                       <span class="badge badge-primary"> {{i+1+desde}} </span>
+                                       <h5 class="ml-5" *ngIf="notificacion.tipo_notificacion.tipo === 'postulacion_aceptada'">Ha sido aceptado para {{notificacion.vacante.titulo}} </h5>
+                                       <h5 class="ml-5" *ngIf="notificacion.tipo_notificacion.tipo === 'postulacion_rechazada_empleador'">Ha sido rechazado para {{notificacion.vacante.titulo}} </h5>
+                                       <h5 class="ml-5" *ngIf="notificacion.tipo_notificacion.tipo === 'desvinculacion_solicitante'">Su contrato  para {{notificacion.vacante.titulo}} ha terminado</h5>
+                                       <h5  *ngIf="notificacion.tipo_notificacion.tipo === 'invitacion_postulacion'">Ha sido invitado a postular para {{notificacion.vacante.titulo}} </h5>
+                                       <span class="ml-5">empleador: {{notificacion.vacante.empleador.nombre}} {{notificacion.vacante.empleador.apellidos}} &nbsp; telefono: {{notificacion.vacante.empleador.telefono}}</span>
+                                       <br>
+                                       <h6 class="text-right">{{notificacion.creado_en | date: 'mediumDate'}} {{notificacion.creado_en | date: 'shortTime'}}</h6>         
+                            </div>
+                       </a>
+                    </td>
+                    <td [class.no-leido]="!notificacion.leido" [class.leido]="notificacion.leido" align="center">
+                        <a class="cursor" (click)="eliminar(notificacion.id)"> <i class="fa fa-trash-o m-r-10 text-info"></i></a>
+                    </td>
+                </tr>
+            </table>  
+
+            
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button (click)="cambiarPagina(-5)" class="btn btn-secondary">Anterior</button> 
+        &nbsp;
+        <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguiente</button>
+    </div>
+</div>
+
+<app-notificacion-postulacion-solicitante *ngIf="myModal" [visible]="myModal" 
+                                          [idNotificacion]= "idNotificacion" 
+                                          (cerrar)="cerrarModal($event)">
+</app-notificacion-postulacion-solicitante>

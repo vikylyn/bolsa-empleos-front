@@ -1,0 +1,32 @@
+
+<ul>
+    <li>
+        <div class="drop-title">Notificaciones recientes</div>
+    </li>
+    <li>
+        <div class="message-center notificacion">
+            <div [class.no-leido]="!notificacion.leido" *ngFor="let notificacion of notificaciones">
+                <!-- Message -->
+                <!--<i class="mdi mdi-dots-horizontal"></i>-->
+                <a  (click)="leerNotificacion(notificacion.id, notificacion.leido,notificacion.tipo_notificacion.tipo)" class="cursor">
+                    
+                    <div  class="mail-contnet ">
+                        <div class="btn float-right" *ngIf="!notificacion.leido"><i class="fa fa-circle"></i></div>
+                        <h5 *ngIf="notificacion.tipo_notificacion.tipo === 'nueva_postulacion'">Nuevo Postulante para {{notificacion.vacante.titulo}} </h5>
+                        <h5 *ngIf="notificacion.tipo_notificacion.tipo === 'postulacion_rechazada_solicitante'">Contratacion rechazada para {{notificacion.vacante.titulo}} </h5>
+                        <h5 *ngIf="notificacion.tipo_notificacion.tipo === 'postulacion_confirmada'">Solicitante confirmado para {{notificacion.vacante.titulo}} </h5>
+
+                            <span class="mail-desc text-right">solicitante:  {{notificacion.solicitante.nombre}} {{notificacion.solicitante.apellidos}}</span>
+                            <span class="mail-desc text-right">ocupacion: {{notificacion.vacante.requisitos.ocupacion.nombre}}</span>  
+                            <span class="time text-right">{{notificacion.creado_en | date: 'mediumDate'}} {{notificacion.creado_en | date: 'shortTime'}}</span> 
+                    </div>
+                </a>
+                <!-- Message -->
+            </div>
+            
+        </div>
+    </li>
+    <li>
+        <a class="nav-link text-center" routerLink="/notificaciones-empleador"> <strong>Ver todas las notificaciones</strong></a>
+    </li>
+</ul>

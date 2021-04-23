@@ -1,0 +1,108 @@
+<div class="container-fluid animated fadeIn fast">
+    <app-cargando [tamanio]="'col-xl-7 col-lg-8 col-md-10 col-sm-12'" *ngIf="cargando"></app-cargando>
+
+    <div *ngIf="cargarformulario" class="row justify-content-center">
+        <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <form  class="form p-t-20" 
+                            [formGroup]="perfilForm">
+                            <div class="form-body">
+                                
+                                <div class="row">
+                                    <div class="col-md-12 ">
+                                        <h3 class="text-center">Modificar Datos de la Empresa</h3>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div  class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Empresa:</label>
+                                            <input [class.is-invalid]="campoNoValido('nombre')" formControlName="nombre" type="text" class="form-control" placeholder="Nombre de la empresa">
+                                            <small *ngIf="campoNoValido('nombre')" class="form-control-feedback text-danger">El nombre de la empresa es obligatorio</small> 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Razón social:</label>
+                                            <select [class.is-invalid]="campoNoValido('id_razon_social')" formControlName="id_razon_social" class="form-control custom-select">
+                                                <option *ngFor="let razon of razonesSociales" value="{{razon.id}}"> {{razon.sigla}} ({{razon.tipo}})</option>
+                                            </select>
+                                            <small *ngIf="campoNoValido('id_razon_social')" class="form-control-feedback text-danger">Seleccione una razón social</small> 
+                                        </div>
+                                      
+                                    </div>                    
+                                </div> 
+                                <div  class="row">    
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Dominio Web (opcional):</label>
+                                            <input formControlName="dominio_web" type="text" class="form-control" placeholder="Dominio web">
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="row">
+                                    <div class="col-md-6 ">
+                                        <div class="form-group">
+                                            <label>Direccion</label>
+                                            <input [class.is-invalid]="campoNoValido('direccion')" formControlName="direccion" type="text" class="form-control" placeholder="Direccion">
+                                            <small *ngIf="campoNoValido('direccion')" class="form-control-feedback text-danger">La direccion de la empresa es Obligatoria</small> 
+                                        </div>
+                                    </div>
+                                    <div  class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="control-label">Telefono:</label>
+                                            <input [class.is-invalid]="campoNoValido('telefono')" formControlName="telefono" type="number" class="form-control" placeholder="Telefono">
+                                            <small *ngIf="campoNoValido('telefono')" class="form-control-feedback text-danger">El telefono de la empresa es obligatorio</small>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div  class="row">
+                                    <div class="col-md-12 ">
+                                        <div class="form-group">
+                                            <label>Descripcion</label>
+                                            <textarea [class.is-invalid]="campoNoValido('descripcion')" formControlName="descripcion" class="form-control rounded-0" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                            <small *ngIf="campoNoValido('descripcion')" class="form-control-feedback text-danger">La descripcion de la empresa es Obligatoria</small> 
+                                        </div>
+                                    </div>
+                                </div>        
+                            </div>
+                            <div  class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Pais</label>
+                                        <select [class.is-invalid]="selectNoValido('id_pais')" formControlName="id_pais" class="form-control custom-select">
+                                            <option *ngFor="let pais of paises" value="{{pais.id}}">{{pais.nombre}}</option>
+                                        </select>
+                                        <small *ngIf="selectNoValido('id_pais')" class="form-control-feedback text-danger">Seleccione un pais</small> 
+    
+                                    </div>
+                                </div>
+                                <!--/span-->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Ciudad</label>
+                                        <select [class.is-invalid]="selectNoValido('id_ciudad')" formControlName="id_ciudad" class="form-control custom-select">
+                                            <option *ngFor="let ciudad of ciudades" value="{{ciudad.id}}">{{ciudad.nombre}} / {{ciudad.estado.nombre}}</option>
+                                        </select>
+                                        <small *ngIf="selectNoValido('id_ciudad')" class="form-control-feedback text-danger">Seleccione una ciudad</small> 
+                                    </div>
+                                </div>
+                                
+                                <!--/span-->
+                            </div>
+                            <hr>
+
+                            <div class="form-actions text-center">
+                                <button (click)="guardar()"  class="btn btn-success"> <i class="fa fa-check"></i> Guardar</button>
+                                &nbsp;
+                                <button  routerLink="/dashboard" type="button" class="btn btn-inverse">Cancelar</button>
+                            </div> 
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

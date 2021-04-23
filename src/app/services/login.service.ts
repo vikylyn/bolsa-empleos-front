@@ -9,7 +9,6 @@ import { Imagen } from '../models/imagen.model';
 import { Empleador } from '../models/empleador/empleador.model';
 import { Solicitante } from '../models/solicitante/solicitante.model';
 import { Administrador } from '../models/administrador/administrador.model';
-import { Empresa } from '../models/empleador/empresa.model';
 
 const base_url = environment.base_url;
 

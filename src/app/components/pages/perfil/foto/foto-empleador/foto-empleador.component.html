@@ -1,0 +1,28 @@
+<div class="container">
+    <app-cargando [tamanio]="'col-xl-7 col-lg-8 col-md-10 col-sm-12'" *ngIf="cargando" [mensaje]="mensaje"></app-cargando>
+
+    <div class="row justify-content-center">
+        <div *ngIf="empleador" class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
+            <div class="card">
+                <div class="card-body" align="center">
+                    <h4 class="card-title">Fotografia del usuario</h4>
+        
+                    <img *ngIf="!imagenTemp" [src]="empleador.imagen.url" class="img-circle img-responsive">
+                    <img *ngIf="imagenTemp" [src]="imagenTemp"  class="img-circle img-responsive">
+                    <input (change)="seleccionImagen( $event.target.files[0] )" type="file">
+                    <br>
+                    <br>
+                    <button (click)="cambiarImagen()" [disabled]="!imagenSubir" type="button" class="btn btn-success waves-effect waves-light m-r-10">
+                        <i class="fa fa-save"></i>
+                        Actualizar foto
+                    </button>
+                    <br>
+                    <br>
+              
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

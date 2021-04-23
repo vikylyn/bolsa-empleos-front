@@ -24,13 +24,13 @@ export class ReporteService {
 
   generarListadoSolicitantesContratados(formData: any): any {
     const token = localStorage.getItem('token');
-    return this.http.post<{contrataciones: Contratacion[], ocupacion: Ocupacion}>
+    return this.http.post<{solicitantes: Solicitante[], ocupacion: Ocupacion}>
            (`${base_url}/reportes/solicitantes-aceptados?token=${token}`, formData);
   }
 
-  generarListadoPostulacionesRechazadas(formData: any): any {
+  generarListadoSolicitantesRechazados(formData: any): any {
     const token = localStorage.getItem('token');
-    return this.http.post<{postulaciones: Postulacion[], ocupacion: Ocupacion, total: number}>(`${base_url}/reportes/postulaciones-rechazadas?token=${token}`, formData);
+    return this.http.post<{solicitantes: Solicitante[], ocupacion: Ocupacion, total: number}>(`${base_url}/reportes/postulaciones-rechazadas?token=${token}`, formData);
   }
 
   generarListadoEmpleadores(formData: any): any {

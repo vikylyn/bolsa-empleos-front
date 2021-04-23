@@ -1,0 +1,97 @@
+<div class="modal" *ngIf="visible">
+    <app-cargando [rowclass]="'row container-modal justify-content-center animated fadeIn fast'" [tamanio]="'col-lg-7  col-md-10 col-sm-12'" *ngIf="cargando"></app-cargando>
+    <div class="row container-modal animated fadeIn fast justify-content-center" *ngIf="!cargando">
+      <div class="col-xl-7 col-lg-10  col-md-10 col-sm-12">
+          <div class="card bg-dark mb-3 rounded">
+              <div class="card-header pt-0 pb-0 header-modal">
+                <div class="row justify-content-end">
+                    <div class="col-1 pr-0">
+                      <a class="cursor float-right" (click)="cerrarModalPadre()"><i class="fa fa-window-close  cerrar"></i></a>
+                   </div>
+                </div>
+              </div>
+              <div class="card-body" *ngIf="contratacion">
+                    <div class="row animated fadeIn fast">
+                      <div class="col-lg-7 col-md-7 col-sm-12">
+                          <div class="row">
+                              <div class="col">
+                                  <div class="card mb-3">
+                                      <div class="card-body">
+                                          <h3 class="card-title text-center">
+                                              <strong>Vacante: {{contratacion.vacante.titulo}}</strong>
+                                          </h3>
+                                          <span class="font-weight-bold">Sueldo: </span> {{contratacion.vacante.sueldo.sueldo}} <br>
+                                          <span class="font-weight-bold">Periodo de pago: </span> {{contratacion.vacante.periodo_pago.periodo}}<br>
+                                          <span class="font-weight-bold">Tipo de Contrato: </span> {{contratacion.vacante.tipo_contrato.tipo}} <br>
+                                          <span class="font-weight-bold">Tipo de Jornada: </span> {{contratacion.vacante.tipo_jornada.tipo}} <br>
+                                          <span class="font-weight-bold">Horario: </span> {{contratacion.vacante.horario.nombre}} <br>
+                                          <span class="font-weight-bold">Fecha de publicacion: </span> <span>{{contratacion.vacante.creado_en | date: 'longDate'}}</span> <br>  
+                                          <span class="font-weight-bold">Vacantes Disponibles: </span> <span>{{contratacion.vacante.num_disponibles}}</span> <br>  
+                                          <span class="font-weight-bold">Direccion: </span> <span>{{contratacion.vacante.direccion}}</span> <br>                          
+                                          <span class="font-weight-bold">Pais: </span> <span>{{contratacion.vacante.ciudad.estado.pais.nombre}}</span> <br>
+                                          <span class="font-weight-bold">Ciudad: </span> <span>{{contratacion.vacante.ciudad.nombre}} / {{contratacion.vacante.ciudad.estado.nombre}}</span> <br>
+                                          <span class="font-weight-bold">Descripcion: </span> <span>{{contratacion.vacante.descripcion}}</span> <br>
+                                         
+                                          <hr>
+      
+                                          <h3 class="card-title text-center"><strong>Requisitos para el cargo</strong> </h3>
+                                          <span class="font-weight-bold">Ocupacion: </span> <span>{{contratacion.vacante.requisitos.ocupacion.nombre}}</span> <br>
+                                          <span class="font-weight-bold">Años de Experiencia: </span> <span>{{contratacion.vacante.requisitos.experiencia}}</span> <br>
+                                          <span class="font-weight-bold">Genero: </span> <span>{{contratacion.vacante.requisitos.genero | genero:contratacion.vacante.requisitos.genero}}</span> <br>
+                                          <span class="font-weight-bold">Idiomas: </span> 
+                                           <ul>
+                                               <li *ngFor="let idioma  of contratacion.vacante.requisitos.idiomas"><span>{{idioma.idioma.nombre}}</span>
+                                                  <ul>
+                                                      <li>Nivel oral: {{idioma.nivel_oral.nombre}}</li>
+                                                      <li>Nivel lectura: {{idioma.nivel_lectura.nombre}}</li>
+                                                      <li>Nivel escrito: {{idioma.nivel_escrito.nombre}}</li>
+                                                  </ul>
+                                              </li>
+                                           </ul>
+                                      </div>
+                                       
+                                      
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-5 col-md-5 col-sm-12">
+                      
+                          <div class="card text-white bg-dark mb-3">
+                              <img class="img-responsive" [src]="contratacion.solicitante.imagen.url" alt="">
+                              <div class="card-body">  
+                                  <span class="font-weight-bold">Empleado: </span> <span>{{contratacion.solicitante.nombre}} {{contratacion.solicitante.apellidos}}</span> <br>
+                                  <span class="font-weight-bold">Contratado en: </span> {{contratacion.creado_en | date: 'long'}} <br> 
+                                  <span class="font-weight-bold">Telefono: </span> <span>{{contratacion.solicitante.telefono}}</span> <br>
+                                  <span class="font-weight-bold">Cedula: </span> <span>{{contratacion.solicitante.cedula}} {{contratacion.solicitante.num_complemento_ci}}</span> <br>
+                                  <span class="font-weight-bold">Correo electronico: </span> <span>{{contratacion.solicitante.credenciales.email}}</span> <br>
+                                  <span class="font-weight-bold">Nacionalidad: </span> <span>{{contratacion.solicitante.nacionalidad}}</span> <br>
+                                  <span class="font-weight-bold">Pais de residencia: </span> <span>{{contratacion.solicitante.ciudad.estado.pais.nombre}}</span> <br>
+                                  <span class="font-weight-bold">Ciudad de residencia: </span> <span>{{contratacion.solicitante.ciudad.nombre}} - {{contratacion.solicitante.ciudad.estado.nombre}}</span> <br>
+                                  <span class="font-weight-bold">Direccion: </span> <span>{{contratacion.solicitante.direccion}}</span> <br>
+                                  <span class="font-weight-bold">Genero: </span> <span>{{contratacion.solicitante.genero | genero:contratacion.solicitante.genero}}</span> <br>
+                                  <span class="font-weight-bold">Ocupaciones : </span> 
+                                  <ul>
+                                      <li *ngFor="let ocupacion of contratacion.solicitante.ocupaciones" >{{ocupacion.ocupacion.nombre}}</li>
+                                  </ul>
+                                  <button (click)="mostrarModal()" class="btn btn-success btn-block mt-2">Curriculum</button>                                                      
+                                  
+                              </div>
+                          </div> 
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+</div> 
+
+
+<app-vista-completo *ngIf="myModal && contratacion" [visible]="myModal" 
+                                                    [idSolicitante]= "contratacion.solicitante.id" 
+                                                    [tipoOperacion]="'contratacion'" 
+                                                    [idOperacion] = "contratacion.id"
+                                                    (cerrar)="cerrarModal($event)"
+                                                    (cancelar)="cancelarModal($event)"
+                                                    >
+</app-vista-completo>

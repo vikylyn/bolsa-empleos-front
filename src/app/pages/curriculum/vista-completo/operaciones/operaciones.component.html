@@ -1,7 +1,0 @@
-<div class="row">
-    <div class="col-12">
-        <button *ngIf="tipoOperacion === 'postulacion' && postulacion && !postulacion.aceptado && !postulacion.rechazado" (click)="contratar()" class="btn btn-info btn-block">Contratar</button>
-        <button *ngIf="tipoOperacion === 'postulacion' && postulacion && !postulacion.rechazado" (click)="rechazar()" class="btn btn-danger btn-block">Rechazar</button>
-        <button *ngIf="contratacion && tipoOperacion === 'contratacion' && contratacion.habilitado" (click)="terminar()" class="btn btn-danger btn-block">Terminar</button>
-   </div>
-</div>

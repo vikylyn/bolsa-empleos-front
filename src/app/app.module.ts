@@ -4,11 +4,11 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 
 // Modulos
 import { AppRoutingModule } from './app-routing.module';
-import { PagesModule } from './pages/pages.module';
+import { PagesModule } from './components/pages/pages.module';
 
 import { AppComponent } from './app.component';
-import { AuthModule } from './auth/auth.module';
-import { NopagefoundComponent } from './nopagefound/nopagefound.component';
+import { AuthModule } from './components/auth/auth.module';
+import { NopagefoundComponent } from './components/nopagefound/nopagefound.component';
 // sockets
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from '../environments/environment';

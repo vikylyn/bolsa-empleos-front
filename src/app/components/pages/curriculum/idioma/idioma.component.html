@@ -1,0 +1,82 @@
+<app-cargando [tamanio]="'col-12'" *ngIf="cargando"></app-cargando>
+<div class="row animated fadeIn fast" *ngIf="!myModal">
+    
+    <div class="col-12">
+        <div class="card" id="4">
+            <div class="card-header">
+                <h2><span class="badge badge-info">Administración de Idiomas</span></h2>
+                
+                <h6>Total: {{totalIdiomas}} - {{desde}}</h6> 
+            </div>
+            <div class="card-body">
+                <button (click)="mostrarModal('adicionar', 0)"
+                        class="btn btn-success">
+                            Adicionar
+                </button>
+                <br><br>
+                <div class="table-responsive">
+                    <table class="table full-color-table full-inverse-table hover-table">
+                        <thead>
+                            <tr>
+                                <th>Idioma</th>
+                                <th>Nivel escrito</th>
+                                <th>Nivel oral</th>
+                                <th>Nivel lectura</th>
+                                <th class="w100 text-center">ver</th>
+                                <th class="w100 text-center">modificar</th>
+                                <th class="w100 text-center">eliminar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let idioma of idiomas">
+                                <td> 
+                                    {{idioma.idioma.nombre}}
+                                </td>
+                                <td>
+                                    {{idioma.nivel_escrito.nombre}}
+                                </td>
+                                <td>
+                                    {{idioma.nivel_oral.nombre}}
+                                </td>
+                                <td>
+                                    {{idioma.nivel_lectura.nombre}}
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <a class="cursor" (click)="mostrarModal2(idioma.id)"> 
+                                        <i class="fa fa-eye "></i> 
+                                    </a>
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <a class="cursor" (click)="mostrarModal('modificar', idioma.id)"> 
+                                            <i class="fa fa-pencil"></i> 
+                                    </a>
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <a (click)="eliminar(idioma.id)" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-trash-o text-info"></i></a>
+                                  
+                                </td>
+                            </tr>
+                        </tbody> 
+                    </table>
+                </div>
+                <div class="text-center">
+                    <button (click)="cambiarPagina(-5)" class="btn btn-secondary">Anterior</button> 
+                    &nbsp;
+                    <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguiente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-formulario-idioma *ngIf="myModal" [visible]="myModal" 
+                                       [idCurriculum]= "idCurriculum" 
+                                       [idIdioma]= "idIdioma" 
+                                       [tipoOperacion]="tipoOperacion" 
+                                       (cerrar)="cerrarModal($event)"
+                                       (cancelar)="cancelarModal($event)">
+</app-formulario-idioma>
+<app-ver-idioma *ngIf="myModal2" [visible]="myModal2" 
+                                      [idIdioma] = "idIdioma"
+                                      (cerrar)="cerrarModal2($event)">
+</app-ver-idioma>

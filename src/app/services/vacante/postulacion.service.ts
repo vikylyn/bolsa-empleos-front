@@ -3,7 +3,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Postulacion } from '../../models/empleador/postulacion.model';
 import { WebsocketService } from '../websocket/websocket.service';
-import { map, delay } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 
 const base_url = environment.base_url;
@@ -34,26 +34,42 @@ export class PostulacionService {
     const token = localStorage.getItem('token');
     return this.http.delete(`${base_url}/postulacion/${id_postulacion}?token=${token}`);
   }
+    // eliminar logicamente la postulacion rechazada por el solicitante
+  eliminarRechazadoSolicitante(id_postulacion: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.put(`${base_url}/postulacion/eliminacion-rechazado-solicitante/${id_postulacion}?token=${token}`, {});
+  }
   // aceptar postulacion por parte de un empleador
   aceptar(id_postulacion: number): any {
     const token = localStorage.getItem('token');
     return this.http.put(`${base_url}/postulacion/aceptar/${id_postulacion}?token=${token}`, {});
   }
     // aceptar postulacion que ha sido rechazada por parte de un empleador
-  aceptarRechazado(id_postulacion: number): any {
+ /* aceptarRechazado(id_postulacion: number): any {
     const token = localStorage.getItem('token');
     return this.http.put(`${base_url}/postulacion/aceptar-rechazado/${id_postulacion}?token=${token}`, {});
   }
-
+*/
   // confirmar  postulacion que ha sido aceptada (solicitante)
   confirmar(id_postulacion: number): any {
     const token = localStorage.getItem('token');
     return this.http.put(`${base_url}/postulacion/confirmar/${id_postulacion}?token=${token}`, {});
   }
   // rechazar postulacion por parte de un empleador ( la postulacion  no ha sido aceptada por el empleador )
-  rechazar(id_postulacion: number): any {
+  rechazarPostulacionEmpleador(id_postulacion: number): any {
     const token = localStorage.getItem('token');
-    return this.http.put(`${base_url}/postulacion/rechazar/${id_postulacion}?token=${token}`, {});
+    return this.http.put(`${base_url}/postulacion/rechazar-empleador/${id_postulacion}?token=${token}`, {});
+  }
+
+  rechazarPostulacionSolicitante(id_postulacion: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.put(`${base_url}/postulacion/rechazar-solicitante/${id_postulacion}?token=${token}`, {});
+  }
+
+  // rechazar postulacion por parte de un empleador ( la postulacion  ha sido aceptada por el empleador )
+  rechazarAceptado(id_postulacion: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.put(`${base_url}/postulacion/rechazar-aceptado/${id_postulacion}?token=${token}`, {});
   }
 
   // listar postulaciones mediante id de Solicitante
@@ -97,9 +113,34 @@ export class PostulacionService {
       (`${base_url}/postulacion/favoritos/${id_vacante}?desde=${desde}&token=${token}`);
   }
 
-  busqueda(valor: string, id_empleador: number): any {
+  busquedaPendientesEmpleador(valor: string, id_empleador: number): any {
     const token = localStorage.getItem('token');
-    return this.http.get<{postulaciones: Postulacion[]}>(`${base_url}/postulacion/busqueda/${id_empleador}/${valor}?token=${token}`);
+    return this.http.get<{postulaciones: Postulacion[]}>(`${base_url}/postulacion/busqueda-pendientes-empleador/${id_empleador}/${valor}?token=${token}`);
+  }
+  busquedaConsideradosEmpleador(valor: string, id_empleador: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get<{postulaciones: Postulacion[]}>(`${base_url}/postulacion/busqueda-considerados-empleador/${id_empleador}/${valor}?token=${token}`);
+  }
+  busquedaRechazadosEmpleador(valor: string, id_empleador: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get<{postulaciones: Postulacion[]}>(`${base_url}/postulacion/busqueda-rechazados-empleador/${id_empleador}/${valor}?token=${token}`);
+  }
+  busquedaFavoritosEmpleador(valor: string, id_empleador: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get<{postulaciones: Postulacion[]}>(`${base_url}/postulacion/busqueda-favoritos-empleador/${id_empleador}/${valor}?token=${token}`);
+  }
+
+  busquedaPendientesSolicitante(valor: string, id_empleador: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get<{postulaciones: Postulacion[]}>(`${base_url}/postulacion/busqueda-pendientes-solicitante/${id_empleador}/${valor}?token=${token}`);
+  }
+  busquedaAceptadosSolicitante(valor: string, id_empleador: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get<{postulaciones: Postulacion[]}>(`${base_url}/postulacion/busqueda-aceptados-solicitante/${id_empleador}/${valor}?token=${token}`);
+  }
+  busquedaRechazadosSolicitante(valor: string, id_empleador: number): any {
+    const token = localStorage.getItem('token');
+    return this.http.get<{postulaciones: Postulacion[]}>(`${base_url}/postulacion/busqueda-rechazados-solicitante/${id_empleador}/${valor}?token=${token}`);
   }
 
   // asignar postulacion como favorito
@@ -122,7 +163,7 @@ export class PostulacionService {
   buscarInvitacion(idSolicitante: number, idVacante: number): any {
     const token = localStorage.getItem('token');
     return this.http.get(`${base_url}/postulacion/invitacion/${idSolicitante}/${idVacante}?token=${token}`)
-            .pipe(map((resp: any)=> resp.notificacion), delay(300));
+            .pipe(map((resp: any)=> resp.notificacion));
   }
   // websockets
 

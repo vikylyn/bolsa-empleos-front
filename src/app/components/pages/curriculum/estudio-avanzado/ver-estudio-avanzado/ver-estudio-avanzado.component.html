@@ -1,0 +1,31 @@
+<div class="modal" *ngIf="visible">
+  <app-cargando [rowclass]="'row container-modal justify-content-center animated fadeIn fast'" [tamanio]="'col-xl-4 col-lg-5 col-md-8 col-sm-12'" *ngIf="cargandoModal"></app-cargando>
+
+  <div class="row container-modal animated fadeIn fast justify-content-center">
+      <div class="col-xl-4 col-lg-5 col-md-8 col-sm-12">
+          <div class="card rounded">
+              <div class="card-header pt-0 pb-0 header-modal">
+                <div class="row justify-content-end">
+                    <div class="col-1 pr-0">
+                      <a class="cursor float-right" (click)="cerrarModal()"><i class="fa fa-window-close  cerrar"></i></a>
+                   </div>
+                </div>
+              </div>
+              <div class="card-body" *ngIf="estudio">
+                    <h3 class="text-center">Estudio Avanzado</h3>
+                    <hr>
+                    <span class="font-weight-bold">Institucion: </span> {{estudio.institucion}} <br>
+                    <span class="font-weight-bold">Carrera/curso/seminario: </span> {{estudio.carrera}} <br>
+                    <span class="font-weight-bold">Nivel de estudio: </span> {{estudio.nivel_estudio.nombre}} <br>
+                    <span class="font-weight-bold">Fecha de Inicio: </span> {{estudio.fecha_inicio | date: 'longDate'}} <br>
+                    <span class="font-weight-bold">Fecha de Finalizacion: </span> {{estudio.fecha_fin | date: 'longDate'}} <br>
+                    <span *ngIf="!estudio.otraCiudad" class="font-weight-bold">Pais: </span> <span *ngIf="!estudio.otraCiudad">{{estudio.ciudad.estado.pais.nombre}} </span> <br *ngIf="!estudio.otraCiudad">
+                    <span *ngIf="!estudio.otraCiudad" class="font-weight-bold">Ciudad - Estado: </span> <span *ngIf="!estudio.otraCiudad"> {{estudio.ciudad.nombre}} - {{estudio.ciudad.estado.nombre}}</span> <br *ngIf="!estudio.otraCiudad">
+                    <span *ngIf="estudio.otraCiudad" class="font-weight-bold">Pais: </span> <span *ngIf="estudio.otraCiudad"> {{estudio.otraCiudad.pais}} </span><br *ngIf="estudio.otraCiudad">
+                    <span *ngIf="estudio.otraCiudad" class="font-weight-bold">Ciudad - Estado: </span><span *ngIf="estudio.otraCiudad">{{estudio.otraCiudad.ciudad}} - {{estudio.otraCiudad.estado}}</span> <br *ngIf="estudio.otraCiudad">
+              
+              </div>
+          </div>
+      </div>
+  </div>
+</div> 

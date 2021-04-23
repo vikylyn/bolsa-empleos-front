@@ -58,7 +58,7 @@ export class SidebarService {
       icono: 'mdi mdi-gauge',
       submenu: [
         {titulo: 'Inicio', url: '/dashboard', submenu: []},
-        {titulo: 'Administrar Informacion de la Aplicacion', url: '/informacion-app', submenu: []},
+        {titulo: 'Informacion de la App', url: '/informacion-app', submenu: []},
         {titulo: 'Administradores', url: '/administrador', submenu: []},
         {titulo: 'Grupos Ocupacionales', url: '/area-laboral', submenu: []},
         {titulo: 'Ocupaciones', url: '/profesion', submenu: []},

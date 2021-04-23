@@ -1,0 +1,91 @@
+<app-cargando [tamanio]="'col-12'" *ngIf="cargando"></app-cargando>
+<div class="row animated fadeIn fast" *ngIf="!myModal">
+    <div class="col-12">
+        <div class="card" id="3">
+            <div class="card-header">
+                <h2><span class="badge badge-info">Administración de Experiencias Laborales</span></h2>              
+                <h6>Total: {{totalExperiencias}} - {{desde}}</h6> 
+            </div>
+            <div class="card-body">
+
+                <button (click)="mostrarModal('adicionar', 0)"
+                        class="btn btn-success">
+                            Adicionar
+                </button>
+                <br><br>
+                <div class="table-responsive">
+                    <table class="table full-color-table full-inverse-table hover-table">
+                        <thead>
+                            <tr>
+                                <th>Empresa</th>
+                                <th>Puesto</th>
+                                <th>Tipo Contrato</th>
+                                <th>Pais</th>
+                                <th>Ciudad - Estado</th>
+                                <th class="w100 text-center">ver</th>
+                                <th class="w100 text-center">modificar</th>
+                                <th class="w100 text-center">eliminar</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let experiencia of experiencias">
+                                <td>
+                                    {{experiencia.empresa}}
+                                </td>
+                                <td>
+                                    {{experiencia.puesto}}
+                                </td>
+                                <td> 
+                                    {{experiencia.tipo_contrato.tipo}}
+                                </td>
+                                <td> 
+                                    <span *ngIf="!experiencia.otraCiudad">{{experiencia.ciudad.estado.pais.nombre}}</span>
+                                    <span *ngIf="experiencia.otraCiudad">{{experiencia.otraCiudad.pais}}</span>
+                                </td>
+                                <td> 
+                                    <span *ngIf="!experiencia.otraCiudad">{{experiencia.ciudad.nombre}} - {{experiencia.ciudad.estado.nombre}}</span>
+                                    <span *ngIf="experiencia.otraCiudad">{{experiencia.otraCiudad.ciudad}} - {{experiencia.otraCiudad.estado}}</span>
+
+                                </td>
+                                <td class="text-nowrap text-center cursor">
+                                    <a class="cursor" (click)="mostrarModal2(experiencia.id)"> 
+                                        <i class="fa fa-eye  m-r-10"></i> 
+                                    </a>
+                                </td>
+                                <td class="text-nowrap text-center cursor">
+                                   
+                                    <a (click)="mostrarModal('modificar', experiencia.id)"
+                                        > 
+                                            <i class="fa fa-pencil  m-r-10"></i> 
+                                    </a>
+                                </td>
+                                <td class="text-nowrap text-center cursor">
+                                    <a (click)="eliminar(experiencia.id)" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"><i class="fa fa-trash-o m-r-10 text-info"></i></a>
+                                </td>
+                            </tr>
+                        </tbody> 
+                    </table>
+                </div>
+                <div class="text-center">
+                    <button (click)="cambiarPagina(-5)" class="btn btn-secondary">Anterior</button> 
+                    &nbsp;
+                    <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguiente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-formulario-experiencia-laboral *ngIf="myModal" [visible]="myModal" 
+                                                    [idCurriculum]= "idCurriculum" 
+                                                    [idExperiencia]= "idExperiencia" 
+                                                    [tipo]="tipoOperacion" 
+                                                    (cerrar)="cerrarModal($event)"
+                                                    (cancelar)="cancelarModal($event)">
+</app-formulario-experiencia-laboral>
+
+<app-ver-experiencia-laboral *ngIf="myModal2" [visible]="myModal2" 
+                                      [idExperiencia] = "idExperiencia"
+                                      (cerrar)="cerrarModal2($event)">
+</app-ver-experiencia-laboral>

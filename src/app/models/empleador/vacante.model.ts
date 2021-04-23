@@ -5,6 +5,7 @@ import { TipoContrato } from './tipo-contrato.model';
 import { Ciudad } from '../ciudad.model';
 import { Empleador } from './empleador.model';
 import { PeriodoPago } from './periodo-pago.model';
+import { TipoJornada } from './tipo-jornada.model';
 export class Vacante {
     constructor(
         public titulo: string,
@@ -21,8 +22,8 @@ export class Vacante {
         public tipo_contrato: TipoContrato,
         public ciudad: Ciudad,
         public empleador: Empleador,
-        public eliminado: boolean,
         public num_postulantes_aceptados: number,
+        public tipo_jornada: TipoJornada,
         public id?: number,
     ) {
     }

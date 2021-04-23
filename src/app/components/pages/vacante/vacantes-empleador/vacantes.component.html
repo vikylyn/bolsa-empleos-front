@@ -1,0 +1,113 @@
+<app-cargando [tamanio]="'col-12'" *ngIf="cargando"></app-cargando>
+<div class="row animated fadeIn fast" *ngIf="!myModal">
+    <div class="col-12">
+        <div class="card" id="3">
+            <div class="card-body">
+                <h2><span class="badge badge-info">Mis Vacantes</span></h2>              
+                <h6>Total: {{totalVacantes}} - {{desde}}</h6> 
+                <button (click)="mostrarModal('adicionar', 0)"
+                        class="btn btn-success">
+                        Adicionar
+                </button>
+                <br><br>
+                <div class="row mb-2">
+                    <div class="col">
+                        <select (change)="filtrar()" [(ngModel)]="valorSelect" class="form-control" name="habilitados">
+                            <option value="todas">Todas</option>
+                            <option value="habilitadas">Vacantes Habilitadas</option>
+                            <option value="inhabilitadas">Vacantes Inhabilitadas</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <input #txtTermino (keyup)="busqueda(txtTermino.value)" type="text" class="form-control" placeholder="buscar ...">
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table full-color-table full-inverse-table hover-table">
+                        <thead>
+                            <tr>
+                                <th>N</th>
+                                <th>Titulo</th>
+                                <th>Ocupacion</th>
+                                <th>Sueldo</th>
+                                <th>Num Vacantes</th>
+                                <th>Vacantes disponibles</th>
+                                <th class="text-center hidden-md-down">Habilitado</th>
+                                <th class="w100 text-center">ver</th>
+                                <th class="w100 text-center">modificar</th>
+                                <th class="w100 text-center">habilitar</th>
+                                <th class="w100 text-center">inhabilitar</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let vacante of vacantes; let i = index;">
+                                <td>
+                                    {{i+1+desde}}
+                                </td>
+                                <td>
+                                    {{vacante.titulo}}
+                                </td>
+                                <td>
+                                    {{vacante.requisitos.ocupacion.nombre}}
+                                </td>
+                                <td> 
+                                    {{vacante.sueldo.sueldo}}
+                                </td>
+                                <td> 
+                                    {{vacante.num_vacantes}}
+                                </td>
+                                <td> 
+                                    {{vacante.num_disponibles}}
+                                </td>
+                                <td class="text-center hidden-md-down">
+                                    <i *ngIf="vacante.habilitado" class="fa  fa-thumbs-up text-info"></i>
+                                    <i *ngIf="!vacante.habilitado" class="fa  fa-thumbs-down text-secondary"></i>
+                                </td>
+                               
+                                <td class="text-nowrap text-center">
+                                    <a class="cursor" (click)="mostrarModal2(vacante.id)"> 
+                                        <i class="fa fa-eye"></i> 
+                                    </a>
+                                </td>
+                                <td class="text-nowrap text-center">
+                               
+                                    <a class="cursor" (click)="mostrarModal('modificar', vacante.id)"> 
+                                            <i class="fa fa-pencil"></i> 
+                                    </a>
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <span *ngIf="vacante.habilitado"><i class="fa fa-minus"></i></span>
+                                    <a *ngIf="!vacante.habilitado" class="cursor" (click)="habilitar(vacante.id)" ><i class="fa fa-thumbs-o-up"></i></a>
+                                </td>
+                                <td class="text-nowrap text-center">
+                                    <span *ngIf="!vacante.habilitado"><i class="fa fa-minus"></i></span>
+                                    <a *ngIf="vacante.habilitado" class="cursor" (click)="inhabilitar(vacante.id)"><i class="fa fa-thumbs-o-down"></i></a>
+                                </td>
+                             
+                            </tr>
+                        </tbody> 
+                    </table>
+                </div>
+                <div class="text-center" *ngIf="!txtTermino.value">
+                    <button (click)="cambiarPagina(-5)" class="btn btn-secondary">Anterior</button> 
+                    &nbsp;
+                    <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguiente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-formulario-vacante *ngIf="myModal" [visible]="myModal" 
+                                       [idVacante]="idVacante" 
+                                       [tipoOperacion]="tipoOperacion"
+                                       (cerrar)="cerrarModal($event)"
+                                       (cancelar)="cancelarModal($event)">
+</app-formulario-vacante>
+
+
+<app-ver-vacante-empleador *ngIf="myModal2" [visible]="myModal2" 
+                                      [idVacante] = "idVacante"
+                                      (cerrar)="cerrarModal2($event)">
+
+</app-ver-vacante-empleador>

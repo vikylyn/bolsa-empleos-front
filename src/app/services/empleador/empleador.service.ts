@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { map, delay } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 const base_url = environment.base_url;
 @Injectable({
@@ -12,12 +12,10 @@ export class EmpleadorService {
   constructor(private http: HttpClient) { }
 
   adicionarEmpleador( formData: any): any {
-    return this.http.post(`${base_url}/empleador`, formData)
-    .pipe(delay(300));
+    return this.http.post(`${base_url}/empleador`, formData);
   }
   adicionarEmpleadorEmpresa( formData: any): any {
-    return this.http.post(`${base_url}/empleador/empresa`, formData)
-    .pipe(delay(300));
+    return this.http.post(`${base_url}/empleador/empresa`, formData);
   }
 
    // buscar por id

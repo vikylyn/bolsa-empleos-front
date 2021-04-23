@@ -1,0 +1,54 @@
+<div class="modal" *ngIf="visible">
+        <app-cargando [rowclass]="'row container-modal justify-content-center animated fadeIn fast'" [tamanio]="'col-xl-7 col-lg-8 col-md-10 col-sm-12'" *ngIf="cargandoModal"></app-cargando>
+
+      <div class="row justify-content-center container-modal animated fadeIn fast">
+        <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
+            <div class="card rounded">
+
+                <div class="card-header pt-0 pb-0 header-modal">
+                    <div class="row justify-content-end">
+                        <div class="col-1 pr-0">
+                          <a class="cursor float-right" (click)="cerrarModal()"><i class="fa fa-window-close  cerrar"></i></a>
+                       </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <app-cargando [tamanio]="'col-12'" *ngIf="cargando"></app-cargando>
+
+                    <h3 class="text-center">Adicionar Habilidades</h3>
+                    <hr>
+                    <form *ngIf="cargarformulario" class="form p-t-20" 
+                            [formGroup]="habilidadForm">  
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="exampleInputuname">Habilidad:</label>
+                                            <ng-select 
+                                                       notFoundText = "Habilidad no encotrada"
+                                                       placeholder="Seleccionar Habilidad"
+                                                       appendTo="body"
+                                                       [multiple]="true"
+                                                       formControlName="id_habilidad">
+                                                       <ng-option [value]= "habilidad.id" *ngFor="let habilidad of habilidades">
+                                                        {{habilidad.habilidad}}
+                                                      </ng-option>
+                                            </ng-select>
+                                    <small *ngIf="selectNoValido('id_habilidad')" class="form-control-feedback text-danger">Seleccione una habilidad</small> 
+                                </div>
+                            </div>
+                        </div>                 
+                        <div class="text-center">
+                            <button  (click)="guardar()" type="submit" class="btn btn-success waves-effect waves-light">
+                                <i class="fa fa-save"></i>
+                                Guardar
+                            </button>
+                            &nbsp;
+                            <button  (click)="cancelarModal()" type="button" class="btn btn-inverse">Cancelar</button>
+                        </div>
+                          
+                </form>
+                </div>
+            </div>
+        </div>
+      </div>
+</div> 

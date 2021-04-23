@@ -1,0 +1,53 @@
+<div>
+    <app-cargando [tamanio]="'col-xl-7 col-lg-8 col-md-10 col-sm-12'" *ngIf="cargando"></app-cargando>
+    <div class="row justify-content-center animated fadeIn fast">
+        <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    
+                    <h4 class="card-title">Mis Ocupaciones</h4>
+                    <h6>Total: {{total}} - {{desde}}</h6>
+                    <button (click)="mostrarModal()"
+                            class="btn btn-success">
+                                Adicionar
+                    </button>
+                    <br><br>
+                    <div class="table-responsive">
+                        <table class="table full-color-table full-inverse-table hover-table">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th class="w100">Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let ocupacion of ocupacionesSolicitante">
+                                    <td>
+                                        {{ocupacion.ocupacion.nombre}}
+                                    </td>
+                                    <td class="text-nowrap  text-center">
+                                        <a class="cursor" (click)="eliminar(ocupacion.id)"><i class="fa fa-trash-o m-r-10 text-info"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center"> 
+                        <button (click)="cambiarPagina(-5)" class="btn btn-secondary">Anterior</button> 
+                        &nbsp;
+                        <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguiente</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-formulario-ocupacion-solicitante *ngIf="myModal" [visible]="myModal"  
+                                       (cerrar)="cerrarModal($event)"
+                                       (cancelar)="cancelarModal($event)">
+</app-formulario-ocupacion-solicitante>
+
+
+

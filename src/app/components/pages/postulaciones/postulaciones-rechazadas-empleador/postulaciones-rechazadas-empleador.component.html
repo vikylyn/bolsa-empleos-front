@@ -1,0 +1,123 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <div class="alert alert-danger alert-danger animated fadeIn fast" role="alert" *ngIf="cargarMensaje">
+                No tiene ninguna vacante Habilitada
+            </div>
+        </div>
+    </div>
+    <div class="row animated fadeIn fast" *ngIf="cargando" >
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                <h4>Cargando...</h4>
+                <i class="fa fa-spin fa-refresh fa-2x"></i>
+                <p class="mb-0">Por favor espere</p>
+            </div>
+        </div>
+    </div>
+    <div class="row animated fadeIn fast" *ngIf="!cargarMensaje">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h2><span class="badge badge-info">Mis Postulantes Rechazados</span></h2>
+                    <h6>Total: {{totalPostulaciones}} - {{desde}}</h6>
+                    <br><br>
+                    <div class="row"> 
+                        <div class="col">
+                            <h5>Vacantes:</h5>
+                            <ng-select [items]="vacantes" 
+                                       bindLabel="titulo" 
+                                       bindValue="id" 
+                                       [clearable] = "false"
+                                       [(ngModel)]="this.idVacante"
+                                       (change)="filtrar()">
+                            </ng-select>
+                        </div>
+                        <div class="col">
+                            <input #txtTermino (keyup)="busqueda(txtTermino.value)" type="text" class="form-control mt-4" placeholder="buscar postulacion...">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                            <div class="table-responsive">
+                                <table class="table full-color-table full-inverse-table hover-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Num</th>
+                                            <th>Publicado en:</th>
+                                            <th>Solicitante</th>
+                                            <th>Sueldo</th>
+                                            <th>Estado</th>
+                                            <th class="w100 text-center">ver</th>
+                                            <th class="w100 text-center">contratar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let postulacion of postulaciones; let i = index">
+                                            <td align="center">
+                                                <span >{{desde + i + 1}}</span>
+                                            </td>
+                                            <td>
+                                                {{postulacion.creado_en | date: 'long'}}
+                                            </td>
+                                            <td>
+                                                {{postulacion.solicitante.nombre}} {{postulacion.solicitante.apellidos}} CI: {{postulacion.solicitante.cedula}}
+                                            </td>
+                                            <td>
+                                                {{postulacion.vacante.sueldo.sueldo}}
+                                            </td>
+                                            <td class="text-center">
+                                                <span *ngIf="!postulacion.aceptado">Rechazado</span>
+                                                <span *ngIf="postulacion.aceptado">Rechazado por el solicitante</span>
+                                            </td>
+                                            <td class="text-nowrap text-center">
+                                                <a class="cursor" (click)="mostrarModal(postulacion.solicitante.id, postulacion.id)"> 
+                                                    <i class="fa fa-eye"></i> 
+                                                </a>
+                                            </td>
+                                            <td class="text-nowrap text-center">
+                                                <a class="cursor" *ngIf="!postulacion.aceptado" (click)="aceptar(postulacion.id)" data-toggle="tooltip" data-original-title="Aceptar"> 
+                                                    <i class=" fa fa-handshake-o"></i> 
+                                                </a>
+                                                <span *ngIf="postulacion.aceptado"><i class="fa fa-minus"></i></span>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center" *ngIf="txtTermino.value.length ===0">
+                        <button (click)="cambiarPagina(-5)" class="btn btn-secondary">Anterior</button> 
+                        &nbsp;
+                        <button (click)="cambiarPagina(5)" class="btn btn-secondary">Siguiente</button>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<!--
+<app-vista-completo *ngIf="myModal" [visible]="myModal" 
+                                                    [idSolicitante]= "idSolicitante" 
+                                                    [tipoOperacion]="'postulacion'" 
+                                                    [idOperacion] = "idPostulacion"
+                                                    (cerrar)="cerrarModal($event)"
+                                                    (cancelar)="cancelarModal($event)"
+                                                    >
+</app-vista-completo>
+-->
+
+<app-ver-postulacion-empleador *ngIf="myModal" [visible]="myModal" 
+                                          [idPostulacion]= "idPostulacion" 
+                                          (cancelar)="cancelarModal($event)"
+                                          (cerrar)="cerrarModal($event)">
+</app-ver-postulacion-empleador>

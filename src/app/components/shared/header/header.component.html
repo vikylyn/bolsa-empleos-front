@@ -1,0 +1,107 @@
+  <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar ">
+            <nav class="navbar top-navbar navbar-expand-md navbar-light">
+                <!-- ============================================================== -->
+                <!-- Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="index.html">
+                        <!-- Logo icon --><b>
+                            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                            <!-- Dark Logo icon 
+                            <img *ngIf="informacion" src="assets/images/maletin.png" width="40px" alt="homepage" class="dark-logo" /> 
+                            -->
+                            <img *ngIf="informacion" [src]="informacion.imagen.url" width="40px" alt="homepage" class="dark-logo" />
+                        </b>
+                        <!--End Logo icon -->
+                        <!-- Logo text<span>
+                         dark Logo text 
+                         <img src="assets/images/logo-text.png" alt="homepage" class="dark-logo" /> -->
+                         <!-- Light Logo text 
+                         <img src="assets/images/logo-light-text.png" class="light-logo" alt="homepage" /></span>   -->
+                    </a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav mr-auto">
+                        <!-- This is  -->
+                        <li class="nav-item"> <a class="nav-link nav-toggler hidden-md-up waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                        <li class="nav-item"> <a class="nav-link sidebartoggler hidden-sm-down waves-effect waves-dark" href="javascript:void(0)"><i class="ti-menu"></i></a> </li>
+                        <li class="nav-item hidden-sm-down"></li>
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- User profile and search -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav my-lg-0">
+                        <!-- ============================================================== -->
+                         <li class="nav-item dropdown" *ngIf="!this.loginService.administrador">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="mdi mdi-message"></i>
+                                <div *ngIf="totalNotificaciones > 0" class="notify"><span class="heartbit"></span> <span class="point"></span> </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right mailbox animated bounceInDown">
+                                <app-notificaciones *ngIf="loginService.solicitante"></app-notificaciones>
+                                <app-notificaciones-empleador *ngIf="loginService.empleador"></app-notificaciones-empleador>
+                            </div>
+                        </li>
+
+                        <!-- ============================================================== -->
+                        <!-- ============================================================== -->
+                        <!-- Profile -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img *ngIf="administrador" [src]="administrador.imagen.url" alt="user" class="profile-pic" />
+                                <img *ngIf="solicitante" [src]="solicitante.imagen.url" alt="user" class="profile-pic" />
+                                <img *ngIf="empleador" [src]="empleador.imagen.url" alt="user" class="profile-pic" />
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right animated flipInY">
+                                <ul *ngIf="administrador" class="dropdown-user">
+                                    <li>
+                                        <div class="dw-user-box" align="center">
+                                            <div class="u-img"><img [src]="administrador.imagen.url" alt="user"></div>
+                                            <div class="u-text">
+                                                <h4>{{administrador.nombre}} {{administrador.apellidos}}</h4>
+                                                <p class="text-muted">{{administrador.credenciales.email}}</p><a routerLink="/perfil-administrador" href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm d-block">Ver Perfil</a></div>
+                                        </div>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a (click)="logout()" class="cursor"><i class="fa fa-power-off mr-2"></i> salir</a></li>
+                                </ul>
+                                <ul *ngIf="solicitante" class="dropdown-user">
+                                    <li>
+                                        <div class="dw-user-box"  align="center">
+                                            <div class="u-img"><img [src]="this.solicitante.imagen.url" alt="user"></div>
+                                            <div class="u-text">
+                                                <h4>{{solicitante.nombre}} {{solicitante.apellidos}}</h4>
+                                                <p class="text-muted">{{solicitante.credenciales.email}}</p><a routerLink="/perfil-solicitante" href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm d-block">Ver mi Perfil</a></div>
+                                        </div>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a (click)="logout()" class="cursor"><i class="fa fa-power-off  mr-2"></i> salir</a></li>
+                                </ul>
+                                <ul *ngIf="empleador" class="dropdown-user">
+                                    <li>
+                                        <div class="dw-user-box" align="center">
+                                            <div class="u-img"><img [src]="this.empleador.imagen.url" alt="user"></div>
+                                            <div class="u-text">
+                                                <h4>{{this.empleador.nombre}} {{this.empleador.apellidos}}</h4>
+                                                <p class="text-muted">{{this.empleador.credenciales.email}}</p><a routerLink="/perfil-empleador" href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm d-block">Ver Perfil</a></div>
+                                        </div>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a (click)="logout()" class="cursor"><i class="fa fa-power-off mr-2"></i> salir</a></li> 
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->

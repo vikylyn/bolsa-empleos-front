@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { delay, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { WebsocketService } from '../websocket/websocket.service';
 import { Notificacion } from '../../models/notificacion';
 
@@ -37,7 +37,7 @@ export class NotificacionService {
   buscar( idNotificacion: number, idRol: number): any {
     const token = localStorage.getItem('token');
     return this.http.get(`${base_url}/notificacion/buscar/${idNotificacion}/${idRol}?token=${token}`)
-               .pipe( map( (resp: any) => resp.notificacion), delay(300));
+               .pipe( map( (resp: any) => resp.notificacion));
   }
  // buscar notificacion
   eliminar( idNotificacion: number, idRol: number): any {

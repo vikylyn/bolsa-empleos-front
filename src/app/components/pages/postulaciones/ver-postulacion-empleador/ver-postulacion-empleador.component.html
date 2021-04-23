@@ -1,0 +1,122 @@
+<div class="modal" *ngIf="visible">
+    <div class="row container-modal justify-content-center animated fadeIn fast" *ngIf="cargando">
+        <div class="col-xl-7 col-lg-10  col-md-10 col-sm-12">
+            <div class="alert alert-info text-center">
+                <h4>Cargando...</h4> 
+                <i class="fa fa-spin fa-refresh fa-2x"></i>
+                <p class="mb-0">Por favor espere</p>
+            </div>
+        </div>
+    </div>
+    <div class="row container-modal justify-content-center">
+            <div class="col-xl-7 col-lg-10  col-md-10 col-sm-12">
+               <div class="card bg-dark animated fadeIn fast">
+                   <div class="card-header pt-0 pb-0 header-modal">
+                    <div class="row justify-content-end">
+                        <div class="col-1 pr-0">
+                          <a class="cursor float-right" (click)="cancelarModalPadre()"><i class="fa fa-window-close  cerrar"></i></a>
+                       </div>
+                    </div>
+                  </div>
+                 
+                   <div class="card-body " *ngIf="postulacion">
+                   
+                   <div class="card bg-dark animated fadeIn fast" *ngIf="postulacion">
+                       <div class="card-body " >
+                        <div class="row animated fadeIn fast">
+                            <div class="col-lg-7 col-md-7 col-sm-12">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="card mb-3">
+                                            <div class="card-body">
+                                                <h3 class="card-title text-center">
+                                                    <strong>Vacante: {{postulacion.vacante.titulo}}</strong>
+                                                </h3>
+                                                <span class="font-weight-bold">Sueldo: </span> {{postulacion.vacante.sueldo.sueldo}} <br>
+                                                <span class="font-weight-bold">Periodo de pago: </span> {{postulacion.vacante.periodo_pago.periodo}}<br>
+                                                <span class="font-weight-bold">Tipo de Contrato: </span> {{postulacion.vacante.tipo_contrato.tipo}} <br>
+                                                <span class="font-weight-bold">Tipo de Jornada: </span> {{postulacion.vacante.tipo_jornada.tipo}} <br>
+                                                <span class="font-weight-bold">Horario: </span> {{postulacion.vacante.horario.nombre}} <br>
+                                                <span class="font-weight-bold">Fecha de publicacion: </span> <span>{{postulacion.vacante.creado_en | date: 'longDate'}}</span> <br>  
+                                                <span class="font-weight-bold">Vacantes Disponibles: </span> <span>{{postulacion.vacante.num_disponibles}}</span> <br>  
+                                                <span class="font-weight-bold">Direccion: </span> <span>{{postulacion.vacante.direccion}}</span> <br>                          
+                                                <span class="font-weight-bold">Pais: </span> <span>{{postulacion.vacante.ciudad.estado.pais.nombre}}</span> <br>
+                                                <span class="font-weight-bold">Ciudad: </span> <span>{{postulacion.vacante.ciudad.nombre}} / {{postulacion.vacante.ciudad.estado.nombre}}</span> <br>
+                                                <span class="font-weight-bold">Descripcion: </span> <span>{{postulacion.vacante.descripcion}}</span> <br> 
+                                               
+                                                <hr>
+            
+                                                <h3 class="card-title text-center"><strong>Requisitos para el cargo</strong> </h3>
+                                                <span class="font-weight-bold">Ocupacion: </span> <span>{{postulacion.vacante.requisitos.ocupacion.nombre}}</span> <br>
+                                                <span class="font-weight-bold">Años de Experiencia: </span> <span>{{postulacion.vacante.requisitos.experiencia}}</span> <br>
+                                                <span class="font-weight-bold">Genero: </span> <span>{{postulacion.vacante.requisitos.genero | genero:postulacion.vacante.requisitos.genero}}</span> <br>
+                                                <span class="font-weight-bold">Idiomas: </span> 
+                                                 <ul>
+                                                     <li *ngFor="let idioma  of postulacion.vacante.requisitos.idiomas"><span>{{idioma.idioma.nombre}}</span>
+                                                        <ul>
+                                                            <li>Nivel oral: {{idioma.nivel_oral.nombre}}</li>
+                                                            <li>Nivel lectura: {{idioma.nivel_lectura.nombre}}</li>
+                                                            <li>Nivel escrito: {{idioma.nivel_escrito.nombre}}</li>
+                                                        </ul>
+                                                    </li>
+                                                 </ul>
+                                            </div>
+                                             
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 col-md-5 col-sm-12">
+                            
+                                <div class="card text-white bg-dark mb-3">
+                                    <img class="img-responsive" [src]="postulacion.solicitante.imagen.url" alt="">
+                                    <div class="card-body">  
+                                        <span class="font-weight-bold">Postulante: </span> <span>{{postulacion.solicitante.nombre}} {{postulacion.solicitante.apellidos}}</span> <br>
+                                        <span class="font-weight-bold">Telefono: </span> <span>{{postulacion.solicitante.telefono}}</span> <br>
+                                        <span class="font-weight-bold">Cedula: </span> <span>{{postulacion.solicitante.cedula}}</span> <br>
+                                        <span class="font-weight-bold">Correo electronico: </span> <span>{{postulacion.solicitante.credenciales.email}}</span> <br>
+                                        <span class="font-weight-bold">Nacionalidad: </span> <span>{{postulacion.solicitante.nacionalidad}}</span> <br>
+                                        <span class="font-weight-bold">Pais de residencia: </span> <span>{{postulacion.solicitante.ciudad.estado.pais.nombre}}</span> <br>
+                                        <span class="font-weight-bold">Ciudad de residencia: </span> <span>{{postulacion.solicitante.ciudad.nombre}} - {{postulacion.solicitante.ciudad.estado.nombre}}</span> <br>
+                                        <span class="font-weight-bold">Direccion: </span> <span>{{postulacion.solicitante.direccion}}</span> <br>
+                                        <span class="font-weight-bold">Genero: </span> <span>{{postulacion.solicitante.genero | genero:postulacion.solicitante.genero}}</span> <br>
+                                        <span class="font-weight-bold">Ocupaciones : </span> 
+                                        <ul>
+                                            <li *ngFor="let ocupacion of postulacion.solicitante.ocupaciones" >{{ocupacion.ocupacion.nombre}}</li>
+                                        </ul>
+                                        <button (click)="mostrarModal()" class="btn btn-success btn-block mt-2">Curriculum</button>                                                      
+                                        
+                                    </div>
+                                </div> 
+                            </div>
+                        </div>
+               
+                       </div>
+                   </div>
+                   </div>
+               </div>
+
+            </div>
+        </div>
+      
+</div> 
+
+
+<app-vista-completo *ngIf="myModal && postulacion" [visible]="myModal" 
+                                                    [idSolicitante]= "postulacion.solicitante.id" 
+                                                    [tipoOperacion]="'postulacion'" 
+                                                    [idOperacion] = "postulacion.id"
+                                                    (cerrar)="cerrarModal($event)"
+                                                    (cancelar)="cancelarModal($event)"
+                                                    >
+</app-vista-completo>
+<!--Mostrar el curriculum cuando no hay una postulacion registrada-->
+<app-vista-completo *ngIf="myModal && !postulacion" [visible]="myModal" 
+                                                    [idSolicitante]= "postulacion.solicitante.id" 
+                                                    [tipoOperacion]="'postulacion'" 
+                                                    [idOperacion] = "0"
+                                                    (cerrar)="cerrarModal($event)"
+                                                    (cancelar)="cancelarModal($event)"
+                                                    >
+</app-vista-completo>
