@@ -7,14 +7,14 @@
                 <div class="card-header pt-0 pb-0 header-modal">
                     <div class="row justify-content-end">
                         <div class="col-1 pr-0">
-                          <a class="cursor float-right" (click)="cerrarModal()"><i class="fa fa-window-close  cerrar"></i></a>
+                          <a class="cursor float-right" (click)="cancelarModal()"><i class="fa fa-window-close  cerrar"></i></a>
                        </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <app-cargando [tamanio]="'col-12'" *ngIf="cargando"></app-cargando>
-                    <h3 class="text-center">{{tipoOperacion | titlecase}} Referencia</h3>
-                    <hr>
+                    <h3 class="text-center font-weight-bold">{{tipoOperacion | titlecase}} Referencia</h3>
+                   
                     <form  class="form p-t-20" 
                     [formGroup]="referenciaForm">  
                         <div class="row">
@@ -22,36 +22,36 @@
                                 <div class="form-group">
                                    
                                     <label for="exampleInputuname">Nombres:</label>
-                                    <input [class.is-invalid]="campoNoValido('nombre')" formControlName="nombre" class="form-control" type="text" placeholder="Ingrese un Nombre">
+                                    <input [class.is-invalid]="campoNoValido('nombre')" formControlName="nombre" class="form-control" type="text" placeholder="Ingrese un Nombre" maxlength="45">
                                     <small *ngIf="campoNoValido('nombre')" class="form-control-feedback text-danger">Ingrese un nombre</small> 
                                 
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputuname">Apellidos</label>
                                     
-                                    <input [class.is-invalid]="campoNoValido('apellidos')" formControlName="apellidos" class="form-control" type="text" placeholder="Apellidos">
+                                    <input [class.is-invalid]="campoNoValido('apellidos')" formControlName="apellidos" class="form-control" type="text" placeholder="Apellidos" maxlength="60">
                                     <small *ngIf="campoNoValido('apellidos')" class="form-control-feedback text-danger">Ingrese los apellidos</small> 
                                 
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputuname">Empresa</label>
                                    
-                                    <input [class.is-invalid]="campoNoValido('empresa')" formControlName="empresa" class="form-control" type="text" placeholder="Empresa">
+                                    <input [class.is-invalid]="campoNoValido('empresa')" formControlName="empresa" class="form-control" type="text" placeholder="Empresa" maxlength="45">
                                     <small *ngIf="campoNoValido('empresa')" class="form-control-feedback text-danger">Ingrese una Empresa</small> 
                                 
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputuname">Cargo</label>
                                     
-                                    <input [class.is-invalid]="campoNoValido('cargo')" formControlName="cargo" class="form-control" type="text" placeholder="Cargo">
+                                    <input [class.is-invalid]="campoNoValido('cargo')" formControlName="cargo" class="form-control" type="text" placeholder="Cargo" maxlength="45">
                                     <small *ngIf="campoNoValido('cargo')" class="form-control-feedback text-danger">Ingrese un cargo</small> 
                                 
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputuname">Telefono</label>
+                                    <label for="exampleInputuname">Teléfono</label>
                                     
-                                    <input [class.is-invalid]="campoNoValido('telefono')" formControlName="telefono" class="form-control" type="number" placeholder="Telefono">
-                                    <small *ngIf="campoNoValido('telefono')" class="form-control-feedback text-danger">Ingrese un Telefono</small> 
+                                    <input [class.is-invalid]="campoNoValido('telefono')" formControlName="telefono" class="form-control" type="text" placeholder="Teléfono" maxlength="10" (keypress)="validacionService.soloNumeros($event)">
+                                    <small *ngIf="campoNoValido('telefono')" class="form-control-feedback text-danger">Ingrese un Teléfono</small> 
                                 
                                 </div>
                             

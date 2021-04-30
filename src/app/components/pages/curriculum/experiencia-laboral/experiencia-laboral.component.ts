@@ -74,7 +74,7 @@ export class ExperienciaLaboralComponent implements OnInit {
   }
   eliminar(id: number): void {
     Swal.fire({
-      title: 'Estas seguro de eliminar la experiencia laboral?',
+      title: '¿Estás seguro de eliminar la experiencia laboral?',
       text: '',
       icon: 'warning',
       showCancelButton: true,

@@ -13,6 +13,7 @@ import { InformacionApp } from '../../../../models/informacion-app.model';
 import { InformacionAppService } from '../../../../services/informacion-app.service';
 import { RazonSocialService } from '../../../../services/empleador/razon-social.service';
 import { RazonSocial } from '../../../../models/empleador/razon-social.model';
+import Swal from 'sweetalert2';
 declare var $:any;
 
 @Component({
@@ -116,6 +117,11 @@ export class ReporteEmpresasComponent implements OnInit {
       this.empresas = empresas;
       this.total = total;
       this.cargando = false;
+      Swal.fire(
+        'Filtrado exitoso!',
+        '',
+        'success'
+      );
     });
   }
 

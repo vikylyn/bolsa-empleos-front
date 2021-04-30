@@ -10,6 +10,7 @@ import { Ciudad } from '../../../../models/ciudad.model';
 import { EstadoCivilService } from '../../../../services/solicitante/estado-civil.service';
 import { UbicacionService } from '../../../../services/ubicacion/ubicacion.service';
 import { WebsocketService } from '../../../../services/websocket/websocket.service';
+import { ValidacionFormularioService } from '../../../../services/validacion-formulario.service';
 
 @Component({
   selector: 'app-perfil-solicitante',
@@ -51,6 +52,7 @@ export class PerfilSolicitanteComponent implements OnInit {
               private loginService: LoginService,
               private ubicacionService: UbicacionService,
               private wsService: WebsocketService,
+              public validacionService: ValidacionFormularioService,
               private estadoCivilService: EstadoCivilService) {
                 this.fechaLimiteInf.setFullYear(this.fechaActual.getFullYear() - 18);
                 this.cargarFechas();

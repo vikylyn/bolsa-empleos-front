@@ -2,13 +2,40 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10">
-                <div class="card">
-                    <div class="card-body">
-                        <h3 class="text-center">Activación Exitosa</h3>
-
-                        <a class="btn btn-info d-block" routerLink='/login' >Ingresar</a>
+                <div class="row animated fadeIn fast" *ngIf="cargando">
+                    <div class="col-12">
+                        <div class="alert alert-info text-center">
+                            <h4>Activando Cuenta...</h4>
+                            <i class="fa fa-spin fa-refresh fa-2x"></i>
+                            <p class="mb-0">Por favor espere</p>
+                        </div>
                     </div>
                 </div>
+                <div class="card" *ngIf="!cargando && !error">
+                    <div class="card-body">
+                      
+                        <div class="row" >
+                            <div class="col">
+                                <h3 class="text-center">Activación Exitosa</h3>
+
+                                <a class="btn btn-info d-block" routerLink='/login' >Ingresar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" *ngIf="!cargando && error">
+                    <div class="card-body">
+                        <div class="row" >
+                            <div class="col">
+                                <div class="alert alert-danger" role="alert">
+                                    El tiempo para activar su cuenta Expiró!
+                                </div>
+                                <a class="btn btn-info d-block" routerLink='/login' >Ir a Inicio</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
             </div>
         </div>
     </div>

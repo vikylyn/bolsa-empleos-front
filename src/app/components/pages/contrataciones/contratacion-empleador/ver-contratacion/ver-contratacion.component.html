@@ -27,17 +27,17 @@
                                           <span class="font-weight-bold">Horario: </span> {{contratacion.vacante.horario.nombre}} <br>
                                           <span class="font-weight-bold">Fecha de publicacion: </span> <span>{{contratacion.vacante.creado_en | date: 'longDate'}}</span> <br>  
                                           <span class="font-weight-bold">Vacantes Disponibles: </span> <span>{{contratacion.vacante.num_disponibles}}</span> <br>  
-                                          <span class="font-weight-bold">Direccion: </span> <span>{{contratacion.vacante.direccion}}</span> <br>                          
-                                          <span class="font-weight-bold">Pais: </span> <span>{{contratacion.vacante.ciudad.estado.pais.nombre}}</span> <br>
+                                          <span class="font-weight-bold">Dirección: </span> <span>{{contratacion.vacante.direccion}}</span> <br>                          
+                                          <span class="font-weight-bold">País: </span> <span>{{contratacion.vacante.ciudad.estado.pais.nombre}}</span> <br>
                                           <span class="font-weight-bold">Ciudad: </span> <span>{{contratacion.vacante.ciudad.nombre}} / {{contratacion.vacante.ciudad.estado.nombre}}</span> <br>
-                                          <span class="font-weight-bold">Descripcion: </span> <span>{{contratacion.vacante.descripcion}}</span> <br>
+                                          <span class="font-weight-bold">Descripción: </span> <span>{{contratacion.vacante.descripcion}}</span> <br>
                                          
                                           <hr>
       
                                           <h3 class="card-title text-center"><strong>Requisitos para el cargo</strong> </h3>
-                                          <span class="font-weight-bold">Ocupacion: </span> <span>{{contratacion.vacante.requisitos.ocupacion.nombre}}</span> <br>
+                                          <span class="font-weight-bold">Ocupación: </span> <span>{{contratacion.vacante.requisitos.ocupacion.nombre}}</span> <br>
                                           <span class="font-weight-bold">Años de Experiencia: </span> <span>{{contratacion.vacante.requisitos.experiencia}}</span> <br>
-                                          <span class="font-weight-bold">Genero: </span> <span>{{contratacion.vacante.requisitos.genero | genero:contratacion.vacante.requisitos.genero}}</span> <br>
+                                          <span class="font-weight-bold">Género: </span> <span>{{contratacion.vacante.requisitos.genero | genero:contratacion.vacante.requisitos.genero}}</span> <br>
                                           <span class="font-weight-bold">Idiomas: </span> 
                                            <ul>
                                                <li *ngFor="let idioma  of contratacion.vacante.requisitos.idiomas"><span>{{idioma.idioma.nombre}}</span>
@@ -62,14 +62,14 @@
                               <div class="card-body">  
                                   <span class="font-weight-bold">Empleado: </span> <span>{{contratacion.solicitante.nombre}} {{contratacion.solicitante.apellidos}}</span> <br>
                                   <span class="font-weight-bold">Contratado en: </span> {{contratacion.creado_en | date: 'long'}} <br> 
-                                  <span class="font-weight-bold">Telefono: </span> <span>{{contratacion.solicitante.telefono}}</span> <br>
-                                  <span class="font-weight-bold">Cedula: </span> <span>{{contratacion.solicitante.cedula}} {{contratacion.solicitante.num_complemento_ci}}</span> <br>
-                                  <span class="font-weight-bold">Correo electronico: </span> <span>{{contratacion.solicitante.credenciales.email}}</span> <br>
+                                  <span class="font-weight-bold">Teléfono: </span> <span>{{contratacion.solicitante.telefono}}</span> <br>
+                                  <span class="font-weight-bold">Cédula: </span> <span>{{contratacion.solicitante.cedula}} {{contratacion.solicitante.num_complemento_ci}}</span> <br>
+                                  <span class="font-weight-bold">Correo electrónico: </span> <span>{{contratacion.solicitante.credenciales.email}}</span> <br>
                                   <span class="font-weight-bold">Nacionalidad: </span> <span>{{contratacion.solicitante.nacionalidad}}</span> <br>
-                                  <span class="font-weight-bold">Pais de residencia: </span> <span>{{contratacion.solicitante.ciudad.estado.pais.nombre}}</span> <br>
+                                  <span class="font-weight-bold">País de residencia: </span> <span>{{contratacion.solicitante.ciudad.estado.pais.nombre}}</span> <br>
                                   <span class="font-weight-bold">Ciudad de residencia: </span> <span>{{contratacion.solicitante.ciudad.nombre}} - {{contratacion.solicitante.ciudad.estado.nombre}}</span> <br>
-                                  <span class="font-weight-bold">Direccion: </span> <span>{{contratacion.solicitante.direccion}}</span> <br>
-                                  <span class="font-weight-bold">Genero: </span> <span>{{contratacion.solicitante.genero | genero:contratacion.solicitante.genero}}</span> <br>
+                                  <span class="font-weight-bold">Dirección: </span> <span>{{contratacion.solicitante.direccion}}</span> <br>
+                                  <span class="font-weight-bold">Género: </span> <span>{{contratacion.solicitante.genero | genero:contratacion.solicitante.genero}}</span> <br>
                                   <span class="font-weight-bold">Ocupaciones : </span> 
                                   <ul>
                                       <li *ngFor="let ocupacion of contratacion.solicitante.ocupaciones" >{{ocupacion.ocupacion.nombre}}</li>

@@ -91,7 +91,7 @@ export class VacantesComponent implements OnInit {
   }
   habilitar(id: number): void {
     Swal.fire({
-      title: 'Estas seguro de habilitar la vacante?',
+      title: '¿Estás seguro de habilitar la vacante?',
       text: '',
       icon: 'warning',
       showCancelButton: true,
@@ -121,7 +121,7 @@ export class VacantesComponent implements OnInit {
   }
   inhabilitar(id: number): void {
     Swal.fire({
-      title: 'Estas seguro de inhabilitar la vacante?',
+      title: '¿Estás seguro de inhabilitar la vacante?',
       text: '',
       icon: 'warning',
       showCancelButton: true,

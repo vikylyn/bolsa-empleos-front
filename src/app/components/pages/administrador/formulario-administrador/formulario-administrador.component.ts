@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { Pais } from '../../../../models/pais.model';
 import { Ciudad } from '../../../../models/ciudad.model';
 import { UbicacionService } from '../../../../services/ubicacion/ubicacion.service';
-
+import { ValidacionFormularioService} from '../../../../services/validacion-formulario.service';
 @Component({
   selector: 'app-formulario-administrador',
   templateUrl: './formulario-administrador.component.html',
@@ -29,6 +29,7 @@ export class FormularioAdministradorComponent implements OnInit {
   ciudades: Ciudad[];
   constructor(public adminService: AdministradorService,
               private ubicacionService: UbicacionService,
+              public validacionService: ValidacionFormularioService,
               private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -42,7 +43,7 @@ export class FormularioAdministradorComponent implements OnInit {
       nombre: ['', [ Validators.required]],
       apellidos: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(4)]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
       password2: ['', [Validators.required]],
       cedula: ['', [Validators.required]],
       num_complemento_ci: [''],

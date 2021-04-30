@@ -90,7 +90,7 @@ export class PostulacionesRechazadasEmpleadorComponent implements OnInit {
 
   aceptar(idPostulacion: number): void {
     Swal.fire({
-      title: 'Estas seguro de contratar al solicitante?',
+      title: '¿Estás seguro de contratar al solicitante?',
       text: '',
       icon: 'warning',
       showCancelButton: true,
@@ -104,7 +104,7 @@ export class PostulacionesRechazadasEmpleadorComponent implements OnInit {
                Swal.fire(resp.mensaje, '', 'success');
                this.cargarPostulaciones();
              }, (err) => {
-               Swal.fire('Error al aceptar solicitante', err.error.mensaje, 'error');
+               Swal.fire('Error al considerar solicitante', err.error.mensaje, 'error');
                console.log(err);
                this.cargando = false;
              });

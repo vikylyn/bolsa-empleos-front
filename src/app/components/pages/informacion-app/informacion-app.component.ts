@@ -7,6 +7,8 @@ import { InformacionAppService } from '../../../services/informacion-app.service
 import Swal from 'sweetalert2';
 import { UbicacionService } from '../../../services/ubicacion/ubicacion.service';
 import { ImagenService } from '../../../services/imagen.service';
+import { LoginService } from '../../../services/login.service';
+import { ValidacionFormularioService } from '../../../services/validacion-formulario.service';
 
 @Component({
   selector: 'app-informacion-app',
@@ -29,6 +31,8 @@ export class InformacionAppComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private infoService: InformacionAppService,
               private imagenService: ImagenService,
+              private loginService: LoginService,
+              public validacionService: ValidacionFormularioService,
               private ubicacionService: UbicacionService) {
                 this.cargarPaises();
   }
@@ -59,6 +63,7 @@ export class InformacionAppComponent implements OnInit {
           direccion: [ this.informacion.direccion , Validators.required],
           id_pais: [this.informacion.ciudad.estado.pais.id, [Validators.required, Validators.min(1)]],
           id_ciudad: [this.informacion.ciudad.id, [Validators.required, Validators.min(1)]],
+          id_administrador: [this.loginService.administrador.id, [Validators.required, Validators.min(1)]],
         });
           this.cargando = false;
     });

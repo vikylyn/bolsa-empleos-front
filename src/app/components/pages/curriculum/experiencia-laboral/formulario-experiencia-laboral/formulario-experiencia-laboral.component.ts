@@ -8,6 +8,7 @@ import { ExperienciaLaboral } from '../../../../../models/curriculum/experiencia
 import { TipoContrato } from '../../../../../models/empleador/tipo-contrato.model';
 import { TipoContratoService } from '../../../../../services/vacante/tipo-contrato.service';
 import { Ciudad } from '../../../../../models/ciudad.model';
+import { ValidacionFormularioService } from '../../../../../services/validacion-formulario.service';
 
 @Component({
   selector: 'app-formulario-experiencia-laboral',
@@ -39,7 +40,8 @@ export class FormularioExperienciaLaboralComponent implements OnInit {
           private fb: FormBuilder,
           private experienciaService: ExperienciaLaboralService,
           private tipoContratoService: TipoContratoService,
-          private ubicacionService: UbicacionService
+          private ubicacionService: UbicacionService,
+          public validacionService: ValidacionFormularioService,
     ) { }
 
   ngOnInit(): void {

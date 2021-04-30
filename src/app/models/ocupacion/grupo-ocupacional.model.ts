@@ -3,8 +3,10 @@ export class GrupoOcupacional {
     constructor(
         public nombre: string,
         public habilitado: boolean,
-        public administrador: Administrador,
-    //    public codigo: string,
+        public creado_por: Administrador,
+        public modificado_por: Administrador,
+        public creado_en: Date,
+        public modificado_en: Date,
         public id?: number
     ){}
 }

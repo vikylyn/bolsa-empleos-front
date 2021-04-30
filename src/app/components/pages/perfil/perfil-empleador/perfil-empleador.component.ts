@@ -8,6 +8,7 @@ import { UbicacionService } from '../../../../services/ubicacion/ubicacion.servi
 import { EmpleadorService } from '../../../../services/empleador/empleador.service';
 import Swal from 'sweetalert2';
 import { WebsocketService } from '../../../../services/websocket/websocket.service';
+import { ValidacionFormularioService } from '../../../../services/validacion-formulario.service';
 
 @Component({
   selector: 'app-perfil-empleador',
@@ -30,6 +31,7 @@ export class PerfilEmpleadorComponent implements OnInit {
               private empleadorService: EmpleadorService,
               private loginService: LoginService,
               private wsService: WebsocketService,
+              public validacionService: ValidacionFormularioService,
               private ubicacionService: UbicacionService) {
                 this.ubicacionService.listarPaises()
                 .subscribe( (resp: Pais[]) => {

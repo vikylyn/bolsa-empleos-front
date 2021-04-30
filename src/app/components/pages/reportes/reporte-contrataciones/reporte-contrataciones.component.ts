@@ -13,6 +13,7 @@ import { LoginService } from '../../../../services/login.service';
 import { DatePipe } from '@angular/common';
 import { InformacionApp } from '../../../../models/informacion-app.model';
 import { InformacionAppService } from '../../../../services/informacion-app.service';
+import Swal from 'sweetalert2';
 declare var $: any;
 
 @Component({
@@ -120,6 +121,11 @@ export class ReporteContratacionesComponent implements OnInit {
        this.contrataciones = contrataciones;
        this.total = total;
        this.cargando = false;
+       Swal.fire(
+        'Filtrado exitoso!',
+        '',
+        'success'
+      );
     });
   }
 

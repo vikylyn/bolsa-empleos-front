@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { CurriculumService } from '../../../services/solicitante/curriculum/curriculum.service';
 import { Solicitante } from '../../../models/solicitante/solicitante.model';
+import { ValidacionFormularioService } from '../../../services/validacion-formulario.service';
 
 @Component({
   selector: 'app-curriculum',
@@ -19,10 +20,12 @@ export class CurriculumComponent implements OnInit {
   public formSubmitted = false;
   public curriculumForm: FormGroup;
   public curriculum: Curriculum;
+  public cargando = false;
 
   constructor(private curriculumService: CurriculumService,
               private loginService: LoginService,
               private router: Router,
+              public validacionService: ValidacionFormularioService,
               private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -38,6 +41,7 @@ export class CurriculumComponent implements OnInit {
 
   }
   agregarCurriculum(): void {
+    this.cargando = true;
     this.cargarFormulario = true;
     this.curriculumForm = this.fb.group({
       titulo: ['', [ Validators.required]],
@@ -45,6 +49,7 @@ export class CurriculumComponent implements OnInit {
       biografia: ['', [Validators.required]],
       id_solicitante: [this.loginService.solicitante.id, [Validators.required]]
     });
+    this.cargando = false;
   }
   campoNoValido( campo: string): boolean {
     if (this.curriculumForm.get(campo).invalid && this.formSubmitted) {
@@ -58,13 +63,15 @@ export class CurriculumComponent implements OnInit {
     if (this.curriculumForm.invalid) {
       return;
     }
+    this.cargando  = true;
     this.curriculumService.adicionar(this.curriculumForm.value)
     .subscribe((resp: any) => {
-      console.log(resp);
+      this.cargando = false;
       Swal.fire(resp.mensaje, '', 'success');
       this.router.navigateByUrl('/curriculum/administracion');
     }, (err) => {
       console.log(err);
+      this.cargando = false;
       Swal.fire('Error al adicionar Curriculum', err.error.error || err.error.mensaje || err.error.errors[0].msg, 'error');
     });
   }

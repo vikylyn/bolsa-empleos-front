@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { GrupoOcupacionalService } from '../../../services/administrador/grupo-ocupacional.service';
 import { GrupoOcupacional } from '../../../models/ocupacion/grupo-ocupacional.model';
 
+
 @Component({
   selector: 'app-grupos-ocupacionales',
   templateUrl: './grupos-ocupacionales.component.html',
@@ -20,7 +21,8 @@ export class GrupoOcupacionalComponent implements OnInit {
   desde = 0;
   cargando = true;
 
-  constructor(private grupoService: GrupoOcupacionalService, public router: Router) { }
+  constructor(private grupoService: GrupoOcupacionalService,
+              public router: Router) { }
 
   ngOnInit(): void {
    this.cargarGrupos();
@@ -61,7 +63,7 @@ export class GrupoOcupacionalComponent implements OnInit {
   }
   inhabilitar(id: number): void {
     Swal.fire({
-      title: 'Estas seguro de inhabilitar el grupo ocupacional?',
+      title: '¿Estás seguro de inhabilitar el grupo ocupacional?',
       text: '',
       icon: 'warning',
       showCancelButton: true,
@@ -90,7 +92,7 @@ export class GrupoOcupacionalComponent implements OnInit {
   }
   habilitar(id: number): void {
     Swal.fire({
-      title: 'Estas seguro de habilitar el grupo ocupacional?',
+      title: '¿Estás seguro de habilitar el grupo ocupacional?',
       text: '',
       icon: 'warning',
       showCancelButton: true,

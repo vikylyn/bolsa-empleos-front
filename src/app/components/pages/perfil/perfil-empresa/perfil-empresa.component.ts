@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { WebsocketService } from '../../../../services/websocket/websocket.service';
 import { RazonSocialService } from '../../../../services/empleador/razon-social.service';
 import { RazonSocial } from '../../../../models/empleador/razon-social.model';
+import { ValidacionFormularioService } from '../../../../services/validacion-formulario.service';
 
 @Component({
   selector: 'app-perfil-empresa',
@@ -33,6 +34,7 @@ export class PerfilEmpresaComponent implements OnInit {
               private empresaService: EmpresaService,
               private loginService: LoginService,
               private wsService: WebsocketService,
+              public validacionService: ValidacionFormularioService,
               private razonSocialService: RazonSocialService,
               private ubicacionService: UbicacionService) {
   }

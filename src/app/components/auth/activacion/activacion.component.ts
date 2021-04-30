@@ -10,7 +10,8 @@ declare function init_plugins();
 
 })
 export class ActivacionComponent implements OnInit {
-
+  cargando = true;
+  error = false;
   constructor(private route: ActivatedRoute,
               private activacionService: ActivacionService) { }
 
@@ -20,10 +21,13 @@ export class ActivacionComponent implements OnInit {
     .subscribe(params => {
       this.activacionService.activar(this.route.snapshot.params.id, this.route.snapshot.params.usuario, params.token)
       .subscribe((resp: any) => {
+        this.cargando = false;
         Swal.fire(resp.mensaje, '', 'success');
       }, (err) => {
         console.log(err);
-        Swal.fire('Error al crear Empleador', err.mensaje || err.error || err.error.mensaje, 'error');
+        this.error = true;
+        this.cargando = false;
+        Swal.fire('Error al activar cuenta', err.mensaje || err.error || err.error.mensaje, 'error');
       });
     });
   }

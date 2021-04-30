@@ -4,11 +4,13 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Mis Contrataciones</h4>
+
+                    <h2><span class="badge badge-info">Mis Contrataciones</span></h2>
+
                     <h6>Total: {{totalContrataciones}} - {{desde}}</h6>
                     <div class="row justify-content-end">
                         <div class="col-md-6">
-                            <input #txtTermino (keyup)="busqueda(txtTermino.value)" type="text" class="form-control" placeholder="buscar contratacion...">
+                            <input #txtTermino (keyup)="busqueda(txtTermino.value)" type="text" class="form-control" placeholder="buscar contratación...">
                         </div>
                     </div>
                     <br><br>
@@ -19,7 +21,7 @@
                                     <th>Num</th>
                                     <th>Contratado en:</th>
                                     <th>Empleador / Empresa</th>
-                                    <th>Ocupacion</th>
+                                    <th>Ocupación</th>
                                     <th>Vacante</th>
                                     <th>habilitado</th>
                                     <th class="w100 text-center">ver</th>

@@ -25,12 +25,12 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <label for="">Ocupacion:</label>
+                                <label for="">Ocupación:</label>
                                 <ng-select id="id_ocupacion" [items]="ocupaciones" 
-                                           placeholder="Seleccionar Ocupaciones"
+                                           placeholder="Seleccionar Ocupación"
                                            [clearable]="false"
                                            bindLabel="nombre"
-                                           notFoundText = "Ocupacion no encontrada" 
+                                           notFoundText = "Ocupación no encontrada" 
                                            bindValue="id" 
                                            formControlName="id_ocupacion">
                                 </ng-select>
@@ -39,8 +39,8 @@
                             <div class="col">
                                 <label for="">Pais:</label>
                                 <ng-select 
-                                    notFoundText = "Pais no encontrado"
-                                    placeholder="Seleccionar Pais"
+                                    notFoundText = "País no encontrado"
+                                    placeholder="Seleccionar País"
                                     appendTo="body"
                                     [clearable] = "false"
                                     formControlName="id_pais">
@@ -92,7 +92,7 @@
                     <td><span class="font-weight-bold">Fecha actual: </span> {{fechaActual | date: 'longDate'}}</td>
                 </tr>
                 <tr>
-                    <td><span class="font-weight-bold">Total:</span> {{total}} Vacantes</td>
+                    <td><span class="font-weight-bold">Total:</span> {{vacantes.length}} Vacantes</td>
                 </tr>
             </table>
         </div>
@@ -110,12 +110,12 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Titulo</th>
-                                    <th>Ocupacion</th>
+                                    <th>Título</th>
+                                    <th>Ocupación</th>
                                     <th>Nº aceptados</th>
                                     <th>Tipo Contrato</th>
                                     <th>Horario</th>
-                                    <th>Ciudad-Estado-Pais</th>
+                                    <th>Ciudad-Estado-País</th>
                                     <th>Empleador / Empresa</th>
                                     <th>Estado</th>
                                     <th>Creado en:</th>

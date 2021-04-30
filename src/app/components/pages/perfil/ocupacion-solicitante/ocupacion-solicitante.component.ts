@@ -44,7 +44,7 @@ export class OcupacionSolicitanteComponent implements OnInit {
   }
   eliminar(id: number): void {
     Swal.fire({
-      title: 'Estas seguro de eliminar la ocupación?',
+      title: '¿Estás seguro de eliminar la ocupación?',
       text: '',
       icon: 'warning',
       showCancelButton: true,

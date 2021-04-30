@@ -3,12 +3,11 @@
     <div class="row">
         <div class="col-12">
             <div class="card" id="4">
-                <div class="card-header">
+
+                <div class="card-body">
                     <h2><span class="badge badge-info">Administración de Estudios Básicos</span></h2>
                     
                     <h6>Total: {{totalEstudios}} - {{desde}}</h6> 
-                </div>
-                <div class="card-body">
                     <button (click)="mostrarModal('adicionar', 0)"
                             class="btn btn-success">
                                 Adicionar 
@@ -19,7 +18,7 @@
                             <thead>
                                 <tr>
                                     <th>Colegio</th>
-                                    <th>Pais</th>
+                                    <th>País</th>
                                     <th>Ciudad - Estado</th>
                                     <th>Grado inicio</th>
                                     <th>Grado fin</th>
@@ -52,18 +51,18 @@
                                     <td class="text-nowrap text-center cursor">
 
                                         <a class="cursor" (click)="mostrarModal2(estudio.id)"> 
-                                            <i class="fa fa-eye  m-r-10"></i> 
+                                            <i class="fa fa-eye "></i> 
                                         </a>
                                        
                                     </td>
                                     <td class="text-nowrap text-center cursor">
 
                                         <a (click)="mostrarModal('modificar', estudio.id)" > 
-                                            <i class="fa fa-pencil m-r-10"></i> 
+                                            <i class="fa fa-pencil "></i> 
                                         </a>
                                     </td>
                                     <td class="text-nowrap text-center cursor">
-                                        <a (click)="eliminar(estudio.id)"  class="cursor" data-toggle="tooltip" data-original-title="Eliminar"><i class="fa fa-trash-o m-r-10 text-info"></i></a>
+                                        <a (click)="eliminar(estudio.id)"  class="cursor" data-toggle="tooltip" data-original-title="Eliminar"><i class="fa fa-trash-o text-info"></i></a>
                                     </td>
                                 </tr>
                             </tbody> 

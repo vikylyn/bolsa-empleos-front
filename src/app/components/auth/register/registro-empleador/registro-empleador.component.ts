@@ -8,6 +8,7 @@ import { Ciudad } from '../../../../models/ciudad.model';
 import Swal from 'sweetalert2';
 import { RazonSocialService } from '../../../../services/empleador/razon-social.service';
 import { RazonSocial } from '../../../../models/empleador/razon-social.model';
+import { ValidacionFormularioService } from '../../../../services/validacion-formulario.service';
 declare function init_plugins();
 
 @Component({
@@ -29,6 +30,7 @@ export class RegistroEmpleadorComponent implements OnInit {
               public router: Router,
               private empleadorService: EmpleadorService,
               private razonSocialService: RazonSocialService,
+              public validacionService: ValidacionFormularioService,
               private ubicacionService: UbicacionService)
     {
     }
@@ -37,7 +39,7 @@ export class RegistroEmpleadorComponent implements OnInit {
     nombre: ['', [ Validators.required]],
     apellidos: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(4)]],
+    password: ['', [Validators.required, Validators.minLength(8)]],
     password2: ['', [Validators.required]],
     cedula: ['', [Validators.required]],
     num_complemento_ci: [''],

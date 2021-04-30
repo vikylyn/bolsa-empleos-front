@@ -45,7 +45,7 @@
                             <div class="col-md-6 ">
                                 <div class="form-group">
                                     <label for="exampleInputuname">Telefono:</label>
-                                    <input [class.is-invalid]="campoNoValido('telefono')" formControlName="telefono" type="number" class="form-control" placeholder="Telefono">
+                                    <input [class.is-invalid]="campoNoValido('telefono')" formControlName="telefono" type="text" class="form-control" placeholder="Telefono" (keypress)="validacionService.soloNumeros($event)">
                                     <small *ngIf="campoNoValido('telefono')" class="form-control-feedback text-danger">El telefono es obligatorio</small>
         
                                 </div>
@@ -62,7 +62,7 @@
                             </div>
                             <div class="col-md-6 ">
                                 <div class="form-group">
-                                    <label class="control-label">Num Complemento Ci:</label>
+                                    <label class="control-label">Complemento Ci (opcional):</label>
                                     <input [class.is-invalid]="campoNoValido('num_complemento_ci')" formControlName="num_complemento_ci" type="text" class="form-control" placeholder="Complemento CI">
                                 </div>
                             </div>

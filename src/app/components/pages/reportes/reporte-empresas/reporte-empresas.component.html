@@ -25,10 +25,10 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <label for="">Pais:</label>
+                                <label for="">País:</label>
                                 <ng-select 
-                                    notFoundText = "Pais no encontrado"
-                                    placeholder="Seleccionar Pais"
+                                    notFoundText = "País no encontrado"
+                                    placeholder="Seleccionar País"
                                     appendTo="body"
                                     [clearable] = "false"
                                     formControlName="id_pais">
@@ -54,7 +54,7 @@
                                 </ng-select>
                             </div>
                             <div class="col">
-                                <label for="">Razon social:</label>
+                                <label for="">Razón social:</label>
                                 <ng-select 
                                            placeholder="Seleccionar una Razon social"
                                            appendTo="body"
@@ -96,7 +96,7 @@
                     <td><span class="font-weight-bold">Fecha actual: </span> {{fechaActual | date: 'longDate'}}</td>
                 </tr>
                 <tr>
-                    <td><span class="font-weight-bold">Total:</span> {{total}}</td>
+                    <td><span class="font-weight-bold">Total:</span> {{empresas.length}} Empresas</td>
                 </tr>
             </table>
         </div>
@@ -116,10 +116,10 @@
                                     <th>#</th>
                                     <th>Nombre</th>
                                     <th>Dominio web</th>
-                                    <th>Telefono</th>
-                                    <th>Descripcion</th>
-                                    <th>Ciudad-Estado-Pais</th>
-                                    <th>Direccion</th>
+                                    <th>Teléfono</th>
+                                    <th>Descripción</th>
+                                    <th>Ciudad-Estado-País</th>
+                                    <th>Dirección</th>
                                     <th>Estado</th>
                                     <th>Creado en:</th>
 

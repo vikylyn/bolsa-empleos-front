@@ -108,7 +108,7 @@ export class VacantesSolicitanteComponent implements OnInit, OnDestroy {
   cancelar(): void {
 
     Swal.fire({
-      title: 'Estas seguro de cancelar su postulacion?',
+      title: 'Estas seguro de cancelar su postulación?',
       text: '',
       icon: 'warning',
       showCancelButton: true,
@@ -123,7 +123,7 @@ export class VacantesSolicitanteComponent implements OnInit, OnDestroy {
           this.verificarPostulacion();
         }, (err) => {
           console.log(err);
-          Swal.fire('Error al eliminar postulacion', err.error.error || err.error.mensaje, 'error');
+          Swal.fire('Error al eliminar postulación', err.error.error || err.error.mensaje, 'error');
           this.cargando2 = false;
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -138,7 +138,7 @@ export class VacantesSolicitanteComponent implements OnInit, OnDestroy {
 
   confirmar(): void {
     Swal.fire({
-      title: 'Desea confirmar su postulacion?',
+      title: 'Desea confirmar su postulación?',
       text: 'Usted ha sido aceptado para la vacante!',
       icon: 'warning',
       showCancelButton: true,
@@ -153,7 +153,7 @@ export class VacantesSolicitanteComponent implements OnInit, OnDestroy {
           this.cargando2 = false;
         }, (err) => {
           console.log(err);
-          Swal.fire('Error al confirmar postulacion', err.error.error || err.error.mensaje, 'error');
+          Swal.fire('Error al confirmar postulación', err.error.error || err.error.mensaje, 'error');
           this.cargando2 = false;
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -168,7 +168,7 @@ export class VacantesSolicitanteComponent implements OnInit, OnDestroy {
 
   rechazar(): void {
     Swal.fire({
-      title: 'Desea rechazar su postulacion?',
+      title: 'Desea rechazar su postulación?',
       text: 'Usted ha sido aceptado para la vacante!',
       icon: 'warning',
       showCancelButton: true,
@@ -183,7 +183,7 @@ export class VacantesSolicitanteComponent implements OnInit, OnDestroy {
           this.cargando2 = false;
         }, (err) => {
           console.log(err);
-          Swal.fire('Error al confirmar postulacion', err.error.error || err.error.mensaje, 'error');
+          Swal.fire('Error al confirmar postulación', err.error.error || err.error.mensaje, 'error');
           this.cargando2 = false;
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {

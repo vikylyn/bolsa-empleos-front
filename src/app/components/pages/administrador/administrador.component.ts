@@ -67,7 +67,7 @@ export class AdministradorComponent implements OnInit {
   }
   inhabilitar(administrador: Administrador): void {
     Swal.fire({
-      title: `Estas seguro de inhabilitar a ${administrador.nombre} ${administrador.apellidos}?`,
+      title: `¿Estás seguro de inhabilitar a ${administrador.nombre} ${administrador.apellidos}?`,
       text: '',
       icon: 'warning',
       showCancelButton: true,
@@ -96,7 +96,7 @@ export class AdministradorComponent implements OnInit {
   }
   habilitar(administrador: Administrador): void {
     Swal.fire({
-      title: `Estas seguro de habilitar a ${administrador.nombre} ${administrador.apellidos}?`,
+      title: `¿Estás seguro de habilitar a ${administrador.nombre} ${administrador.apellidos}?`,
       text: '',
       icon: 'warning',
       showCancelButton: true,
@@ -120,7 +120,6 @@ export class AdministradorComponent implements OnInit {
           '',
           'error'
         );
-       
       }
     });
   }

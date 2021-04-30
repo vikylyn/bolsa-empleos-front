@@ -64,7 +64,7 @@ export class EstudioBasicoComponent implements OnInit {
 
   eliminar(id: number): void {
     Swal.fire({
-      title: 'Estas seguro de eliminar el estudio básico?',
+      title: '¿Estás seguro de eliminar el estudio básico?',
       text: '',
       icon: 'warning',
       showCancelButton: true,

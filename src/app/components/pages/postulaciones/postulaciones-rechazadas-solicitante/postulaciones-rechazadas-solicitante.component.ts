@@ -40,9 +40,11 @@ export class PostulacionesRechazadasSolicitanteComponent implements OnInit {
     if (valor.length === 0) {
       return this.postulaciones =  this.postulacionesTemp;
     }
+    this.cargando = true;
     this.postulacionService.busquedaRechazadosSolicitante(valor, this.loginService.solicitante.id).subscribe(
       ({postulaciones}) => {
         this.postulaciones = postulaciones;
+        this.cargando = false;
       }
     );
   }

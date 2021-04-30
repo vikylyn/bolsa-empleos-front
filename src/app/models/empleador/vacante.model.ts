@@ -17,6 +17,7 @@ export class Vacante {
         public num_disponibles: number,
         public descripcion: string,
         public creado_en: Date,
+        public modificado_en: Date,
         public habilitado: boolean,
         public requisitos: Requisitos,
         public tipo_contrato: TipoContrato,

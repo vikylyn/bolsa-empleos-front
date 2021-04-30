@@ -63,7 +63,7 @@ export class IdiomaComponent implements OnInit {
 
   eliminar(id: number): void {
     Swal.fire({
-      title: 'Estas seguro de eliminar el idioma?',
+      title: '¿Estás seguro de eliminar el idioma?',
       text: '',
       icon: 'warning',
       showCancelButton: true,

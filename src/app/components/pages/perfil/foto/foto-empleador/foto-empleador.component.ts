@@ -43,7 +43,6 @@ export class FotoEmpleadorComponent implements OnInit {
       this.imagenSubir = null;
       return;
     }
-   
     this.imagenSubir = archivo;
     let reader = new FileReader();
     let urlImagenTemp = reader.readAsDataURL(archivo);

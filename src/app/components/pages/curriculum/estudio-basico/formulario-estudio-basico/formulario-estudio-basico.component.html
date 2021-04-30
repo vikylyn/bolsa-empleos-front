@@ -13,8 +13,8 @@
                 </div>
                 <div class="card-body">
                     <app-cargando [tamanio]="'col-12'" *ngIf="cargando"></app-cargando>
-                    <h3 class="text-center">{{tipoOperacion | titlecase}} Estudio Básico</h3>
-                    <hr>
+                    <h3 class="text-center font-weight-bold">{{tipoOperacion | titlecase}} Estudio Básico</h3>
+                    
                     <form  class="form p-t-20" 
                     [formGroup]="estudioForm"> 
                     <div class="form-body">
@@ -22,7 +22,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="exampleInputuname">Colegio</label>
-                                    <input [class.is-invalid]="campoNoValido('colegio')" formControlName="colegio" class="form-control" type="text" placeholder="Ingrese un Colegio">
+                                    <input [class.is-invalid]="campoNoValido('colegio')" formControlName="colegio" class="form-control" type="text" placeholder="Ingrese un Colegio" maxlength="45">
                                     <small *ngIf="campoNoValido('colegio')" class="form-control-feedback text-danger">Ingrese un Colegio</small> 
     
                                 </div>
@@ -39,9 +39,9 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="exampleInputuname">Fecha de Finalizacion</label>
+                                    <label for="exampleInputuname">Fecha de Finalización</label>
                                     <input [class.is-invalid]="campoNoValido('fecha_fin')" formControlName="fecha_fin"  type="date" class="form-control" placeholder="dd/mm/yyyy">
-                                    <small *ngIf="campoNoValido('fecha_fin')" class="form-control-feedback text-danger">La fecha de finalizacion es obligatoria </small>
+                                    <small *ngIf="campoNoValido('fecha_fin')" class="form-control-feedback text-danger">La fecha de finalización es obligatoria </small>
 
                                 </div>
                             </div>
@@ -51,10 +51,10 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="exampleInputuname">Pais</label>
+                                    <label for="exampleInputuname">País</label>
                                     <ng-select 
-                                          notFoundText = "Pais no encontrado"
-                                          placeholder="Seleccionar Pais"
+                                          notFoundText = "País no encontrado"
+                                          placeholder="Seleccionar País"
                                           [clearable] = "false"
                                           appendTo="body"
                                           formControlName="id_pais"
@@ -63,7 +63,7 @@
                                            {{pais.nombre}}
                                          </ng-option>
                                     </ng-select>
-                                    <small *ngIf="campoNoValido('id_pais')" class="form-control-feedback text-danger">Seleccione un pais</small> 
+                                    <small *ngIf="campoNoValido('id_pais')" class="form-control-feedback text-danger">Seleccione un país</small> 
                                 </div>
                             </div>
                             <div class="col-md-6" *ngIf="!mostrarCampos">
@@ -84,9 +84,9 @@
                             </div>
                             <div class="col-md-6" *ngIf="mostrarCampos">
                                 <div class="form-group">
-                                    <label class="text-white" for="exampleInputuname">Pais:</label>
-                                    <input [class.is-invalid]="campoNoValido('pais')" formControlName="pais" class="form-control" type="text" placeholder="Ingrese el nombre del pais">
-                                    <small *ngIf="campoNoValido('pais')" class="form-control-feedback text-danger">El pais es obligatorio </small>
+                                    <label class="text-white" for="exampleInputuname">País:</label>
+                                    <input [class.is-invalid]="campoNoValido('pais')" formControlName="pais" class="form-control" type="text" placeholder="Ingrese el nombre del país" maxlength="20">
+                                    <small *ngIf="campoNoValido('pais')" class="form-control-feedback text-danger">El país es obligatorio </small>
                                 </div>
                             </div>
                         </div>
@@ -94,14 +94,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputuname">Estado/departamento:</label>
-                                    <input [class.is-invalid]="campoNoValido('estado')" formControlName="estado" class="form-control" type="text" placeholder="Estado">
+                                    <input [class.is-invalid]="campoNoValido('estado')" formControlName="estado" class="form-control" type="text" placeholder="Estado" maxlength="20">
                                     <small *ngIf="campoNoValido('estado')" class="form-control-feedback text-danger">El estado es obligatorio </small>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="exampleInputuname">ciudad:</label>
-                                    <input [class.is-invalid]="campoNoValido('ciudad')" formControlName="ciudad" class="form-control" type="text" placeholder="Ciudad">
+                                    <input [class.is-invalid]="campoNoValido('ciudad')" formControlName="ciudad" class="form-control" type="text" placeholder="Ciudad" maxlength="20">
                                     <small *ngIf="campoNoValido('ciudad')" class="form-control-feedback text-danger">La ciudad es obligatoria </small>
                                 </div>
                             </div>
@@ -119,7 +119,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="control-label">Grado de Finalizacion</label>
+                                    <label class="control-label">Grado de Finalización</label>
                                     <select [class.is-invalid]="campoNoValido('id_grado_fin')" formControlName="id_grado_fin" class="form-control custom-select">
                                         <option *ngIf="tipoOperacion==='adicionar'" value="0">Seleccionar</option>
                                         <option *ngFor="let grado of grados" [value]="grado.id">{{grado.grado}} / {{grado.nivel_escolar.nivel}}</option>

@@ -20,6 +20,7 @@ import { PeriodoPago } from '../../../../../models/empleador/periodo-pago.model'
 import { Vacante } from '../../../../../models/empleador/vacante.model';
 import { TipoJornada } from '../../../../../models/empleador/tipo-jornada.model';
 import { TipoJornadaService } from '../../../../../services/vacante/tipo-jornada.service';
+import { ValidacionFormularioService } from '../../../../../services/validacion-formulario.service';
 
 @Component({
   selector: 'app-formulario-vacante',
@@ -62,6 +63,7 @@ export class FormularioVacanteComponent implements OnInit {
           private vacanteService: VacanteService,
           private periodoPagoService: PeriodoPagoService,
           private loginService: LoginService,
+          public validacionService: ValidacionFormularioService,
           private tipoJornadaService: TipoJornadaService
     ) { }
 

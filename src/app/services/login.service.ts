@@ -20,24 +20,36 @@ export class LoginService {
   empleador: Empleador;
   solicitante: Solicitante;
   administrador: Administrador;
- 
+
   constructor(private http: HttpClient,
               private router: Router) {
                 this.cargarStorage();
   }
 
-  validarToken(): Observable<boolean> {
+  validarToken(): boolean {
+    const token = localStorage.getItem('token') || '';
+    const id = localStorage.getItem('id');
+    if (token.length > 0 ) {
+      return false;
+    }else {
+      return true;
+    }
+  }
+ /* validarToken(): Observable<boolean> {
     const token = localStorage.getItem('token') || '';
     const id = localStorage.getItem('id');
     return this.http.post(`${base_url}/login/renovar` + `?token=${token}`, id)
           .pipe(
             tap( (resp: any) => {
               localStorage.setItem('token', resp.token);
+              console.log(resp.token);
             }),
             map( resp => true),
             catchError( error => of(false))
           );
   }
+*/
+
   // carga el storage para que compartir los atributos con la clase que los inyecta
   cargarStorage(): any {
     if (localStorage.getItem('token')) {

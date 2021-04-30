@@ -10,7 +10,7 @@
                                 class="form-horizontal form-material animated fadeIn fast" id="loginform" >
                                 <h3 class="box-title m-b-20 text-center">Iniciar sesión</h3>
                                 <div class="form-group">
-                                    <input [class.is-invalid]="campoNoValido('email')" formControlName="email" class="form-control" type="email"  placeholder="Email">
+                                    <input [class.is-invalid]="campoNoValido('email')" formControlName="email" class="form-control" type="email"  placeholder="Email" maxlength="50">
                                     <small *ngIf="campoNoValido('email')" class="form-control-feedback text-danger">El email es obligatorio. Por favor, usa el formato: tucorreo@ejemplo.com </small>
                                 </div>
                                 <div class="form-group">

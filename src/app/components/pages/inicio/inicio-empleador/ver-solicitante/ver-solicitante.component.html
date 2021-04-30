@@ -26,19 +26,19 @@
                             <span class="font-weight-bold">Nombre: </span> <span>{{solicitante.nombre}}</span> <br>
                             <span class="font-weight-bold">Apellidos: </span> <span>{{solicitante.apellidos}}</span> <br>
                             <span class="font-weight-bold">Edad: </span> <span>{{solicitante.fecha_nac | fechanac:solicitante.fecha_nac}}</span> <br>
-                            <span class="font-weight-bold">Telefono: </span> <span>{{solicitante.telefono}}</span> <br>
-                            <span class="font-weight-bold">Cedula: </span> <span>{{solicitante.cedula}}{{solicitante.num_complemento_ci}}</span> <br>
-                            <span class="font-weight-bold">Correo electronico: </span> <span>{{solicitante.credenciales.email}}</span> <br>
+                            <span class="font-weight-bold">Teléfono: </span> <span>{{solicitante.telefono}}</span> <br>
+                            <span class="font-weight-bold">Cédula: </span> <span>{{solicitante.cedula}}{{solicitante.num_complemento_ci}}</span> <br>
+                            <span class="font-weight-bold">Correo electrónico: </span> <span>{{solicitante.credenciales.email}}</span> <br>
                             <span class="font-weight-bold">Nacionalidad: </span> <span>{{solicitante.nacionalidad}}</span> <br>
-                            <span class="font-weight-bold">Pais de residencia: </span> <span>{{solicitante.ciudad.estado.pais.nombre}}</span> <br>
+                            <span class="font-weight-bold">País de residencia: </span> <span>{{solicitante.ciudad.estado.pais.nombre}}</span> <br>
                             <span class="font-weight-bold">Ciudad de residencia: </span> <span>{{solicitante.ciudad.nombre}} - {{solicitante.ciudad.estado.nombre}}</span> <br>
-                            <span class="font-weight-bold">Direccion: </span> <span>{{solicitante.direccion}}</span> <br>
-                            <span class="font-weight-bold">Genero: </span> <span>{{solicitante.genero}}</span> <br>
+                            <span class="font-weight-bold">Dirección: </span> <span>{{solicitante.direccion}}</span> <br>
+                            <span class="font-weight-bold">Género: </span> <span>{{solicitante.genero | genero:'solicitante.genero'}}</span> <br>
                             <span class="font-weight-bold">Ocupaciones : </span> 
                             <ul>
                                 <li *ngFor="let ocupacion of solicitante.ocupaciones" >{{ocupacion.ocupacion.nombre}}</li>
                             </ul>
-                            <span class="font-weight-bold">Se unio en: </span> <span>{{solicitante.creado_en | date: 'mediumDate'}}</span> <br> 
+                            <span class="font-weight-bold">Se unió en: </span> <span>{{solicitante.creado_en | date: 'mediumDate'}}</span> <br> 
                             <button (click)="mostrarModal(solicitante.id)" class="btn btn-info btn-block">Invitar a Postularse</button>
                             <button (click)="mostrarModalCurriculum(solicitante.id)" class="btn btn-success btn-block">Ver Curriculum</button>
 

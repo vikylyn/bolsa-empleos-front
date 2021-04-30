@@ -19,6 +19,9 @@ import localEs from '@angular/common/locales/es';
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { InterceptorService } from './interceptors/interceptor.service';
+import { RouterModule } from '@angular/router';
 
 
 // Set the fonts to use
@@ -43,12 +46,18 @@ const config: SocketIoConfig = {
     AppRoutingModule,
     PagesModule,
     AuthModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    RouterModule,
   ],
   providers: [
     {
       provide: LOCALE_ID,
       useValue: 'es'
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorService,
+      multi: true
     }
   ],
   bootstrap: [AppComponent]

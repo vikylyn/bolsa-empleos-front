@@ -2,12 +2,10 @@
 <div class="row animated fadeIn fast" *ngIf="!myModal">
     <div class="col-12">
         <div class="card" id="3">
-            <div class="card-header">
+
+            <div class="card-body">
                 <h2><span class="badge badge-info">Administración de Experiencias Laborales</span></h2>              
                 <h6>Total: {{totalExperiencias}} - {{desde}}</h6> 
-            </div>
-            <div class="card-body">
-
                 <button (click)="mostrarModal('adicionar', 0)"
                         class="btn btn-success">
                             Adicionar
@@ -20,7 +18,7 @@
                                 <th>Empresa</th>
                                 <th>Puesto</th>
                                 <th>Tipo Contrato</th>
-                                <th>Pais</th>
+                                <th>País</th>
                                 <th>Ciudad - Estado</th>
                                 <th class="w100 text-center">ver</th>
                                 <th class="w100 text-center">modificar</th>

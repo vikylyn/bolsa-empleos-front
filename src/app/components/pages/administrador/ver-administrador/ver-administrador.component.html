@@ -13,21 +13,21 @@
               <div class="card-body">
                   <div class="row">
                     <div class="col">
-                      <h3 class="text-center">Datos del Administrador</h3>
+                      <h3 class="text-center font-weight-bold">Datos del Administrador</h3>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col">
                       <span class="font-weight-bold">Nombre: </span> {{administrador.nombre}} {{administrador.apellidos}} <br>
-                      <span class="font-weight-bold">Correo electronico: </span> {{administrador.credenciales.email}} <br>
+                      <span class="font-weight-bold">Correo electrónico: </span> {{administrador.credenciales.email}} <br>
                       <span class="font-weight-bold">Teléfono: </span> {{administrador.telefono}} <br> 
-                      <span class="font-weight-bold">Cedula de Identidad: </span> {{administrador.cedula}} <br>
+                      <span class="font-weight-bold">Cédula de Identidad: </span> {{administrador.cedula}} <br>
                       <span class="font-weight-bold">Complemento CI: </span> {{administrador.num_complemento_ci}} <br>
                       <span class="font-weight-bold">Género: </span> {{administrador.genero | genero: administrador.genero}} <br>
                       <span class="font-weight-bold">Habilitado: </span> {{administrador.habilitado}} <br>
                       <span class="font-weight-bold">Ciudad: </span> {{administrador.nombre}} <br>
                       <span class="font-weight-bold">Dirección: </span> {{administrador.direccion}} <br>
-                      <span class="font-weight-bold">Pais: </span> {{administrador.ciudad.estado.pais.nombre}} <br> 
+                      <span class="font-weight-bold">País: </span> {{administrador.ciudad.estado.pais.nombre}} <br> 
                     </div>
                     <div class="col">
                       <img  class="img-responsive rounded" [src]="administrador.imagen.url" alt="">

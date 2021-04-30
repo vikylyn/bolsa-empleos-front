@@ -8,13 +8,12 @@
                                [formGroup]="registerForm"
                                (ngSubmit)="adicionarSolicitante()">
                             <div class="form-body"> 
-                                <h3 class="card-title">Registrarme</h3>
-                                <hr>
+                                <h3 class="card-title font-weight-bold text-center">Registrarme</h3>
                                 <div class="row p-t-20">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Nombres:</label>
-                                            <input [class.is-invalid]="campoNoValido('nombre')" formControlName="nombre" class="form-control" type="text" placeholder="Nombres">
+                                            <input [class.is-invalid]="campoNoValido('nombre')" formControlName="nombre" class="form-control" type="text" placeholder="Nombres" (keypress)="validacionService.soloLetras($event)">
                                             <small *ngIf="campoNoValido('nombre')" class="form-control-feedback text-danger">El nombre es obligatorio </small>
                                         </div>
                                     </div>
@@ -22,7 +21,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Apellidos:</label>
-                                            <input [class.is-invalid]="campoNoValido('apellidos')" formControlName="apellidos" class="form-control" type="text"  placeholder="Apellidos">
+                                            <input [class.is-invalid]="campoNoValido('apellidos')" formControlName="apellidos" class="form-control" type="text"  placeholder="Apellidos" (keypress)="validacionService.soloLetras($event)">
                                             <small *ngIf="campoNoValido('apellidos')" class="form-control-feedback text-danger">Los apellidos son obligatorios </small>
                                         </div>
                                     </div>
@@ -42,7 +41,7 @@
                                             <label class="control-label">Contraseña:</label>
                                             <input [class.is-invalid]="campoNoValido('password')" formControlName="password" class="form-control" type="password"  placeholder="Password">
                                             <small *ngIf="campoNoValido('password')" class="form-control-feedback text-danger">La contraseña es obligatoria. </small> <br>
-                                            <small *ngIf="minlength()" class="form-control-feedback text-danger">Debe tener un mínimo de 4 caracteres.</small>
+                                            <small *ngIf="minlength()" class="form-control-feedback text-danger">Debe tener un mínimo de 8 caracteres.</small>
                                         </div>
                                     </div>
                                     <div class="col-md-12 ">
@@ -91,22 +90,22 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">Genero</label>
+                                            <label class="control-label">Género</label>
                                             <select [class.is-invalid]="campoNoValido('genero')" formControlName="genero" class="form-control custom-select">
                                                 <option value="seleccionar">Seleccionar</option>
                                                 <option value="M">Masculino</option>
                                                 <option value="F">Fememino</option>
                                             </select>
-                                            <small *ngIf="campoNoValido('genero')" class="form-control-feedback text-danger">Seleccione un genero</small> 
+                                            <small *ngIf="campoNoValido('genero')" class="form-control-feedback text-danger">Seleccione un género</small> 
         
                                         </div>
                                     </div>
                                     <!--/span-->
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">Telefono:</label>
-                                            <input [class.is-invalid]="campoNoValido('telefono')" formControlName="telefono" type="number" class="form-control" placeholder="Telefono">
-                                            <small *ngIf="campoNoValido('telefono')" class="form-control-feedback text-danger">El telefono es obligatorio</small>
+                                            <label class="control-label">Teléfono:</label>
+                                            <input [class.is-invalid]="campoNoValido('telefono')" formControlName="telefono" type="text" class="form-control" placeholder="Teléfono" (keypress)="validacionService.soloNumeros($event)">
+                                            <small *ngIf="campoNoValido('telefono')" class="form-control-feedback text-danger">El teléfono es obligatorio</small>
                                         </div>
                                     </div>
                                     <!--/span-->
@@ -115,15 +114,15 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">Cedula de identidad:</label>
-                                            <input [class.is-invalid]="campoNoValido('cedula')" formControlName="cedula" type="text" class="form-control" placeholder="Cedula">
-                                            <small *ngIf="campoNoValido('cedula')" class="form-control-feedback text-danger">La cedula de identidad es obligatorio</small> 
+                                            <label class="control-label">Cédula de identidad:</label>
+                                            <input [class.is-invalid]="campoNoValido('cedula')" formControlName="cedula" type="text" class="form-control" placeholder="Cédula">
+                                            <small *ngIf="campoNoValido('cedula')" class="form-control-feedback text-danger">La cédula de identidad es obligatorio</small> 
                                         </div>
                                     </div>
                                     <!--/span-->
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="control-label">Num Complemento Ci:</label>
+                                            <label class="control-label">Complemento Ci (opcional):</label>
                                             <input [class.is-invalid]="campoNoValido('num_complemento_ci')" formControlName="num_complemento_ci" type="text" class="form-control" placeholder="Complemento CI">
                                         </div>
                                     </div>
@@ -132,16 +131,16 @@
                                 <div class="row">
                                     <div class="col-md-12 ">
                                         <div class="form-group">
-                                            <label>Ocupacion:</label>
+                                            <label>Ocupación:</label>
                                             <ng-select id="id_profesion" [items]="profesiones" 
                                                        placeholder="Seleccionar Ocupaciones"
                                                        bindLabel="nombre"
-                                                       notFoundText = "Ocupacion no encontrada" 
+                                                       notFoundText = "Ocupación no encontrada" 
                                                        bindValue="id" 
                                                        [multiple] = "true"
                                                        formControlName="id_profesion">
                                             </ng-select>
-                                            <small *ngIf="campoNoValido('id_profesion')" class="form-control-feedback text-danger">Seleccione almenos una profesion</small> 
+                                            <small *ngIf="campoNoValido('id_profesion')" class="form-control-feedback text-danger">Seleccione almenos una ocupación</small> 
 
                                         </div>
                                     </div>
@@ -150,7 +149,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label class="control-label">Nacionalidad</label>
-                                            <input [class.is-invalid]="campoNoValido('nacionalidad')" formControlName="nacionalidad" type="text" class="form-control" placeholder="Nacionalidad">
+                                            <input [class.is-invalid]="campoNoValido('nacionalidad')" formControlName="nacionalidad" type="text" class="form-control" placeholder="Nacionalidad" (keypress)="validacionService.soloLetras($event)">
                                             <small *ngIf="campoNoValido('nacionalidad')" class="form-control-feedback text-danger">La nacionalidad es Obligatoria</small> 
                                         </div>
                                     </div>
@@ -171,27 +170,27 @@
                                 <div class="row">
                                     <div class="col-md-12 ">
                                         <div class="form-group">
-                                            <label>Direccion</label>
-                                            <input [class.is-invalid]="campoNoValido('direccion')" formControlName="direccion" type="text" class="form-control" placeholder="Direccion">
-                                            <small *ngIf="campoNoValido('direccion')" class="form-control-feedback text-danger">La Direccion es Obligatoria</small> 
+                                            <label>Dirección</label>
+                                            <input [class.is-invalid]="campoNoValido('direccion')" formControlName="direccion" type="text" class="form-control" placeholder="Dirección" (keypress)="validacionService.direccion($event)">
+                                            <small *ngIf="campoNoValido('direccion')" class="form-control-feedback text-danger">La Dirección es Obligatoria</small> 
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Pais</label>   
+                                            <label>País</label>   
                                             <ng-select 
-                                                       notFoundText = "Pais no encontrado"
+                                                       notFoundText = "País no encontrado"
                                                        [clearable]="false"
-                                                       placeholder="Seleccionar Pais"
+                                                       placeholder="Seleccionar País"
                                                        appendTo="body"
                                                        formControlName="id_pais">
                                                        <ng-option [value]= "pais.id" *ngFor="let pais of paises">
                                                         {{pais.nombre}}
                                                       </ng-option>
                                             </ng-select>
-                                            <small *ngIf="campoNoValido('id_pais')" class="form-control-feedback text-danger">Seleccione un pais</small> 
+                                            <small *ngIf="campoNoValido('id_pais')" class="form-control-feedback text-danger">Seleccione un país</small> 
                                         </div>
                                     </div>
                                     <!--/span-->

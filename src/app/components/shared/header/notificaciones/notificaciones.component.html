@@ -15,7 +15,7 @@
                         <h5 *ngIf="notificacion.tipo_notificacion.tipo === 'desvinculacion_solicitante'">Su contrato  para {{notificacion.vacante.titulo}} ha terminado</h5>
                         <h5 *ngIf="notificacion.tipo_notificacion.tipo === 'invitacion_postulacion'">Ha sido invitado a postular para {{notificacion.vacante.titulo}} </h5>
 
-                            <span  class="mail-desc text-right">empleador: {{notificacion.vacante.empleador.nombre}}</span>
+                            <span  class="mail-desc text-right">empleador: {{notificacion.vacante.empleador.nombre}} {{notificacion.vacante.empleador.apellidos}}</span>
                             <span class="mail-desc text-right">ocupacion: {{notificacion.vacante.requisitos.ocupacion.nombre}}</span>  
                             <span class="time text-right">{{notificacion.creado_en | date: 'mediumDate'}} {{notificacion.creado_en | date: 'shortTime'}}</span> 
                     </div>

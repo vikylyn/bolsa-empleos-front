@@ -67,7 +67,7 @@ export class PostulacionesPendientesSolicitanteComponent implements OnInit {
   eliminar(id_postulacion: number): void {
 
     Swal.fire({
-      title: 'Estas seguro de eliminar su postulación?',
+      title: '¿Estás seguro de eliminar su postulación?',
       text: '',
       icon: 'warning',
       showCancelButton: true,

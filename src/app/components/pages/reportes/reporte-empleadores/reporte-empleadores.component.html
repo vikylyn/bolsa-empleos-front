@@ -37,10 +37,10 @@
                                 </div>
                             </div>
                             <div class="col-md-5">
-                                <label for="">Pais:</label>
+                                <label for="">País:</label>
                                 <ng-select 
-                                    notFoundText = "Pais no encontrado"
-                                    placeholder="Seleccionar Pais"
+                                    notFoundText = "País no encontrado"
+                                    placeholder="Seleccionar País"
                                     appendTo="body"
                                     [clearable] = "false"
                                     formControlName="id_pais">
@@ -92,7 +92,7 @@
                     <td><span class="font-weight-bold">Fecha actual: </span> {{fechaActual | date: 'longDate'}}</td>
                 </tr>
                 <tr>
-                    <td><span class="font-weight-bold">Total:</span> {{total}}</td>
+                    <td><span class="font-weight-bold">Total:</span> {{empleadores.length}} Empleadores</td>
                 </tr>
             </table>
         </div>
@@ -112,12 +112,12 @@
                                     <th>#</th>
                                     <th>Nombres</th>
                                     <th>Apellidos</th>
-                                    <th>Telefono</th>
-                                    <th>Cedula</th>
-                                    <th>Genero</th>
+                                    <th>Teléfono</th>
+                                    <th>Cédula</th>
+                                    <th>Género</th>
                                     <th>Nacionalidad</th>
-                                    <th>Ciudad-Estado-Pais</th>
-                                    <th>Direccion</th>
+                                    <th>Ciudad-Estado-País</th>
+                                    <th>Dirección</th>
                                     <th>Estado</th>
                                     <th>Creado en:</th>
                                     <th>Empresa</th>

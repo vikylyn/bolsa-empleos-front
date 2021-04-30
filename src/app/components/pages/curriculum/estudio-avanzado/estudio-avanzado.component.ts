@@ -62,7 +62,7 @@ export class EstudioAvanzadoComponent implements OnInit {
 
   eliminar(id: number): void {
     Swal.fire({
-      title: 'Estas seguro de eliminar el estudio avanzado?',
+      title: '¿Estás seguro de eliminar el estudio avanzado?',
       text: '',
       icon: 'warning',
       showCancelButton: true,

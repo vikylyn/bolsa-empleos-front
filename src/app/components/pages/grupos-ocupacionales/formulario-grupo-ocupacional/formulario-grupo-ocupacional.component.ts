@@ -4,6 +4,7 @@ import { GrupoOcupacionalService } from '../../../../services/administrador/grup
 import { GrupoOcupacional } from '../../../../models/ocupacion/grupo-ocupacional.model';
 import { LoginService } from '../../../../services/login.service';
 import Swal from 'sweetalert2';
+import { ValidacionFormularioService } from '../../../../services/validacion-formulario.service';
 @Component({
   selector: 'app-formulario-grupo-ocupacional',
   templateUrl: './formulario-grupo-ocupacional.component.html',
@@ -25,6 +26,7 @@ export class FormularioGrupoOcupacionalComponent implements OnInit {
   public grupo: GrupoOcupacional;
   constructor(public grupoService: GrupoOcupacionalService,
               private fb: FormBuilder,
+              public validacionService: ValidacionFormularioService,
               private loginService: LoginService) { }
 
   ngOnInit(): void {

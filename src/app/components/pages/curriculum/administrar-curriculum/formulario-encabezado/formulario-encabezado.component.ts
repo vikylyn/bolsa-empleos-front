@@ -6,6 +6,7 @@ import { LoginService } from '../../../../../services/login.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Curriculum } from '../../../../../models/curriculum/curriculum.model';
+import { ValidacionFormularioService } from '../../../../../services/validacion-formulario.service';
 
 @Component({
   selector: 'app-formulario-encabezado',
@@ -30,6 +31,7 @@ export class FormularioEncabezadoComponent implements OnInit {
   constructor(private curriculumService: CurriculumService,
               private loginService: LoginService,
               private router: Router,
+              public validacionService: ValidacionFormularioService,
               private fb: FormBuilder) { }
 
 

@@ -26,19 +26,19 @@
                                             <span class="font-weight-bold">Tipo de Contrato: </span> {{vacante.tipo_contrato.tipo}} <br>
                                             <span class="font-weight-bold">Tipo de Jornada: </span> {{vacante.tipo_jornada.tipo}} <br>
                                             <span class="font-weight-bold">Horario: </span> {{vacante.horario.nombre}} <br>
-                                            <span class="font-weight-bold">Fecha de publicacion: </span> <span>{{vacante.creado_en | date: 'longDate'}}</span> <br>  
+                                            <span class="font-weight-bold">Fecha de publicación: </span> <span>{{vacante.creado_en | date: 'longDate'}}</span> <br>  
                                             <span class="font-weight-bold">Vacantes Disponibles: </span> <span>{{vacante.num_disponibles}}</span> <br>  
-                                            <span class="font-weight-bold">Direccion: </span> <span>{{vacante.direccion}}</span> <br>                          
-                                            <span class="font-weight-bold">Pais: </span> <span>{{vacante.ciudad.estado.pais.nombre}}</span> <br>
+                                            <span class="font-weight-bold">Dirección: </span> <span>{{vacante.direccion}}</span> <br>                          
+                                            <span class="font-weight-bold">País: </span> <span>{{vacante.ciudad.estado.pais.nombre}}</span> <br>
                                             <span class="font-weight-bold">Ciudad: </span> <span>{{vacante.ciudad.nombre}} / {{vacante.ciudad.estado.nombre}}</span> <br>
-                                            <span class="font-weight-bold">Descripcion: </span> <span>{{vacante.descripcion}}</span> <br>                               
+                                            <span class="font-weight-bold">Descripción: </span> <span>{{vacante.descripcion}}</span> <br>                               
                                             
                                             <hr>
                                             <h4 class="card-title text-center"><strong>Requisitos para el cargo</strong> </h4>
                                             
-                                            <span class="font-weight-bold">Ocupacion: </span> <span>{{vacante.requisitos.ocupacion.nombre}}</span> <br>
+                                            <span class="font-weight-bold">Ocupación: </span> <span>{{vacante.requisitos.ocupacion.nombre}}</span> <br>
                                             <span class="font-weight-bold">Años de Experiencia: </span> <span>{{vacante.requisitos.experiencia}}</span> <br>
-                                            <span class="font-weight-bold">Genero: </span> <span>{{vacante.requisitos.genero | genero:vacante.requisitos.genero}}</span> <br>
+                                            <span class="font-weight-bold">Género: </span> <span>{{vacante.requisitos.genero | genero:vacante.requisitos.genero}}</span> <br>
                                             <span class="font-weight-bold">Idiomas: </span> 
                                              <ul>
                                                  <li *ngFor="let idioma  of vacante.requisitos.idiomas"><span>{{idioma.idioma.nombre}}</span>
@@ -64,11 +64,11 @@
                                   <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Empresa: </span> <span>{{vacante.empleador.empresa.nombre}}  {{vacante.empleador.empresa.razon_social.sigla}}</span> <br>
                                   <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Dominio web: </span> <span *ngIf="vacante.empleador.empresa.dominio_web">{{vacante.empleador.empresa.dominio_web}}</span> <span *ngIf="!vacante.empleador.empresa.dominio_web"> No tiene</span><br>
                                   <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Email: </span> <span>{{vacante.empleador.credenciales.email}}</span>  <br>
-                                  <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Pais: </span> <span>{{vacante.empleador.empresa.ciudad.estado.pais.nombre}}</span> <br>
+                                  <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">País: </span> <span>{{vacante.empleador.empresa.ciudad.estado.pais.nombre}}</span> <br>
                                   <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Ciudad: </span> <span>{{vacante.empleador.empresa.ciudad.nombre}} / {{vacante.empleador.empresa.ciudad.estado.nombre}}</span> <br>
-                                  <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Direccion: </span> <span>{{vacante.empleador.empresa.direccion}}</span> <br>   
-                                  <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Telefono: </span> <span>{{vacante.empleador.empresa.telefono}}</span>  <br>                              
-                                  <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Descripcion: </span> <span>{{vacante.empleador.empresa.descripcion}}</span>  <br> 
+                                  <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Dirección: </span> <span>{{vacante.empleador.empresa.direccion}}</span> <br>   
+                                  <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Teléfono: </span> <span>{{vacante.empleador.empresa.telefono}}</span>  <br>                              
+                                  <span *ngIf="vacante.empleador.empresa" class="font-weight-bold">Descripción: </span> <span>{{vacante.empleador.empresa.descripcion}}</span>  <br> 
                                   
                                  
                                 </div>
@@ -78,12 +78,12 @@
                                 <img [src]="vacante.empleador.imagen.url" alt="">
                                 <div class="card-body">  
                                     <span *ngIf="!vacante.empleador.empresa" class="font-weight-bold">Empleador: </span> <span>{{vacante.empleador.nombre}} {{vacante.empleador.apellidos}}</span> <br>
-                                    <span *ngIf="!vacante.empleador.empresa" class="font-weight-bold">Genero: </span> <span>{{ vacante.empleador.genero | genero: vacante.empleador.genero}}</span> <br>
+                                    <span *ngIf="!vacante.empleador.empresa" class="font-weight-bold">Género: </span> <span>{{ vacante.empleador.genero | genero: vacante.empleador.genero}}</span> <br>
                                     <span *ngIf="!vacante.empleador.empresa" class="font-weight-bold">Nacionalidad: </span> <span>{{ vacante.empleador.nacionalidad}}</span> <br>
-                                    <span *ngIf="!vacante.empleador.empresa" class="font-weight-bold">Pais: </span> <span>{{vacante.empleador.ciudad.estado.pais.nombre}}</span> <br>
+                                    <span *ngIf="!vacante.empleador.empresa" class="font-weight-bold">País: </span> <span>{{vacante.empleador.ciudad.estado.pais.nombre}}</span> <br>
                                     <span *ngIf="!vacante.empleador.empresa" class="font-weight-bold">Ciudad: </span> <span>{{vacante.empleador.ciudad.nombre}} / {{vacante.empleador.ciudad.estado.nombre}}</span> <br>
-                                    <span *ngIf="!vacante.empleador.empresa" class="font-weight-bold">Direccion: </span> <span>{{vacante.empleador.direccion}}</span> <br>   
-                                    <span *ngIf="!vacante.empleador.empresa" class="font-weight-bold">Telefono: </span> <span>{{vacante.empleador.telefono}}</span>  <br>                              
+                                    <span *ngIf="!vacante.empleador.empresa" class="font-weight-bold">Dirección: </span> <span>{{vacante.empleador.direccion}}</span> <br>   
+                                    <span *ngIf="!vacante.empleador.empresa" class="font-weight-bold">Teléfono: </span> <span>{{vacante.empleador.telefono}}</span>  <br>                              
                                     <span *ngIf="!vacante.empleador.empresa" class="font-weight-bold">Email: </span> <span>{{vacante.empleador.credenciales.email}}</span>  <br>
                                 </div>
                             </div> 
@@ -108,7 +108,7 @@
                                       </div>
 
                                       <div class="alert alert-primary text-justify" role="alert" *ngIf="(postulacion && postulacion.rechazado && !postulacion.aceptado)">
-                                        El empleador rechazó su postulacion para esta vacante !
+                                        El empleador rechazó su postulación para esta vacante !
                                         <button *ngIf="!postulacion.oculto" routerLink="/postulaciones-rechazadas-solicitante" class="btn btn-info btn-block">Ver postulaciones rechazadas</button>                            
                                       </div>
                                 </div>

@@ -14,8 +14,8 @@
                 </div>
                 <div class="card-body">
                     <app-cargando [tamanio]="'col-12'" *ngIf="cargando"></app-cargando>
-                    <h3 class="text-center">{{tipoOperacion | titlecase}} Idioma</h3>
-                    <hr>
+                    <h3 class="text-center font-weight-bold">{{tipoOperacion | titlecase}} Idioma</h3>
+                 
                     <form class="form p-t-20" 
                     [formGroup]="idiomaForm">  
                         <div class="row">

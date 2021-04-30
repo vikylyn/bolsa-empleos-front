@@ -12,16 +12,16 @@
                 </div>
               </div>
               <div class="card-body" *ngIf="experiencia">
-                    <h3 class="text-center">Experiencia Laboral</h3>
-                    <hr>
+                    <h3 class="text-center font-weight-bold">Experiencia Laboral</h3>
+                 
                     <span class="font-weight-bold">Empresa: </span> {{experiencia.empresa}} <br>
                     <span class="font-weight-bold">Puesto: </span> {{experiencia.puesto}}<br>
-                    <span class="font-weight-bold">Descripcion: </span> {{experiencia.descripcion}} <br> 
+                    <span class="font-weight-bold">Descripción: </span> {{experiencia.descripcion}} <br> 
                     <span class="font-weight-bold">Fecha de Inicio: </span> {{experiencia.fecha_inicio | date: 'longDate'}} <br>
-                    <span class="font-weight-bold">Fecha de Finalizacion: </span> {{experiencia.fecha_fin | date: 'longDate'}} <br>
-                    <span *ngIf="!experiencia.otraCiudad" class="font-weight-bold">Pais: </span> <span *ngIf="!experiencia.otraCiudad">{{experiencia.ciudad.estado.pais.nombre}} </span> <br *ngIf="!experiencia.otraCiudad">
+                    <span class="font-weight-bold">Fecha de Finalización: </span> {{experiencia.fecha_fin | date: 'longDate'}} <br>
+                    <span *ngIf="!experiencia.otraCiudad" class="font-weight-bold">País: </span> <span *ngIf="!experiencia.otraCiudad">{{experiencia.ciudad.estado.pais.nombre}} </span> <br *ngIf="!experiencia.otraCiudad">
                     <span *ngIf="!experiencia.otraCiudad" class="font-weight-bold">Ciudad - Estado: </span> <span *ngIf="!experiencia.otraCiudad"> {{experiencia.ciudad.nombre}} - {{experiencia.ciudad.estado.nombre}}</span> <br *ngIf="!experiencia.otraCiudad">
-                    <span *ngIf="experiencia.otraCiudad" class="font-weight-bold">Pais: </span> <span *ngIf="experiencia.otraCiudad"> {{experiencia.otraCiudad.pais}} </span><br *ngIf="experiencia.otraCiudad">
+                    <span *ngIf="experiencia.otraCiudad" class="font-weight-bold">País: </span> <span *ngIf="experiencia.otraCiudad"> {{experiencia.otraCiudad.pais}} </span><br *ngIf="experiencia.otraCiudad">
                     <span *ngIf="experiencia.otraCiudad" class="font-weight-bold">Ciudad - Estado: </span><span *ngIf="experiencia.otraCiudad">{{experiencia.otraCiudad.ciudad}} - {{experiencia.otraCiudad.estado}}</span> <br *ngIf="experiencia.otraCiudad">
               
                     <span class="font-weight-bold">Tipo de Contrato: </span> {{experiencia.tipo_contrato.tipo}} <br>

@@ -5,9 +5,11 @@ export class Ocupacion {
         public nombre: string,
         public habilitado: boolean,
         public area_laboral: GrupoOcupacional,
-        public administrador: Administrador,
+        public creado_por: Administrador,
+        public modificado_por: Administrador,
+        public creado_en: Date,
+        public modificado_en: Date,
         public grupo_ocupacional: GrupoOcupacional,
-     //   public codigo: string,
         public id?: number,
     ) {
     }

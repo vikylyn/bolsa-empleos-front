@@ -10,6 +10,7 @@ import { OcupacionService } from '../../../../services/administrador/ocupacion.s
 import { UbicacionService } from '../../../../services/ubicacion/ubicacion.service';
 import { EstadoCivilService } from '../../../../services/solicitante/estado-civil.service';
 import Swal from 'sweetalert2';
+import { ValidacionFormularioService } from '../../../../services/validacion-formulario.service';
 declare function init_plugins();
 
 
@@ -53,6 +54,7 @@ export class RegistroSolicitanteComponent implements OnInit {
               private solicitanteService: SolicitanteService,
               private ocupacionService: OcupacionService,
               private ubicacionService: UbicacionService,
+              public validacionService: ValidacionFormularioService,
               private estadoCivilService: EstadoCivilService)
     {
       this.fechaLimiteInf.setFullYear(this.fechaActual.getFullYear() - 18);
@@ -63,7 +65,7 @@ export class RegistroSolicitanteComponent implements OnInit {
     nombre: ['', [ Validators.required]],
     apellidos: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required, Validators.minLength(4)]],
+    password: ['', [Validators.required, Validators.minLength(8)]],
     password2: ['', [Validators.required]],
     cedula: ['', [Validators.required]],
     num_complemento_ci: [''],
@@ -131,6 +133,7 @@ export class RegistroSolicitanteComponent implements OnInit {
       fecha_nac: anio + '-' + mes + '-' + dia
     };
     const form = Object.assign(this.registerForm.value, fechaObj);
+    console.log(form);
     this.solicitanteService.adicionarSolicitante(form)
         .subscribe( (resp: any) => {
           Swal.fire(resp.mensaje, this.registerForm.get('email').value, 'success');

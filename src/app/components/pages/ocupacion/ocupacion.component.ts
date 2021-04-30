@@ -108,7 +108,7 @@ export class OcupacionComponent implements OnInit {
   }
   inhabilitar(id: number): void {
     Swal.fire({
-      title: 'Estas seguro de inhabilitar la ocupación?',
+      title: '¿Estás seguro de inhabilitar la ocupación?',
       text: '',
       icon: 'warning',
       showCancelButton: true,
@@ -137,7 +137,7 @@ export class OcupacionComponent implements OnInit {
   }
   habilitar(id: number): void {
     Swal.fire({
-      title: 'Estas seguro de habilitar la ocupación?',
+      title: '¿Estás seguro de habilitar la ocupación?',
       text: '',
       icon: 'warning',
       showCancelButton: true,

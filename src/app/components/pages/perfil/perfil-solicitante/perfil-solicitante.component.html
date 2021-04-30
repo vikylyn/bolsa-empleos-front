@@ -4,8 +4,8 @@
         <div class="col-xl-7 col-lg-8 col-md-10 col-sm-12">
             <div class="card">
                 <div class="card-body">
-                    <h3 class="text-center">Datos Personales</h3>
-                    <hr>
+                    <h3 class="text-center font-weight-bold">Datos Personales</h3>
+
                     <form class="form p-t-20" 
                             [formGroup]="perfilForm"
                             (ngSubmit)="guardar()">
@@ -13,14 +13,14 @@
                             <div class="col-md-6 ">
                                 <div class="form-group">
                                     <label for="exampleInputuname">Nombres</label>
-                                    <input [class.is-invalid]="campoNoValido('nombre')" formControlName="nombre" class="form-control" type="text" placeholder="Nombres">
+                                    <input [class.is-invalid]="campoNoValido('nombre')" formControlName="nombre" class="form-control" type="text" placeholder="Nombres" (keypress)="validacionService.soloLetras($event)" maxlength="45">
                                     <small *ngIf="campoNoValido('nombre')" class="form-control-feedback text-danger">El nombre es obligatorio </small>                        
                                 </div>
                             </div>
                             <div class="col-md-6 ">
                                 <div class="form-group">
                                     <label for="exampleInputuname">Apellidos</label>
-                                    <input [class.is-invalid]="campoNoValido('apellidos')" formControlName="apellidos" class="form-control" type="text"  placeholder="Apellidos">
+                                    <input [class.is-invalid]="campoNoValido('apellidos')" formControlName="apellidos" class="form-control" type="text"  placeholder="Apellidos" (keypress)="validacionService.soloLetras($event)" maxlength="60">
                                     <small *ngIf="campoNoValido('apellidos')" class="form-control-feedback text-danger">Los apellidos son obligatorios </small>        
                                 </div>
                             </div>
@@ -28,7 +28,7 @@
                         <div class="row">
                             <div class="col-md-6 ">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Correo electronico</label>
+                                    <label for="exampleInputEmail1">Correo electrónico</label>
                                     <input formControlName="email" class="form-control" type="email"  placeholder="Email"> 
                                     <small *ngIf="campoNoValido('email')" class="form-control-feedback text-danger">El email es obligatorio </small>  <br>
                                     <small *ngIf="email()" class="form-control-feedback text-danger">Ingrese un email válido. Ejemplo: tucorreo@ejemplo.com.</small>     
@@ -36,9 +36,9 @@
                             </div>
                             <div class="col-md-6 ">
                                 <div class="form-group">
-                                    <label for="exampleInputuname">Telefono</label>
-                                    <input [class.is-invalid]="campoNoValido('telefono')" formControlName="telefono" type="number" class="form-control" placeholder="Telefono">
-                                    <small *ngIf="campoNoValido('telefono')" class="form-control-feedback text-danger">El telefono es obligatorio</small>
+                                    <label for="exampleInputuname">Teléfono</label>
+                                    <input [class.is-invalid]="campoNoValido('telefono')" formControlName="telefono" type="text" class="form-control" placeholder="Teléfono" (keypress)="validacionService.soloNumeros($event)">
+                                    <small *ngIf="campoNoValido('telefono')" class="form-control-feedback text-danger">El teléfono es obligatorio</small>
         
                                 </div>
                             </div>
@@ -46,16 +46,16 @@
                         <div class="row">
                             <div class="col-md-6 ">
                                 <div class="form-group">
-                                    <label for="exampleInputuname">Cedula</label>
-                                    <input [class.is-invalid]="campoNoValido('cedula')" formControlName="cedula" type="text" class="form-control" placeholder="Cedula">
-                                    <small *ngIf="campoNoValido('cedula')" class="form-control-feedback text-danger">La cedula de identidad es obligatorio</small> 
+                                    <label for="exampleInputuname">Cédula</label>
+                                    <input [class.is-invalid]="campoNoValido('cedula')" formControlName="cedula" type="text" class="form-control" placeholder="Cédula" maxlength="20">
+                                    <small *ngIf="campoNoValido('cedula')" class="form-control-feedback text-danger">La cédula de identidad es obligatorio</small> 
         
                                 </div>
                             </div>
                             <div class="col-md-6 ">
                                 <div class="form-group">
                                     <label class="control-label">Num Complemento Ci:</label>
-                                    <input [class.is-invalid]="campoNoValido('num_complemento_ci')" formControlName="num_complemento_ci" type="text" class="form-control" placeholder="Complemento CI">
+                                    <input [class.is-invalid]="campoNoValido('num_complemento_ci')" formControlName="num_complemento_ci" type="text" class="form-control" placeholder="Complemento CI" maxlength="10">
                                 </div>
                             </div>
                         </div>
@@ -95,17 +95,17 @@
                         <div class="row">
                             <div class="col-md-6 ">
                                 <div class="form-group">
-                                    <label for="exampleInputuname">Genero</label>
+                                    <label for="exampleInputuname">Género</label>
                                         <select formControlName="genero" class="form-control custom-select">
                                             <option value="M">Masculino</option>
-                                            <option value="F">Fememino</option>
+                                            <option value="F">Fememaxo</option>
                                         </select>
                                 </div>
                             </div>
                             <div class="col-md-6 ">
                                 <div class="form-group">
                                     <label for="exampleInputuname">Nacionalidad</label>
-                                    <input [class.is-invalid]="campoNoValido('nacionalidad')" formControlName="nacionalidad" type="text" class="form-control" placeholder="Nacionalidad">
+                                    <input [class.is-invalid]="campoNoValido('nacionalidad')" formControlName="nacionalidad" type="text" class="form-control" placeholder="Nacionalidad" (keypress)="validacionService.soloLetras($event)" maxlength="20">
                                     <small *ngIf="campoNoValido('nacionalidad')" class="form-control-feedback text-danger">La nacionalidad es Obligatoria</small> 
                                 </div>
                             </div>
@@ -122,27 +122,27 @@
                             </div>
                             <div class="col-md-6 ">
                                 <div class="form-group">
-                                    <label for="exampleInputuname">Direccion</label>
-                                    <input [class.is-invalid]="campoNoValido('direccion')" formControlName="direccion" type="text" class="form-control" placeholder="Direccion">
-                                    <small *ngIf="campoNoValido('direccion')" class="form-control-feedback text-danger">La nacionalidad es Obligatoria</small> 
+                                    <label for="exampleInputuname">Dirección</label>
+                                    <input [class.is-invalid]="campoNoValido('direccion')" formControlName="direccion" type="text" class="form-control" placeholder="Dirección" (keypress)="validacionService.direccion($event)" maxlength="45">
+                                    <small *ngIf="campoNoValido('direccion')" class="form-control-feedback text-danger">La dirección es Obligatoria</small> 
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Pais</label>   
+                                    <label>País</label>   
                                     <ng-select 
-                                               notFoundText = "Pais no encontrado"
+                                               notFoundText = "País no encontrado"
                                                [clearable]="false"
-                                               placeholder="Seleccionar Pais"
+                                               placeholder="Seleccionar País"
                                                appendTo="body"
                                                formControlName="id_pais">
                                                <ng-option [value]= "pais.id" *ngFor="let pais of paises">
                                                 {{pais.nombre}}
                                               </ng-option>
                                     </ng-select>
-                                    <small *ngIf="campoNoValido('id_pais')" class="form-control-feedback text-danger">Seleccione un pais</small> 
+                                    <small *ngIf="campoNoValido('id_pais')" class="form-control-feedback text-danger">Seleccione un país</small> 
                                 </div>
                             </div>
                             <div class="col-md-6">

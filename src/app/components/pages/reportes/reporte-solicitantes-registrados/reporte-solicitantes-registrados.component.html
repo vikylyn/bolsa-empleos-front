@@ -26,22 +26,22 @@
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <label for="">Ocupacion:</label>
+                                    <label for="">Ocupación:</label>
                                     <ng-select id="id_ocupacion" [items]="ocupaciones" 
-                                               placeholder="Seleccionar Ocupaciones"
+                                               placeholder="Seleccionar Ocupación"
                                                [clearable]="false"
                                                bindLabel="nombre"
-                                               notFoundText = "Ocupacion no encontrada" 
+                                               notFoundText = "Ocupación no encontrada" 
                                                bindValue="id" 
                                                formControlName="id_ocupacion">
                                     </ng-select>
                                     <small *ngIf="campoNoValido('id_ocupacion')" class="form-control-feedback text-danger">Seleccione una ocupacion </small>
                                 </div>
                                 <div class="col">
-                                    <label for="">Pais:</label>
+                                    <label for="">País:</label>
                                     <ng-select 
-                                        notFoundText = "Pais no encontrado"
-                                        placeholder="Seleccionar Pais"
+                                        notFoundText = "País no encontrado"
+                                        placeholder="Seleccionar País"
                                         appendTo="body"
                                         [clearable] = "false"
                                         formControlName="id_pais">
@@ -114,13 +114,13 @@
                                         <th>#</th>
                                         <th>Nombres</th>
                                         <th>Apellidos</th>
-                                        <th>Ocupacion</th>
-                                        <th>Cedula</th>
-                                        <th>Genero</th>
+                                        <th>Ocupación</th>
+                                        <th>Cédula</th>
+                                        <th>Género</th>
                                         <th>Nacionalidad</th>
                                         <th>Fecha de Nac</th>
-                                        <th>Ciudad-Estado-Pais</th>
-                                        <th>Direccion</th>
+                                        <th>Ciudad-Estado-País</th>
+                                        <th>Dirección</th>
                                         <th>Estado Civil</th>
                                         <th>Estado</th>
                                         <th>Creado en:</th>

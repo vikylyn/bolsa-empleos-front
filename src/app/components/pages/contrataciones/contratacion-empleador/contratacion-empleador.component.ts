@@ -90,7 +90,7 @@ export class ContratacionEmpleadorComponent implements OnInit {
   terminar(id_contratacion: number): void {
 
     Swal.fire({
-      title: 'Estas seguro de terminar el contrato?',
+      title: '¿Estás seguro de terminar el contrato?',
       text: '',
       icon: 'warning',
       showCancelButton: true,
@@ -105,7 +105,7 @@ export class ContratacionEmpleadorComponent implements OnInit {
           this.cargando = false;
         }, (err) => {
           console.log(err);
-          Swal.fire('Error al eliminar postulacion', err.error.error || err.error.mensaje, 'error');
+          Swal.fire('Error al eliminar contratación', err.error.error || err.error.mensaje, 'error');
           this.cargando = false;
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {

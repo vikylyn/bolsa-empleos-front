@@ -102,7 +102,7 @@ export class PostulacionesSinConsiderarEmpleadorComponent implements OnInit {
   rechazar(idPostulacion: number): void {
 
     Swal.fire({
-      title: 'Estas seguro de rechazar la postulación?',
+      title: '¿Estás seguro de rechazar la postulación?',
       text: '',
       icon: 'warning',
       showCancelButton: true,
@@ -110,12 +110,15 @@ export class PostulacionesSinConsiderarEmpleadorComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
+        this.cargando = true;
         this.postulacionService.rechazarPostulacionEmpleador(idPostulacion).subscribe((resp: any) => {
           Swal.fire(resp.mensaje, '', 'success');
+          this.cargando = false;
           this.cargarPostulaciones();
         }, (err) => {
           console.log(err);
           Swal.fire('Error al eliminar postulacion', err.error.error || err.error.mensaje, 'error');
+          this.cargando = false;
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(
@@ -129,7 +132,7 @@ export class PostulacionesSinConsiderarEmpleadorComponent implements OnInit {
 
   aceptar(idPostulacion: number): void {
     Swal.fire({
-      title: 'Desea contratar al solicitante?',
+      title: '¿Desea contratar al postulante?',
       text: '',
       icon: 'warning',
       showCancelButton: true,

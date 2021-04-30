@@ -8,7 +8,7 @@ import { WebsocketService } from '../../../../services/websocket/websocket.servi
 import { UbicacionService } from '../../../../services/ubicacion/ubicacion.service';
 import { Pais } from '../../../../models/pais.model';
 import { Ciudad } from '../../../../models/ciudad.model';
-
+import { ValidacionFormularioService} from '../../../../services/validacion-formulario.service';
 
 @Component({
   selector: 'app-perfil-administrador',
@@ -25,6 +25,7 @@ export class PerfilAdministradorComponent implements OnInit {
   paises: Pais[];
   ciudades: Ciudad[];
   constructor(private fb: FormBuilder,
+              public validacionService: ValidacionFormularioService,
               private administradorService: AdministradorService,
               private ubicacionService: UbicacionService,
               private wsService: WebsocketService,
@@ -75,11 +76,13 @@ export class PerfilAdministradorComponent implements OnInit {
   }
   guardar(): void {
     this.formSubmitted = true;
+    console.log(this.perfilForm);
     console.log(this.perfilForm.value);
     if (this.perfilForm.invalid) {
       return;
     }
     this.cargando = true;
+    
     this.administradorService.modificar(this.perfilForm.value, this.perfilForm.get('id').value)
         .subscribe( (resp: any) => {
           Swal.fire(resp.mensaje, this.perfilForm.get('email').value, 'success');
@@ -103,5 +106,6 @@ export class PerfilAdministradorComponent implements OnInit {
       return false;
     }
   }
+
 
 }

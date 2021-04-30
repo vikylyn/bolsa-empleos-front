@@ -14,10 +14,10 @@ export class EjecutarRestablecerPasswordComponent implements OnInit {
   idCredencial: number;
   token: string;
   formSubmitted = false;
-
-  constructor(private credencialesService: CredencialesService,private route: ActivatedRoute,
+  cargando = false;
+  constructor(private credencialesService: CredencialesService, private route: ActivatedRoute,
               private fb: FormBuilder,
-              public router: Router,) { }
+              public router: Router) { }
 
   ngOnInit(): void {
     init_plugins();
@@ -60,11 +60,13 @@ export class EjecutarRestablecerPasswordComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
+        this.cargando = true;
         this.credencialesService.restablecerPassword(this.passwordForm.value, this.idCredencial, this.token).subscribe((resp: any) => {
           Swal.fire(resp.mensaje, '', 'success');
-
+          this.cargando = false;
         }, (err) => {
           console.log(err);
+          this.cargando = false;
           Swal.fire('Error al restablecer password', err.error.mensaje, 'error');
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {

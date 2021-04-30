@@ -31,16 +31,16 @@
                   </div>
                   <div class="row">
                       <div class="col">
-                        <h3 class="text-center" *ngIf="!siguiente">{{tipoOperacion | titlecase}} Vacante</h3>
-                        <hr *ngIf="!siguiente">
+                        <h3 class="text-center font-weight-bold" *ngIf="!siguiente">{{tipoOperacion | titlecase}} Vacante</h3>
+                       
                         <form *ngIf="cargarformulario" autocomplete="off" 
                         [formGroup]="vacanteForm">
                                <div *ngIf="!siguiente" class="row p-t-20">
                                    <div class="col-md-12">
                                        <div class="form-group">
-                                           <label class="control-label">Titulo:</label>
-                                           <input [class.is-invalid]="campoNoValido('titulo')" formControlName="titulo" class="form-control" type="text" placeholder="Titulo">
-                                           <small *ngIf="campoNoValido('titulo')" class="form-control-feedback text-danger">El titulo es obligatorio </small>
+                                           <label class="control-label">Título:</label>
+                                           <input [class.is-invalid]="campoNoValido('titulo')" formControlName="titulo" class="form-control" type="text" placeholder="Título" maxlength="100">
+                                           <small *ngIf="campoNoValido('titulo')" class="form-control-feedback text-danger">El título es obligatorio </small>
                                        </div>
                                    </div>
                                </div>
@@ -103,9 +103,9 @@
                                     </div>
                                    <div class="col-md-6">
                                        <div class="form-group">
-                                           <label class="control-label">Direccion:</label>
-                                           <input [class.is-invalid]="campoNoValido('direccion')" formControlName="direccion" class="form-control" type="email"  placeholder="Direccion">
-                                           <small *ngIf="campoNoValido('direccion')" class="form-control-feedback text-danger">La direccion es Obligatoria </small>
+                                           <label class="control-label">Dirección:</label>
+                                           <input [class.is-invalid]="campoNoValido('direccion')" formControlName="direccion" class="form-control" type="email"  placeholder="Dirección" maxlength="45">
+                                           <small *ngIf="campoNoValido('direccion')" class="form-control-feedback text-danger">La dirección es Obligatoria </small>
                                        </div>
                                    </div>
                                   
@@ -114,9 +114,9 @@
                                <div class="row" *ngIf="!siguiente">
                                     <div class="col-md-12 ">
                                         <div class="form-group">
-                                            <label class="control-label">Descripcion:</label>
-                                            <textarea [class.is-invalid]="campoNoValido('descripcion')" formControlName="descripcion" class="form-control rounded-0" id="exampleFormControlTextarea1" rows="3"></textarea>
-                                            <small *ngIf="campoNoValido('descripcion')" class="form-control-feedback text-danger">La Descripcion es Obligatoria</small>
+                                            <label class="control-label">Descripción:</label>
+                                            <textarea [class.is-invalid]="campoNoValido('descripcion')" formControlName="descripcion" class="form-control rounded-0" id="exampleFormControlTextarea1" rows="3" maxlength="255"></textarea>
+                                            <small *ngIf="campoNoValido('descripcion')" class="form-control-feedback text-danger">La Descripción es Obligatoria</small>
                                         </div>
                                     </div>                         
                                </div>
@@ -124,10 +124,10 @@
                                <div class="row" *ngIf="!siguiente">
                                    <div class="col-md-6">
                                        <div class="form-group">
-                                           <label>Pais</label>   
+                                           <label>País</label>   
                                            <ng-select 
                                                       notFoundText = "Pais no encontrado"
-                                                      placeholder="Seleccionar Pais"
+                                                      placeholder="Seleccionar País"
                                                       [clearable] = "false"
                                                       appendTo="body"
                                                       formControlName="id_pais"
@@ -136,7 +136,7 @@
                                                        {{pais.nombre}}
                                                      </ng-option>
                                            </ng-select>
-                                           <small *ngIf="campoNoValido('id_pais')" class="form-control-feedback text-danger">Seleccione un pais</small> 
+                                           <small *ngIf="campoNoValido('id_pais')" class="form-control-feedback text-danger">Seleccione un país</small> 
                                        </div>
                                    </div>
                                    <!--/span-->
@@ -161,17 +161,17 @@
                                <div class="row" *ngIf="!siguiente">
                                    <div class="col-md-6 ">
                                        <div class="form-group">
-                                           <label class="control-label">Numero de Vacantes:</label>
-                                           <input *ngIf="tipoOperacion=== 'adicionar'" [class.is-invalid]="campoNoValido('num_vacantes')" formControlName="num_vacantes" type="number" min="1" class="form-control" placeholder="Num Vacantes">
-                                           <input (keyup)="modificarNumDisponibles()" (change)="modificarNumDisponibles()" *ngIf="tipoOperacion=== 'modificar'" [class.is-invalid]="campoNoValido('num_vacantes')" formControlName="num_vacantes" type="number" min="{{vacante.num_postulantes_aceptados}}" class="form-control" placeholder="Num Vacantes">
-                                           <small *ngIf="campoNoValido('num_vacantes') && tipoOperacion=== 'adicionar'" class="form-control-feedback text-danger">El numero de Vacantes es obligatorio, debe ser mayor a cero.</small> 
-                                           <small *ngIf="campoNoValido('num_vacantes') && tipoOperacion=== 'modificar'" class="form-control-feedback text-danger">El numero de Vacantes es obligatorio, debe ser mayor o igual al numero de postulantes aceptados</small> 
+                                           <label class="control-label">Número de Vacantes:</label>
+                                           <input *ngIf="tipoOperacion=== 'adicionar'" [class.is-invalid]="campoNoValido('num_vacantes')" formControlName="num_vacantes" type="number" min="1" class="form-control" placeholder="Num Vacantes" (keypress)="validacionService.soloNumeros($event)">
+                                           <input (keyup)="modificarNumDisponibles()" (change)="modificarNumDisponibles()" *ngIf="tipoOperacion=== 'modificar'" [class.is-invalid]="campoNoValido('num_vacantes')" formControlName="num_vacantes" type="number" min="{{vacante.num_postulantes_aceptados}}" class="form-control" placeholder="Num Vacantes" (keypress)="validacionService.soloNumeros($event)">
+                                           <small *ngIf="campoNoValido('num_vacantes') && tipoOperacion=== 'adicionar'" class="form-control-feedback text-danger">El número de Vacantes es obligatorio, debe ser mayor a cero.</small> 
+                                           <small *ngIf="campoNoValido('num_vacantes') && tipoOperacion=== 'modificar'" class="form-control-feedback text-danger">El número de Vacantes es obligatorio, debe ser mayor o igual al número de postulantes aceptados</small> 
         
                                        </div>
                                    </div>
                                    <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="exampleInputuname">Habilitar publicacion</label>
+                                        <label for="exampleInputuname">Habilitar publicación</label>
                                         <select formControlName="habilitado" class="form-control custom-select">
                                             <option value="true">Habilitar</option>
                                             <option value="false">Inhabilitar</option>
@@ -183,19 +183,19 @@
                                <div class="row" *ngIf="tipoOperacion=== 'modificar' && !siguiente">
                                     <div class="col-md-6 ">
                                         <div class="form-group">
-                                            <label class="control-label">Numero de Vacantes Disponibles:</label>
-                                            <input formControlName="num_disponibles" type="number" min="1" class="form-control" >
+                                            <label class="control-label">Número de Vacantes Disponibles:</label>
+                                            <input formControlName="num_disponibles" type="number" min="1" class="form-control" (keypress)="validacionService.soloNumeros($event)">
                                         </div>
                                     </div>
                                     <div class="col-md-6 ">
                                         <div class="form-group">
-                                            <label class="control-label">Numero de postulantes aceptados:</label>
-                                            <input formControlName="num_postulantes_aceptados" type="number" min="1" class="form-control">
+                                            <label class="control-label">Número de postulantes aceptados:</label>
+                                            <input formControlName="num_postulantes_aceptados" type="number" min="1" class="form-control" (keypress)="validacionService.soloNumeros($event)">
                                         </div>
                                     </div>
                                </div>       
                             
-                           <hr *ngIf="!siguiente">
+                         
                            <div class="form-actions text-center" *ngIf="!siguiente">
                             <button (click)="siguienteFormulario()"  class="btn btn-success"> <i class="fa fa-check"></i> Siguiente</button>
                             &nbsp;
@@ -206,23 +206,23 @@
                         [formGroup]="requisitosForm">   
                             <div class="row" *ngIf="siguiente">
                                 <div class="col-md-12 ">
-                                    <h3 class="text-center">Requisitos del Solicitante</h3>
-                                    <hr *ngIf="siguiente">
+                                    <h3 class="text-center font-weight-bold">Requisitos del Solicitante</h3>
+                                    
                                 </div>
                             </div>
                             <div class="row" *ngIf="siguiente">
                                 <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="control-label">Ocupacion:</label>
+                                            <label class="control-label">Ocupación:</label>
                                             <ng-select id="id_ocupacion" [items]="ocupaciones" 
-                                            placeholder="Seleccionar una ocupacion"
+                                            placeholder="Seleccionar una ocupación"
                                             [clearable] = "false"
                                             bindLabel="nombre"
-                                            notFoundText = "Ocupacion no encontrada" 
+                                            notFoundText = "Ocupación no encontrada" 
                                             bindValue="id" 
                                             formControlName="id_ocupacion">
                                             </ng-select>
-                                        <small *ngIf="campoNoValido2('id_ocupacion')" class="form-control-feedback text-danger">Seleccione almenos una ocupacion</small> 
+                                        <small *ngIf="campoNoValido2('id_ocupacion')" class="form-control-feedback text-danger">Seleccione almenos una ocupación</small> 
         
                                     </div>
                                 </div>
@@ -232,19 +232,19 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="control-label">Experiencia (años):</label>
-                                        <input [class.is-invalid]="campoNoValido2('experiencia')" formControlName="experiencia" type="number" min="0" class="form-control" placeholder="Experiencia">
+                                        <input [class.is-invalid]="campoNoValido2('experiencia')" formControlName="experiencia" type="number" min="0" class="form-control" placeholder="Experiencia" (keypress)="validacionService.soloNumeros($event)">
                                         <small *ngIf="campoNoValido2('experiencia')" class="form-control-feedback text-danger">La Experiencia es obligatoria</small> 
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                  <div class="form-group">
-                                     <label class="control-label">Genero</label>
+                                     <label class="control-label">Género</label>
                                      <select [class.is-invalid]="campoNoValido2('genero')" formControlName="genero" class="form-control custom-select">
                                          <option value="seleccionar">Seleccionar</option>
                                          <option value="M">Masculino</option>
                                          <option value="F">Fememino</option>
                                      </select>
-                                     <small *ngIf="campoNoValido2('genero')" class="form-control-feedback text-danger">Seleccione un genero</small> 
+                                     <small *ngIf="campoNoValido2('genero')" class="form-control-feedback text-danger">Seleccione un género</small> 
                                  </div>
                                 </div>
                             </div> 
@@ -276,7 +276,7 @@
         
                              </div>
                            </div>
-                           <hr *ngIf="siguiente">
+                          
                            <div class="form-actions text-center" *ngIf="siguiente">
                                <button (click)="guardar()"  class="btn btn-success"> <i class="fa fa-check"></i> Guardar</button>
                                &nbsp;

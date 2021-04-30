@@ -41,17 +41,34 @@ export class OperacionesComponent implements OnInit {
   }
 
   contratar(): void {
-    this.cargar.emit();
-    this.postulacionService.aceptar(this.id)
-        .subscribe((resp: any) => {
-          Swal.fire(resp.mensaje, '', 'success');
-          this.noCargar.emit();
-          this.cerrarModalPadre();
-        }, (err) => {
-          console.log(err);
-          Swal.fire('Error al contratar solicitante', err.error.error.error || err.error.error || err.error.mensaje, 'error');
-          this.noCargar.emit();
-        });
+    Swal.fire({
+      title: '¿Desea contratar al postulante?',
+      text: '',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Confirmar!',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        this.cargar.emit();
+        this.postulacionService.aceptar(this.id)
+            .subscribe((resp: any) => {
+              Swal.fire(resp.mensaje, '', 'success');
+              this.noCargar.emit();
+              this.cerrarModalPadre();
+            }, (err) => {
+              console.log(err);
+              Swal.fire('Error al contratar solicitante', err.error.error.error || err.error.error || err.error.mensaje, 'error');
+              this.noCargar.emit();
+            });
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+          'Cancelado',
+          '',
+          'error'
+        );
+      }
+    });
   }
 /*  contratarRechazado(): void {
     this.postulacionService.aceptarRechazado(this.id)
@@ -67,7 +84,7 @@ export class OperacionesComponent implements OnInit {
   rechazar(): void {
 
     Swal.fire({
-      title: 'Estas seguro de rechazar la postulacion?',
+      title: '¿Estás seguro de rechazar la postulación?',
       text: '',
       icon: 'warning',
       showCancelButton: true,
@@ -82,7 +99,7 @@ export class OperacionesComponent implements OnInit {
           this.cerrarModalPadre();
         }, (err) => {
           console.log(err);
-          Swal.fire('Error al rechazar postulacion', err.error.error || err.error.mensaje, 'error');
+          Swal.fire('Error al rechazar postulación', err.error.error || err.error.mensaje, 'error');
           this.noCargar.emit();
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -98,7 +115,7 @@ export class OperacionesComponent implements OnInit {
   rechazarConsiderado(): void {
 
     Swal.fire({
-      title: 'Estas seguro de rechazar la postulacion?',
+      title: '¿Estás seguro de rechazar la postulación?',
       text: '',
       icon: 'warning',
       showCancelButton: true,
@@ -113,7 +130,7 @@ export class OperacionesComponent implements OnInit {
           this.cerrarModalPadre();
         }, (err) => {
           console.log(err);
-          Swal.fire('Error al rechazar postulacion', err.error.error || err.error.mensaje, 'error');
+          Swal.fire('Error al rechazar postulación', err.error.error || err.error.mensaje, 'error');
           this.noCargar.emit();
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -129,7 +146,7 @@ export class OperacionesComponent implements OnInit {
 // eliminar la postulacion que no ha sido aceptada por el empleador
   terminar(): void {
     Swal.fire({
-      title: 'Estas seguro de terminar el contrato?',
+      title: '¿Estás seguro de terminar el contrato?',
       text: '',
       icon: 'warning',
       showCancelButton: true,
@@ -144,7 +161,7 @@ export class OperacionesComponent implements OnInit {
           this.cerrarModalPadre();
         }, (err) => {
           console.log(err);
-          Swal.fire('Error al eliminar postulacion', err.error.error || err.error.mensaje, 'error');
+          Swal.fire('Error al eliminar contratación', err.error.error || err.error.mensaje, 'error');
           this.noCargar.emit();
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {

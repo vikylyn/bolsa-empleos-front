@@ -61,7 +61,7 @@ export class ReferenciaComponent implements OnInit {
   }
   eliminar(id: number): void {
     Swal.fire({
-      title: 'Estas seguro de eliminar la referencia?',
+      title: '¿Estás seguro de eliminar la referencia?',
       text: '',
       icon: 'warning',
       showCancelButton: true,

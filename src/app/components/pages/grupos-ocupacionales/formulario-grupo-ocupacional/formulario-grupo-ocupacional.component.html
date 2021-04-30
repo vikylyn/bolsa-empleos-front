@@ -13,16 +13,16 @@
               </div>
               <div class="card-body">
                 <app-cargando [tamanio]="'col'" *ngIf="cargando"></app-cargando>
-                <h3 class="text-center">{{tipoOperacion | titlecase}} Grupo Ocupacional</h3>
-                <hr>
+                <h3 class="text-center font-weight-bold">{{tipoOperacion | titlecase}} Grupo Ocupacional</h3>
+            
                 <form *ngIf="cargarformulario" class="form p-t-10" 
                 [formGroup]="grupoForm">
                     <div class="form-group">
                         <label for="exampleInputuname">Nombre:</label>
-                        <input [class.is-invalid]="campoNoValido('nombre')" formControlName="nombre" class="form-control" type="text" placeholder="Nombre">
+                        <input [class.is-invalid]="campoNoValido('nombre')" formControlName="nombre" class="form-control" type="text" placeholder="Nombre" maxlength="150" (keypress)="validacionService.soloLetras($event)">
                         <small *ngIf="campoNoValido('nombre')" class="form-control-feedback text-danger">El nombre es obligatorio </small>
                     </div> 
-                    <hr>
+               
                     <div class="text-center">
                         <button  (click)="guardar()" type="submit" class="btn btn-success waves-effect waves-light">
                             <i class="fa fa-save"></i>

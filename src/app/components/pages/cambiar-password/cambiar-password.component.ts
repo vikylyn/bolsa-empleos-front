@@ -47,7 +47,7 @@ export class CambiarPasswordComponent implements OnInit {
   cargarFormularioAdministrador(): void {
     this.passwordForm = this.fb.group({
       password_antiguo: ['', [ Validators.required]],
-      password_nuevo: ['', [Validators.required]],
+      password_nuevo: ['', [Validators.required, Validators.minLength(8)]],
       password2: ['', [Validators.required]],
       id_credenciales: [this.loginService.administrador.credenciales.id, [Validators.required]]
     }, {
@@ -58,7 +58,7 @@ export class CambiarPasswordComponent implements OnInit {
   cargarFormularioEmpleador(): void {
     this.passwordForm = this.fb.group({
       password_antiguo: ['', [ Validators.required]],
-      password_nuevo: ['', [Validators.required]],
+      password_nuevo: ['', [Validators.required, Validators.minLength(8)]],
       password2: ['', [Validators.required]],
       id_credenciales: [this.loginService.empleador.credenciales.id, [Validators.required]]
     }, {
@@ -69,7 +69,7 @@ export class CambiarPasswordComponent implements OnInit {
   cargarFormularioSolicitante(): void {
     this.passwordForm = this.fb.group({
       password_antiguo: ['', [ Validators.required]],
-      password_nuevo: ['', [Validators.required]],
+      password_nuevo: ['', [Validators.required, Validators.minLength(8)]],
       password2: ['', [Validators.required]],
       id_credenciales: [this.loginService.solicitante.credenciales.id, [Validators.required]]
     }, {
@@ -87,6 +87,7 @@ export class CambiarPasswordComponent implements OnInit {
     }
   }
   guardar(): void{
+    console.log(this.passwordForm);
     this.formSubmitted = true;
     if (this.passwordForm.invalid) {
       return;
@@ -130,5 +131,11 @@ export class CambiarPasswordComponent implements OnInit {
       };
     };
   }
-
+  minlength(): boolean {
+    if (this.passwordForm.controls.password_nuevo.errors && this.passwordForm.controls.password_nuevo.errors.minlength) {
+      return true;
+    }else {
+      return false;
+    }
+  }
 }

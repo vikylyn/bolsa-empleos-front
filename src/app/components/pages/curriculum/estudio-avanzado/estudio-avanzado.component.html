@@ -3,13 +3,11 @@
     <div class="row">
         <div class="col-12">
             <div class="card" id="4">
-                <div class="card-header">
+
+                <div class="card-body">
                     <h2><span class="badge badge-info">Administración de Estudios Avanzados</span></h2>
                     
-                    <h6>Total: {{totalEstudios}} - {{desde}}</h6> 
-                </div>
-                <div class="card-body">
-                   
+                    <h6>Total: {{totalEstudios}} - {{desde}}</h6>
                     <button (click)="mostrarModal('adicionar', 0)"
                             class="btn btn-success">
                                 Adicionar 
@@ -19,9 +17,9 @@
                         <table class="table full-color-table full-inverse-table hover-table">
                             <thead>
                                 <tr>
-                                    <th>Institucion</th>
+                                    <th>Institución</th>
                                     <th>Carrera/ Curso/ Seminario</th>
-                                    <th>Pais</th>
+                                    <th>País</th>
                                     <th>Ciudad - Estado</th>
                                     <th>Nivel estudio</th>
                                     <th class="w100 text-center">ver</th>
@@ -51,17 +49,17 @@
                                     </td>
                                     <td class="text-nowrap text-center">
                                         <a class="cursor" (click)="mostrarModal2(estudio.id)"> 
-                                            <i class="fa fa-eye  m-r-10"></i> 
+                                            <i class="fa fa-eye "></i> 
                                         </a>
                                     </td>
                                     <td class="text-nowrap text-center">
 
                                         <a class="cursor" (click)="mostrarModal('modificar', estudio.id)"> 
-                                                <i class="fa fa-pencil m-r-10"></i> 
+                                                <i class="fa fa-pencil"></i> 
                                         </a>
                                     </td>
                                     <td class="text-nowrap text-center">
-                                        <a (click)="eliminar(estudio.id)" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-trash-o m-r-10 text-info"></i> </a>                                    
+                                        <a (click)="eliminar(estudio.id)" class="cursor" data-toggle="tooltip" data-original-title="Eliminar"> <i class="fa fa-trash-o text-info"></i> </a>                                    
                                     </td>
                                 </tr>
                             </tbody> 

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Referencia } from '../../../../../models/curriculum/referencia.model';
 import { ReferenciaService } from '../../../../../services/solicitante/curriculum/referencia.service';
 import Swal from 'sweetalert2';
+import { ValidacionFormularioService } from '../../../../../services/validacion-formulario.service';
 
 @Component({
   selector: 'app-formulario-referencia',
@@ -25,7 +26,8 @@ export class FormularioReferenciaComponent implements OnInit {
 
   constructor(
           private fb: FormBuilder,
-          private referenciaService: ReferenciaService
+          private referenciaService: ReferenciaService,
+          public validacionService: ValidacionFormularioService
     ) { }
 
   ngOnInit(): void {
