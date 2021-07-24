@@ -15,6 +15,7 @@
                                        bindLabel="nombre"
                                        notFoundText = "Ocupacion no encontrada" 
                                        bindValue="id" 
+                                       (change)="cambiar()"
                                        formControlName="id_ocupacion">
                             </ng-select>
                             <small *ngIf="campoNoValido('id_ocupacion')" class="form-control-feedback text-danger">Seleccione una ocupacion </small>
@@ -29,6 +30,7 @@
                                 placeholder="Seleccionar Pais"
                                 appendTo="body"
                                 [clearable] = "false"
+                                (change)="cambiar()"
                                 formControlName="id_pais">
                                 <ng-option [value]= "pais.id" *ngFor="let pais of paises">
                                  {{pais.nombre}}
@@ -42,6 +44,7 @@
                                        appendTo="body"
                                        [clearable] = "false"
                                        notFoundText = "ciudad no encontrada"
+                                       (change)="cambiar()"
                                        formControlName="id_ciudad">
                                        <ng-option [value]= "0">
                                          Cualquiera
@@ -54,12 +57,13 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                            <label for="">Publicado en:</label>
+                            <label for="">Publicado desde:</label>
                             <ng-select 
                                        placeholder="Seleccionar Fecha"
                                        appendTo="body"
                                        [clearable] = "false"
                                        notFoundText = "Fecha no encontrada"
+                                       (change)="cambiar()"
                                        formControlName="fecha">
                                        <ng-option [value]= "fecha.fecha" *ngFor="let fecha of fechas">
                                          {{fecha.descripcion}}
@@ -73,6 +77,7 @@
                                         bindLabel="tipo"
                                         [clearable] = "false"
                                         notFoundText = "Tipo de contrato no encontrado" 
+                                        (change)="cambiar()"
                                         formControlName="id_tipo_contrato">
                                         <ng-option [value]= "0">
                                             Cualquiera
@@ -89,6 +94,7 @@
                                 <ng-select
                                         [clearable] = "false"
                                         [searchable] = "false"
+                                        (change)="cambiar()"
                                         formControlName="ascendente">
                                         <ng-option [value]= "true">
                                             Ascendente
@@ -140,7 +146,7 @@
                                 <img class="img-responsive rounded" [src]="vacante.empleador.empresa.logo.url" alt="">
                             </div>
                             <div class="col-sm-12 col-xl-7 col-lg-7 text-center">
-                                <h5>{{vacante.titulo}}</h5>
+                                <h4 font-weight-bold>{{vacante.titulo}}</h4>
                                 <h5>Trabajo ubicado en {{vacante.ciudad.nombre}} - {{vacante.ciudad.estado.pais.nombre}}</h5>
                                 <h5>Publicado el {{vacante.creado_en | date: 'longDate'}}</h5>
                                 <button (click)="mostrarModal(vacante.id)" class="btn btn-success btn-lg btn-block mt-2">ver detalle</button>
@@ -150,11 +156,11 @@
                     <div class="card-body" *ngIf="!vacante.empleador.empresa">
                         <div class="row">
                             <div class="col-sm-12 col-xl-5 col-lg-5 text-center">
-                                <h5>{{vacante.empleador.nombre}} {{vacante.empleador.apellidos}}</h5>
+                                <h5 font-weight-bold>{{vacante.empleador.nombre}} {{vacante.empleador.apellidos}}</h5>
                                 <img class="img-responsive rounded" [src]="vacante.empleador.imagen.url" alt="">
                             </div>
                             <div class="col-sm-12 col-xl-7 col-lg-7 text-center">
-                                <h5>{{vacante.titulo}}</h5>
+                                <h4>{{vacante.titulo}}</h4>
                                 <h5>Trabajo ubicado en {{vacante.ciudad.nombre}} - {{vacante.ciudad.estado.pais.nombre}}</h5>
                                 <h5>Publicado el {{vacante.creado_en | date: 'longDate'}}</h5>
                                 <button (click)="mostrarModal(vacante.id)" class="btn btn-success btn-lg btn-block mt-2">ver detalle</button>

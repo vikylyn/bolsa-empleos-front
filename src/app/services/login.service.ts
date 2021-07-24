@@ -107,7 +107,6 @@ export class LoginService {
     return this.http.post(`${base_url}/login`, formData)
         .pipe(
           tap( (resp: any) => {
-            console.log('respuesta autenticacion', resp);
             localStorage.setItem('token', resp.token);
             this.guardarStorage(resp.usuario, resp.token);
          //   this.cargarStorage();

@@ -105,6 +105,7 @@ export class InicioEmpleadorComponent implements OnInit {
     }
     this.cargarOcupacion();
     this.cargando = true;
+    console.log(this.desde,this.filtradoForm.value);
     this.solicitanteService.filtrar(this.filtradoForm.value, this.desde).subscribe(
       ({solicitantes, total}) => {
         this.solicitantes = solicitantes;
@@ -144,6 +145,9 @@ export class InicioEmpleadorComponent implements OnInit {
   }
   cerrarModal(e) {
     this.myModal = e;
+  }
+  cambiar(): void {
+    this.desde = 0;
   }
 
 }

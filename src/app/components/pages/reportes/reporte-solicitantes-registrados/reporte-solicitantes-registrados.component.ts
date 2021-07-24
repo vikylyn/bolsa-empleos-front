@@ -119,7 +119,7 @@ export class ReporteSolicitantesComponent implements OnInit {
     const formularioCompleto = Object.assign(this.reporteForm.value, objFechas);
     this.cargando = true;
     this.reporteService.generarListadoSolicitantes(formularioCompleto).subscribe(({solicitantes, ocupacion, total}) => {
-       this.solicitantes = solicitantes;
+       console.log(this.solicitantes);
        this.ocupacion = ocupacion;
        this.total = total;
        this.cargando = false;

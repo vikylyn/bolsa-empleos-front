@@ -13,7 +13,7 @@
             <div class="alert alert-danger text-center" role="alert" *ngIf="notificacionEliminada">
                 La notificacion a sido eliminada 
             </div>
-           <div class="card bg-dark animated fadeIn fast" *ngIf="notificacion">
+           <div class="card bg-dark animated fadeIn fast" *ngIf="notificacion && !notificacionEliminada">
                <div class="card-body ">
                 
                 <div class="row">
@@ -132,13 +132,13 @@
                               </div>
 
                               <div class="alert alert-primary text-center" role="alert" *ngIf="(postulacion && postulacion.rechazado && postulacion.aceptado)">
-                                Usted ha rechazado esta vacante !
+                                Usted ha rechazado esta vacante!
                                 <button routerLink="/postulaciones-rechazadas-solicitante" class="btn btn-info btn-block">Ver postulaciones rechazadas</button>                            
 
                               </div>
 
                               <div class="alert alert-primary text-justify" role="alert" *ngIf="(postulacion && postulacion.rechazado && !postulacion.aceptado)">
-                                El empleador rechazó su postulacion para esta vacante !
+                                El empleador rechazó su postulacion para esta vacante!
                                 <button routerLink="/postulaciones-rechazadas-solicitante" class="btn btn-info btn-block">Ver postulaciones rechazadas</button>                            
                               </div>
 

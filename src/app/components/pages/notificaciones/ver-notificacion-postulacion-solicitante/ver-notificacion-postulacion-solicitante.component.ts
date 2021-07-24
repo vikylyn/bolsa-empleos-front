@@ -35,25 +35,30 @@ export class VerNotificacionPostulacionSolicitanteComponent implements OnInit {
     this.activatedRoute.params
       .subscribe((params: Params) => {
         this.cargando = true;
-        this.notificacionService.buscar(params.id,
-          this.loginService.solicitante.credenciales.rol.id).subscribe((resp: Notificacion) => {
-            this.notificacion = resp;
-            this.verificarPostulacion();
-          }, (err) => {
-            Swal.fire(err.error.mensaje, 'Error al buscar notificacion' , 'error');
-            console.log(err);
-            this.notificacionEliminada = true;
-            this.cargando = false;
-          //  this.router.navigateByUrl('/postulaciones-solicitante');
-          });
+        this.notificacionEliminada = false;
+        this.buscarNotificacion(params.id);
       }
     );
     this.veririficarPostulacionWs();
+  }
+  buscarNotificacion(id: number): void {
+    this.notificacionService.buscar(id,
+      this.loginService.solicitante.credenciales.rol.id).subscribe((resp: Notificacion) => {
+        this.notificacion = resp;
+        this.verificarPostulacion();
+      }, (err) => {
+        Swal.fire(err.error.mensaje, 'Error al buscar notificacion' , 'error');
+        console.log(err);
+        this.notificacionEliminada = true;
+        this.cargando = false;
+      //  this.router.navigateByUrl('/postulaciones-solicitante');
+      });
   }
   veririficarPostulacionWs(): void {
     this.verificacionSubscription =  this.postulacionService.verificarPostulacion()
         .subscribe(( () => {
           this.verificarPostulacion();
+          this.buscarNotificacion(this.notificacion.id);
         }));
   }
   // verificar si el solicitante ya se postulo a la vacante
@@ -75,7 +80,7 @@ export class VerNotificacionPostulacionSolicitanteComponent implements OnInit {
                   };
     console.log(datos);
     Swal.fire({
-      title: 'Desea de postular a la vacante?',
+      title: '¿Desea de postular a la vacante?',
       text: '',
       icon: 'warning',
       showCancelButton: true,
@@ -83,12 +88,15 @@ export class VerNotificacionPostulacionSolicitanteComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
+        this.cargando = true;
         this.postulacionService.postular(datos).subscribe( (resp: any ) => {
           this.postulacion = resp.postulacion;
           this.postulando = true;
+          this.cargando = false;
           Swal.fire(resp.mensaje, '', 'success');
         }, (err) => {
           console.log(err);
+          this.cargando = false;
           Swal.fire('Error al postularme', err.error.error || err.error.mensaje, 'error');
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -104,7 +112,7 @@ export class VerNotificacionPostulacionSolicitanteComponent implements OnInit {
   cancelar(): void {
 
     Swal.fire({
-      title: 'Estas seguro de cancelar su postulacion?',
+      title: '¿Estás seguro de cancelar su postulación?',
       text: '',
       icon: 'warning',
       showCancelButton: true,
@@ -112,11 +120,14 @@ export class VerNotificacionPostulacionSolicitanteComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
+        this.cargando = true;
         this.postulacionService.eliminar(this.postulacion.id).subscribe((resp: any) => {
           Swal.fire(resp.mensaje, '', 'success');
           this.verificarPostulacion();
+          this.cargando = false;
         }, (err) => {
           console.log(err);
+          this.cargando = false;
           Swal.fire('Error al eliminar postulacion', err.error.error || err.error.mensaje, 'error');
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -131,7 +142,7 @@ export class VerNotificacionPostulacionSolicitanteComponent implements OnInit {
 
   confirmar(): void {
     Swal.fire({
-      title: 'Desea confirmar su postulacion?',
+      title: '¿Desea confirmar su postulación?',
       text: 'Usted ha sido aceptado para la vacante!',
       icon: 'warning',
       showCancelButton: true,
@@ -139,11 +150,14 @@ export class VerNotificacionPostulacionSolicitanteComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
+        this.cargando = true;
         this.postulacionService.confirmar(this.postulacion.id).subscribe((resp: any) => {
           Swal.fire(resp.mensaje, '', 'success');
           this.verificarPostulacion();
+          this.cargando = false;
         }, (err) => {
           console.log(err);
+          this.cargando = false;
           Swal.fire('Error al confirmar postulacion', err.error.error || err.error.mensaje, 'error');
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
@@ -158,7 +172,7 @@ export class VerNotificacionPostulacionSolicitanteComponent implements OnInit {
 
   rechazar(): void {
     Swal.fire({
-      title: 'Desea rechazar su postulacion?',
+      title: '¿Desea rechazar su postulación?',
       text: 'Usted ha sido aceptado para la vacante!',
       icon: 'warning',
       showCancelButton: true,
@@ -166,12 +180,15 @@ export class VerNotificacionPostulacionSolicitanteComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.value) {
+        this.cargando = true;
         this.postulacionService.rechazarPostulacionSolicitante(this.postulacion.id).subscribe((resp: any) => {
           Swal.fire(resp.mensaje, '', 'success');
+          this.cargando = false;
           this.verificarPostulacion();
         }, (err) => {
           console.log(err);
-          Swal.fire('Error al confirmar postulacion', err.error.error || err.error.mensaje, 'error');
+          this.cargando = false;
+          Swal.fire('Error al confirmar postulación', err.error.error || err.error.mensaje, 'error');
         });
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire(

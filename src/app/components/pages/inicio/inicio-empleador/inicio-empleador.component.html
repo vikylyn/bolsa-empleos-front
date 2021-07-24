@@ -15,6 +15,7 @@
                                        bindLabel="nombre"
                                        notFoundText = "Ocupacion no encontrada" 
                                        bindValue="id" 
+                                       (change)="cambiar()"
                                        formControlName="id_ocupacion">
                             </ng-select>
                             <small *ngIf="campoNoValido('id_ocupacion')" class="form-control-feedback text-danger">Seleccione una ocupacion </small>
@@ -29,6 +30,7 @@
                                 placeholder="Seleccionar Pais"
                                 appendTo="body"
                                 [clearable] = "false"
+                                (change)="cambiar()"
                                 formControlName="id_pais">
                                 <ng-option [value]= "pais.id" *ngFor="let pais of paises">
                                  {{pais.nombre}}
@@ -42,7 +44,8 @@
                                        appendTo="body"
                                        [clearable] = "false"
                                        notFoundText = "ciudad no encontrada"
-                                       formControlName="id_ciudad">
+                                       formControlName="id_ciudad"
+                                       (change)="cambiar()">
                                        <ng-option [value]= "0">
                                          Cualquiera
                                        </ng-option>
@@ -60,6 +63,7 @@
                                        appendTo="body"
                                        [clearable] = "false"
                                        notFoundText = "Fecha no encontrada"
+                                       (change)="cambiar()"
                                        formControlName="fecha">
                                        <ng-option [value]= "fecha.fecha" *ngFor="let fecha of fechas">
                                          {{fecha.descripcion}}
@@ -71,6 +75,7 @@
                                 <ng-select
                                         [clearable] = "false"
                                         [searchable] = "false"
+                                        (change)="cambiar()"
                                         formControlName="ascendente">
                                         <ng-option [value]= "true">
                                             Ascendente

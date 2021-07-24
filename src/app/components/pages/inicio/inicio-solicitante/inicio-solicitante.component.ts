@@ -147,4 +147,8 @@ export class InicioSolicitanteComponent implements OnInit {
   cerrarModal(e) {
     this.myModal = e;
   }
+
+  cambiar(): void {
+    this.desde = 0;
+  }
 }

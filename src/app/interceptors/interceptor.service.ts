@@ -1,7 +1,7 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, delay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
@@ -29,7 +29,8 @@ export class InterceptorService implements HttpInterceptor{
           });
         }
         return throwError(error);
-      })
+      }),
+      delay(600)
     );
   }
 }
